@@ -1,0 +1,33 @@
+using System;
+using StarterAssets;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+
+public class Portal : MonoBehaviour
+{
+    [HideInInspector] public GameObject player;
+    protected virtual void OnPlayerEnter(GameObject player){}
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Trigger"))
+        {
+            var player = other.transform.parent.gameObject;
+            this.player = player;
+            OnPlayerEnter(player);
+        }
+            
+    }
+    public void SpawnPlayerAtPortal()
+    {
+        player.GetComponent<CharacterController>().enabled = false;
+        player.GetComponent<ThirdPersonController>().enabled = false;
+
+        player.transform.position = transform.position + (this.player.transform.forward * 1.5f);
+            
+        player.GetComponent<CharacterController>().enabled = true;
+        player.GetComponent<ThirdPersonController>().enabled = true;
+    }
+}
