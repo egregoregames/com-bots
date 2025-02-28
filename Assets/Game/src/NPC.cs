@@ -3,6 +3,7 @@ using DependencyInjection;
 using Febucci.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game
 {
@@ -13,6 +14,13 @@ namespace Game
         [SerializeField] NpcSo npcSo;
         
         public UISo uiSo;
+
+        public GameObject player;
+        [ContextMenu("Go")]
+        public void GoToPlayer()
+        {
+            GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
+        }
         
         public void Interact()
         {
