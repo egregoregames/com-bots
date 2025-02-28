@@ -8,7 +8,7 @@ public class UISo : ScriptableObject
     
     public Action<string[]> OnPushDialogue;
     
-    public Action<Room[], Action<int>> OnSelectionPortal;
+    public Action<Room[], Action<int>, string> OnSelectionPortal;
 
     public Action<Action, string> AreaSelected;
     

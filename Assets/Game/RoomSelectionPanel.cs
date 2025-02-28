@@ -15,6 +15,7 @@ public class RoomSelectionPanel : MonoBehaviour
     Action<int> onRoomSelected;
     Room[] _rooms;
     int _roomIndex = 0;
+    private string _cancelText;
     private void Awake()
     {
         uiSo.OnSelectionPortal += PushRoomList;
@@ -50,7 +51,7 @@ public class RoomSelectionPanel : MonoBehaviour
     {
         if (_roomIndex == 0)
         {
-            _roomIndex = _rooms.Length - 1;
+            _roomIndex = _rooms.Length;
         }
         else
         {
@@ -60,7 +61,7 @@ public class RoomSelectionPanel : MonoBehaviour
     }
     void RoomSelectDown()
     {
-        if (_roomIndex < _rooms.Length - 1)
+        if (_roomIndex < _rooms.Length)
         {
             _roomIndex++;
         }
@@ -71,8 +72,9 @@ public class RoomSelectionPanel : MonoBehaviour
         SetArrowActive();
     }
 
-    void PushRoomList(Room[] roomNames, Action<int> callback)
+    void PushRoomList(Room[] roomNames, Action<int> callback, string cancelText)
     {
+        _cancelText = cancelText;
         onRoomSelected = callback;
         inputSO.SwitchToUIInput();
         var panel = transform.GetChild(0).gameObject;
@@ -93,11 +95,14 @@ public class RoomSelectionPanel : MonoBehaviour
 
             roomsNameSelectionObjects[i].gameObject.SetActive(true);
         }
+        var roomNameTex = roomsNameSelectionObjects[_rooms.Length].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = _cancelText;
+        var selectionArro = roomsNameSelectionObjects[_rooms.Length].transform.GetChild(1).gameObject;
+        roomsNameSelectionObjects[_rooms.Length].gameObject.SetActive(true);
     }
     
     private void SetArrowActive()
     {
-        for (int i = 0; i < _rooms.Length; i++)
+        for (int i = 0; i <= _rooms.Length; i++)
         {
             var selectionArrow = roomsNameSelectionObjects[i].transform.GetChild(1).gameObject;
 
@@ -114,7 +119,7 @@ public class RoomSelectionPanel : MonoBehaviour
 
     void ClearArrows()
     {
-        for (int i = 0; i < _rooms.Length; i++)
+        for (int i = 0; i <= _rooms.Length; i++)
         {
             roomsNameSelectionObjects[i].transform.GetChild(1).gameObject.SetActive(false);
         }

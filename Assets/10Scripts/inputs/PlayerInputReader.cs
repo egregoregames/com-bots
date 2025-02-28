@@ -52,6 +52,7 @@ namespace StarterAssets
 			inputSo.submit = playerInput.actions["Submit"].WasPressedThisFrame();
 			inputSo.up = playerInput.actions["Up"].WasPressedThisFrame();
 			inputSo.down = playerInput.actions["Down"].WasPressedThisFrame();
+			inputSo.sprint = playerInput.actions["Sprint"].IsPressed();
 			if (inputSo.down)
 			{
 				inputSo.OnDown.Invoke();

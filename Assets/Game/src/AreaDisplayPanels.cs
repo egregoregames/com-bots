@@ -32,7 +32,7 @@ namespace Game.src
 
             // Compute closed positions (panels meet at center)
             float screenWidth = Screen.width;
-            endPosition = new Vector2(0, 375);
+            endPosition = new Vector2(0, 170);
         }
 
         public void DoTransition(Action callback, string name)
