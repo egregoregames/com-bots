@@ -16,7 +16,6 @@ namespace StarterAssets
 		{
 			inputSo.switchToPlayerInput += () => playerInput.SwitchCurrentActionMap("Player");
 			inputSo.switchToUIInput += () => playerInput.SwitchCurrentActionMap("UI");
-
 		}
 
 		void OnMove(InputValue value)

@@ -10,7 +10,7 @@ public class UISo : ScriptableObject
     
     public Action<Room[], Action<int>, string> OnSelectionPortal;
 
-    public Action<Action, string> AreaSelected;
+    public Action<Action, Action, string> AreaSelected;
     
     public Action<AudioClip> SoundSelected;
 

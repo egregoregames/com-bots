@@ -1,8 +1,5 @@
-using System;
 using StarterAssets;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class SimplePortal : Portal
@@ -12,9 +9,20 @@ public class SimplePortal : Portal
     public AudioClip clip;
     protected override void OnPlayerEnter(GameObject playerThatEntered)
     {
-        uiSo.AreaSelected?.Invoke(HandlePlayerChangeArea, SceneManager.GetActiveScene().name);
+        OnTriggerPortal(0);
     }
-    private void HandlePlayerChangeArea()
+    void ReleasePlayerMovement()
+    {
+        player.GetComponent<Animator>().enabled = true;
+        player.GetComponent<ThirdPersonController>().enabled = true;
+    }
+    private void OnTriggerPortal(int roomIndex)
+    {
+        player.GetComponent<Animator>().enabled = false;
+        player.GetComponent<ThirdPersonController>().enabled = false;
+        uiSo.AreaSelected?.Invoke(TeleportPlayer, ReleasePlayerMovement, "Beach");
+    }
+    private void TeleportPlayer()
     {
         
         nextPortal.player = player;

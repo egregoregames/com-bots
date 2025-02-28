@@ -8,7 +8,7 @@ public class InputSO : ScriptableObject
 {
     public Action switchToPlayerInput;
     public Action switchToUIInput;
-
+    public Action<bool> setInput;
     public void SwitchToPlayerInput()
     {
         switchToPlayerInput?.Invoke();
@@ -17,6 +17,11 @@ public class InputSO : ScriptableObject
     public void SwitchToUIInput()
     {
         switchToUIInput?.Invoke();
+    }
+
+    public void SetInput(bool status)
+    {
+        setInput?.Invoke(status);
     }
     
     [Header("Character Input Values")]

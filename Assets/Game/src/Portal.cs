@@ -22,12 +22,8 @@ public class Portal : MonoBehaviour
     }
     public void SpawnPlayerAtPortal()
     {
-        player.GetComponent<CharacterController>().enabled = false;
-        player.GetComponent<ThirdPersonController>().enabled = false;
-
-        player.transform.position = transform.position + (this.player.transform.forward * 1.5f);
-            
-        player.GetComponent<CharacterController>().enabled = true;
-        player.GetComponent<ThirdPersonController>().enabled = true;
+        
+        player.transform.position =  transform.position + (this.player.transform.forward * 1.5f);
+        
     }
 }

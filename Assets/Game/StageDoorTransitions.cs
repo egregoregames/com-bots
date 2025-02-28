@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Game.src;
 using UnityEngine;
 
 public class StageDoorTransitions : MonoBehaviour
@@ -9,7 +10,7 @@ public class StageDoorTransitions : MonoBehaviour
     public float transitionTime = 0.5f;
     public UISo uiSo;
     public float delayTime = 0.5f;
-    
+    public AreaDisplayPanels AreaDisplayPanels;
     private Vector2 leftStartPos, rightStartPos;
     private Vector2 leftClosePos, rightClosePos;
 
@@ -30,34 +31,56 @@ public class StageDoorTransitions : MonoBehaviour
         rightClosePos = new Vector2(480, 0);
     }
 
-    public void DoStageDoorTransition(Action callback, string name)
+    public void DoStageDoorTransition(Action onTransitionMidPoint, Action onTransitionEnd, string areaName)
     {
-        StartCoroutine(TransitionCoRo(callback));
+        StartCoroutine(TransitionCoRo(onTransitionMidPoint, onTransitionEnd, areaName));
     }
 
     private bool _isClosed = false;
-    IEnumerator TransitionCoRo(Action teleportPlayerCallback = null)
+    private bool _isOpen = true;
+    IEnumerator TransitionCoRo(Action onTransitionMidPoint, Action onTransitionEnd, string areaName)
     {
         CloseTransition();
         
         yield return new WaitUntil(() => _isClosed);
-        teleportPlayerCallback?.Invoke();
+
+        onTransitionMidPoint?.Invoke();
+        
         yield return new WaitForSeconds(delayTime);
         
         OpenTransition();
+        
+        yield return new WaitUntil(() => _isOpen);
+        
+        AreaDisplayPanels.DoTransition(areaName);
+
+        onTransitionEnd?.Invoke();
+
+    }
+
+    void SetClosed()
+    {
+        _isClosed = true;
+        _isOpen = false;
+    }
+
+    void SetOpen()
+    {
         _isClosed = false;
+        _isOpen = true;
     }
 
     public void CloseTransition()
     {
         LeanTween.move(leftPanel, leftClosePos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
         LeanTween.move(rightPanel, rightClosePos, transitionTime).setEase(LeanTweenType.easeInOutQuad)
-            .setOnComplete(() => _isClosed = true);
+            .setOnComplete(SetClosed);
     }
 
     public void OpenTransition()
     {
         LeanTween.move(leftPanel, leftStartPos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
-        LeanTween.move(rightPanel, rightStartPos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(rightPanel, rightStartPos, transitionTime).setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(SetOpen);
     }
 }

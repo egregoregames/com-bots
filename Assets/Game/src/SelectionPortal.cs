@@ -1,3 +1,4 @@
+using StarterAssets;
 using UnityEngine;
 
 
@@ -26,15 +27,22 @@ public class SelectionPortal : Portal
         
         _roomSelected = rooms[roomIndex];
 
-        uiSo.AreaSelected?.Invoke(HandlePlayerChangeArea, _roomSelected.name);
+        player.GetComponent<ThirdPersonController>().enabled = false;
+        uiSo.AreaSelected?.Invoke(TeleportPlayerToRoom, ReleasePlayerMovement, _roomSelected.name);
     }
 
-    private void HandlePlayerChangeArea()
+    void ReleasePlayerMovement()
+    {
+        player.GetComponent<ThirdPersonController>().enabled = true;
+    }
+    
+
+    private void TeleportPlayerToRoom()
     {
         var portal = _roomSelected.Portal;
         
         portal.player = player;
-        
+
         portal.SpawnPlayerAtPortal();
         
         uiSo.SoundSelected?.Invoke(_roomSelected.clip);
