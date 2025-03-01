@@ -18,13 +18,22 @@ public class RoomSelectionPanel : MonoBehaviour
     private string _cancelText;
     private void Awake()
     {
-        uiSo.OnSelectionPortal += PushRoomList;
+        uiSo.PlayerEnteredRoomSelector += PushRoomList;
+        
         inputSO.OnUp += RoomSelectUp;
         inputSO.OnDown += RoomSelectDown;
-        
         inputSO.OnSubmit += OnRoomSelected;
     }
-    
+    void PushRoomList(Room[] roomNames, Action<Room> callback, string cancelText)
+    {
+        // _cancelText = cancelText;
+        // onRoomSelected = callback;
+        // inputSO.SwitchToUIInput();
+        // var panel = transform.GetChild(0).gameObject;
+        // panel.SetActive(true);
+        //
+        // SetObjectsActive(roomNames);
+    }
     private void OnRoomSelected()
     {
         inputSO.SwitchToPlayerInput();
@@ -35,6 +44,7 @@ public class RoomSelectionPanel : MonoBehaviour
         _roomIndex = 0;
 
     }
+    
 
 
     private void OnDisable()
@@ -72,16 +82,7 @@ public class RoomSelectionPanel : MonoBehaviour
         SetArrowActive();
     }
 
-    void PushRoomList(Room[] roomNames, Action<int> callback, string cancelText)
-    {
-        _cancelText = cancelText;
-        onRoomSelected = callback;
-        inputSO.SwitchToUIInput();
-        var panel = transform.GetChild(0).gameObject;
-        panel.SetActive(true);
-        
-        SetObjectsActive(roomNames);
-    }
+    
 
     private void SetObjectsActive(Room[] rooms)
     {

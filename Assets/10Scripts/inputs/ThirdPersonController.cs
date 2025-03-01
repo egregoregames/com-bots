@@ -155,6 +155,16 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
         }
 
+        public void AllowPlayerInput()
+        {
+            enabled = true;
+            input.SwitchToPlayerInput();
+        }
+        public void DisAllowPlayerInput()
+        {
+            enabled = false;
+        }
+
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
@@ -220,7 +230,6 @@ namespace StarterAssets
         private void Move()
         {
 	    //menu.menuID = -1;
-	        Debug.Log(input.sprint);
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = input.sprint ? SprintSpeed : MoveSpeed;
 

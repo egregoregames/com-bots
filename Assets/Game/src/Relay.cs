@@ -7,14 +7,21 @@ namespace Game.src
     {
         [SerializeField] InputSO inputSo;
         [SerializeField] UISo uiSo;
+        [SerializeField] MenuController menuController;
+        [SerializeField] StageDoorTransitions stageDoorTransitions;
 
-        
         private void Awake()
         {
-            uiSo.OnRoomTransition += OnRoomTransition;
+            uiSo.TriggerAreaChangeTransition += OnRoomTransition;
+            uiSo.PlayerEnteredRoomSelector += OnPlayerEnteredSelectionPortal;
         }
 
-        public void OnRoomTransition(Room room)
+        public void OnPlayerEnteredSelectionPortal(Room[] rooms, Action<Room> roomSelected, string cancelText)
+        {
+            menuController.RoomSelectPanel(rooms, roomSelected, cancelText);
+        }
+
+        public void OnRoomTransition(Action onTransitionStart, Action onTransitionEnd, string areaName)
         {
             
         }

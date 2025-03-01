@@ -13,37 +13,28 @@ public class SelectionPortal : Portal
     protected override void OnPlayerEnter(GameObject playerWhoEntered)
     {
         player = playerWhoEntered;
-        uiSo.OnSelectionPortal?.Invoke(rooms, OnRoomSelected, cancelText);
-    }
-    void OnRoomSelected(int roomIndex)
-    {
-        OnTriggerPortal(roomIndex);
-    }
-
-    private void OnTriggerPortal(int roomIndex)
-    {
-        if(roomIndex == rooms.Length)
-            return;
         
-        _roomSelected = rooms[roomIndex];
-
+        uiSo.PlayerEnteredRoomSelector?.Invoke(rooms, OnRoomSelected, cancelText);
+    }
+    
+    private void OnRoomSelected(Room room)
+    {
+        _roomSelected = room;
         player.GetComponent<ThirdPersonController>().enabled = false;
-        uiSo.AreaSelected?.Invoke(TeleportPlayerToRoom, ReleasePlayerMovement, _roomSelected.name);
+        
+        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayerToRoom, ReleasePlayerMovement, room.name);
     }
 
     void ReleasePlayerMovement()
     {
-        player.GetComponent<ThirdPersonController>().enabled = true;
+        
+        player.GetComponent<ThirdPersonController>().AllowPlayerInput();
+
     }
     
-
     private void TeleportPlayerToRoom()
     {
-        var portal = _roomSelected.Portal;
-        
-        portal.player = player;
-
-        portal.SpawnPlayerAtPortal();
+        _roomSelected.TeleportPlayerToRoom(player);
         
         uiSo.SoundSelected?.Invoke(_roomSelected.clip);
     }

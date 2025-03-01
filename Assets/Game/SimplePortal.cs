@@ -18,9 +18,9 @@ public class SimplePortal : Portal
     }
     private void OnTriggerPortal(int roomIndex)
     {
-        player.GetComponent<Animator>().enabled = false;
-        player.GetComponent<ThirdPersonController>().enabled = false;
-        uiSo.AreaSelected?.Invoke(TeleportPlayer, ReleasePlayerMovement, "Beach");
+        // player.GetComponent<Animator>().enabled = false;
+        // player.GetComponent<ThirdPersonController>().enabled = false;
+        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayer, ReleasePlayerMovement, "Beach");
     }
     private void TeleportPlayer()
     {

@@ -2,34 +2,31 @@ using System;
 using System.Collections;
 using Game.src;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class StageDoorTransitions : MonoBehaviour
+public class NewAreaDisplay : MonoBehaviour
 {
-    public RectTransform leftPanel;
+    [FormerlySerializedAs("leftPanel")] public RectTransform display;
     public RectTransform rightPanel;
     public float transitionTime = 0.5f;
     public UISo uiSo;
     public float delayTime = 0.5f;
     public AreaDisplayPanels AreaDisplayPanels;
-    private Vector2 leftStartPos, rightStartPos;
-    private Vector2 leftClosePos, rightClosePos;
+    private Vector2 startPos, rightStartPos;
+    private Vector2 endPos, rightClosePos;
 
     private void Awake()
     {
-        uiSo.TriggerAreaChangeTransition += DoStageDoorTransition;
+       // uiSo.TriggerAreaChangeTransition += DoStageDoorTransition;
     }
 
     void Start()
     {
         // Store initial positions
-        leftStartPos = leftPanel.anchoredPosition;
-        rightStartPos = rightPanel.anchoredPosition;
+        startPos = display.anchoredPosition;
 
         // Compute closed positions (panels meet at center)
-        float screenWidth = Screen.width;
-        Debug.Log(screenWidth);
-        leftClosePos = new Vector2(0, 0);
-        rightClosePos = new Vector2(0, 0);
+        endPos = new Vector2(0, 0);
     }
 
     public void DoStageDoorTransition(Action onTransitionMidPoint, Action onTransitionEnd, string areaName)
@@ -74,7 +71,7 @@ public class StageDoorTransitions : MonoBehaviour
     [ContextMenu("Close")]
     public void CloseTransition()
     {
-        LeanTween.move(leftPanel, leftClosePos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(display, endPos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
         LeanTween.move(rightPanel, rightClosePos, transitionTime).setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(SetClosed);
     }
@@ -82,7 +79,7 @@ public class StageDoorTransitions : MonoBehaviour
     [ContextMenu("Open")]
     public void OpenTransition()
     {
-        LeanTween.move(leftPanel, leftStartPos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(display, startPos, transitionTime).setEase(LeanTweenType.easeInOutQuad);
         LeanTween.move(rightPanel, rightStartPos, transitionTime).setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(SetOpen);
     }

@@ -16,6 +16,7 @@ public class InputSO : ScriptableObject
 
     public void SwitchToUIInput()
     {
+        
         switchToUIInput?.Invoke();
     }
 
@@ -32,10 +33,12 @@ public class InputSO : ScriptableObject
     public bool submit;
     public bool up;
     public bool down;
-
+    public bool openMenu;
+    
     public Action OnUp;
     public Action OnDown;
     public Action OnSubmit;
+    public Action OnOpenMenu;
 
     [Header("Movement Settings")]
     public bool analogMovement;
