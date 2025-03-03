@@ -8,5 +8,10 @@ public class MenuDescriptionPanel : MonoBehaviour
     public Image menuPanelIcon;
     public TextMeshProUGUI menuPanelDescription;
 
+
+    public void SetDescription()
+    {
+        
+    }
     
 }

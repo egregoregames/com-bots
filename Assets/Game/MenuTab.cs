@@ -10,6 +10,7 @@ public class MenuTab : Button
     private RectTransform rectTransform;
     private Vector2 initialPosition;
 
+    public NpcSo connection;
     
     protected override void Start()
     {
@@ -22,17 +23,30 @@ public class MenuTab : Button
     {
         base.OnSelect(eventData);
 
+        SelectEffect();
+    }
+
+    protected virtual void SelectEffect()
+    {
         var offset = transform.parent.GetComponent<RectTransform>().rect.width * .12f;
+        
+        if(!rectTransform)
+            return;
         
         rectTransform.anchoredPosition += new Vector2(offset, 0);
         onSelect?.Invoke();
     }
 
+    
+
     public override void OnDeselect(BaseEventData eventData)
     {
         base.OnDeselect(eventData);
-        rectTransform.anchoredPosition = initialPosition;
+        DeselectEffect();
     }
 
-    
+    public void DeselectEffect()
+    {
+        rectTransform.anchoredPosition = initialPosition;
+    }
 }

@@ -41,6 +41,10 @@ namespace StarterAssets
 		{
 			inputSo.openMenu = value.isPressed;
 		}
+		void OnCancel(InputValue value)
+		{
+			inputSo.cancel = value.isPressed;
+		}
 		void OnMove(InputValue value)
 		{ 
 			inputSo.move = value.Get<Vector2>();
@@ -104,7 +108,10 @@ namespace StarterAssets
 			{
 				inputSo.OnInteract?.Invoke();
 			}
-
+			if (inputSo.cancel)
+			{
+				inputSo.OnCancel?.Invoke();
+			}
 		}
 
 		// public void OnUp(InputValue value)
