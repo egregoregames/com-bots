@@ -26,8 +26,6 @@ public class StageDoorTransitions : MonoBehaviour
         rightStartPos = rightPanel.anchoredPosition;
 
         // Compute closed positions (panels meet at center)
-        float screenWidth = Screen.width;
-        Debug.Log(screenWidth);
         leftClosePos = new Vector2(0, 0);
         rightClosePos = new Vector2(0, 0);
     }

@@ -29,13 +29,19 @@ public class InputSO : ScriptableObject
     public Vector2 move;
     public Vector2 look;
     public bool jump;
+    public bool interact;
+
     public bool sprint;
     public bool submit;
     public bool up;
     public bool down;
     public bool openMenu;
-    
+    public bool cancel;
+
     public Action OnUp;
+    public Action OnInteract;
+    public Action OnCancel;
+
     public Action OnDown;
     public Action OnSubmit;
     public Action OnOpenMenu;

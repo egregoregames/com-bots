@@ -9,7 +9,7 @@ public class NewRoomSelectionPanel : MonoBehaviour
 {
     [SerializeField] List<GameObject> selectionTabs;
     [SerializeField] GameObject tabsParent;
-    
+    [SerializeField] private InputSO _inputSo;
 
     public void PopWindow(Room[] rooms, Action<Room> roomSelected, string cancelText)
     {
@@ -34,6 +34,7 @@ public class NewRoomSelectionPanel : MonoBehaviour
         var cancelTabButton = selectionTabs[rooms.Length].GetComponentInChildren<Button>();
             
         cancelTabButton.onClick.AddListener( () => tabsParent.SetActive(false));
+        cancelTabButton.onClick.AddListener( () => _inputSo.SwitchToPlayerInput());
 
         var cancelTabTmp = selectionTabs[rooms.Length].GetComponentInChildren<TextMeshProUGUI>();
             

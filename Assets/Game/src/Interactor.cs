@@ -6,14 +6,14 @@ namespace Game
 {
     public class Interactor : MonoBehaviour
     {
-        
+        [SerializeField] private InputSO _inputSo;
         //todo cache the interactable to prevent update GetComponent
         private void OnTriggerStay(Collider collider)
         {
             if (!collider.CompareTag("Interactable"))
                 return;
             collider.GetComponent<IInteractable>().OnHoverStay();
-            if (Input.GetKeyDown(KeyCode.E))
+            if (_inputSo.interact)
             {
                 collider.GetComponent<IInteractable>().Interact();
             }

@@ -16,8 +16,10 @@ namespace StarterAssets
 		{
 	
 			inputSo.switchToPlayerInput += () => playerInput.SwitchCurrentActionMap("Player");
-			inputSo.switchToUIInput += () => playerInput.SwitchCurrentActionMap("UI");
+			inputSo.switchToPlayerInput += () => playerInput.actions.FindActionMap("UI").Disable();
+
 			
+			inputSo.switchToUIInput += () => playerInput.SwitchCurrentActionMap("UI");
 			inputSo.switchToUIInput += () => playerInput.actions.FindActionMap("Player").Disable();
 			//inputSo.switchToUIInput += () => Debug.Log("Current Action Map: " + playerInput.currentActionMap.name);
 
@@ -42,6 +44,11 @@ namespace StarterAssets
 		void OnMove(InputValue value)
 		{ 
 			inputSo.move = value.Get<Vector2>();
+		}
+
+		void OnInteract(InputValue value)
+		{
+			inputSo.interact = value.isPressed;
 		}
 		//yield return new WaitUntil(() => playerInput.actions["Submit"].WasPressedThisFrame());
 
@@ -70,10 +77,12 @@ namespace StarterAssets
 		private void Update()
 		{
 			inputSo.submit = playerInput.actions["Submit"].WasPressedThisFrame();
+			inputSo.interact = playerInput.actions["Interact"].WasPressedThisFrame();
 			inputSo.up = playerInput.actions["Up"].WasPressedThisFrame();
 			inputSo.down = playerInput.actions["Down"].WasPressedThisFrame();
 			inputSo.sprint = playerInput.actions["Sprint"].IsPressed();
 			inputSo.openMenu = playerInput.actions["Open Menu"].WasPressedThisFrame();
+			inputSo.cancel = playerInput.actions["Cancel"].WasPressedThisFrame();
 
 			if (inputSo.openMenu)
 			{
@@ -90,6 +99,10 @@ namespace StarterAssets
 			if (inputSo.up)
 			{
 				inputSo.OnUp?.Invoke();
+			}
+			if (inputSo.interact)
+			{
+				inputSo.OnInteract?.Invoke();
 			}
 
 		}

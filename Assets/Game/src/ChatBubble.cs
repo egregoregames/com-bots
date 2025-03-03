@@ -13,10 +13,7 @@ namespace Game.src
         [SerializeField] UISo uiSo;
         [FormerlySerializedAs("inputSO")] [SerializeField] InputSO inputSo;
         [SerializeField] GameObject chatBubbleGameObject;
-        private void Awake()
-        {
-            uiSo.OnPushDialogue += SendDialogue;
-        }
+        
 
         public void SendDialogue(string[] dialogue)
         {

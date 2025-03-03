@@ -10,9 +10,8 @@ namespace Game
     public class NPC : MonoBehaviour, IInteractable
     {
         [SerializeField] GameObject talkPrompt;
-        
         [SerializeField] NpcSo npcSo;
-        
+        [SerializeField] private GameEventRelay gameEventRelay;
         public UISo uiSo;
 
         public GameObject player;
@@ -25,7 +24,7 @@ namespace Game
         public void Interact()
         {
             uiSo.OnPushDialogue?.Invoke(npcSo.dialogue);
-            
+            gameEventRelay.ConnectionMade?.Invoke(npcSo);
             Debug.Log("Hello! Im an NPC!");
         }
 
