@@ -1,0 +1,386 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73574cdca6caa188a836dd799d465f76, type: 3}
+  m_Name: SuperBot
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: a08a185a81b2ee27e917cc9f860ee5e5, type: 2}
+    - {fileID: 11400000, guid: 56678635d02d431758c0edd549845029, type: 2}
+    - {fileID: 11400000, guid: 0234d1b086e906e83a7082966e24d12b, type: 2}
+    - {fileID: 11400000, guid: 0d1a71baadc638165956eb8c09f919c4, type: 2}
+    - {fileID: 11400000, guid: 1d89de502aa2506f0bbe560da911df33, type: 2}
+    - {fileID: 11400000, guid: 7c6fbb10652b7bd8eb71189fd622a75b, type: 2}
+    - {fileID: 11400000, guid: 2191e2ba78bde04658456b6d52adb27e, type: 2}
+    - {fileID: 11400000, guid: fcbc505120ddd5eeaab5a74e2633721c, type: 2}
+    - {fileID: 11400000, guid: 86785e10fa4ccd22c88b011bce207a42, type: 2}
+    - {fileID: 11400000, guid: 6befe4f0f0751b42faed2dd99afd78a0, type: 2}
+    - {fileID: 11400000, guid: 67005d8ce8103575c9d3d9ef1fad653f, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Stats
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Battles.Stats.StatDefinition,
+        Assembly-CSharp],[Game.Battles.Stats.Stat, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[Game.Battles.Stats.StatDefinition,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 2|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 3|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 4|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 5|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 6|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: 7|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: 8|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: 9|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: 10|Game.Battles.Stats.Stat, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 12
+    - Name: _max
+      Entry: 3
+      Data: 12
+    - Name: _stage
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Vitals
+      Entry: 7
+      Data: 11|System.Collections.Generic.Dictionary`2[[VitalDefinition, Assembly-CSharp],[Game.Battles.Vitals.Vital,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 12|System.Collections.Generic.ObjectEqualityComparer`1[[VitalDefinition,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 9
+    - Name: $v
+      Entry: 7
+      Data: 13|Game.Battles.Vitals.Vital, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 100
+    - Name: _max
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 10
+    - Name: $v
+      Entry: 7
+      Data: 14|Game.Battles.Vitals.Vital, Assembly-CSharp
+    - Name: _current
+      Entry: 3
+      Data: 100
+    - Name: _max
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  <Attacks>k__BackingField:
+  - {fileID: 11400000, guid: 308d14bf69174321ab01b27e28f622d8, type: 2}
+  - {fileID: 11400000, guid: aaf64e226b7b6cbe79651acbd1ab8186, type: 2}
+  - {fileID: 11400000, guid: 5661c0954558fd2f39b822a4d3b12c7b, type: 2}
+  - {fileID: 11400000, guid: dbe0a1146acf90bff96225cd225671a0, type: 2}
+  Conditions: []
+  <Rank>k__BackingField: 
+  <Meister>k__BackingField: 
+  <OnlineOffline>k__BackingField: 0
+  <CurrentBlueprint>k__BackingField: 
+  <BotForm>k__BackingField: 
+  <CurrentAbility>k__BackingField: 
+  <SoftwareLoad>k__BackingField: 
+  <HardwareLoad>k__BackingField: 
+  <TotalWeight>k__BackingField: 0
+  <MeleeAttackModifierStage>k__BackingField: 0
+  <BeamAttackModifierStage>k__BackingField: 0
+  <BlastAttackModifierStage>k__BackingField: 0
+  <MeleeDefenseModifierStage>k__BackingField: 0
+  <BeamDefenseModifierStage>k__BackingField: 0
+  <BlastDefenseModifierStage>k__BackingField: 0
+  <SpeedModifierStage>k__BackingField: 0
+  <AccuracyModifierStage>k__BackingField: 0
+  <EvasivenessModifierStage>k__BackingField: 0
+  <CriticalHitRateModifierStage>k__BackingField: 0
+  <StasisStatus>k__BackingField: 0
+  <ZeroedInStatus>k__BackingField: 0
+  <ScannedStatus>k__BackingField: 0
+  <StoringPowerStatus>k__BackingField: 0
+  <GuardStatus>k__BackingField: 0
+  <SpinyGuardStatus>k__BackingField: 0
+  <InterceptStatus>k__BackingField: 0
+  <InterceptGrantor>k__BackingField: 
+  <FilterStatus>k__BackingField: 0
+  <HideStatus>k__BackingField: 0
+  <DeflectionFieldStatus>k__BackingField: 0
+  <GuardedAttackStatus>k__BackingField: 0
+  <RiposteStatus>k__BackingField: 0
+  <CoveringFireStatus>k__BackingField: 0
+  <CoveringFireGrantor>k__BackingField: 
+  <ImplantedStatus>k__BackingField: 0
+  <EnduraBatteryStatus>k__BackingField: 0
+  <EnduraBatteryCounter>k__BackingField: 0
+  <LastSoftwareUsed>k__BackingField: 
+  <LastSoftwareToHitBot>k__BackingField: 
+  <TotalDamageTakenLastTurn>k__BackingField: 0
+  <BlockedStatus>k__BackingField: 0
+  <LastItemUsedByTeam>k__BackingField: 
+  <OmegaEnergy>k__BackingField: 
+  <LastSoftwareUsedByAnyCombatant>k__BackingField: 
+  <SmokescreenEffect>k__BackingField: 0
+  <SafetyFoamEffect>k__BackingField: 0
+  <TimeBombStatus>k__BackingField: 0
+  <CurrentTurn>k__BackingField: 1
