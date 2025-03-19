@@ -9,25 +9,25 @@ namespace Game.Battles.Effects
     {
         [FormerlySerializedAs("statDef")] public VitalDefinition vitalDef;
         public float percentage;
-        public override string ApplyEffect(BotSo attackingBot, BotSo targettedBot)
+        public override void ApplyEffect(BotSo attackingBot, BotSo targettedBot, string applierName, Software attack = null)
         {
             int amountToMod = Mathf.CeilToInt(percentage * targettedBot.Vitals[vitalDef].Max);
             
             targettedBot.Vitals[vitalDef].Current += amountToMod;
             
-            return GetBattleText(targettedBot, amountToMod);
+            Debug.Log(GetBattleText(targettedBot, applierName, amountToMod));
         }
 
-        private string GetBattleText(BotSo targettedBot, float modifier)
+        private string GetBattleText(BotSo targettedBot, string applierName, float modifier)
         {
             if (modifier < 0)
             {
-                return $"{targettedBot.name}'s {vitalDef.name} was lowered by {modifier}!";
+                return $"{targettedBot.name}'s {vitalDef.name} was lowered by {modifier} by {applierName}!";
             }
 
-            if (this.percentage > 0)
+            if (modifier > 0)
             {
-                return $"{targettedBot.name}'s {vitalDef.name} was raised by {modifier}!";
+                return $"{targettedBot.name}'s {vitalDef.name} was raised by {modifier} by {applierName}!";
             }
             Debug.LogError("Should never get here");
             return "";

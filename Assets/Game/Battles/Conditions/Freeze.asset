@@ -12,10 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ec464747f67cca294822cc652d64ef, type: 3}
   m_Name: Freeze
   m_EditorClassIdentifier: 
-  BattleMessage: 
+  documentation: 'Test for thaw: 50% chance to thaw after 1 turn, 75% chance to thaw
+    after 2 turns, and 100% chance to thaw after 3 turns. If Bot thaws, condition
+    is removed and message is displayed.
+
+'
+  BattleMessage: '''s circuits are too cold to move!'
   Result: 1
   Type: 0
   Dissolves: 0
   DissolutionTime: 0
-  Stat: 0
+  statDefinition: {fileID: 0}
   percentage: 12.5
+  preventsBattle: 1
+  endOfTurnEffects: []

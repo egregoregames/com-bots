@@ -11,13 +11,13 @@ namespace Game.Battles.Vitals
     {
         [HorizontalGroup("Stats", LabelWidth = 50, Width = 80)]
         [Range(0, 1000)]
-        [SerializeField] private int _current;
+        [SerializeField] private float _current;
         [HorizontalGroup("Stats", LabelWidth = 30, Width = 70)]
         [Range(0, 1000)]
         [SerializeField] private int _max;
 
         
-        public int Current
+        public float Current
         {
             get => _current;
             set => _current = Mathf.Clamp(value, 0, Max);

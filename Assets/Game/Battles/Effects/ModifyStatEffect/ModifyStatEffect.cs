@@ -9,25 +9,12 @@ namespace Game.Battles.Effects
     {
         public StatDefinition statDef;
         public int modifier;
-        public override string ApplyEffect(BotSo attackingBot, BotSo targettedBot)
+        public override void ApplyEffect(BotSo attackingBot, BotSo targettedBot, string applierName, Software attack = null)
         {
             targettedBot.Stats[statDef].Stage += modifier;
-            return GetBattleText(targettedBot, modifier);
-        }
-
-        private string GetBattleText(BotSo targettedBot, int modifier)
-        {
-            if (modifier < 0)
-            {
-                return $"{targettedBot.name}'s {statDef.name} was lowered by 1!";
-            }
-
-            if (this.modifier > 0)
-            {
-                return $"{targettedBot.name}'s {statDef.name} was raised by 1!";
-            }
-            Debug.LogError("Should never get here");
-            return "";
+            Debug.Log($"{targettedBot}'s {statDef.name} stage was modified by the following {modifier}!");
+            //todo
+            // specific text info for different types of effects
         }
     }
 }

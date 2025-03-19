@@ -9,13 +9,32 @@ namespace Game.Battles.Effects
    public class SimpleDamage : ScriptableObject
    {
       public VitalDefinition enduranceVital;
+
+      public Condition nullifiedByCondition;
+      
+      string _basicBattleText;
+      string _basicBattleTextMod = "";
+
       // base crit chance 5% heightened chance = 20%
-      public string ApplyDamage(BotSo attackingBot, BotSo targettedBot, int damage)
+      public void ApplyDamage(BotSo attackingBot, BotSo targettedBot, Software attack)
       {
-         targettedBot.Vitals[enduranceVital].Current -= damage;
-         return $"{targettedBot.name} was hit for: {damage}!";
+         //todo
+         // be specific about which condition prevented damage and how
+         if (targettedBot.Conditions.Contains(nullifiedByCondition))
+         {
+            Debug.Log($"{targettedBot.name} guarded against the attack!");
+            return;
+         }
+            
+         targettedBot.GetHit(attackingBot, targettedBot, attack);
       }
       
+      
+      string GetBasicBattleText(BotSo targettedBot, Software attack)
+      {
+         return $"{targettedBot.name} was hit {_basicBattleTextMod} for: {attack.baseStats[SoftwareBaseStat.Power]}!";
+      }
+
       public static int CalculateAttack(int attackMod, double rank, double attackBase)
       {
          double result;

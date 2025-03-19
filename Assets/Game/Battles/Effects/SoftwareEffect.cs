@@ -5,12 +5,12 @@ namespace Game.Battles.Effects
 {
     public abstract class SoftwareEffect : ScriptableObject, IAttackEffect
     {
-        public abstract string ApplyEffect(BotSo attackingBot, BotSo targettedBot);
+        public abstract void ApplyEffect(BotSo attackingBot, BotSo targettedBot, string applierName, Software attack = null);
 
     }
     
     public interface IAttackEffect
     {
-        public string ApplyEffect(BotSo attackingBot, BotSo targettedBot);
+        public void ApplyEffect(BotSo attackingBot, BotSo targettedBot, string applierName, Software attack);
     }
 }

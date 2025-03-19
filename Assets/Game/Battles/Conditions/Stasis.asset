@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ec464747f67cca294822cc652d64ef, type: 3}
   m_Name: Stasis
   m_EditorClassIdentifier: 
+  documentation: Stasis is a condition exclusively caused by the Hibernator Ability,
+    which only two Bots can have. Essentially, when a Bot is in Stasis, it cannot
+    choose to do anything for that turn (it gets skipped), but when its turn comes
+    around for it to use a move, it heals 1/4 of its Max Endurance and 1/4 of its
+    Max Energy. The condition alternates turns (so the Bot can only do something
+    every other turn)
   BattleMessage: Ensure this bots next move always hits
   Result: 1
   Type: 0
   Dissolves: 0
-  DissolutionTime: 0
+  DissolutionTime: 1
   statDefinition: {fileID: 0}
   percentage: 12.5

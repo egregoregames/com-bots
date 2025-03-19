@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ec464747f67cca294822cc652d64ef, type: 3}
   m_Name: Rust
   m_EditorClassIdentifier: 
+  documentation: Bot takes 1/8 of its max endurance in damage at the end of turn
   BattleMessage: 
   Result: 1
   Type: 0
   Dissolves: 0
-  DissolutionTime: 0
-  Stat: 0
+  DissolutionTime: 1
+  statDefinition: {fileID: 0}
   percentage: 12.5
+  endOfTurnEffects:
+  - {fileID: 11400000, guid: 391ad170907d32d3da5596f3390d8f55, type: 2}
