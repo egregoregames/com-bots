@@ -15,7 +15,7 @@ namespace Game
             collider.GetComponent<IInteractable>().OnHoverStay();
             if (_inputSo.interact)
             {
-                collider.GetComponent<IInteractable>().Interact();
+                collider.GetComponent<IInteractable>().Interact(gameObject);
             }
         }
         private void OnTriggerExit(Collider collider)

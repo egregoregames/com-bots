@@ -1,6 +1,8 @@
 using System;
 using DependencyInjection;
 using Febucci.UI;
+using PixelCrushers.DialogueSystem;
+using PixelCrushers.DialogueSystem.Wrappers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,10 +23,11 @@ namespace Game
             GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
         }
         
-        public void Interact()
+        public void Interact(GameObject interactor)
         {
-            uiSo.OnPushDialogue?.Invoke(npcSo.dialogue);
-            gameEventRelay.ConnectionMade?.Invoke(npcSo);
+            DialogueManager.StartConversation("New Conversation 1", interactor.transform, transform);
+            //uiSo.OnPushDialogue?.Invoke(npcSo.dialogue);
+            //gameEventRelay.ConnectionMade?.Invoke(npcSo);
             Debug.Log("Hello! Im an NPC!");
         }
 
