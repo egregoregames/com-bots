@@ -1,1 +1,64 @@
+
+# Unity - treat all text files as text and auto-normalize line endings
 * text=auto
+
+# Scripts - normalized line endings (LF), tracked as text
+*.cs text eol=lf
+*.shader text eol=lf
+*.cginc text eol=lf
+*.hlsl text eol=lf
+
+# YAML scenes and metadata - must be treated as text to avoid merge issues
+*.unity text
+*.prefab text
+*.asset text
+*.mat text
+*.anim text
+*.controller text
+*.overrideController text
+*.physicsMaterial2D text
+*.spriteatlas text
+*.timeline text
+*.signal text
+*.mask text
+*.lighting text
+*.renderTexture text
+*.terrainlayer text
+*.guiskin text
+*.meta text
+
+# Images & binary assets - use Git LFS
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.anim filter=lfs diff=lfs merge=lfs -text
+*.controller filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+
+# 3D models
+*.obj filter=lfs diff=lfs merge=lfs -text
+*.blend filter=lfs diff=lfs merge=lfs -text
+
+# Unity cache / intermediate files (just in case)
+[Ll]ibrary/** -text
+[Tt]emp/** -text
+[Bb]uild/** -text
+[Oo]bj/** -text
+[Mm]emoryCaptures/** -text
+
+# Ignore project settings and user-specific files
+*.csproj -text
+*.sln -text
+*.user -text
+*.userprefs -text
+
+# Git LFS lockable files (optional for large binary assets like PSDs)
+*.psd filter=lfs diff=lfs merge=lfs lockable -text
+
