@@ -7,6 +7,7 @@ public class SimplePortal : Portal
     public Portal nextPortal;
     public UISo uiSo;
     public AudioClip clip;
+    public string areaName = "AREA NAME NOT SET";
     protected override void OnPlayerEnter(GameObject playerThatEntered)
     {
         OnTriggerPortal(0);
@@ -20,7 +21,7 @@ public class SimplePortal : Portal
     {
         // player.GetComponent<Animator>().enabled = false;
         // player.GetComponent<ThirdPersonController>().enabled = false;
-        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayer, ReleasePlayerMovement, "Beach");
+        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayer, ReleasePlayerMovement, areaName);
     }
     private void TeleportPlayer()
     {
