@@ -12,6 +12,7 @@ public class MainHudButtons : MonoBehaviour
     [SerializeField] MenuDescriptionPanel menuDescriptionPanel;
     private RectTransform rectTransform;
     private Vector2 initialPosition;
+    private Color buttonColor;
 
     public MenuPanel activePanel;
     private void Awake()
@@ -41,6 +42,7 @@ public class MainHudButtons : MonoBehaviour
     {
         Vector2 targetPosition = new Vector2(0, 0);
         rectTransform.anchoredPosition = targetPosition;
+        menuDescriptionPanel.gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(buttonToMenuPairs[0].menuButton.gameObject);
 
     }
@@ -48,6 +50,7 @@ public class MainHudButtons : MonoBehaviour
     public void Hide()
     {
         rectTransform.anchoredPosition = initialPosition;
+        menuDescriptionPanel.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
     }
 }
@@ -57,8 +60,12 @@ public class HudButtonToMenuPair
 {
     public ScalableButton menuButton;
     public MenuPanel menuPanel;
+    SpriteColorSampler _spriteColorSampler;
+    
     public void Init(MenuDescriptionPanel menuPanelDescription, InputSO inputSo, MainHudButtons hudButtons)
     {
+        _spriteColorSampler = new SpriteColorSampler(menuPanel.icon.sprite);
+        
         // set menu panel to open from button
         menuButton.onClick.AddListener(() => menuPanel.OpenMenu());
         menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
@@ -66,17 +73,40 @@ public class HudButtonToMenuPair
 
         // and to close from 'S' Key
         //inputSo.OnCancel += () => menuPanel.CloseMenu();
-        
 
         menuButton.onSelect += () =>
         {
-            menuPanelDescription.menuPanelDescription.text = menuPanel.description;
-            menuPanelDescription.menuPanelIcon = menuPanel.icon;
+            menuPanelDescription.SetDescription(menuPanel, _spriteColorSampler.spriteColor);
         };
         
     }
 
     
 }
+
+public class SpriteColorSampler
+{
+    public Color spriteColor;
+
+    public SpriteColorSampler(Sprite sprite)
+    {
+        // Get the sprite's texture
+        Texture2D texture = sprite.texture;
+
+        // Convert the sprite's rect position to texture-space coordinates
+        Rect rect = sprite.textureRect;
+        
+        // Convert top-left in sprite rect to texture pixel coordinates
+        int x = Mathf.FloorToInt(rect.x);
+        int y = Mathf.FloorToInt(rect.y + rect.height - 1); // Top-left (Y is inverted in Unity textures)
+
+
+        // Read the color at that pixel
+        spriteColor = texture.GetPixel(x, y);
+
+        Debug.Log("Cached color: " + spriteColor);
+    }
+}
+
 
 
