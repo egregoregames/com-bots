@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 namespace Game.UI.src
@@ -23,6 +24,15 @@ namespace Game.UI.src
             {
                 EventSystem.current.SetSelectedGameObject(null); // Clear current selection
                 firstSelectable.Select();
+            }
+            
+            // Soft reset InputSystemUIInputModule to re-enable navigation
+            var inputModule = EventSystem.current.currentInputModule as InputSystemUIInputModule;
+            if (inputModule != null)
+            {
+                inputModule.enabled = false;
+                yield return null; // wait 1 frame
+                inputModule.enabled = true;
             }
         }
     }
