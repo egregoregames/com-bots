@@ -22,7 +22,7 @@ public class MainHudButtons : MonoBehaviour
 
         buttonToMenuPairs.ForEach(o => o.Init(menuDescriptionPanel, inputSo, this));
         inputSo.OnCancel += () => SetHudButtonsInteractability(true);
-        inputSo.OnCancel += () => activePanel.CloseMenu();
+        inputSo.OnCancel += () => activePanel?.CloseMenu();
     }
 
     public void SetHudButtonsInteractability(bool status)
