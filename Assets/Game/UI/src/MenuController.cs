@@ -1,17 +1,16 @@
 using System;
 using Game.src;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 public class MenuController : MonoBehaviour
 {
     [SerializeField] private UISo uiSo;
     [SerializeField] private InputSO inputSo;
     [SerializeField] NewRoomSelectionPanel roomSelectionPanel;
-    [FormerlySerializedAs("_menuSelector")] [SerializeField] MainHudButtons mainHudButtons;
+    [SerializeField] MainHudButtons mainHudButtons;
     [SerializeField] GameObject menuContentParent;
     [SerializeField] ChatBubble chatBubble;
+    [SerializeField] GameObject topHud;
     private bool _menuOpen;
     private void Awake()
     {
@@ -32,6 +31,7 @@ public class MenuController : MonoBehaviour
             mainHudButtons.Hide();
             _menuOpen = false;
             menuContentParent.SetActive(false);
+            topHud.SetActive(false);
         }
         else
         {
@@ -39,7 +39,7 @@ public class MenuController : MonoBehaviour
             mainHudButtons.Show();
             _menuOpen = true;
             menuContentParent.SetActive(true);
-
+            topHud.SetActive(true);
         }
     }
 

@@ -8,7 +8,7 @@ public class MenuDescriptionPanel : MonoBehaviour
     public TextMeshProUGUI menuPanelDescription;
     public Image menuPanelIcon;
     public Image background;
-    public float backgroundColorAlpha = 0.2f;
+    public float backgroundColorAlpha = 0.5f;
     
     public void SetDescription(MenuPanel menuPanel, Color backgroundColor)
     {

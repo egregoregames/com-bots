@@ -66,6 +66,7 @@ public class HudButtonToMenuPair
     {
         _spriteColorSampler = new SpriteColorSampler(menuPanel.icon.sprite);
         
+        
         // set menu panel to open from button
         menuButton.onClick.AddListener(() => menuPanel.OpenMenu());
         menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
