@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Npc", menuName = "Entity/Npc")]
 public class NpcSo : ScriptableObject
 {
-    public string[] dialogue;
+    public string conversationKey;
     public Image portrait;
     public Image imageOverWorld;
     public bool potentialTeammate;
