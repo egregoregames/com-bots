@@ -25,25 +25,37 @@ public class MenuController : MonoBehaviour
 
     public void ShowMenu()
     {
+        uiSo.OnPauseStateChanged?.Invoke(_menuOpen);
+        
         if (_menuOpen)
         {
-            inputSo.SwitchToPlayerInput();
-            mainHudButtons.Hide();
-            _menuOpen = false;
-            menuContentParent.SetActive(false);
-            topHud.SetActive(false);
+            CloseMenu();
         }
         else
         {
-            inputSo.SwitchToUIInput();
-            mainHudButtons.Show();
-            _menuOpen = true;
-            menuContentParent.SetActive(true);
-            topHud.SetActive(true);
+            OpenMenu();
         }
     }
 
-    
+    void OpenMenu()
+    {
+        inputSo.SwitchToUIInput();
+        mainHudButtons.Show();
+        _menuOpen = true;
+        menuContentParent.SetActive(true);
+        topHud.SetActive(true);
+    }
+
+    void CloseMenu()
+    {
+        inputSo.SwitchToPlayerInput();
+        mainHudButtons.Hide();
+        _menuOpen = false;
+        menuContentParent.SetActive(false);
+        topHud.SetActive(false);
+    }
+
+
     public void RoomSelectPanel(Room[] rooms, Action<Room> roomSelected, string cancelText)
     {
         inputSo.SwitchToUIInput();

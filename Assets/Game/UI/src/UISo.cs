@@ -14,6 +14,6 @@ public class UISo : ScriptableObject
     
     public Action<AudioClip> SoundSelected;
 
-
+    public Action<bool> OnPauseStateChanged;
 
 }
