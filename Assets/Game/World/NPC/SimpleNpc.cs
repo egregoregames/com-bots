@@ -8,6 +8,7 @@ namespace Game
     [RequireComponent(typeof(DialogueSystemEvents))]
     public class SimpleNpc : MonoBehaviour, IInteractable
     {
+        
         [SerializeField] GameObject talkPrompt;
         [SerializeField] NpcSo npcSo;
         [SerializeField] GameEventRelay gameEventRelay;
@@ -15,7 +16,7 @@ namespace Game
         [SerializeField] bool stopPlayerOnDialogue = true;
         GameObject _player;
         DialogueSystemEvents _dialogueEvents;
-        
+
         
         void OnValidate()
         {
@@ -70,12 +71,22 @@ namespace Game
         
         void StopPlayerOnThisNPCDialogue(Transform actor)
         {
-            _player.GetComponentInParent<ThirdPersonController>().DisAllowPlayerInput();
+            var controller = _player.GetComponentInParent<ThirdPersonController>();
+
+            if (controller != null)
+            {
+                controller.DisAllowPlayerInput();
+            }
         }
         
         void ResumePlayerOnThisNPCDialogue(Transform actor)
         {
-            _player.GetComponentInParent<ThirdPersonController>().AllowPlayerInput();
+            var controller = _player.GetComponentInParent<ThirdPersonController>();
+
+            if (controller != null)
+            {
+                controller.AllowPlayerInput();
+            }
         }
     }
 }

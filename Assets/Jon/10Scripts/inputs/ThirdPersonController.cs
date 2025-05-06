@@ -20,7 +20,6 @@ namespace StarterAssets
 
     public class ThirdPersonController : MonoBehaviour
     {
-
         public InputSO input;
 	//public menuManager menu;
 	[Header("Player")]
@@ -160,9 +159,10 @@ namespace StarterAssets
             enabled = true;
             input.SwitchToPlayerInput();
         }
+        
         public void DisAllowPlayerInput()
         {
-            enabled = false;
+            input.SwitchToUIInput();
         }
 
         private void Update()
