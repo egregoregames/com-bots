@@ -1,3 +1,4 @@
+using System;
 using PixelCrushers.DialogueSystem;
 using StarterAssets;
 using UnityEngine;
@@ -5,41 +6,31 @@ using UnityEngine.AI;
 
 namespace Game
 {
-    [RequireComponent(typeof(DialogueSystemEvents))]
     public class SimpleNpc : MonoBehaviour, IInteractable
     {
-        
         [SerializeField] GameObject talkPrompt;
         [SerializeField] NpcSo npcSo;
         [SerializeField] GameEventRelay gameEventRelay;
         [SerializeField] UISo uiSo;
         [SerializeField] bool stopPlayerOnDialogue = true;
-        GameObject _player;
-        DialogueSystemEvents _dialogueEvents;
-
-        
-        void OnValidate()
-        {
-            if (_dialogueEvents == null) _dialogueEvents = GetComponent<DialogueSystemEvents>();
-            
-            ClearPlayerControllerStoppingCallbacks();
-            
-            if (stopPlayerOnDialogue)
-            {
-                SetPlayerControllerStoppingCallbacks();
-            }
-        }
+        GameObject _interactor;
         
         public void Interact(GameObject interactor)
         {
-            _player = interactor;
+            _interactor = interactor;
+            ClearPlayerControllerStoppingCallbacks();
+            SetPlayerControllerStoppingCallbacks();
+            
             DialogueManager.StartConversation(npcSo.conversationKey, interactor.transform, transform);
             Debug.Log("NPC conversation started name: " + transform.name);
         }
         
         public void OnHoverStay()
         {
-            talkPrompt.SetActive(true);
+            if (!DialogueManager.isConversationActive)
+            {
+                talkPrompt.SetActive(true);
+            }
         }
 
         public void OnHoverEnter()
@@ -54,26 +45,26 @@ namespace Game
         [ContextMenu("Go")]
         public void GoToPlayer()
         {
-            GetComponent<NavMeshAgent>().SetDestination(_player.transform.position);
+            GetComponent<NavMeshAgent>().SetDestination(_interactor.transform.position);
         }
         
         void SetPlayerControllerStoppingCallbacks()
         {
-            _dialogueEvents.conversationEvents.onConversationStart.AddListener(StopPlayerOnThisNPCDialogue);
-            _dialogueEvents.conversationEvents.onConversationEnd.AddListener(ResumePlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationStarted += (StopPlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationEnded += (ResumePlayerOnThisNPCDialogue);
         }
         
         void ClearPlayerControllerStoppingCallbacks()
         {
-            _dialogueEvents.conversationEvents.onConversationStart.RemoveAllListeners();
-            _dialogueEvents.conversationEvents.onConversationEnd.RemoveAllListeners();
+            DialogueManager.instance.conversationStarted -= (StopPlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationEnded -= (ResumePlayerOnThisNPCDialogue);
         }
         
         void StopPlayerOnThisNPCDialogue(Transform actor)
         {
-            var controller = _player.GetComponentInParent<ThirdPersonController>();
-
-            if (controller != null)
+            talkPrompt.SetActive(false);
+            var controller = _interactor.GetComponentInParent<ThirdPersonController>();
+            if (controller != null && stopPlayerOnDialogue)
             {
                 controller.DisAllowPlayerInput();
             }
@@ -81,9 +72,8 @@ namespace Game
         
         void ResumePlayerOnThisNPCDialogue(Transform actor)
         {
-            var controller = _player.GetComponentInParent<ThirdPersonController>();
-
-            if (controller != null)
+            var controller = _interactor.GetComponentInParent<ThirdPersonController>();
+            if (controller != null && stopPlayerOnDialogue)
             {
                 controller.AllowPlayerInput();
             }

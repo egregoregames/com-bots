@@ -12,12 +12,12 @@ namespace Game
 
         private void OnEnable()
         {
-            _inputSo.OnInteract += InteractWithNPC;
+            _inputSo.OnInteract += TriggerInteract;
         }
 
         private void OnDisable()
         {
-            _inputSo.OnInteract -= InteractWithNPC;
+            _inputSo.OnInteract -= TriggerInteract;
         }
 
         private void OnTriggerEnter(Collider collider)
@@ -45,7 +45,7 @@ namespace Game
             _currentCollider = null;
         }
 
-        private void InteractWithNPC()
+        private void TriggerInteract()
         {
             _currentInteractable?.Interact(gameObject);
         }
