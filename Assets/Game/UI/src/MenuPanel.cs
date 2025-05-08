@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MenuPanel : MonoBehaviour
 {
+    public string menuName;
     public string description;
     public Image icon;
     public List<MenuTab> buttons;

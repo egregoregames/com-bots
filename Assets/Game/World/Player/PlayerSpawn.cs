@@ -14,6 +14,7 @@ public class PlayerSpawn : MonoBehaviour
         Spawn();
     }
 
+
     [ContextMenu("Spawn")]
     public void Spawn()
     {
@@ -34,6 +35,6 @@ public class PlayerSpawn : MonoBehaviour
         thirdPersonController._controller = playerGo.GetComponent<CharacterController>();
         thirdPersonController._mainCamera = sceneCam;
         thirdPersonController.CinemachineCameraTarget = camLockGo;
-        //playerGo.GetComponent<Thi>()
     }
 }
+

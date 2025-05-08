@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -21,7 +22,7 @@ public class MainHudButtons : MonoBehaviour
 
         buttonToMenuPairs.ForEach(o => o.Init(menuDescriptionPanel, inputSo, this));
         inputSo.OnCancel += () => SetHudButtonsInteractability(true);
-        inputSo.OnCancel += () => activePanel.CloseMenu();
+        inputSo.OnCancel += () => activePanel?.CloseMenu();
     }
 
     public void SetHudButtonsInteractability(bool status)
@@ -41,6 +42,7 @@ public class MainHudButtons : MonoBehaviour
     {
         Vector2 targetPosition = new Vector2(0, 0);
         rectTransform.anchoredPosition = targetPosition;
+        menuDescriptionPanel.gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(buttonToMenuPairs[0].menuButton.gameObject);
 
     }
@@ -48,6 +50,7 @@ public class MainHudButtons : MonoBehaviour
     public void Hide()
     {
         rectTransform.anchoredPosition = initialPosition;
+        menuDescriptionPanel.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
     }
 }
@@ -57,8 +60,13 @@ public class HudButtonToMenuPair
 {
     public ScalableButton menuButton;
     public MenuPanel menuPanel;
+    SpriteColorSampler _spriteColorSampler;
+    
     public void Init(MenuDescriptionPanel menuPanelDescription, InputSO inputSo, MainHudButtons hudButtons)
     {
+        _spriteColorSampler = new SpriteColorSampler(menuPanel.icon.sprite);
+        
+        
         // set menu panel to open from button
         menuButton.onClick.AddListener(() => menuPanel.OpenMenu());
         menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
@@ -66,17 +74,14 @@ public class HudButtonToMenuPair
 
         // and to close from 'S' Key
         //inputSo.OnCancel += () => menuPanel.CloseMenu();
-        
 
         menuButton.onSelect += () =>
         {
-            menuPanelDescription.menuPanelDescription.text = menuPanel.description;
-            menuPanelDescription.menuPanelIcon = menuPanel.icon;
+            menuPanelDescription.SetDescription(menuPanel, _spriteColorSampler.spriteColor);
         };
         
     }
-
-    
 }
+
 
 
