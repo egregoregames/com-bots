@@ -45,7 +45,7 @@ public class MenuTab : Button
         DeselectEffect();
     }
 
-    public void DeselectEffect()
+    public virtual void DeselectEffect()
     {
         rectTransform.anchoredPosition = initialPosition;
     }
