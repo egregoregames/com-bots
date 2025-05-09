@@ -40,24 +40,29 @@ namespace Game.UI.src.SettingsUI
 
             if (_associatedSlider == null)
             {
-                int newIndex = Mathf.Clamp(currentSubIndex + direction, 0, subButtons.Count - 1);
-                currentSubIndex = newIndex;
-                
-                for (int i = 0; i < subButtons.Count; i++)
-                {
-                    if (i == currentSubIndex)
-                    {
-                        subButtons[i].SelectEffect();
-                    }
-                    else
-                    {
-                        subButtons[i].DeselectEffect();
-                    }
-                }
+                SetActiveSubButton(direction);
             }
             else
             {
                 _associatedSlider.value += direction * (_associatedSlider.wholeNumbers ? 1 : 0.1f);
+            }
+        }
+
+        void SetActiveSubButton(int direction)
+        {
+            int newIndex = Mathf.Clamp(currentSubIndex + direction, 0, subButtons.Count - 1);
+            currentSubIndex = newIndex;
+                
+            for (int i = 0; i < subButtons.Count; i++)
+            {
+                if (i == currentSubIndex)
+                {
+                    subButtons[i].SelectEffect();
+                }
+                else
+                {
+                    subButtons[i].DeselectEffect();
+                }
             }
         }
     }

@@ -21,6 +21,9 @@ namespace Game.UI.src.SettingsUI
             SetButtonOnSelect(slowTextButton, SetTextSpeed);
             SetButtonOnSelect(mediumTextButton, SetTextSpeed);
             SetButtonOnSelect(fastTextButton, SetTextSpeed);
+            
+            musicVolumeSlider.onValueChanged.AddListener(_ => SetMusicVolumeSlider());
+            musicVolumeSlider.onValueChanged.AddListener(_ => SetSfxVolumeSlider());
         }
 
         void SetButtonOnSelect(SettingsTab settingsTab, Action buttonAction)
@@ -43,6 +46,16 @@ namespace Game.UI.src.SettingsUI
         void SetTextSpeed()
         {
             //Set Text speed
+        }
+
+        void SetMusicVolumeSlider()
+        {
+            //Set Music volume to slider value
+        }
+
+        void SetSfxVolumeSlider()
+        {
+            //Set sfx volume to slider value
         }
     }
 }
