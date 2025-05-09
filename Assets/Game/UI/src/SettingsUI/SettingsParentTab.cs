@@ -8,31 +8,16 @@ namespace Game.UI.src.SettingsUI
     {
         Image _frameImage;
         
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
             _frameImage = GetComponent<Image>();
-        }
-        
-        public override void OnSelect(BaseEventData eventData)
-        {
-            base.OnSelect(eventData);
-
-            SelectEffect();
         }
 
         protected override void SelectEffect()
         {
             _frameImage.enabled = true;
             onSelect?.Invoke();
-        }
-
-    
-
-        public override void OnDeselect(BaseEventData eventData)
-        {
-            base.OnDeselect(eventData);
-            DeselectEffect();
         }
 
         public override void DeselectEffect()

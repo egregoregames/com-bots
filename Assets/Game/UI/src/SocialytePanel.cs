@@ -15,7 +15,7 @@ public class SocialytePanel : MenuPanel
         for (int i = 0; i < _playerData.KnownConnections.Count; i++)
         {
             var connection = _playerData.KnownConnections[i];
-            var button = buttons[i];
+            var button = categoryButtons[i];
             
             //button.gameObject.SetActive(true);
             button.connection = connection;

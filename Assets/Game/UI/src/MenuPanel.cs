@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,17 +8,17 @@ public class MenuPanel : MonoBehaviour
     public string menuName;
     public string description;
     public Image icon;
-    public List<MenuTab> buttons;
+    public List<MenuTab> categoryButtons;
 
     [SerializeField] MenuDescriptionPanel descriptionPanel;
     [SerializeField] Button menuButton;
     [SerializeField] GameObject menuContent;
 
-    private GameObject previouslySelectedGameObject;
+    GameObject _previouslySelectedGameObject;
 
     public void SetupButtons()
     {
-        foreach (var menutab in buttons)
+        foreach (var menutab in categoryButtons)
         {
             
         }
@@ -28,19 +27,19 @@ public class MenuPanel : MonoBehaviour
     public void OpenMenu()
     {
         menuContent.SetActive(true);
-        previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
-        EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
+        _previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(categoryButtons[0].gameObject);
     }
     public void CloseMenu()
     {
         menuContent.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);
+        EventSystem.current.SetSelectedGameObject(_previouslySelectedGameObject);
         DeselectAllButtons();
     }
     
 
     void DeselectAllButtons()
     {
-        buttons.ForEach(b => b.DeselectEffect());
+        categoryButtons.ForEach(b => b.DeselectEffect());
     }
 }
