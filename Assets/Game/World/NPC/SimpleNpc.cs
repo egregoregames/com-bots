@@ -1,4 +1,3 @@
-using System;
 using PixelCrushers.DialogueSystem;
 using StarterAssets;
 using UnityEngine;
@@ -6,6 +5,11 @@ using UnityEngine.AI;
 
 namespace Game
 {
+    /// <summary>
+    /// Handles a simple NPC interaction logic with no quest strings attached, including showing a talk prompt on hover,
+    /// starting a dialogue conversation using Dialogue System, and optionally stopping
+    /// the player's movement during the dialogue.
+    /// </summary>
     public class SimpleNpc : MonoBehaviour, IInteractable
     {
         [SerializeField] GameObject talkPrompt;

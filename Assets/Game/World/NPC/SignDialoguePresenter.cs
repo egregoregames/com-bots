@@ -6,8 +6,12 @@ using UnityEngine.AI;
 
 namespace Game
 {
+    /// <summary>
+    /// Attach this to a sign and modify the sign text and on interaction with the player it'll show a simple
+    /// Dialogue text with its custom UI if there's any attached.
+    /// </summary>
     [RequireComponent(typeof(DialogueSystemEvents))]
-    public class SimpleSign : MonoBehaviour, IInteractable
+    public class SignDialoguePresenter : MonoBehaviour, IInteractable
     {
         [SerializeField] GameObject talkPrompt;
         [SerializeField] string signText;
@@ -15,7 +19,7 @@ namespace Game
         [SerializeField] UISo uiSo;
         DialogueSystemEvents _dialogueSystemEvents;
         GameObject _interactor;
-        const string SIGN_CONVERSATION_KEY = "New Conversation 3";
+        const string SIGN_CONVERSATION_KEY = "SIGN";
 
 
         public void Awake()
@@ -30,7 +34,7 @@ namespace Game
             SetPlayerControllerStoppingCallbacks();
             
             DialogueManager.StartConversation(SIGN_CONVERSATION_KEY, interactor.transform, transform);
-            Debug.Log("NPC conversation started name: " + transform.name);
+            Debug.Log("SIGN attempted conversation started name: " + transform.name);
         }
         
         public void OnHoverStay()
