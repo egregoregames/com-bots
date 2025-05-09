@@ -37,6 +37,8 @@ public class InputSO : ScriptableObject
     public bool down;
     public bool openMenu;
     public bool cancel;
+    public bool left;
+    public bool right;
 
     public Action OnUp;
     public Action OnInteract;
@@ -45,6 +47,9 @@ public class InputSO : ScriptableObject
     public Action OnDown;
     public Action OnSubmit;
     public Action OnOpenMenu;
+    
+    public Action OnLeft;
+    public Action OnRight;
 
     [Header("Movement Settings")]
     public bool analogMovement;

@@ -11,6 +11,7 @@ namespace Game.UI.src.SettingsUI
         
         Image _buttonBackground;
         TextMeshProUGUI _buttonText;
+        
         Color _selectedBackgroundColor;
 
         protected override void Awake()
@@ -28,7 +29,7 @@ namespace Game.UI.src.SettingsUI
             SelectEffect();
         }
 
-        protected override void SelectEffect()
+        public override void SelectEffect()
         {
             _buttonBackground.color = _selectedBackgroundColor;
             _buttonText.color = Color.white;

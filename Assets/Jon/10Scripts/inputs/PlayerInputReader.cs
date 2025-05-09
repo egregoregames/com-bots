@@ -87,6 +87,8 @@ namespace StarterAssets
 			inputSo.sprint = playerInput.actions["Sprint"].IsPressed();
 			inputSo.openMenu = playerInput.actions["Open Menu"].WasPressedThisFrame();
 			inputSo.cancel = playerInput.actions["Cancel"].WasPressedThisFrame();
+			inputSo.left = playerInput.actions["Left"].WasPressedThisFrame();
+			inputSo.right = playerInput.actions["Right"].WasPressedThisFrame();
 
 			if (inputSo.openMenu)
 			{
@@ -111,6 +113,14 @@ namespace StarterAssets
 			if (inputSo.cancel)
 			{
 				inputSo.OnCancel?.Invoke();
+			}
+			if (inputSo.left)
+			{
+				inputSo.OnLeft?.Invoke();
+			}
+			if (inputSo.right)
+			{
+				inputSo.OnRight?.Invoke();
 			}
 		}
 

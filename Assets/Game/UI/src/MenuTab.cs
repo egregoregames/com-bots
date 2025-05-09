@@ -7,14 +7,15 @@ public class MenuTab : Button
 {
     public Action onSelect;
     
-    private RectTransform rectTransform;
-    private Vector2 initialPosition;
+    protected bool isSelected;
+
+    RectTransform rectTransform;
+    Vector2 initialPosition;
 
     public NpcSo connection;
-    
-    protected override void Start()
+
+    protected override void Awake()
     {
-        base.Start();
         rectTransform = transform.GetComponent<RectTransform>();
         initialPosition = rectTransform.anchoredPosition; // Store initial UI position
     }
@@ -26,7 +27,7 @@ public class MenuTab : Button
         SelectEffect();
     }
 
-    protected virtual void SelectEffect()
+    public virtual void SelectEffect()
     {
         var offset = transform.parent.GetComponent<RectTransform>().rect.width * .12f;
         
@@ -48,5 +49,10 @@ public class MenuTab : Button
     public virtual void DeselectEffect()
     {
         rectTransform.anchoredPosition = initialPosition;
+    }
+    
+    public virtual void HandleHorizontalInput(int direction)
+    {
+        
     }
 }
