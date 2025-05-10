@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game.UI.src.SettingsUI
@@ -25,10 +26,38 @@ namespace Game.UI.src.SettingsUI
             musicVolumeSlider.onValueChanged.AddListener(_ => SetMusicVolumeSlider());
             musicVolumeSlider.onValueChanged.AddListener(_ => SetSfxVolumeSlider());
         }
-
-        void SetButtonOnSelect(SettingsTab settingsTab, Action buttonAction)
+        
+        public override void OpenMenu()
         {
-            settingsTab.onSelect += buttonAction;
+            base.OpenMenu();
+        
+            inputSO.OnLeft += HandleLeftInput;
+            inputSO.OnRight += HandleRightInput;
+        }
+        public override void CloseMenu()
+        {
+            base.CloseMenu();
+        
+            inputSO.OnLeft -= HandleLeftInput;
+            inputSO.OnRight -= HandleRightInput;
+        }
+
+        void HandleLeftInput()
+        {
+            var selected = EventSystem.current.currentSelectedGameObject;
+            if (selected != null && selected.TryGetComponent(out MenuTab tab))
+            {
+                tab.HandleHorizontalInput(-1);
+            }
+        }
+
+        void HandleRightInput()
+        {
+            var selected = EventSystem.current.currentSelectedGameObject;
+            if (selected != null && selected.TryGetComponent(out MenuTab tab))
+            {
+                tab.HandleHorizontalInput(1);
+            }
         }
         
         void SetFullscreen()
@@ -45,17 +74,17 @@ namespace Game.UI.src.SettingsUI
 
         void SetTextSpeed()
         {
-            //Set Text speed
+            //TODO: Set Text speed
         }
 
         void SetMusicVolumeSlider()
         {
-            //Set Music volume to slider value
+            //TODO: Set Music volume to slider value
         }
 
         void SetSfxVolumeSlider()
         {
-            //Set sfx volume to slider value
+            //TODO: Set sfx volume to slider value
         }
     }
 }

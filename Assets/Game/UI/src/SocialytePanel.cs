@@ -5,6 +5,8 @@ using UnityEngine;
 public class SocialytePanel : MenuPanel
 {
     [SerializeField] PlayerData _playerData;
+    public NpcSo connection;
+    
     private void Awake()
     {
         foreach (var connection in _playerData.KnownConnections)        
@@ -18,7 +20,7 @@ public class SocialytePanel : MenuPanel
             var button = categoryButtons[i];
             
             //button.gameObject.SetActive(true);
-            button.connection = connection;
+            this.connection = connection;
         }
     }
 }

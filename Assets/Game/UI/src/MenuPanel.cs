@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,46 +26,26 @@ public class MenuPanel : MonoBehaviour
         }
     }
 
-    public void OpenMenu()
+    public virtual void OpenMenu()
     {
         menuContent.SetActive(true);
         _previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(categoryButtons[0].gameObject);
-        
-        inputSO.OnLeft += HandleLeftInput;
-        inputSO.OnRight += HandleRightInput;
     }
-    public void CloseMenu()
+    public virtual void CloseMenu()
     {
         menuContent.SetActive(false);
         EventSystem.current.SetSelectedGameObject(_previouslySelectedGameObject);
         DeselectAllButtons();
-        
-        inputSO.OnLeft -= HandleLeftInput;
-        inputSO.OnRight -= HandleRightInput;
     }
     
+    protected void SetButtonOnSelect(MenuTab menuTab, Action buttonAction)
+    {
+        menuTab.onSelect += buttonAction;
+    }
 
     void DeselectAllButtons()
     {
         categoryButtons.ForEach(b => b.DeselectEffect());
-    }
-    
-    private void HandleLeftInput()
-    {
-        var selected = EventSystem.current.currentSelectedGameObject;
-        if (selected != null && selected.TryGetComponent(out MenuTab tab))
-        {
-            tab.HandleHorizontalInput(-1);
-        }
-    }
-
-    private void HandleRightInput()
-    {
-        var selected = EventSystem.current.currentSelectedGameObject;
-        if (selected != null && selected.TryGetComponent(out MenuTab tab))
-        {
-            tab.HandleHorizontalInput(1);
-        }
     }
 }

@@ -25,7 +25,6 @@ namespace Game.UI.src.SettingsUI
         public override void OnSelect(BaseEventData eventData)
         {
             base.OnSelect(eventData);
-
             SelectEffect();
         }
 
@@ -35,8 +34,6 @@ namespace Game.UI.src.SettingsUI
             _buttonText.color = Color.white;
             onSelect?.Invoke();
         }
-
-    
 
         public override void OnDeselect(BaseEventData eventData)
         {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Game.UI.src.SettingsUI
 {
-    public class SettingsParentTab : MenuTab
+    public class SettingsCategoryTab : MenuTab
     {
         Image _frameImage;
         List<MenuTab> subButtons = new();
@@ -19,6 +19,18 @@ namespace Game.UI.src.SettingsUI
             _frameImage = GetComponent<Image>();
             subButtons.AddRange(GetComponentsInChildren<MenuTab>().Where(tab => tab != this));
             _associatedSlider = GetComponentInChildren<Slider>();
+        }
+
+        public override void OnSelect(BaseEventData eventData)
+        {
+            base.OnSelect(eventData);
+            SelectEffect();
+        }
+
+        public override void OnDeselect(BaseEventData eventData)
+        {
+            base.OnDeselect(eventData);
+            DeselectEffect();
         }
 
         public override void SelectEffect()
