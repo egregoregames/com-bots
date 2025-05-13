@@ -17,8 +17,13 @@ public class MainHudButtons : MonoBehaviour
     {
         rectTransform = transform.GetComponent<RectTransform>();
         initialPosition = rectTransform.anchoredPosition; // Store initial UI position
-
-        buttonToMenuPairs.ForEach(o => o.Init(menuDescriptionPanel, inputSo, this));
+        
+        for (var i = 0; i < buttonToMenuPairs.Count; i++)
+        {
+            buttonToMenuPairs[i].Init(menuDescriptionPanel, inputSo, this, i);
+        }
+        
+        
         inputSo.OnCancel += () => SetHudButtonsInteractability(true);
         inputSo.OnCancel += () => activePanel?.CloseMenu();
     }
@@ -58,13 +63,9 @@ public class HudButtonToMenuPair
 {
     public ScalableButton menuButton;
     public MenuPanel menuPanel;
-    SpriteColorSampler _spriteColorSampler;
     
-    public void Init(MenuDescriptionPanel menuPanelDescription, InputSO inputSo, MainHudButtons hudButtons)
+    public void Init(MenuDescriptionPanel menuPanelDescription, InputSO inputSo, MainHudButtons hudButtons, int index)
     {
-        _spriteColorSampler = new SpriteColorSampler(menuPanel.icon.sprite);
-        
-        
         // set menu panel to open from button
         menuButton.onClick.AddListener(() => menuPanel.OpenMenu());
         menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
@@ -75,7 +76,7 @@ public class HudButtonToMenuPair
 
         menuButton.onSelect += () =>
         {
-            menuPanelDescription.SetDescription(menuPanel, _spriteColorSampler.spriteColor);
+            menuPanelDescription.SetDescription(menuPanel, index);
         };
         
     }
