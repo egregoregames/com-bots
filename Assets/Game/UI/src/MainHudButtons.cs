@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Game.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class MainHudButtons : MonoBehaviour
 {

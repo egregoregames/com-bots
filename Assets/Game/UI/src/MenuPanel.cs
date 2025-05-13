@@ -18,14 +18,6 @@ public class MenuPanel : MonoBehaviour
 
     GameObject _previouslySelectedGameObject;
 
-    public void SetupButtons()
-    {
-        foreach (var menutab in categoryButtons)
-        {
-            
-        }
-    }
-
     public virtual void OpenMenu()
     {
         menuContent.SetActive(true);
@@ -48,4 +40,5 @@ public class MenuPanel : MonoBehaviour
     {
         categoryButtons.ForEach(b => b.DeselectEffect());
     }
+    
 }

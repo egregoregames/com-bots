@@ -143,6 +143,7 @@ MonoBehaviour:
   descriptionPanel: {fileID: 0}
   menuButton: {fileID: 0}
   menuContent: {fileID: 8634931066323698576}
+  saveDescription: {fileID: 8983162994429814239}
 --- !u!1 &7010666809151708516
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &105787137205194942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -734,6 +735,10 @@ PrefabInstance:
     - target: {fileID: 4781154172419104369, guid: a69b67ba89ab5134a9e4f373693a239e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873285193915491401, guid: a69b67ba89ab5134a9e4f373693a239e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
