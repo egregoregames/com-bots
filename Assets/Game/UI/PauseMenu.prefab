@@ -1502,7 +1502,7 @@ MonoBehaviour:
   - menuButton: {fileID: 6652046112058534202}
     menuPanel: {fileID: 1345009087443465562}
   - menuButton: {fileID: 6456620454130709974}
-    menuPanel: {fileID: 7187304031919431675}
+    menuPanel: {fileID: 2754664051108100725}
   - menuButton: {fileID: 939870257321685085}
     menuPanel: {fileID: 2067867175004456132}
   - menuButton: {fileID: 4043525142061661722}
@@ -6497,7 +6497,7 @@ GameObject:
   - component: {fileID: 8210354122284964303}
   - component: {fileID: 885503289855506726}
   m_Layer: 5
-  m_Name: StudentYearImage
+  m_Name: OccupationImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6830,7 +6830,7 @@ GameObject:
   - component: {fileID: 5450058069993331055}
   - component: {fileID: 8801461654037837072}
   m_Layer: 5
-  m_Name: StudentYearText
+  m_Name: OccupationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9342,7 +9342,7 @@ GameObject:
   - component: {fileID: 3993267671932164883}
   - component: {fileID: 4976543422841789812}
   m_Layer: 5
-  m_Name: StudentYearText
+  m_Name: OccupationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10485,7 +10485,7 @@ GameObject:
   - component: {fileID: 2696947278899993789}
   - component: {fileID: 7194493235438502195}
   m_Layer: 5
-  m_Name: HomeTownText
+  m_Name: OriginText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13992,7 +13992,7 @@ GameObject:
   - component: {fileID: 8252278180434804879}
   - component: {fileID: 7584248880991214568}
   m_Layer: 5
-  m_Name: HomeTownImage
+  m_Name: OriginImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15474,7 +15474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 945214886474750250}
   - component: {fileID: 4413634206354280362}
-  - component: {fileID: 7187304031919431675}
+  - component: {fileID: 2754664051108100725}
   m_Layer: 5
   m_Name: Soc_Parent
   m_TagString: Untagged
@@ -15510,7 +15510,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3804482360518175158}
   m_CullTransparentMesh: 1
---- !u!114 &7187304031919431675
+--- !u!114 &2754664051108100725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15519,11 +15519,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3804482360518175158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb727106c043f0fc081f675b3a9c16c7, type: 3}
+  m_Script: {fileID: 11500000, guid: d828343f40096fc8aa5b875d60285e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menuName: Socialyte
-  description: This is the socialyte
+  description: Connect with your friends and acquaintances.
   icon: {fileID: 1288507431925139732}
   categoryButtons:
   - {fileID: 6255089223029389675}
@@ -15538,6 +15538,22 @@ MonoBehaviour:
   descriptionPanel: {fileID: 4882426996423808348}
   menuButton: {fileID: 6456620454130709974}
   menuContent: {fileID: 67863251207956108}
+  playerData: {fileID: 11400000, guid: d7f9bf549745c196f9b52f979e24071c, type: 2}
+  playerProfileGameObject: {fileID: 4102043264825752191}
+  playerProfileImage: {fileID: 2667327234905164443}
+  playerNameText: {fileID: 8080669563524420727}
+  playerOccupationText: {fileID: 8801461654037837072}
+  playerConnectionText: {fileID: 8381085365907872057}
+  playerRankText: {fileID: 5695366325342527872}
+  playerBlueprintsText: {fileID: 637971529743874991}
+  playerSoftwareText: {fileID: 4636834360646278971}
+  connectionProfileGameObject: {fileID: 2596701743188649354}
+  connectionProfileImage: {fileID: 4085013649348373091}
+  connectionNameText: {fileID: 2423495912413954756}
+  connectionOccupationText: {fileID: 4976543422841789812}
+  connectionOriginText: {fileID: 7194493235438502195}
+  connectionLocationText: {fileID: 623501431387530771}
+  connectionBioText: {fileID: 564721797533546204}
 --- !u!1 &3826539985424806537
 GameObject:
   m_ObjectHideFlags: 0
@@ -20210,7 +20226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuName: Map
-  description: This is the map
+  description: Find your bearings on a map of Los Servos.
   icon: {fileID: 3902140992017289369}
   categoryButtons: []
   inputSO: {fileID: 0}
@@ -20455,7 +20471,7 @@ GameObject:
   - component: {fileID: 3216640539757711911}
   - component: {fileID: 564721797533546204}
   m_Layer: 5
-  m_Name: QuestDescriptionText
+  m_Name: BioDescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27781,7 +27797,7 @@ GameObject:
   - component: {fileID: 3590942853158609725}
   - component: {fileID: 1883627363735250772}
   m_Layer: 5
-  m_Name: StudentYearImage
+  m_Name: OccupationImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35820,7 +35836,7 @@ GameObject:
   - component: {fileID: 5851985700584318796}
   - component: {fileID: 5817030544861830431}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BottomImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

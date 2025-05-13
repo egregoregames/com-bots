@@ -33,15 +33,16 @@ namespace Game.UI.src.SocialyteUI
         {
             base.SelectEffect();
 
-            if (connection.newConnection)
-            {
-                _newCircleGameObject.SetActive(false);
-                connection.newConnection = false;
-            }
+            if (connection == null || !connection.newConnection) return;
+            
+            _newCircleGameObject.SetActive(false);
+            connection.newConnection = false;
         }
         
         public void SetConnectionStatus()
         {
+            if (connection == null) return;
+            
             _newCircleGameObject.SetActive(connection.newConnection);
             buttonText.text = connection.profileName;
         }

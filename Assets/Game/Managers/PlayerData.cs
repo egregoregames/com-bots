@@ -10,4 +10,5 @@ public class PlayerData : ScriptableObject
     public int ownedBlueprints = 5;
     public string playerOccupation = "First-Year Student";
     public string rank  = "D";
+    public string playerName = "Player";
 }
