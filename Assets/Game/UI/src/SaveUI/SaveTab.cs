@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,12 +7,12 @@ namespace Game.UI.Save
 {
     public class SaveTab : MenuTab
     {
-        GameObject _fingerGameObject;
+        TextMeshProUGUI _buttonText;
         
         protected override void Awake()
         {
             base.Awake();
-            _fingerGameObject = transform.GetChild(1).gameObject;
+            _buttonText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         public override void OnSelect(BaseEventData eventData)
@@ -28,12 +29,12 @@ namespace Game.UI.Save
 
         public override void SelectEffect()
         {
-            _fingerGameObject.SetActive(true);
+            _buttonText.color = Color.white;
             onSelect?.Invoke();
         }
         public override void DeselectEffect()
         {
-            _fingerGameObject.SetActive(false);
+            _buttonText.color = Color.black;
         }
     }
 }

@@ -2,13 +2,10 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Game.UI.Save
+namespace Game.UI.src.SaveUI
 {
     public class SavePanel : MenuPanel
     {
-        [SerializeField] GameObject mainButtonsGameObject;
-        [SerializeField] GameObject mainDescriptionGameObject;
-        [SerializeField] GameObject mainTopGameObject;
         [SerializeField] TextMeshProUGUI saveDescription;
         string _initialSaveText;
 
@@ -19,15 +16,8 @@ namespace Game.UI.Save
             _initialSaveText = saveDescription.text;
         }
 
-        public override void OpenMenu()
-        {
-            base.OpenMenu();
-            ToggleMainHud(false);
-        }
-
         public override void CloseMenu()
         {
-            ToggleMainHud(true);
             ToggleButtonsActive(true);
             base.CloseMenu();
             RemoveButtonListeners();
@@ -72,13 +62,6 @@ namespace Game.UI.Save
             {
                 categoryButton.onClick.RemoveAllListeners();
             }
-        }
-
-        void ToggleMainHud(bool isActive)
-        {
-            mainButtonsGameObject.SetActive(isActive);
-            mainDescriptionGameObject.SetActive(isActive);
-            mainTopGameObject.SetActive(isActive);
         }
 
         void ToggleButtonsActive(bool isActive)

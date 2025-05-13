@@ -71,9 +71,6 @@ public class HudButtonToMenuPair
         menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
         menuButton.onClick.AddListener(() =>  hudButtons.SetHudButtonsInteractability(false));
 
-        // and to close from 'S' Key
-        //inputSo.OnCancel += () => menuPanel.CloseMenu();
-
         menuButton.onSelect += () =>
         {
             menuPanelDescription.SetDescription(menuPanel, index);
