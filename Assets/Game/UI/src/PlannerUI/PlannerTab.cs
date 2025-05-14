@@ -1,52 +1,75 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.UI.src.PlannerUI
 {
     public class PlannerTab : MenuTab
     {
-        const string CompletedColorString = "#8D989E";
+        public GameObject selectedGameObject;
         
-        GameObject newCircleGameObject;
-        GameObject completedLabelGameObject;
-        Image buttonBackground;
-        TextMeshProUGUI buttonText;
-        Color _completedBackgroundColor;
+        GameObject _newCircleGameObject;
+        Image _buttonBackground;
+        TextMeshProUGUI _buttonText;
+        Sprite _originalSprite;
+        Sprite _selectedSprite;
+        Sprite _completedSprite;
+        bool _isCompleted;
         
         protected override void Awake()
         {
             base.Awake();
             
-            ColorUtility.TryParseHtmlString(CompletedColorString, out _completedBackgroundColor);
-            buttonBackground = transform.GetComponent<Image>();
-            buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            completedLabelGameObject = transform.GetChild(1).gameObject;
-            newCircleGameObject = transform.GetChild(2).gameObject;
+            _buttonBackground = transform.GetComponent<Image>();
+            _buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            selectedGameObject = transform.GetChild(1).gameObject;
+            _newCircleGameObject = transform.GetChild(2).gameObject;
+            _originalSprite = _buttonBackground.sprite;
+            _selectedSprite = spriteState.highlightedSprite;
+            _completedSprite = spriteState.disabledSprite;
         }
         
         public override void SelectEffect()
         {
             base.SelectEffect();
-            newCircleGameObject.SetActive(false);
+
+            if (!_isCompleted)
+            {
+                _buttonText.color = Color.white;
+                _buttonBackground.sprite = _selectedSprite;
+            }
+            
+            _newCircleGameObject.SetActive(false);
+        }
+
+        public override void DeselectEffect()
+        {
+            base.DeselectEffect();
+            if (!_isCompleted)
+            {
+                _buttonText.color = Color.black;
+                _buttonBackground.sprite = _originalSprite;
+            }
         }
 
         public void SetQuestStatuses(bool isNewQuest, bool isCompleted)
         {
-            newCircleGameObject.SetActive(isNewQuest);
+            _newCircleGameObject.SetActive(isNewQuest);
+            _isCompleted = isCompleted;
 
-            if (isCompleted)
+            if (_isCompleted)
             {
-                completedLabelGameObject.SetActive(true);
-                buttonBackground.color = _completedBackgroundColor;
-                buttonText.color = Color.white;
+                _buttonBackground.sprite = _completedSprite;
+                _buttonText.color = Color.white;
             }
             else
             {
-                completedLabelGameObject.SetActive(false);
-                buttonBackground.color = Color.white;
-                buttonText.color = Color.black;
+                _buttonBackground.sprite = _originalSprite;
+                _buttonText.color = Color.black;
             }
         }
+        
+        
     }
 }

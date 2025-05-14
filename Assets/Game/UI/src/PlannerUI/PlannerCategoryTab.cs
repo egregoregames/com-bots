@@ -1,26 +1,41 @@
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.UI.src.PlannerUI
 {
     public class PlannerCategoryTab : MenuTab
     {
-        Image _backgroundImage;
+        const string SelectedColorString = "#F7951F";
+        
+        Image _buttonBackground;
+        TextMeshProUGUI _buttonText;
+        Sprite _originalSprite;
+        Sprite _selectedSprite;
+        Color _unselectedTextColor;
         
         protected override void Awake()
         {
             base.Awake();
-            _backgroundImage = GetComponent<Image>();
+            ColorUtility.TryParseHtmlString(SelectedColorString, out _unselectedTextColor);
+            _buttonBackground = GetComponent<Image>();
+            _originalSprite = _buttonBackground.sprite;
+            _selectedSprite = spriteState.highlightedSprite;
+            _buttonText = GetComponentInChildren<TextMeshProUGUI>();
+            
         }
 
         public override void SelectEffect()
         {
-            _backgroundImage.enabled = true;
+            _buttonBackground.sprite = _selectedSprite;
+            _buttonText.color = Color.white;
             onSelect?.Invoke();
         }
 
         public override void DeselectEffect()
         {
-            _backgroundImage.enabled = false;
+            _buttonBackground.sprite = _originalSprite;
+            _buttonText.color = _unselectedTextColor;
         }
     }
 }

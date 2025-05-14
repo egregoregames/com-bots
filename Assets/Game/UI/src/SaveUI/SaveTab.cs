@@ -1,9 +1,8 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.UI.Save
+namespace Game.UI.src.SaveUI
 {
     public class SaveTab : MenuTab
     {

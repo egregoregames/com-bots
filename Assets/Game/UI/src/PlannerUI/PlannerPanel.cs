@@ -14,9 +14,7 @@ namespace Game.UI.src.PlannerUI
         [SerializeField] PlannerCategoryTab electivesTab;
         [SerializeField] TextMeshProUGUI questNameText;
         [SerializeField] TextMeshProUGUI questPointsText;
-        [SerializeField] TextMeshProUGUI questDescriptionText;
-        [SerializeField] TextMeshProUGUI questGiverNameText;
-        [SerializeField] Image questGiverImage;
+        [SerializeField] TextMeshProUGUI questDescriptionText; 
         [SerializeField] ScrollRect scrollRect;
         List<MenuTab> subMenuTabs = new();
         int _currentSubIndex;
@@ -35,7 +33,8 @@ namespace Game.UI.src.PlannerUI
 
             for (int i = 0; i < subPlannerTabs.Count; i++)
             {
-                SetButtonOnSelect(subPlannerTabs[i], () => SetQuestTabAction(i));
+                var i1 = i;
+                SetButtonOnSelect(subPlannerTabs[i], () => SetQuestTabAction(i1));
             }
         }
 
@@ -62,14 +61,28 @@ namespace Game.UI.src.PlannerUI
             //TODO: Figure out requirements quest list vs. electives quest list
             //TODO: Set description panel values.  Quest name, quest description text, quest points, quest giver name, quest giver image
             //TODO: Set is new quest to false 
+            
+            RemoveButtonListeners();
+            subPlannerTabs[questIndex].onClick.AddListener(() => SelectQuest(questIndex));
+        }
+
+        void SelectQuest(int index)
+        {
+            //TODO: Add whatever logic selecting a quest entails
+            subPlannerTabs[index].selectedGameObject.SetActive(true);
+
+            for (var i = 0; i < subPlannerTabs.Count; i++)
+            {
+                subPlannerTabs[i].selectedGameObject.SetActive(i == index);
+            }
         }
         
         public override void OpenMenu()
         {
             base.OpenMenu();
-            SetRequirementsAction();
+            requirementsTab.SelectEffect();
             ResetSubButtons();
-            SetQuestTabAction(0);
+            EventSystem.current.SetSelectedGameObject(subPlannerTabs[0].gameObject);
         
             inputSO.OnLeft += HandleLeftInput;
             inputSO.OnRight += HandleRightInput;
@@ -153,6 +166,14 @@ namespace Game.UI.src.PlannerUI
             {
                 var target = tabs[selectIndex].gameObject;
                 EventSystem.current.SetSelectedGameObject(target);
+            }
+        }
+        
+        void RemoveButtonListeners()
+        {
+            foreach (var plannerTab in subPlannerTabs)
+            {
+                plannerTab.onClick.RemoveAllListeners();
             }
         }
     }
