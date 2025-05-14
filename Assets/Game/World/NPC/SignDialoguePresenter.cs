@@ -1,4 +1,3 @@
-using System;
 using PixelCrushers.DialogueSystem;
 using StarterAssets;
 using UnityEngine;
@@ -30,9 +29,7 @@ namespace Game
         public void Interact(GameObject interactor)
         {
             _interactor = interactor;
-            ClearPlayerControllerStoppingCallbacks();
             SetPlayerControllerStoppingCallbacks();
-            
             DialogueManager.StartConversation(SIGN_CONVERSATION_KEY, interactor.transform, transform);
             Debug.Log("SIGN attempted conversation started name: " + transform.name);
         }
@@ -64,18 +61,19 @@ namespace Game
         {
             DialogueManager.instance.conversationStarted += (StopPlayerOnThisNPCDialogue);
             DialogueManager.instance.conversationEnded += (ResumePlayerOnThisNPCDialogue);
-            _dialogueSystemEvents.conversationEvents.onConversationLine.AddListener(OnConversationLine);
+            _dialogueSystemEvents.conversationEvents.onConversationLine.AddListener(SetupSignText);
         }
         
         void ClearPlayerControllerStoppingCallbacks()
         {
             DialogueManager.instance.conversationStarted -= (StopPlayerOnThisNPCDialogue);
             DialogueManager.instance.conversationEnded -= (ResumePlayerOnThisNPCDialogue);
-            _dialogueSystemEvents.conversationEvents.onConversationLine.RemoveListener(OnConversationLine);
+            _dialogueSystemEvents.conversationEvents.onConversationLine.RemoveListener(SetupSignText);
         }
         
         void StopPlayerOnThisNPCDialogue(Transform actor)
         {
+            uiSo.OnCameraTransition?.Invoke(false);
             talkPrompt.SetActive(false);
             var controller = _interactor.GetComponentInParent<ThirdPersonController>();
             if (controller != null)
@@ -86,6 +84,8 @@ namespace Game
         
         void ResumePlayerOnThisNPCDialogue(Transform actor)
         {
+            ClearPlayerControllerStoppingCallbacks();
+            uiSo.OnCameraTransition?.Invoke(true);
             var controller = _interactor.GetComponentInParent<ThirdPersonController>();
             if (controller != null)
             {
@@ -93,7 +93,7 @@ namespace Game
             }
         }
         
-        void OnConversationLine(Subtitle subtitle)
+        void SetupSignText(Subtitle subtitle)
         {
             if (subtitle.dialogueEntry.id == 0) return; // Ignore <START> node.
             subtitle.formattedText.text = signText;

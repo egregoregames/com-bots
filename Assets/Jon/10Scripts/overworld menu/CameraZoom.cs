@@ -14,15 +14,15 @@ public class CameraZoomOnPause : MonoBehaviour
 
     void OnEnable()
     {
-        uiSo.OnPauseStateChanged += HandlePauseChanged;
+        uiSo.OnCameraTransition += HandleCameraZoom;
     }
 
     void OnDisable()
     {
-        uiSo.OnPauseStateChanged -= HandlePauseChanged;
+        uiSo.OnCameraTransition -= HandleCameraZoom;
     }
 
-    void HandlePauseChanged(bool menuOpen)
+    void HandleCameraZoom(bool menuOpen)
     {
         float targetFOV = menuOpen ? normalFOV : zoomedFOV;
 

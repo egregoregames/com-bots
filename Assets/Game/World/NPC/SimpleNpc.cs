@@ -22,9 +22,7 @@ namespace Game
         public void Interact(GameObject interactor)
         {
             _interactor = interactor;
-            ClearPlayerControllerStoppingCallbacks();
             SetPlayerControllerStoppingCallbacks();
-            
             DialogueManager.StartConversation(npcSo.conversationKey, interactor.transform, transform);
             Debug.Log("NPC conversation started name: " + transform.name);
         }
@@ -66,6 +64,7 @@ namespace Game
         
         void StopPlayerOnThisNPCDialogue(Transform actor)
         {
+            uiSo.OnCameraTransition?.Invoke(false);
             talkPrompt.SetActive(false);
             var controller = _interactor.GetComponentInParent<ThirdPersonController>();
             if (controller != null && stopPlayerOnDialogue)
@@ -76,6 +75,8 @@ namespace Game
         
         void ResumePlayerOnThisNPCDialogue(Transform actor)
         {
+            ClearPlayerControllerStoppingCallbacks();
+            uiSo.OnCameraTransition?.Invoke(true);
             var controller = _interactor.GetComponentInParent<ThirdPersonController>();
             if (controller != null && stopPlayerOnDialogue)
             {
