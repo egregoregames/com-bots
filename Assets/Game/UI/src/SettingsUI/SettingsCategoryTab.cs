@@ -8,17 +8,27 @@ namespace Game.UI.src.SettingsUI
 {
     public class SettingsCategoryTab : MenuTab
     {
-        Image _frameImage;
-        List<MenuTab> subButtons = new();
+        readonly List<MenuTab> _subButtons = new();
+        Image _backgroundImage;
         Slider _associatedSlider;
-        int currentSubIndex;
+        int _currentSubIndex;
         
         protected override void Awake()
         {
             base.Awake();
-            _frameImage = GetComponent<Image>();
-            subButtons.AddRange(GetComponentsInChildren<MenuTab>().Where(tab => tab != this));
+            _backgroundImage = GetComponent<Image>();
             _associatedSlider = GetComponentInChildren<Slider>();
+            _subButtons.AddRange(GetComponentsInChildren<MenuTab>().Where(tab => tab != this).OrderBy(tab => tab.transform.GetSiblingIndex()));
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            
+            if (_subButtons.Count > 0)
+                _subButtons[0].SelectEffect(); //Default to first button in list for now
+
+            SetDefaultValuesFromSave();
         }
 
         public override void OnSelect(BaseEventData eventData)
@@ -36,19 +46,19 @@ namespace Game.UI.src.SettingsUI
         public override void SelectEffect()
         {
             isSelected = true;
-            _frameImage.enabled = true;
+            _backgroundImage.enabled = true;
             onSelect?.Invoke();
         }
 
         public override void DeselectEffect()
         {
             isSelected = false;
-            _frameImage.enabled = false;
+            _backgroundImage.enabled = false;
         }
         
         public override void HandleHorizontalInput(int direction)
         {
-            if (!isSelected || subButtons == null) return;
+            if (!isSelected || _subButtons == null) return;
 
             if (_associatedSlider == null)
             {
@@ -62,20 +72,25 @@ namespace Game.UI.src.SettingsUI
 
         void SetActiveSubButton(int direction)
         {
-            int newIndex = Mathf.Clamp(currentSubIndex + direction, 0, subButtons.Count - 1);
-            currentSubIndex = newIndex;
+            int newIndex = Mathf.Clamp(_currentSubIndex + direction, 0, _subButtons.Count - 1);
+            _currentSubIndex = newIndex;
                 
-            for (int i = 0; i < subButtons.Count; i++)
+            for (int i = 0; i < _subButtons.Count; i++)
             {
-                if (i == currentSubIndex)
+                if (i == _currentSubIndex)
                 {
-                    subButtons[i].SelectEffect();
+                    _subButtons[i].SelectEffect();
                 }
                 else
                 {
-                    subButtons[i].DeselectEffect();
+                    _subButtons[i].DeselectEffect();
                 }
             }
+        }
+
+        void SetDefaultValuesFromSave()
+        {
+            //TODO: Load saved settings and set those buttons as the active ones
         }
     }
 }
