@@ -23,10 +23,9 @@ public class MenuController : MonoBehaviour
         
     }
 
-    public void ShowMenu()
+    void ShowMenu()
     {
-        uiSo.OnPauseStateChanged?.Invoke(_menuOpen);
-        
+        uiSo.OnCameraTransition?.Invoke(_menuOpen);
         if (_menuOpen)
         {
             CloseMenu();
