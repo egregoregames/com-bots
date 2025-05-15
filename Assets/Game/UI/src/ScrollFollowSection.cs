@@ -10,13 +10,14 @@ public class ScrollFollowSelection : MonoBehaviour
     public ScrollRect scrollRect; // Assign your ScrollRect in Inspector
     public RectTransform contentPanel; // The panel holding the buttons
     public RectTransform parentRect;  // Assign the parent panel
-    public RectTransform childRect;  
-    
-    private List<GameObject> contentTabs;
+    public RectTransform childRect;
+
+    List<GameObject> _contentTabs;
+    GameObject _lastSelected;
     private void Awake()
     {
         parentRect = GetComponent<RectTransform>();
-        contentTabs = contentPanel.GetComponentsInChildren<MenuTab>().Select(m => m.gameObject).ToList();
+        _contentTabs = contentPanel.GetComponentsInChildren<MenuTab>().Select(m => m.gameObject).ToList();
     }
 
     public float scrollStep = 0.1f; // Adjust this value to control scroll speed
@@ -33,33 +34,29 @@ public class ScrollFollowSelection : MonoBehaviour
         scrollRect.verticalNormalizedPosition -= scrollStep;
         scrollRect.verticalNormalizedPosition = Mathf.Clamp01(scrollRect.verticalNormalizedPosition);
     }
-    // void Update()
-    // {
-    //     GameObject selected = EventSystem.current.currentSelectedGameObject;
-    //     if (selected != null && selected.transform.IsChildOf(contentPanel))
-    //     {
-    //         ScrollToSelected(selected.GetComponent<RectTransform>());
-    //     }
-    // }
-    
+
     void Update()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
-        
-        if(selected == null)
+
+        if (selected == null || selected == _lastSelected)
             return;
+
+        _lastSelected = selected;
+
         var tab = selected.GetComponent<MenuTab>();
-        if(tab == null)
+        if (tab == null)
             return;
 
         childRect = tab.GetComponent<RectTransform>();
         float normalizedPosition = GetNormalizedPosition(childRect, parentRect);
 
-        if (normalizedPosition < 0.1f) // Example: Check if near the bottom
+        // Only scroll if outside bounds — use tighter, safer thresholds
+        if (normalizedPosition < 0.05f)
         {
             ScrollDown();
         }
-        if (normalizedPosition > 0.9f) // Example: Check if near the bottom
+        else if (normalizedPosition > 0.95f)
         {
             ScrollUp();
         }
@@ -76,26 +73,4 @@ public class ScrollFollowSelection : MonoBehaviour
         // Convert to normalized range (0 = bottom, 1 = top)
         return Mathf.InverseLerp(-parentHeight / 2, parentHeight / 2, localPos.y);
     }
-    //
-    // void ScrollToSelected(RectTransform selected)
-    // {
-    //     RectTransform viewport = scrollRect.viewport;
-    //
-    //     // Convert selected button's position to local space of viewport
-    //     Vector3 localPos = viewport.InverseTransformPoint(selected.position);
-    //     Vector3 viewportCenter = viewport.InverseTransformPoint(contentPanel.position);
-    //
-    //     // Check if the selected button is outside the visible area
-    //     float offset = localPos.y - viewportCenter.y;
-    //
-    //     if (Mathf.Abs(offset) > viewport.rect.height / 2)
-    //     {
-    //         // Adjust scroll position to bring the selected button into view
-    //         float normalizedPosition = Mathf.Clamp01(
-    //             (contentPanel.rect.height / 2 - selected.localPosition.y) /
-    //             (contentPanel.rect.height - viewport.rect.height)
-    //         );
-    //         scrollRect.verticalNormalizedPosition = normalizedPosition;
-    //     }
-    // }
 }

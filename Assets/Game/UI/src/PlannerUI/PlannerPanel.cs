@@ -125,6 +125,11 @@ namespace Game.UI.src.PlannerUI
         
         void ResetSubButtons()
         {
+            for (int i = 0; i < subMenuTabs.Count; i++)
+            {
+                subMenuTabs[i].DeselectEffect();
+            }
+            
             _currentSubIndex = -1;
             SetActiveSubButton(subMenuTabs, 1, ref _currentSubIndex);
         }
