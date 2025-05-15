@@ -73,6 +73,12 @@ namespace StarterAssets
 		{
 			inputSo.sprint = value.isPressed;
 		}
+		
+		public void OnNavigate(InputValue value)
+		{
+			inputSo.navigate = value.Get<Vector2>();
+		}
+		
 		// public void OnSubmit(InputValue value)
 		// {
 		// 	inputSo.submit = value.isPressed;

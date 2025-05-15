@@ -50,6 +50,7 @@ namespace Game.UI.src.SocialyteUI
         {
             base.OpenMenu();
             EventSystem.current.SetSelectedGameObject(_socialyteTabs[0].gameObject);
+            connectionTab.SelectEffect();
             SetPlayerInfo();
             SetTabConnections();
             

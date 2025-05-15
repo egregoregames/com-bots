@@ -27,6 +27,7 @@ public class InputSO : ScriptableObject
     
     [Header("Character Input Values")]
     public Vector2 move;
+    public Vector2 navigate;
     public Vector2 look;
     public bool jump;
     public bool interact;
