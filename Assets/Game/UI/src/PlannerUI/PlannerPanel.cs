@@ -10,8 +10,8 @@ namespace Game.UI.src.PlannerUI
     public class PlannerPanel: MenuPanel
     {
         [SerializeField] List<PlannerTab> subPlannerTabs = new();
-        [SerializeField] PlannerCategoryTab requirementsTab;
-        [SerializeField] PlannerCategoryTab electivesTab;
+        [SerializeField] CategoryTab requirementsTab;
+        [SerializeField] CategoryTab electivesTab;
         [SerializeField] TextMeshProUGUI questNameText;
         [SerializeField] TextMeshProUGUI questPointsText;
         [SerializeField] TextMeshProUGUI questDescriptionText; 
@@ -125,11 +125,6 @@ namespace Game.UI.src.PlannerUI
         
         void ResetSubButtons()
         {
-            for (int i = 0; i < subMenuTabs.Count; i++)
-            {
-                subMenuTabs[i].DeselectEffect();
-            }
-            
             _currentSubIndex = -1;
             SetActiveSubButton(subMenuTabs, 1, ref _currentSubIndex);
         }
