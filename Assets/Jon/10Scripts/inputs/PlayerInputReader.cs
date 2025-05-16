@@ -118,7 +118,14 @@ namespace StarterAssets
 			}
 			if (inputSo.cancel)
 			{
-				inputSo.OnCancel?.Invoke();
+				if (inputSo.AltCancel == null)
+				{
+					inputSo.OnCancel?.Invoke();
+				}
+				else
+				{
+					inputSo.AltCancel.Invoke();
+				}
 			}
 			if (inputSo.left)
 			{

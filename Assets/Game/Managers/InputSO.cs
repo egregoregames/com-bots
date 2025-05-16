@@ -44,6 +44,7 @@ public class InputSO : ScriptableObject
     public Action OnUp;
     public Action OnInteract;
     public Action OnCancel;
+    public Action AltCancel;
 
     public Action OnDown;
     public Action OnSubmit;

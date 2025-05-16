@@ -1,5 +1,6 @@
 using System;
 using Game.src;
+using Game.UI.src;
 using UnityEngine;
 
 public class MenuController : MonoBehaviour
