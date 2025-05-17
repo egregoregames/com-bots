@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.UI.src.SocialyteUI
@@ -16,7 +17,8 @@ namespace Game.UI.src.SocialyteUI
         [SerializeField] GameObject connectionDescriptionPanel;
         [SerializeField] SocialyteCategoryTab connectionTab;
         [SerializeField] SocialyteCategoryTab feedTab;
-        [SerializeField] List<MenuTab> connectionTabs;
+        [SerializeField] List<SocialyteTab> socialyteTabs;
+        
         
     
         [Header("Player Profile")]
@@ -36,20 +38,20 @@ namespace Game.UI.src.SocialyteUI
         [SerializeField] TextMeshProUGUI connectionLocationText;
         [SerializeField] TextMeshProUGUI connectionBioText;
         [SerializeField] List<GameObject> connectionBondIcons;
-    
-        List<SocialyteTab> _socialyteTabs = new();
+
+        readonly List<MenuTab> _connectionTabs = new();
         int _currentCategoryIndex;
 
         void Awake()
         {
-            _socialyteTabs = connectionTabs.Where(b => b is SocialyteTab).Cast<SocialyteTab>().ToList();
+            _connectionTabs.AddRange(socialyteTabs);
             SetAllTabActions();
         }
 
         public override void OpenMenu()
         {
             base.OpenMenu();
-            EventSystem.current.SetSelectedGameObject(_socialyteTabs[0].gameObject);
+            EventSystem.current.SetSelectedGameObject(socialyteTabs[0].gameObject);
             connectionTab.SelectEffect();
             SetPlayerInfo();
             SetTabConnections();
@@ -67,20 +69,18 @@ namespace Game.UI.src.SocialyteUI
 
         void SetTabConnections()
         {
-            if (playerData.KnownConnections.Count == 0) return;
-            
-            for (var i = 1; i < _socialyteTabs.Count; i++)
+            for (var i = 1; i < socialyteTabs.Count; i++)
             {
                 if (i > playerData.KnownConnections.Count)
                 {
-                    _socialyteTabs[i].gameObject.SetActive(false);
+                    socialyteTabs[i].gameObject.SetActive(false);
                     continue;
                 }
                 
-                _socialyteTabs[i].gameObject.SetActive(true);
+                socialyteTabs[i].gameObject.SetActive(true);
                 var connection = playerData.KnownConnections[i - 1];
-                _socialyteTabs[i].connection = connection;
-                _socialyteTabs[i].SetConnectionStatus();
+                socialyteTabs[i].connection = connection;
+                socialyteTabs[i].SetConnectionStatus();
             }
         }
 
@@ -88,20 +88,21 @@ namespace Game.UI.src.SocialyteUI
         {
             SetButtonOnSelect(connectionTab, SetConnectionTabAction);
             SetButtonOnSelect(feedTab, SetFeedTabAction);
-            SetButtonOnSelect(_socialyteTabs[0], SetPlayerInfo);
-            for (var i = 1; i < _socialyteTabs.Count; i++)
+            SetButtonOnSelect(socialyteTabs[0], SetPlayerInfo);
+            for (var i = 1; i < socialyteTabs.Count; i++)
             {
-                var currentTab = _socialyteTabs[i];
+                var currentTab = socialyteTabs[i];
                 SetButtonOnSelect(currentTab, () => SetConnectionInfo(currentTab.connection));
             }
         }
 
         void SetConnectionTabAction()
         {
+            SetTabConnections();
             scrollRect.GameObject().SetActive(true);
             connectionDescriptionPanel.SetActive(true);
-            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, connectionTabs, 0));
-            EventSystem.current.SetSelectedGameObject(_socialyteTabs[0].gameObject);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _connectionTabs, 0));
+            EventSystem.current.SetSelectedGameObject(socialyteTabs[0].gameObject);
         }
 
         void SetFeedTabAction()

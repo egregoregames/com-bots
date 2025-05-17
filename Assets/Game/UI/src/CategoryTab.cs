@@ -28,14 +28,19 @@ namespace Game.UI.src
         public override void SelectEffect()
         {
             _buttonBackground.sprite = _selectedSprite;
-            _buttonText.color = Color.white;
+            
+            if(_buttonText != null)
+                _buttonText.color = Color.white;
+            
             onSelect?.Invoke();
         }
 
         public override void DeselectEffect()
         {
             _buttonBackground.sprite = _originalSprite;
-            _buttonText.color = _unselectedTextColor;
+            
+            if(_buttonText != null)
+                _buttonText.color = _unselectedTextColor;
         }
     }
 }
