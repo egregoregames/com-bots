@@ -1,3 +1,4 @@
+using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,12 @@ namespace Game.UI.src.BotlinkUI
         {
             base.OpenMenu();
             categoryButtons[0].SelectEffect();
+        }
+
+        public override void CloseMenu()
+        {
+            base.CloseMenu();
+            subMenuPanels.ForEach(menu  => menu.CloseMenu());
         }
 
         void SetButtonOnSelect(MenuTab menuTab,int index)
