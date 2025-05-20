@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Game.UI.src
 {
@@ -24,6 +26,8 @@ namespace Game.UI.src
             {
                 buttonToMenuPairs[i].Init(menuDescriptionPanel, inputSo, this, i);
             }
+
+            SetupNavigation(buttonToMenuPairs);
             
             inputSo.OnCancel += () => SetHudButtonsInteractability(true);
             inputSo.OnCancel += () => activePanel?.CloseMenu();
@@ -57,6 +61,25 @@ namespace Game.UI.src
             menuDescriptionPanel.gameObject.SetActive(false);
             EventSystem.current.SetSelectedGameObject(null);
         }
+        
+        void SetupNavigation(List<HudButtonToMenuPair> buttons)
+        {
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                Navigation nav = buttons[i].menuButton.navigation;
+                nav.mode = Navigation.Mode.Explicit;
+
+                int leftIndex = (i - 1 + buttons.Count) % buttons.Count;
+                int rightIndex = (i + 1) % buttons.Count;
+
+                nav.selectOnLeft = buttons[leftIndex].menuButton;
+                nav.selectOnRight = buttons[rightIndex].menuButton;
+
+                buttons[i].menuButton.navigation = nav;
+            }
+        }
+
+
     }
 
     [Serializable]
