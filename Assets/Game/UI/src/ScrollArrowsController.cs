@@ -1,36 +1,60 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScrollArrowsController : MonoBehaviour
+namespace Game.UI.src
 {
-    public ScrollRect scrollRect;
-    public GameObject arrowUp;
-    public GameObject arrowDown;
-
-    void Update()
+    public class ScrollArrowsController : MonoBehaviour
     {
-        UpdateArrows();
-    }
+        public ScrollRect scrollRect;
+        public GameObject arrowUp;
+        public GameObject arrowDown;
 
-    void UpdateArrows()
-    {
-        RectTransform content = scrollRect.content;
-        RectTransform viewport = scrollRect.viewport;
+        void Update()
+        {
+            UpdateArrows();
+        }
 
-        float contentTop = content.anchoredPosition.y;
-        float contentHeight = content.rect.height;
-        float viewportHeight = viewport.rect.height;
+        void UpdateArrows()
+        {
+            RectTransform viewport = scrollRect.viewport;
+            RectTransform content = scrollRect.content;
 
-        // Clamp due to potential floating point precision issues
-        contentTop = Mathf.Clamp(contentTop, 0, Mathf.Infinity);
+            // Get viewport bounds in local space
+            Vector3[] viewportCorners = new Vector3[4];
+            viewport.GetWorldCorners(viewportCorners);
+            float viewportTop = viewportCorners[1].y;
+            float viewportBottom = viewportCorners[0].y;
 
-        // Check if there's content above (can scroll up)
-        bool showArrowUp = contentTop > 1f;
+            bool showArrowUp = false;
+            bool showArrowDown = false;
 
-        // Check if there's content below (can scroll down)
-        bool showArrowDown = contentTop + viewportHeight < contentHeight - 1f;
+            // Loop through all active buttons
+            foreach (Button button in content.GetComponentsInChildren<Button>(true))
+            {
+                if (!button.gameObject.activeInHierarchy || !button.interactable)
+                    continue;
 
-        arrowUp.SetActive(showArrowUp);
-        arrowDown.SetActive(showArrowDown);
+                RectTransform buttonRect = button.GetComponent<RectTransform>();
+
+                // Get button corners in world space
+                Vector3[] buttonCorners = new Vector3[4];
+                buttonRect.GetWorldCorners(buttonCorners);
+
+                float buttonTop = buttonCorners[1].y;
+                float buttonBottom = buttonCorners[0].y;
+
+                if (buttonTop > viewportTop + 1f)
+                    showArrowUp = true;
+                if (buttonBottom < viewportBottom - 1f)
+                    showArrowDown = true;
+
+                // Early exit if both arrows need to be shown
+                if (showArrowUp && showArrowDown)
+                    break;
+            }
+
+            arrowUp.SetActive(showArrowUp);
+            arrowDown.SetActive(showArrowDown);
+        }
     }
 }

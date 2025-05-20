@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace Game.UI.src.PlannerUI
 {
@@ -16,14 +17,14 @@ namespace Game.UI.src.PlannerUI
         [SerializeField] TextMeshProUGUI questPointsText;
         [SerializeField] TextMeshProUGUI questDescriptionText; 
         [SerializeField] ScrollRect scrollRect;
-        List<MenuTab> subMenuTabs = new();
+        readonly List<MenuTab> _subMenuTabs = new();
         int _currentSubIndex;
         int _currentCategoryIndex;
 
         void Awake()
         {
             SetAllButtonActions();
-            subMenuTabs.AddRange(subPlannerTabs);
+            _subMenuTabs.AddRange(subPlannerTabs);
         }
 
         void SetAllButtonActions()
@@ -101,35 +102,35 @@ namespace Game.UI.src.PlannerUI
         
         void HandleLeftInput()
         {
-            SetActiveSubButton(categoryButtons, -1, ref _currentCategoryIndex);
-            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, subMenuTabs, 0));
+            SetActiveCategoryButton(categoryButtons, -1, ref _currentCategoryIndex);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _subMenuTabs, 0));
             ResetSubButtons();
         }
 
         void HandleRightInput()
         {
-            SetActiveSubButton(categoryButtons, 1, ref _currentCategoryIndex);
-            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, subMenuTabs, 0));
+            SetActiveCategoryButton(categoryButtons, 1, ref _currentCategoryIndex);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _subMenuTabs, 0));
             ResetSubButtons();
         }
 
         void HandleUpInput()
         {
-            SetActiveSubButton(subMenuTabs, -1, ref _currentSubIndex);
+            SetActiveSubButton(_subMenuTabs, -1, ref _currentSubIndex);
         }
 
         void HandleDownInput()
         {
-           SetActiveSubButton(subMenuTabs, 1, ref _currentSubIndex);
+           SetActiveSubButton(_subMenuTabs, 1, ref _currentSubIndex);
         }
         
         void ResetSubButtons()
         {
             _currentSubIndex = -1;
-            SetActiveSubButton(subMenuTabs, 1, ref _currentSubIndex);
+            SetActiveSubButton(_subMenuTabs, 1, ref _currentSubIndex);
         }
         
-        void SetActiveSubButton(List<MenuTab> tabs, int direction, ref int currentIndex)
+        void SetActiveCategoryButton(List<MenuTab> tabs, int direction, ref int currentIndex)
         {
             int newIndex = Mathf.Clamp(currentIndex + direction, 0, tabs.Count - 1);
 
@@ -149,6 +150,22 @@ namespace Game.UI.src.PlannerUI
                 else
                 {
                     tabs[i].DeselectEffect();
+                }
+            }
+        }
+        
+        void SetActiveSubButton(List<MenuTab> tabs, int direction, ref int currentIndex)
+        {
+            int lastActiveTab = tabs.Count(t => t.isActiveAndEnabled) - 1;
+            int newIndex = Mathf.Clamp(currentIndex + direction, 0, lastActiveTab);
+            
+            currentIndex = newIndex;
+
+            for (int i = 0; i < lastActiveTab; i++)
+            {
+                if (i == currentIndex)
+                {
+                    EventSystem.current.SetSelectedGameObject(tabs[i].gameObject);
                 }
             }
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Game.UI.src.BotlinkUI
         protected void Awake()
         {
             SetAllButtonActions();
+            SetupNavigationWrapHorizontal(categoryButtons);
         }
         
         void SetAllButtonActions()
@@ -55,6 +57,23 @@ namespace Game.UI.src.BotlinkUI
             foreach (var categoryTab in categoryButtons)
             {
                 categoryTab.onClick.RemoveAllListeners();
+            }
+        }
+        
+        void SetupNavigationWrapHorizontal(List<MenuTab> buttons)
+        {
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                Navigation nav = buttons[i].navigation;
+                nav.mode = Navigation.Mode.Explicit;
+
+                int leftIndex = (i - 1 + buttons.Count) % buttons.Count;
+                int rightIndex = (i + 1) % buttons.Count;
+
+                nav.selectOnLeft = buttons[leftIndex];
+                nav.selectOnRight = buttons[rightIndex];
+
+                buttons[i].navigation = nav;
             }
         }
     }

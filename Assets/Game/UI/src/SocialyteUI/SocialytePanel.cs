@@ -19,8 +19,6 @@ namespace Game.UI.src.SocialyteUI
         [SerializeField] SocialyteCategoryTab feedTab;
         [SerializeField] List<SocialyteTab> socialyteTabs;
         
-        
-    
         [Header("Player Profile")]
         [SerializeField] GameObject playerProfileGameObject;
         [SerializeField] TextMeshProUGUI playerNameText;
@@ -41,6 +39,7 @@ namespace Game.UI.src.SocialyteUI
 
         readonly List<MenuTab> _connectionTabs = new();
         int _currentCategoryIndex;
+        int _currentSubIndex;
 
         void Awake()
         {
@@ -58,6 +57,8 @@ namespace Game.UI.src.SocialyteUI
             
             inputSO.OnLeft += HandleLeftInput;
             inputSO.OnRight += HandleRightInput;
+            inputSO.OnUp += HandleUpInput;
+            inputSO.OnDown += HandleDownInput;
         }
 
         public override void CloseMenu()
@@ -65,6 +66,8 @@ namespace Game.UI.src.SocialyteUI
             base.CloseMenu();
             inputSO.OnLeft -= HandleLeftInput;
             inputSO.OnRight -= HandleRightInput;
+            inputSO.OnUp -= HandleUpInput;
+            inputSO.OnDown -= HandleDownInput;
         }
 
         void SetTabConnections()
@@ -143,20 +146,33 @@ namespace Game.UI.src.SocialyteUI
             {
                 connectionBondIcons[i].SetActive(i < connection.bond);
             }
-
         }
         
         void HandleLeftInput()
         {
-            SetActiveSubButton(categoryButtons, -1, ref _currentCategoryIndex);
+            SetActiveCategoryButton(categoryButtons, -1, ref _currentCategoryIndex);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _connectionTabs, 0));
+            ResetSubButtons();
         }
 
         void HandleRightInput()
         {
-            SetActiveSubButton(categoryButtons, 1, ref _currentCategoryIndex);
+            SetActiveCategoryButton(categoryButtons, 1, ref _currentCategoryIndex);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _connectionTabs, 0));
+            ResetSubButtons();
         }
         
-        void SetActiveSubButton(List<MenuTab> tabs, int direction, ref int currentIndex)
+        void HandleUpInput()
+        {
+            SetActiveSubButton(_connectionTabs, -1, ref _currentSubIndex);
+        }
+
+        void HandleDownInput()
+        {
+            SetActiveSubButton(_connectionTabs, 1, ref _currentSubIndex);
+        }
+        
+        void SetActiveCategoryButton(List<MenuTab> tabs, int direction, ref int currentIndex)
         {
             int newIndex = Mathf.Clamp(currentIndex + direction, 0, tabs.Count - 1);
 
@@ -178,6 +194,28 @@ namespace Game.UI.src.SocialyteUI
                     tabs[i].DeselectEffect();
                 }
             }
+        }
+        
+        void SetActiveSubButton(List<MenuTab> tabs, int direction, ref int currentIndex)
+        {
+            int lastActiveTab = tabs.Count(t => t.isActiveAndEnabled) - 1;
+            int newIndex = Mathf.Clamp(currentIndex + direction, 0, lastActiveTab);
+            
+            currentIndex = newIndex;
+
+            for (int i = 0; i < lastActiveTab; i++)
+            {
+                if (i == currentIndex)
+                {
+                    EventSystem.current.SetSelectedGameObject(tabs[i].gameObject);
+                }
+            }
+        }
+        
+        void ResetSubButtons()
+        {
+            _currentSubIndex = -1;
+            SetActiveSubButton(_connectionTabs, 1, ref _currentSubIndex);
         }
         
         IEnumerator ResetScrollPositionAndSelect(ScrollRect scrollRect, List<MenuTab> tabs, int selectIndex)

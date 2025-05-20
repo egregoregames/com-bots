@@ -27,7 +27,7 @@ namespace Game.UI.src
                 buttonToMenuPairs[i].Init(menuDescriptionPanel, inputSo, this, i);
             }
 
-            SetupNavigation(buttonToMenuPairs);
+            SetupNavigationWrapHorizontal(buttonToMenuPairs);
             
             inputSo.OnCancel += () => SetHudButtonsInteractability(true);
             inputSo.OnCancel += () => activePanel?.CloseMenu();
@@ -62,7 +62,7 @@ namespace Game.UI.src
             EventSystem.current.SetSelectedGameObject(null);
         }
         
-        void SetupNavigation(List<HudButtonToMenuPair> buttons)
+        void SetupNavigationWrapHorizontal(List<HudButtonToMenuPair> buttons)
         {
             for (int i = 0; i < buttons.Count; i++)
             {

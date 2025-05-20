@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -29,7 +30,19 @@ namespace Game.UI.src.PlannerUI
             _selectedSprite = spriteState.highlightedSprite;
             _completedSprite = spriteState.disabledSprite;
         }
-        
+
+        public override void OnSelect(BaseEventData eventData)
+        {
+            base.OnSelect(eventData);
+            SelectEffect();
+        }
+
+        public override void OnDeselect(BaseEventData eventData)
+        {
+            base.OnDeselect(eventData);
+            DeselectEffect();
+        }
+
         public override void SelectEffect()
         {
             base.SelectEffect();
