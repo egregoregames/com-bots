@@ -16,6 +16,7 @@ public class MenuController : MonoBehaviour
     private void Awake()
     {
         inputSo.OnOpenMenu += () => mainHudButtons.SetHudButtonsInteractability(true);
+        inputSo.OnOpenMenu += () => mainHudButtons.SetupNavigationWrapHorizontal(mainHudButtons.buttonToMenuPairs);;
         inputSo.OnOpenMenu += () => mainHudButtons.activePanel?.CloseMenu();
         inputSo.OnOpenMenu += ShowMenu;
     }

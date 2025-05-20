@@ -26,10 +26,9 @@ namespace Game.UI.src
             {
                 buttonToMenuPairs[i].Init(menuDescriptionPanel, inputSo, this, i);
             }
-
-            SetupNavigationWrapHorizontal(buttonToMenuPairs);
             
             inputSo.OnCancel += () => SetHudButtonsInteractability(true);
+            inputSo.OnCancel += () => SetupNavigationWrapHorizontal(buttonToMenuPairs);;
             inputSo.OnCancel += () => activePanel?.CloseMenu();
         }
 
@@ -37,6 +36,29 @@ namespace Game.UI.src
         {
             buttonToMenuPairs.ForEach(t => t.menuButton.interactable = status);
         }
+        
+        public void SetupNavigationWrapHorizontal(List<HudButtonToMenuPair> buttons)
+        {
+            List<HudButtonToMenuPair> activeButtons = buttons
+                .Where(b => b.menuButton != null && b.menuButton.gameObject.activeInHierarchy)
+                .ToList();
+
+            for (int i = 0; i < activeButtons.Count; i++)
+            {
+                var currentButton = activeButtons[i].menuButton;
+                Navigation nav = currentButton.navigation;
+                nav.mode = Navigation.Mode.Explicit;
+
+                int leftIndex = (i - 1 + activeButtons.Count) % activeButtons.Count;
+                int rightIndex = (i + 1) % activeButtons.Count;
+
+                nav.selectOnLeft = activeButtons[leftIndex].menuButton;
+                nav.selectOnRight = activeButtons[rightIndex].menuButton;
+
+                currentButton.navigation = nav;
+            }
+        }
+
 
         [ContextMenu("Show ob")]
         public void ShowSelected()
@@ -61,24 +83,6 @@ namespace Game.UI.src
             menuDescriptionPanel.gameObject.SetActive(false);
             EventSystem.current.SetSelectedGameObject(null);
         }
-        
-        void SetupNavigationWrapHorizontal(List<HudButtonToMenuPair> buttons)
-        {
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                Navigation nav = buttons[i].menuButton.navigation;
-                nav.mode = Navigation.Mode.Explicit;
-
-                int leftIndex = (i - 1 + buttons.Count) % buttons.Count;
-                int rightIndex = (i + 1) % buttons.Count;
-
-                nav.selectOnLeft = buttons[leftIndex].menuButton;
-                nav.selectOnRight = buttons[rightIndex].menuButton;
-
-                buttons[i].menuButton.navigation = nav;
-            }
-        }
-
 
     }
 
