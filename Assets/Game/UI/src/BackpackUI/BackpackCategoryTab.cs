@@ -9,5 +9,17 @@ namespace Game.UI.src.BackpackUI
             SelectedColorString = BackpackSelectedColorString;
             base.Awake();
         }
+
+        public override void SelectEffect()
+        {
+            isSelected = true;            
+            base.SelectEffect();
+        }
+
+        public override void DeselectEffect()
+        {
+            if (isSelected) return;
+            base.DeselectEffect();
+        }
     }
 }

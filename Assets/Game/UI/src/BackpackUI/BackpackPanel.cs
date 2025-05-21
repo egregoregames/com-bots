@@ -10,7 +10,6 @@ namespace Game.UI.src.BackpackUI
     public class BackpackPanel : MenuPanel
     {
         const int ColumnAmount = 5;
-        const int RowAmount = 1;
         
         [SerializeField] List<BackpackItemTab> itemTabs;
         [SerializeField] Sprite[] categoryIcons;
@@ -25,6 +24,7 @@ namespace Game.UI.src.BackpackUI
         readonly List<MenuTab> _allMenuTabs = new();
         
         int _currentIndex;
+        int _currentCategoryIndex;
 
         protected void Awake()
         {
@@ -51,12 +51,14 @@ namespace Game.UI.src.BackpackUI
         void SetButtonCategories(MenuTab categoryTab, int categoryIndex)
         {
             categoryImage.sprite = categoryIcons[categoryIndex];
+
+            foreach (var categoryButton in categoryButtons)
+            {
+                categoryButton.isSelected = categoryButton == categoryTab;
+                categoryButton.DeselectEffect();
+            }
             
-            //TODO: Decide if an onclick to set the current pocket is needed
-            //RemoveButtonListeners(categoryButtons);
-            //categoryTab.onClick.AddListener(() => SetActivePocket(categoryIndex));
-            useBanner.SetActive(false);
-            openBanner.SetActive(true);
+            //SetActivePocket(categoryIndex);
         }
 
         void SetActivePocket(int categoryIndex)
@@ -115,40 +117,58 @@ namespace Game.UI.src.BackpackUI
         
         void HandleLeftInput()
         {
-            if (_currentIndex < 6)
+            if (_currentIndex >= 5)
             {
-                SetActiveSubButton(_allMenuTabs, -RowAmount, ref _currentIndex);
-                // StartCoroutine(ResetScrollPositionAndSelect(scrollRect, itemTabs, 0));
-                // ResetSubButtons();
+                SetActiveSubButtonWrap(_allMenuTabs, -1, ref _currentIndex);
             }
             else
             {
-                SetActiveSubButton(_allMenuTabs, -RowAmount, ref _currentIndex);
+                SetActiveSubButton(_allMenuTabs, -1, ref _currentIndex);
+                _currentCategoryIndex = _currentIndex;
             }
         }
 
         void HandleRightInput()
         {
-            if (_currentIndex < 4)
+            switch (_currentIndex)
             {
-                SetActiveSubButton(_allMenuTabs, 1, ref _currentIndex);
-                // StartCoroutine(ResetScrollPositionAndSelect(scrollRect, itemTabs, 0));
-                // ResetSubButtons();
-            }
-            else
-            {
-                SetActiveSubButton(_allMenuTabs, 1, ref _currentIndex);
+                case >= 5:
+                    SetActiveSubButtonWrap(_allMenuTabs, 1, ref _currentIndex);
+                    break;
+                case 4:
+                    break;
+                default:
+                    SetActiveSubButton(_allMenuTabs, 1, ref _currentIndex);
+                    _currentCategoryIndex = _currentIndex;
+                    break;
             }
         }
 
         void HandleUpInput()
         {
-            SetActiveSubButton(_allMenuTabs, -ColumnAmount, ref _currentIndex);
+            if (_currentIndex <= 4 ) return;
+            if (_currentIndex <= 9)
+            {
+                SetActiveSubButton(_allMenuTabs, 0, ref _currentCategoryIndex);
+                _allMenuTabs[_currentIndex].DeselectEffect();
+                _currentIndex = _currentCategoryIndex;
+            }
+            else
+            {
+                SetActiveSubButton(_allMenuTabs, -ColumnAmount, ref _currentIndex);
+            }
         }
 
         void HandleDownInput()
         {
-           SetActiveSubButton(_allMenuTabs, ColumnAmount, ref _currentIndex);
+            if (_currentIndex <= 4)
+            {
+                ResetSubButtons();
+            }
+            else
+            {
+                SetActiveSubButton(_allMenuTabs, ColumnAmount, ref _currentIndex);
+            }
         }
         
         void ResetSubButtons()
@@ -180,6 +200,43 @@ namespace Game.UI.src.BackpackUI
                 }
             }
         }
+        
+        void SetActiveSubButtonWrap(List<MenuTab> tabs, int direction, ref int currentIndex)
+        {
+            int columns = 5;
+
+            int row = currentIndex / columns;
+            int col = currentIndex % columns;
+
+            int newCol = col + direction;
+
+            if (newCol < 0)
+                newCol = columns - 1;
+            else if (newCol >= columns)
+                newCol = 0;
+
+            int newIndex = row * columns + newCol;
+
+            if (newIndex < 0 || newIndex >= tabs.Count || currentIndex == newIndex)
+                return;
+
+            currentIndex = newIndex;
+
+            for (int i = 0; i < tabs.Count; i++)
+            {
+                if (!tabs[i].isActiveAndEnabled) break;
+
+                if (i == currentIndex)
+                {
+                    tabs[i].SelectEffect();
+                }
+                else
+                {
+                    tabs[i].DeselectEffect();
+                }
+            }
+        }
+
         
         IEnumerator ResetScrollPositionAndSelect(ScrollRect scrollRect, List<BackpackItemTab> tabs, int selectIndex)
         {
