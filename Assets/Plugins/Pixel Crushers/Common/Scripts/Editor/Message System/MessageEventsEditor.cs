@@ -8,7 +8,7 @@ namespace PixelCrushers
 
     [CustomEditor(typeof(MessageEvents), true)]
     [CanEditMultipleObjects]
-    public class MessageEventsEditor : UnityEditor.Editor
+    public class MessageEventsEditor : Editor
     {
 
         public override void OnInspectorGUI()

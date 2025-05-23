@@ -8,7 +8,7 @@ namespace PixelCrushers
 
     [CustomEditor(typeof(TimedEvent), true)]
     [CanEditMultipleObjects]
-    public class TimedEventEditor : UnityEditor.Editor
+    public class TimedEventEditor : Editor
     {
         private SerializedProperty modeProperty;
         private SerializedProperty durationProperty;
