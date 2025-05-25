@@ -1,17 +1,14 @@
 using System;
 using PixelCrushers.DialogueSystem;
+using PixelCrushers.QuestMachine.Wrappers;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game
+namespace Game.World.NPC
 {
-    /// <summary>
-    /// Handles a simple NPC interaction logic with no quest strings attached, including showing a talk prompt on hover,
-    /// starting a dialogue conversation using Dialogue System, and optionally stopping
-    /// the player's movement during the dialogue.
-    /// </summary>
-    public class SimpleNpc : MonoBehaviour, IInteractable
+    [RequireComponent(typeof(QuestGiver))]
+    public class QuestGiverNpc: MonoBehaviour, IInteractable
     {
         [SerializeField] GameObject talkPrompt;
         [SerializeField] NpcSo npcSo;
@@ -19,16 +16,23 @@ namespace Game
         [SerializeField] UISo uiSo;
         [SerializeField] bool stopPlayerOnDialogue = true;
         GameObject _interactor;
-        
+        QuestGiver _questGiver;
+
+        void Awake()
+        {
+            _questGiver = GetComponent<QuestGiver>();
+            foreach (var quest in npcSo.questsToGive)
+            {
+                _questGiver.AddQuest(quest);
+            }
+        }
 
         public void Interact(GameObject interactor)
         {
             _interactor = interactor;
             SetPlayerControllerStoppingCallbacks();
-            OverrideNpcDialogueActorData();
-            
-            DialogueManager.StartConversation(npcSo.conversationKey, interactor.transform, transform);
-            Debug.Log("NPC conversation started name: " + transform.name);
+            _questGiver.StartDialogue(_interactor);
+            Debug.Log("Quest conversation started name: " + transform.name);
         }
         
         public void OnHoverStay()
@@ -56,14 +60,14 @@ namespace Game
         
         void SetPlayerControllerStoppingCallbacks()
         {
-            DialogueManager.instance.conversationStarted += StopPlayerOnThisNPCDialogue;
-            DialogueManager.instance.conversationEnded += ResumePlayerOnThisNPCDialogue;
+            DialogueManager.instance.conversationStarted += (StopPlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationEnded += (ResumePlayerOnThisNPCDialogue);
         }
         
         void ClearPlayerControllerStoppingCallbacks()
         {
-            DialogueManager.instance.conversationStarted -= StopPlayerOnThisNPCDialogue;
-            DialogueManager.instance.conversationEnded -= ResumePlayerOnThisNPCDialogue;
+            DialogueManager.instance.conversationStarted -= (StopPlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationEnded -= (ResumePlayerOnThisNPCDialogue);
         }
         
         void StopPlayerOnThisNPCDialogue(Transform actor)
@@ -85,22 +89,6 @@ namespace Game
             if (controller != null && stopPlayerOnDialogue)
             {
                 controller.AllowPlayerInput();
-            }
-        }
-        
-        void OverrideNpcDialogueActorData()
-        {
-            var conversation = DialogueManager.masterDatabase.GetConversation(npcSo.conversationKey);
-            if (conversation == null) return;
-            
-            var conversantActor = DialogueManager.masterDatabase.actors.Find(a => a.id == conversation.ConversantID);
-            if (conversantActor == null) return;
-
-            conversantActor.Name = npcSo.name;
-
-            if (npcSo.portrait != null)
-            {
-                conversantActor.portrait = npcSo.portrait;
             }
         }
     }
