@@ -73,13 +73,12 @@ namespace Game.UI.src.PlannerUI
         void SelectQuest(int index)
         {
             //TODO: Add whatever logic selecting a quest entails
-            subPlannerTabs[index].selectedGameObject.SetActive(true);
-            subPlannerTabs[index].isSelected = true;
             setQuestGameObject.SetActive(false);
 
             for (var i = 0; i < subPlannerTabs.Count; i++)
             {
                 subPlannerTabs[i].selectedGameObject.SetActive(i == index);
+                subPlannerTabs[i].isSelected = i == index;
             }
         }
         
