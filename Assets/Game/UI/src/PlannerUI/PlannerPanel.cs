@@ -16,6 +16,7 @@ namespace Game.UI.src.PlannerUI
         [SerializeField] TextMeshProUGUI questNameText;
         [SerializeField] TextMeshProUGUI questPointsText;
         [SerializeField] TextMeshProUGUI questDescriptionText; 
+        [SerializeField] GameObject setQuestGameObject;
         [SerializeField] ScrollRect scrollRect;
         readonly List<MenuTab> _subMenuTabs = new();
         int _currentSubIndex;
@@ -63,6 +64,8 @@ namespace Game.UI.src.PlannerUI
             //TODO: Set description panel values.  Quest name, quest description text, quest points, quest giver name, quest giver image
             //TODO: Set is new quest to false 
             
+            setQuestGameObject.SetActive(!subPlannerTabs[questIndex].isSelected);
+            
             RemoveButtonListeners();
             subPlannerTabs[questIndex].onClick.AddListener(() => SelectQuest(questIndex));
         }
@@ -71,6 +74,8 @@ namespace Game.UI.src.PlannerUI
         {
             //TODO: Add whatever logic selecting a quest entails
             subPlannerTabs[index].selectedGameObject.SetActive(true);
+            subPlannerTabs[index].isSelected = true;
+            setQuestGameObject.SetActive(false);
 
             for (var i = 0; i < subPlannerTabs.Count; i++)
             {
@@ -84,6 +89,7 @@ namespace Game.UI.src.PlannerUI
             requirementsTab.SelectEffect();
             ResetSubButtons();
             EventSystem.current.SetSelectedGameObject(subPlannerTabs[0].gameObject);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _subMenuTabs, 0));
         
             inputSO.OnLeft += HandleLeftInput;
             inputSO.OnRight += HandleRightInput;
@@ -98,6 +104,9 @@ namespace Game.UI.src.PlannerUI
             inputSO.OnRight -= HandleRightInput;
             inputSO.OnUp -= HandleUpInput;
             inputSO.OnDown -= HandleDownInput;
+            
+            _currentSubIndex = 0;
+            _currentCategoryIndex = 0;
         }
         
         void HandleLeftInput()
@@ -192,6 +201,12 @@ namespace Game.UI.src.PlannerUI
             {
                 plannerTab.onClick.RemoveAllListeners();
             }
+        }
+        
+        protected override void DeselectAllButtons()
+        {
+            base.DeselectAllButtons();
+            subPlannerTabs.ForEach(b => b.DeselectEffect());
         }
     }
 }

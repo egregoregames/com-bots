@@ -51,6 +51,7 @@ namespace Game.UI.src.SocialyteUI
         {
             base.OpenMenu();
             EventSystem.current.SetSelectedGameObject(socialyteTabs[0].gameObject);
+            StartCoroutine(ResetScrollPositionAndSelect(scrollRect, _connectionTabs, 0));
             connectionTab.SelectEffect();
             SetPlayerInfo();
             SetTabConnections();
@@ -68,6 +69,9 @@ namespace Game.UI.src.SocialyteUI
             inputSO.OnRight -= HandleRightInput;
             inputSO.OnUp -= HandleUpInput;
             inputSO.OnDown -= HandleDownInput;
+            
+            _currentCategoryIndex = 0;
+            _currentSubIndex = 0;
         }
 
         void SetTabConnections()
@@ -232,6 +236,12 @@ namespace Game.UI.src.SocialyteUI
                 var target = tabs[selectIndex].gameObject;
                 EventSystem.current.SetSelectedGameObject(target);
             }
+        }
+
+        protected override void DeselectAllButtons()
+        {
+            base.DeselectAllButtons();
+            _connectionTabs.ForEach(b => b.DeselectEffect());
         }
     }
 }

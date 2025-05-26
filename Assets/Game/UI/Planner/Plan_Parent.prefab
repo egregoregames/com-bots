@@ -243,7 +243,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5192611177153163310}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.40905878
+  m_Size: 0.3998753
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -416,7 +416,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 444095952800436429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5909412}
+  m_AnchorMin: {x: 0, y: 0.6001247}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -1333,8 +1333,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175, y: -25.9769}
-  m_SizeDelta: {x: 662.2708, y: 638.1317}
+  m_AnchoredPosition: {x: -175, y: -18.813812}
+  m_SizeDelta: {x: 662.2708, y: 623.8055}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1448295494279601918
 CanvasRenderer:
@@ -1390,7 +1390,7 @@ MonoBehaviour:
   contentPanel: {fileID: 2487547480993580201}
   parentRect: {fileID: 2487547480993580201}
   childRect: {fileID: 5621867545090531101}
-  scrollStep: 0.3
+  scrollStep: 0.225
 --- !u!114 &76967405519879420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,6 +2223,7 @@ MonoBehaviour:
   questNameText: {fileID: 6840707707543984176}
   questPointsText: {fileID: 5022357329241854734}
   questDescriptionText: {fileID: 8497552815688757728}
+  setQuestGameObject: {fileID: 3569731396587848270}
   scrollRect: {fileID: 8004036211198074356}
 --- !u!1 &8648463225144055292
 GameObject:
@@ -2842,6 +2843,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1529df6eafdbee4aaf89beab6ca3fc2, type: 3}
+--- !u!1 &3569731396587848270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2578337387826278871, guid: d1529df6eafdbee4aaf89beab6ca3fc2, type: 3}
+  m_PrefabInstance: {fileID: 1315653602849846169}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4747039121442108217 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6026657518902804640, guid: d1529df6eafdbee4aaf89beab6ca3fc2, type: 3}

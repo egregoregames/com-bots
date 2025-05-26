@@ -9,6 +9,7 @@ namespace Game.UI.src.PlannerUI
     public class PlannerTab : MenuTab
     {
         public GameObject selectedGameObject;
+        public bool isSelected;
         
         GameObject _newCircleGameObject;
         Image _buttonBackground;
