@@ -10,6 +10,9 @@ namespace Game.UI.src.BackpackUI
     public class BackpackPanel : MenuPanel
     {
         const int ColumnAmount = 5;
+        const int FinalCategorySlot = 4;
+        const int FirstBottomRowSlot = 24;
+        const int FinalFirstRowSlot = 9;
         
         [SerializeField] List<BackpackItemTab> itemTabs;
         [SerializeField] Sprite[] categoryIcons;
@@ -113,18 +116,21 @@ namespace Game.UI.src.BackpackUI
             inputSO.OnRight -= HandleRightInput;
             inputSO.OnUp -= HandleUpInput;
             inputSO.OnDown -= HandleDownInput;
+
+            _currentIndex = 0;
+            _currentCategoryIndex = 0;
         }
         
         void HandleLeftInput()
         {
-            if (_currentIndex >= 5)
-            {
-                SetActiveSubButtonWrap(_allMenuTabs, -1, ref _currentIndex);
-            }
-            else
+            if (_currentIndex <= FinalCategorySlot)
             {
                 SetActiveSubButton(_allMenuTabs, -1, ref _currentIndex);
                 _currentCategoryIndex = _currentIndex;
+            }
+            else
+            {
+                SetActiveSubButtonWrap(_allMenuTabs, -1, ref _currentIndex);
             }
         }
 
@@ -132,22 +138,22 @@ namespace Game.UI.src.BackpackUI
         {
             switch (_currentIndex)
             {
-                case >= 5:
-                    SetActiveSubButtonWrap(_allMenuTabs, 1, ref _currentIndex);
-                    break;
-                case 4:
-                    break;
-                default:
+                case < FinalCategorySlot:
                     SetActiveSubButton(_allMenuTabs, 1, ref _currentIndex);
                     _currentCategoryIndex = _currentIndex;
+                    break;
+                case FinalCategorySlot:
+                    break;
+                default:
+                    SetActiveSubButtonWrap(_allMenuTabs, 1, ref _currentIndex);
                     break;
             }
         }
 
         void HandleUpInput()
         {
-            if (_currentIndex <= 4 ) return;
-            if (_currentIndex <= 9)
+            if (_currentIndex <= FinalCategorySlot) return;
+            if (_currentIndex <= FinalFirstRowSlot)
             {
                 SetActiveSubButton(_allMenuTabs, 0, ref _currentCategoryIndex);
                 _allMenuTabs[_currentIndex].DeselectEffect();
@@ -161,7 +167,9 @@ namespace Game.UI.src.BackpackUI
 
         void HandleDownInput()
         {
-            if (_currentIndex <= 4)
+            if (_currentIndex >= FirstBottomRowSlot) return;
+                
+            if (_currentIndex <= FinalCategorySlot)
             {
                 ResetSubButtons();
             }
@@ -173,7 +181,7 @@ namespace Game.UI.src.BackpackUI
         
         void ResetSubButtons()
         {
-            _currentIndex = 4;
+            _currentIndex = FinalCategorySlot;
             SetActiveSubButton(_allMenuTabs, 1, ref _currentIndex);
         }
         
@@ -260,6 +268,11 @@ namespace Game.UI.src.BackpackUI
             {
                 tab.onClick.RemoveAllListeners();
             }
+        }
+
+        protected override void DeselectAllButtons()
+        {
+            _allMenuTabs.ForEach(b => b.DeselectEffect());
         }
     }
 }

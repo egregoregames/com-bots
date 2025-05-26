@@ -19,9 +19,11 @@ public class MenuPanel : MonoBehaviour
     [SerializeField] GameObject mainTopGameObject;
 
     GameObject _previouslySelectedGameObject;
+    bool _isMenuOpen;
 
     public virtual void OpenMenu()
     {
+        _isMenuOpen = true;
         menuContent.SetActive(true);
         _previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(categoryButtons[0].gameObject);
@@ -29,6 +31,9 @@ public class MenuPanel : MonoBehaviour
     }
     public virtual void CloseMenu()
     {
+        if (!_isMenuOpen) return;
+        _isMenuOpen = false;
+        
         ToggleMainHud(true);
         menuContent.SetActive(false);
         EventSystem.current.SetSelectedGameObject(_previouslySelectedGameObject);
@@ -40,7 +45,7 @@ public class MenuPanel : MonoBehaviour
         menuTab.onSelect += buttonAction;
     }
 
-    void DeselectAllButtons()
+    protected virtual void DeselectAllButtons()
     {
         categoryButtons.ForEach(b => b.DeselectEffect());
     }
