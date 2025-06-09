@@ -20,7 +20,9 @@ public class ScrollFollowSelection : MonoBehaviour
         _contentTabs = contentPanel.GetComponentsInChildren<MenuTab>().Select(m => m.gameObject).ToList();
     }
 
-    public float scrollStep = 0.1f; // Adjust this value to control scroll speed
+    public float scrollStep = 0.225f; // Adjust this value to control scroll speed
+    public float topEdgeThreshold = 0.8f;    // Scroll up when near top
+    public float bottomEdgeThreshold = 0.2f; // Scroll down when near bottom
 
     [ContextMenu("Up")]
     public void ScrollUp()
@@ -51,16 +53,18 @@ public class ScrollFollowSelection : MonoBehaviour
         childRect = tab.GetComponent<RectTransform>();
         float normalizedPosition = GetNormalizedPosition(childRect, parentRect);
 
-        // Only scroll if outside bounds — use tighter, safer thresholds
-        if (normalizedPosition < 0.05f)
+        // Trigger scroll slightly earlier — when the item is second-from-edge
+
+        if (normalizedPosition < bottomEdgeThreshold)
         {
             ScrollDown();
         }
-        else if (normalizedPosition > 0.95f)
+        else if (normalizedPosition > topEdgeThreshold)
         {
             ScrollUp();
         }
     }
+
 
     float GetNormalizedPosition(RectTransform child, RectTransform parent)
     {
