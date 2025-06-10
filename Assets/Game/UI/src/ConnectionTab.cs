@@ -4,7 +4,8 @@ public class ConnectionTab : MenuTab
 {
     public NpcSo connection;
     public MenuDescriptionPanel descriptionPanel;
-    protected override void SelectEffect()
+
+    public override void SelectEffect()
     {
         base.SelectEffect();
         

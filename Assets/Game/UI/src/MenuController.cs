@@ -1,5 +1,6 @@
 using System;
 using Game.src;
+using Game.UI.src;
 using UnityEngine;
 
 public class MenuController : MonoBehaviour
@@ -14,6 +15,9 @@ public class MenuController : MonoBehaviour
     private bool _menuOpen;
     private void Awake()
     {
+        inputSo.OnOpenMenu += () => mainHudButtons.SetHudButtonsInteractability(true);
+        inputSo.OnOpenMenu += () => mainHudButtons.SetupNavigationWrapHorizontal(mainHudButtons.buttonToMenuPairs);;
+        inputSo.OnOpenMenu += () => mainHudButtons.activePanel?.CloseMenu();
         inputSo.OnOpenMenu += ShowMenu;
     }
 

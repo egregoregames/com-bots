@@ -27,6 +27,7 @@ public class InputSO : ScriptableObject
     
     [Header("Character Input Values")]
     public Vector2 move;
+    public Vector2 navigate;
     public Vector2 look;
     public bool jump;
     public bool interact;
@@ -37,14 +38,20 @@ public class InputSO : ScriptableObject
     public bool down;
     public bool openMenu;
     public bool cancel;
+    public bool left;
+    public bool right;
 
     public Action OnUp;
     public Action OnInteract;
     public Action OnCancel;
+    public Action AltCancel;
 
     public Action OnDown;
     public Action OnSubmit;
     public Action OnOpenMenu;
+    
+    public Action OnLeft;
+    public Action OnRight;
 
     [Header("Movement Settings")]
     public bool analogMovement;

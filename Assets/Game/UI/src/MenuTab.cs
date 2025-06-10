@@ -1,52 +1,44 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MenuTab : Button
 {
+    protected RectTransform rectTransform;
+    protected Vector2 initialPosition;
+    
     public Action onSelect;
-    
-    private RectTransform rectTransform;
-    private Vector2 initialPosition;
+    public bool isSelected;
 
-    public NpcSo connection;
-    
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         rectTransform = transform.GetComponent<RectTransform>();
         initialPosition = rectTransform.anchoredPosition; // Store initial UI position
     }
 
-    public override void OnSelect(BaseEventData eventData)
+    public virtual void SelectEffect()
     {
-        base.OnSelect(eventData);
-
-        SelectEffect();
-    }
-
-    protected virtual void SelectEffect()
-    {
-        var offset = transform.parent.GetComponent<RectTransform>().rect.width * .12f;
+        var offset = transform.parent.GetComponent<RectTransform>().rect.width * .07f;
         
-        if(!rectTransform)
-            return;
+        if(!rectTransform || !rectTransform.anchoredPosition.Equals(initialPosition)) return;
         
         rectTransform.anchoredPosition += new Vector2(offset, 0);
         onSelect?.Invoke();
     }
-
     
-
-    public override void OnDeselect(BaseEventData eventData)
-    {
-        base.OnDeselect(eventData);
-        DeselectEffect();
-    }
-
-    public void DeselectEffect()
+    public virtual void DeselectEffect()
     {
         rectTransform.anchoredPosition = initialPosition;
+    }
+    
+    public virtual void HandleHorizontalInput(int direction)
+    {
+        
+    }
+
+    public virtual void HandleVerticalInput(int direction)
+    {
+        
     }
 }

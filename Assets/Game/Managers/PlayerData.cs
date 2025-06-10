@@ -5,5 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    public List<NpcSo> KnownConnections = new List<NpcSo>();
+    public List<dataHolderSocialyteProfile> KnownConnections = new();
+    public List<dataHolderSoftware> CollectedSoftware = new();
+    public int ownedBlueprints = 5;
+    public string playerOccupation = "First-Year Student";
+    public int rank  = 1;
+    public string playerName = "Player";
 }

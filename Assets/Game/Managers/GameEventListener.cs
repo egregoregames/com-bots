@@ -10,13 +10,13 @@ public class GameEventListener : MonoBehaviour
         gameEventRelay.ConnectionMade += OnConnectionMade;
     }
 
-    void OnConnectionMade(NpcSo npcSo)
+    void OnConnectionMade(dataHolderSocialyteProfile connection)
     {
 
-        if (!playerData.KnownConnections.Contains(npcSo))
+        if (!playerData.KnownConnections.Contains(connection))
         {
-            Debug.Log($"Connection made with {npcSo.name}");
-            playerData.KnownConnections.Add(npcSo);
+            Debug.Log($"Connection made with {connection.name}");
+            playerData.KnownConnections.Add(connection);
         }
     }
 }

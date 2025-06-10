@@ -15,4 +15,5 @@ public class dataHolderSocialyteProfile : ScriptableObject
 	public ScriptableObject location;
 	public bool currentConnection;
 	public bool newConnection;
+	public bool inParty;
 }

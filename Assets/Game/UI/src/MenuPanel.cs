@@ -8,39 +8,52 @@ public class MenuPanel : MonoBehaviour
 {
     public string menuName;
     public string description;
-    public Image icon;
-    public List<MenuTab> buttons;
-
+    public List<MenuTab> categoryButtons;
+    public InputSO inputSO;
+    
     [SerializeField] MenuDescriptionPanel descriptionPanel;
     [SerializeField] Button menuButton;
     [SerializeField] GameObject menuContent;
+    [SerializeField] GameObject mainButtonsGameObject;
+    [SerializeField] GameObject mainDescriptionGameObject;
+    [SerializeField] GameObject mainTopGameObject;
 
-    private GameObject previouslySelectedGameObject;
+    GameObject _previouslySelectedGameObject;
+    bool _isMenuOpen;
 
-    public void SetupButtons()
+    public virtual void OpenMenu()
     {
-        foreach (var menutab in buttons)
-        {
-            
-        }
-    }
-
-    public void OpenMenu()
-    {
+        _isMenuOpen = true;
         menuContent.SetActive(true);
-        previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
-        EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
+        _previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(categoryButtons[0].gameObject);
+        ToggleMainHud(false);
     }
-    public void CloseMenu()
+    public virtual void CloseMenu()
     {
+        if (!_isMenuOpen) return;
+        _isMenuOpen = false;
+        
+        ToggleMainHud(true);
         menuContent.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);
+        EventSystem.current.SetSelectedGameObject(_previouslySelectedGameObject);
         DeselectAllButtons();
     }
     
-
-    void DeselectAllButtons()
+    protected void SetButtonOnSelect(MenuTab menuTab, Action buttonAction)
     {
-        buttons.ForEach(b => b.DeselectEffect());
+        menuTab.onSelect += buttonAction;
+    }
+
+    protected virtual void DeselectAllButtons()
+    {
+        categoryButtons.ForEach(b => b.DeselectEffect());
+    }
+    
+    void ToggleMainHud(bool isActive)
+    {
+        mainButtonsGameObject.SetActive(isActive);
+        mainDescriptionGameObject.SetActive(isActive);
+        mainTopGameObject.SetActive(isActive);
     }
 }

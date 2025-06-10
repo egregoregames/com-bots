@@ -73,6 +73,12 @@ namespace StarterAssets
 		{
 			inputSo.sprint = value.isPressed;
 		}
+		
+		public void OnNavigate(InputValue value)
+		{
+			inputSo.navigate = value.Get<Vector2>();
+		}
+		
 		// public void OnSubmit(InputValue value)
 		// {
 		// 	inputSo.submit = value.isPressed;
@@ -87,6 +93,8 @@ namespace StarterAssets
 			inputSo.sprint = playerInput.actions["Sprint"].IsPressed();
 			inputSo.openMenu = playerInput.actions["Open Menu"].WasPressedThisFrame();
 			inputSo.cancel = playerInput.actions["Cancel"].WasPressedThisFrame();
+			inputSo.left = playerInput.actions["Left"].WasPressedThisFrame();
+			inputSo.right = playerInput.actions["Right"].WasPressedThisFrame();
 
 			if (inputSo.openMenu)
 			{
@@ -110,7 +118,22 @@ namespace StarterAssets
 			}
 			if (inputSo.cancel)
 			{
-				inputSo.OnCancel?.Invoke();
+				if (inputSo.AltCancel == null)
+				{
+					inputSo.OnCancel?.Invoke();
+				}
+				else
+				{
+					inputSo.AltCancel.Invoke();
+				}
+			}
+			if (inputSo.left)
+			{
+				inputSo.OnLeft?.Invoke();
+			}
+			if (inputSo.right)
+			{
+				inputSo.OnRight?.Invoke();
 			}
 		}
 
