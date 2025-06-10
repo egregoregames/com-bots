@@ -127,6 +127,8 @@ MonoBehaviour:
   parentRect: {fileID: 7997771217505845910}
   childRect: {fileID: 0}
   scrollStep: 0.35
+  topEdgeThreshold: 0.95
+  bottomEdgeThreshold: 0.05
 --- !u!1 &243129520257321168
 GameObject:
   m_ObjectHideFlags: 0
@@ -7621,6 +7623,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6596882109616852039, guid: 47fad9cc85f1f494a8334bf4ab352d82, type: 3}
+      propertyPath: topEdgeThreshold
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596882109616852039, guid: 47fad9cc85f1f494a8334bf4ab352d82, type: 3}
+      propertyPath: bottomEdgeThreshold
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 7082531504092957726, guid: 47fad9cc85f1f494a8334bf4ab352d82, type: 3}
       propertyPath: m_Name
       value: Settings_Parent
@@ -8375,6 +8385,14 @@ PrefabInstance:
     - target: {fileID: 7041772087155990234, guid: 2d8f3bc6c1ed95a45b4b90429e1d14cd, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068139821495198679, guid: 2d8f3bc6c1ed95a45b4b90429e1d14cd, type: 3}
+      propertyPath: topEdgeThreshold
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068139821495198679, guid: 2d8f3bc6c1ed95a45b4b90429e1d14cd, type: 3}
+      propertyPath: bottomEdgeThreshold
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7197146051923657163, guid: 2d8f3bc6c1ed95a45b4b90429e1d14cd, type: 3}
       propertyPath: m_AnchorMax.y
