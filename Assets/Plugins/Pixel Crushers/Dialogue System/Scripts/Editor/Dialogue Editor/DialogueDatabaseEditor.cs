@@ -13,7 +13,7 @@ namespace PixelCrushers.DialogueSystem
     /// with DialogueEditorWindow.
     /// </summary>
     [CustomEditor(typeof(DialogueDatabase), true)]
-    public class DialogueDatabaseEditor : Editor
+    public class DialogueDatabaseEditor : UnityEditor.Editor
     {
 
         public static DialogueDatabaseEditor instance = null;
@@ -118,7 +118,11 @@ namespace PixelCrushers.DialogueSystem
             refreshSource = (RefreshSource)EditorGUILayout.EnumPopup(refreshSource, GUILayout.Width(100));
             EditorGUILayout.EndHorizontal();
             EditorWindowTools.DrawHorizontalLine();
-            if (GUI.changed) EditorUtility.SetDirty(target);
+            if (GUI.changed)
+            {
+                EditorUtility.SetDirty(target);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(target);
+            }
             if (GUILayout.Button("Reset Position", EditorStyles.miniButton, GUILayout.Width(100)))
             {
                 DialogueEditor.DialogueEditorWindow.ResetPosition();
@@ -128,6 +132,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 ReconvertDatabase();
                 EditorUtility.SetDirty(target);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(target);
             }
         }
 
