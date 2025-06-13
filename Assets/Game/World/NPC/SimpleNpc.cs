@@ -29,6 +29,7 @@ namespace Game
             
             DialogueManager.StartConversation(npcSo.conversationKey, interactor.transform, transform);
             Debug.Log("NPC conversation started name: " + transform.name);
+            
         }
         
         public void OnHoverStay()
