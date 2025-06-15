@@ -8,7 +8,7 @@ using UnityEngine.AI;
 namespace Game.World.NPC
 {
     [RequireComponent(typeof(QuestGiver))]
-    public class QuestGiverNpc: MonoBehaviour, IInteractable
+    public class NpcDialogueQuestGiver: MonoBehaviour, IInteractable
     {
         [SerializeField] GameObject talkPrompt;
         [SerializeField] NpcSo npcSo;
@@ -23,7 +23,7 @@ namespace Game.World.NPC
             _questGiver = GetComponent<QuestGiver>();
             foreach (var quest in npcSo.questsToGive)
             {
-                _questGiver.AddQuest(quest);
+                //_questGiver.AddQuest(quest);
             }
         }
 

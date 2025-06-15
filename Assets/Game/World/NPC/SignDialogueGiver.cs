@@ -1,4 +1,3 @@
-using System;
 using PixelCrushers.DialogueSystem;
 using StarterAssets;
 using UnityEngine;
@@ -7,29 +6,32 @@ using UnityEngine.AI;
 namespace Game
 {
     /// <summary>
-    /// Handles a simple NPC interaction logic with no quest strings attached, including showing a talk prompt on hover,
-    /// starting a dialogue conversation using Dialogue System, and optionally stopping
-    /// the player's movement during the dialogue.
+    /// Attach this to a sign and modify the sign text and on interaction with the player it'll show a simple
+    /// Dialogue text with its custom UI if there's any attached.
     /// </summary>
-    public class SimpleNpc : MonoBehaviour, IInteractable
+    [RequireComponent(typeof(DialogueSystemEvents))]
+    public class SignDialogueGiver : MonoBehaviour, IInteractable
     {
         [SerializeField] GameObject talkPrompt;
-        [SerializeField] NpcSo npcSo;
+        [SerializeField] string signText;
         [SerializeField] GameEventRelay gameEventRelay;
         [SerializeField] UISo uiSo;
-        [SerializeField] bool stopPlayerOnDialogue = true;
+        DialogueSystemEvents _dialogueSystemEvents;
         GameObject _interactor;
-        
+        const string SIGN_CONVERSATION_KEY = "SIGN";
+
+
+        public void Awake()
+        {
+            _dialogueSystemEvents = GetComponent<DialogueSystemEvents>();
+        }
 
         public void Interact(GameObject interactor)
         {
             _interactor = interactor;
             SetPlayerControllerStoppingCallbacks();
-            OverrideNpcDialogueActorData();
-            
-            DialogueManager.StartConversation(npcSo.conversationKey, interactor.transform, transform);
-            Debug.Log("NPC conversation started name: " + transform.name);
-            
+            DialogueManager.StartConversation(SIGN_CONVERSATION_KEY, interactor.transform, transform);
+            Debug.Log("SIGN attempted conversation started name: " + transform.name);
         }
         
         public void OnHoverStay()
@@ -57,14 +59,16 @@ namespace Game
         
         void SetPlayerControllerStoppingCallbacks()
         {
-            DialogueManager.instance.conversationStarted += StopPlayerOnThisNPCDialogue;
-            DialogueManager.instance.conversationEnded += ResumePlayerOnThisNPCDialogue;
+            DialogueManager.instance.conversationStarted += (StopPlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationEnded += (ResumePlayerOnThisNPCDialogue);
+            _dialogueSystemEvents.conversationEvents.onConversationLine.AddListener(SetupSignText);
         }
         
         void ClearPlayerControllerStoppingCallbacks()
         {
-            DialogueManager.instance.conversationStarted -= StopPlayerOnThisNPCDialogue;
-            DialogueManager.instance.conversationEnded -= ResumePlayerOnThisNPCDialogue;
+            DialogueManager.instance.conversationStarted -= (StopPlayerOnThisNPCDialogue);
+            DialogueManager.instance.conversationEnded -= (ResumePlayerOnThisNPCDialogue);
+            _dialogueSystemEvents.conversationEvents.onConversationLine.RemoveListener(SetupSignText);
         }
         
         void StopPlayerOnThisNPCDialogue(Transform actor)
@@ -72,7 +76,7 @@ namespace Game
             uiSo.OnCameraTransition?.Invoke(false);
             talkPrompt.SetActive(false);
             var controller = _interactor.GetComponentInParent<ThirdPersonController>();
-            if (controller != null && stopPlayerOnDialogue)
+            if (controller != null)
             {
                 controller.DisAllowPlayerInput();
             }
@@ -83,26 +87,16 @@ namespace Game
             ClearPlayerControllerStoppingCallbacks();
             uiSo.OnCameraTransition?.Invoke(true);
             var controller = _interactor.GetComponentInParent<ThirdPersonController>();
-            if (controller != null && stopPlayerOnDialogue)
+            if (controller != null)
             {
                 controller.AllowPlayerInput();
             }
         }
         
-        void OverrideNpcDialogueActorData()
+        void SetupSignText(Subtitle subtitle)
         {
-            var conversation = DialogueManager.masterDatabase.GetConversation(npcSo.conversationKey);
-            if (conversation == null) return;
-            
-            var conversantActor = DialogueManager.masterDatabase.actors.Find(a => a.id == conversation.ConversantID);
-            if (conversantActor == null) return;
-
-            conversantActor.Name = npcSo.name;
-
-            if (npcSo.portrait != null)
-            {
-                conversantActor.portrait = npcSo.portrait;
-            }
+            if (subtitle.dialogueEntry.id == 0) return; // Ignore <START> node.
+            subtitle.formattedText.text = signText;
         }
     }
 }
