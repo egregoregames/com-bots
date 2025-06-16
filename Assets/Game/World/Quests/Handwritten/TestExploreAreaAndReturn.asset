@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9171342669429075238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285a0cf9c914ae847852a4a97a4c9fd0, type: 3}
+  m_Name: DialogueSystemConversationQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_conversation: Quest Conversation 1
+  m_entryID: -1
+--- !u!114 &-6870297899616298066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285a0cf9c914ae847852a4a97a4c9fd0, type: 3}
+  m_Name: DialogueSystemConversationQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_conversation: Quest Conversation 1
+  m_entryID: -1
 --- !u!114 &-5925942717581488917
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,7 +139,7 @@ MonoBehaviour:
   m_originalAsset: {fileID: 0}
   m_fileVersion: 1
   m_id:
-    m_text: TestExploreCircleAndReturn
+    m_text: TestExploreAreaAndReturn
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
@@ -164,12 +194,14 @@ MonoBehaviour:
     - m_contentList: []
   - m_actionList: []
     m_categorizedContentList:
-    - m_contentList: []
+    - m_contentList:
+      - {fileID: -9171342669429075238}
     - m_contentList: []
     - m_contentList: []
   - m_actionList: []
     m_categorizedContentList:
-    - m_contentList: []
+    - m_contentList:
+      - {fileID: -6870297899616298066}
     - m_contentList: []
     - m_contentList: []
   - m_actionList: []
@@ -231,8 +263,8 @@ MonoBehaviour:
     m_childIndexList: 01000000
     m_canvasRect:
       serializedVersion: 2
-      x: 201.6
-      y: 20.799995
+      x: 197.6
+      y: 48.800003
       width: 120
       height: 48
   - m_id:
@@ -279,7 +311,7 @@ MonoBehaviour:
     m_canvasRect:
       serializedVersion: 2
       x: 199.19998
-      y: 86.532104
+      y: 118.53211
       width: 120
       height: 48
   - m_id:
@@ -325,8 +357,8 @@ MonoBehaviour:
     m_childIndexList: 03000000
     m_canvasRect:
       serializedVersion: 2
-      x: 199.2
-      y: 156
+      x: 198.4
+      y: 188.8
       width: 120
       height: 48
   - m_id:
@@ -368,8 +400,8 @@ MonoBehaviour:
     m_childIndexList: 
     m_canvasRect:
       serializedVersion: 2
-      x: 200
-      y: 224
+      x: 197.6
+      y: 269.6
       width: 120
       height: 35
   m_textTable: {fileID: 0}

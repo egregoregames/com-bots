@@ -1,7 +1,6 @@
+using Game.World.NPC;
 using PixelCrushers.DialogueSystem;
-using StarterAssets;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Game
 {
@@ -17,29 +16,30 @@ namespace Game
         [SerializeField] GameEventRelay gameEventRelay;
         [SerializeField] UISo uiSo;
         DialogueSystemEvents _dialogueSystemEvents;
-        GameObject _interactor;
+        DialoguePromptCoordinator _dialoguePromptCoordinator;
         const string SIGN_CONVERSATION_KEY = "SIGN";
 
 
         public void Awake()
         {
+            _dialoguePromptCoordinator = new DialoguePromptCoordinator(talkPrompt,uiSo);
             _dialogueSystemEvents = GetComponent<DialogueSystemEvents>();
         }
 
         public void Interact(GameObject interactor)
         {
-            _interactor = interactor;
-            SetPlayerControllerStoppingCallbacks();
+            _dialoguePromptCoordinator.InitializeForInteractor(interactor);
+            _dialogueSystemEvents.conversationEvents.onConversationLine.RemoveAllListeners();
+            _dialogueSystemEvents.conversationEvents.onConversationLine.AddListener(SetupSignText);
+            
             DialogueManager.StartConversation(SIGN_CONVERSATION_KEY, interactor.transform, transform);
             Debug.Log("SIGN attempted conversation started name: " + transform.name);
+            
         }
         
         public void OnHoverStay()
         {
-            if (!DialogueManager.isConversationActive)
-            {
-                talkPrompt.SetActive(true);
-            }
+            _dialoguePromptCoordinator.PromptTalkBubble();
         }
 
         public void OnHoverEnter()
@@ -48,49 +48,7 @@ namespace Game
 
         public void OnHoverExit()
         {
-            talkPrompt.SetActive(false);
-        }
-        
-        [ContextMenu("Go")]
-        public void GoToPlayer()
-        {
-            GetComponent<NavMeshAgent>().SetDestination(_interactor.transform.position);
-        }
-        
-        void SetPlayerControllerStoppingCallbacks()
-        {
-            DialogueManager.instance.conversationStarted += (StopPlayerOnThisNPCDialogue);
-            DialogueManager.instance.conversationEnded += (ResumePlayerOnThisNPCDialogue);
-            _dialogueSystemEvents.conversationEvents.onConversationLine.AddListener(SetupSignText);
-        }
-        
-        void ClearPlayerControllerStoppingCallbacks()
-        {
-            DialogueManager.instance.conversationStarted -= (StopPlayerOnThisNPCDialogue);
-            DialogueManager.instance.conversationEnded -= (ResumePlayerOnThisNPCDialogue);
-            _dialogueSystemEvents.conversationEvents.onConversationLine.RemoveListener(SetupSignText);
-        }
-        
-        void StopPlayerOnThisNPCDialogue(Transform actor)
-        {
-            uiSo.OnCameraTransition?.Invoke(false);
-            talkPrompt.SetActive(false);
-            var controller = _interactor.GetComponentInParent<ThirdPersonController>();
-            if (controller != null)
-            {
-                controller.DisAllowPlayerInput();
-            }
-        }
-        
-        void ResumePlayerOnThisNPCDialogue(Transform actor)
-        {
-            ClearPlayerControllerStoppingCallbacks();
-            uiSo.OnCameraTransition?.Invoke(true);
-            var controller = _interactor.GetComponentInParent<ThirdPersonController>();
-            if (controller != null)
-            {
-                controller.AllowPlayerInput();
-            }
+            _dialoguePromptCoordinator.DeactivateTalkBubble();
         }
         
         void SetupSignText(Subtitle subtitle)

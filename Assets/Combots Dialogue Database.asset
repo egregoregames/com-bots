@@ -83,7 +83,7 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Name
-      value: TestExploreCircleAndReturn
+      value: TestExploreAreaAndReturn
       type: 0
       typeString: 
     - title: Pictures
@@ -1090,7 +1090,7 @@ MonoBehaviour:
         destinationDialogueID: 6
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CurrentQuestState("TestExploreAreaAndReturn") == "unassigned"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1139,9 +1139,9 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: "(CurrentQuestState(\"TestExploreCircleAndReturn\") == \"active\"
-        and \nGetQuestNodeState(\"TestExploreCircleAndReturn\", \"Enter Area\") ==
-        \"active\")"
+      conditionsString: "CurrentQuestState(\"TestExploreAreaAndReturn\") == \"active\"
+        and \nGetQuestNodeState(\"TestExploreAreaAndReturn\", \"Enter Area\") ==
+        \"active\""
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1149,7 +1149,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 462.81808
-        y: 137.2727
+        y: 136.39359
         width: 160
         height: 30
     - id: 3
@@ -1190,9 +1190,9 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: "(CurrentQuestState(\"TestExploreCircleAndReturn\") == \"active\"
-        and \nGetQuestNodeState(\"TestExploreCircleAndReturn\", \"Return\") == \"active\")"
-      userScript: SetQuestNodeState("TestExploreCircleAndReturn", "Return", "success")
+      conditionsString: "(CurrentQuestState(\"TestExploreAreaAndReturn\") == \"active\"
+        and \nGetQuestNodeState(\"TestExploreAreaAndReturn\", \"Return\") == \"active\")"
+      userScript: SetQuestNodeState("TestExploreAreaAndReturn", "Return", "success")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1240,7 +1240,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: CurrentQuestState("TestExploreCircleAndReturn") == "success"
+      conditionsString: CurrentQuestState("TestExploreAreaAndReturn") == "success"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1288,16 +1288,22 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 4
+        originDialogueID: 5
+        destinationConversationID: 4
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: GiveQuest("NPC", "TestExploreCircleAndReturn")
+      userScript: GiveQuest("Quest Giver", "TestExploreAreaAndReturn")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 680.9998
-        y: 112.72731
+        y: 111.848175
         width: 160
         height: 30
     - id: 6
@@ -1410,9 +1416,58 @@ MonoBehaviour:
         y: 38.18184
         width: 160
         height: 30
+    - id: 8
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Thank you so much!
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 4
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 890.61993
+        y: 189.18991
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 253.40656, y: 0}
-    canvasZoom: 0.9100001
+    canvasScrollPosition: {x: 173.5719, y: 0}
+    canvasZoom: 0.7900002
   syncInfo:
     syncActors: 0
     syncItems: 0
