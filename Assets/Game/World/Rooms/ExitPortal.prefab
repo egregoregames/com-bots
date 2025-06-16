@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2596686986627548793}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.18550873, y: 0.87, z: -3.16}
-  m_LocalScale: {x: 9.1878, y: 3.336, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8444074685197839015}
@@ -82,6 +82,7 @@ MonoBehaviour:
   nextPortal: {fileID: 0}
   uiSo: {fileID: 11400000, guid: 226605c3159201ff8a3bdab992569bff, type: 2}
   clip: {fileID: 8300000, guid: 2bc75f3102561ae4983944320861509a, type: 3}
+  areaName: AREA NAME NOT SET
 --- !u!54 &2526499720813624940
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -119,7 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8444074685197839015}
   m_Layer: 0
-  m_Name: Exit
+  m_Name: exitDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +135,7 @@ Transform:
   m_GameObject: {fileID: 9212699013756491027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0018, z: 2.59}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
