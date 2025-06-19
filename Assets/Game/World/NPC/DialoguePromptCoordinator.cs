@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.World.NPC
 {
     /// <summary>
-    /// Handles dialogue UI prompts and player input control during conversations. Manages showing talk prompts on hover
+    /// Handles dialogue UI prompts and player input control during conversations, showing talk prompts on hover
     /// And subscribing to dialogue start/end events to disable and enable player input accordingly.
     /// </summary>
     public class DialoguePromptCoordinator

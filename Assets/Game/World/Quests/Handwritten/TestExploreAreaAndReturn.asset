@@ -418,7 +418,7 @@ MonoBehaviour:
     m_canvasRect:
       serializedVersion: 2
       x: 199.19998
-      y: 116.1321
+      y: 115.332115
       width: 120
       height: 48
   - m_id:
@@ -447,6 +447,7 @@ MonoBehaviour:
       - m_contentList: []
     - m_actionList:
       - {fileID: -5724458483324118875}
+      - {fileID: 1337772553546546222}
       m_categorizedContentList:
       - m_contentList: []
       - m_contentList: []
@@ -534,6 +535,44 @@ MonoBehaviour:
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
+--- !u!114 &1337772553546546222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c92f583e5cd314caa25bde3971b4fe, type: 3}
+  m_Name: MessageQuestAction
+  m_EditorClassIdentifier: 
+  m_senderSpecifier: 2
+  m_senderID:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_targetSpecifier: 0
+  m_targetID:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_message:
+    m_text: SwapQuestIcon
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_parameter:
+    m_text: update
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_value:
+    m_valueType: 0
+    m_intValue: 0
+    m_stringValue: 
 --- !u!114 &6296446176213637947
 MonoBehaviour:
   m_ObjectHideFlags: 1
