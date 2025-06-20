@@ -1,20 +1,20 @@
 using PixelCrushers;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 namespace Game.UI.src
 {
     public class QuestAlertIconListener : MonoBehaviour, IMessageHandler
     {
-        public Image alertIcon;
-        public Sprite newIcon;
-        public Sprite updateIcon;
-        public Sprite completeIcon;
+        [SerializeField] Sprite newIcon;
+        [SerializeField] Sprite updateIcon;
+        [SerializeField] Sprite completeIcon;
+        QuestIconUpdater _questIconUpdater;
         const string TAG = "SwapQuestIcon";
-        
         
         void OnEnable()
         {
+            _questIconUpdater = transform.GetComponentInChildren<QuestIconUpdater>();
             MessageSystem.AddListener(this, TAG, "");
         }
 
@@ -25,24 +25,17 @@ namespace Game.UI.src
 
         public void OnMessage(MessageArgs messageArgs)
         {
-            string param = messageArgs.parameter;
-            var color = alertIcon.color;
-            color.a = 1;
-            alertIcon.color = color;
-            
+            string param = messageArgs.parameter.ToLower();
             switch (param)
             {
                 case "new":
-                    alertIcon.sprite = newIcon;
+                    _questIconUpdater.EnqueueIcon(newIcon);
                     break;
                 case "update":
-                    alertIcon.sprite = updateIcon;
+                    _questIconUpdater.EnqueueIcon(updateIcon);
                     break;
                 case "complete":
-                    alertIcon.sprite = completeIcon;
-                    break;
-                default:
-                    alertIcon.sprite = null;
+                    _questIconUpdater.EnqueueIcon(completeIcon);
                     break;
             }
         }
