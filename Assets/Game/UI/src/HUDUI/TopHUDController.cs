@@ -63,7 +63,7 @@ namespace Game.UI.src.HUDUI
 
         void UpdateRank()
         {
-            rankText.text = playerData.rank.ToString();
+            rankText.text = $"Rank {playerData.rank.ToString()}";
         }
 
         void UpdateRankExperience()
