@@ -25,9 +25,9 @@ namespace Game.src
         }
         
 
-        public void OnPlayerEnteredSelectionPortal(Room[] rooms, Action<Room> roomSelected, string cancelText)
+        public void OnPlayerEnteredSelectionPortal(Room[] rooms, Action<Room> roomSelected, string cancelText, string optionMessage)
         {
-            menuController.RoomSelectPanel(rooms, roomSelected, cancelText);
+            menuController.RoomSelectPanel(rooms, roomSelected, cancelText, optionMessage);
         }
 
         public void OnRoomTransition(Action onTransitionStart, Action onTransitionEnd, string areaName)

@@ -8,13 +8,14 @@ public class SelectionPortal : Portal
     public UISo uiSo;
     public Room[] rooms;
     public string cancelText;
+    public string optionMessage;
     
     Room _roomSelected;
     protected override void OnPlayerEnter(GameObject playerWhoEntered)
     {
         player = playerWhoEntered;
         
-        uiSo.PlayerEnteredRoomSelector?.Invoke(rooms, OnRoomSelected, cancelText);
+        uiSo.PlayerEnteredRoomSelector?.Invoke(rooms, OnRoomSelected, cancelText, optionMessage);
     }
     
     private void OnRoomSelected(Room room)
@@ -22,7 +23,7 @@ public class SelectionPortal : Portal
         _roomSelected = room;
         player.GetComponent<ThirdPersonController>().enabled = false;
         
-        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayerToRoom, ReleasePlayerMovement, room.name);
+        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayerToRoom, ReleasePlayerMovement, room.bannerName);
     }
 
     void ReleasePlayerMovement()

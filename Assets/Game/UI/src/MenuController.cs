@@ -59,13 +59,13 @@ public class MenuController : MonoBehaviour
     }
 
 
-    public void RoomSelectPanel(Room[] rooms, Action<Room> roomSelected, string cancelText)
+    public void RoomSelectPanel(Room[] rooms, Action<Room> roomSelected, string cancelText, string optionMessage)
     {
         inputSo.SwitchToUIInput();
         mainHudButtons.SetHudButtonsInteractability(false);
         roomSelected += room => mainHudButtons.SetHudButtonsInteractability(true); 
         roomSelectionPanel.PopWindow(rooms, roomSelected, cancelText);
-        chatBubble.SendDialogue(new string[] {"What class do you want?"});
+        chatBubble.SendDialogue(new string[] {optionMessage});
         
     }
 }

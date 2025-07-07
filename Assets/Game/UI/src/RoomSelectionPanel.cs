@@ -24,7 +24,7 @@ public class RoomSelectionPanel : MonoBehaviour
         inputSO.OnDown += RoomSelectDown;
         inputSO.OnSubmit += OnRoomSelected;
     }
-    void PushRoomList(Room[] roomNames, Action<Room> callback, string cancelText)
+    void PushRoomList(Room[] roomNames, Action<Room> callback, string cancelText, string optionMessage)
     {
         // _cancelText = cancelText;
         // onRoomSelected = callback;

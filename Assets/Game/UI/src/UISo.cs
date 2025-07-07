@@ -8,7 +8,7 @@ public class UISo : ScriptableObject
     
     public Action<string[]> OnPushDialogue;
     
-    public Action<Room[], Action<Room>, string> PlayerEnteredRoomSelector;
+    public Action<Room[], Action<Room>, string, string> PlayerEnteredRoomSelector;
 
     public Action<Action, Action, string> TriggerAreaChangeTransition;
     
