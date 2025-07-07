@@ -27,7 +27,7 @@ public class NewRoomSelectionPanel : MonoBehaviour
 
             var tmp = selectionTabs[i].GetComponentInChildren<TextMeshProUGUI>();
             
-            tmp.text = rooms[i].name;
+            tmp.text = rooms[i].optionName;
         }
         selectionTabs[rooms.Length].SetActive(true);
             

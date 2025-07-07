@@ -37,7 +37,7 @@ public class AreaDisplayPanels : MonoBehaviour
     private IEnumerator MoveRoutine(string areaName)
     {
         GetComponentInChildren<TextMeshProUGUI>().text = areaName;
-        Vector2 targetPosition = new Vector2(0, 0);
+        Vector2 targetPosition = new Vector2(0, -180);
 
         // Move down
         yield return MoveToPosition(targetPosition, moveDuration);
