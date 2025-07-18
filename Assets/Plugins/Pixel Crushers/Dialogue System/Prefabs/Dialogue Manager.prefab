@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 11426072}
   - component: {fileID: 11471062}
   - component: {fileID: 11424616}
+  - component: {fileID: 4615832367443312916}
+  - component: {fileID: 6047255849767226730}
   m_Layer: 0
   m_Name: Dialogue Manager
   m_TagString: Untagged
@@ -87,16 +89,19 @@ MonoBehaviour:
       allowPCSubtitleReminders: 0
       skipPCSubtitleAfterResponseMenu: 1
       subtitleCharsPerSecond: 30
-      minSubtitleSeconds: 2
+      minSubtitleSeconds: 1.5
       continueButton: 4
-      requireContinueOnLastLine: 0
+      requireContinueOnLastLine: 1
       richTextEmphases: 1
+      convertPipesToLineBreaks: 1
       informSequenceStartAndEnd: 0
     cameraSettings:
       sequencerCamera: {fileID: 0}
       alternateCameraObject: {fileID: 0}
       cameraAngles: {fileID: 0}
+      cameraEasing: 0
       keepCameraPositionAtConversationEnd: 0
+      showSubtitleOnEmptyContinue: 0
       defaultSequence: Delay({{end}})
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
@@ -128,7 +133,7 @@ MonoBehaviour:
       allowAlertsDuringConversations: 0
       alertCheckFrequency: 0
       alertCharsPerSecond: 0
-      minAlertSeconds: 0
+      minAlertSeconds: 3
   persistentDataSettings:
     recordPersistentDataOn: 1
     includeActorData: 1
@@ -143,8 +148,11 @@ MonoBehaviour:
     initializeNewVariables: 1
   allowSimultaneousConversations: 0
   interruptActiveConversations: 0
+  stopEvaluationAtFirstValid: 0
+  reevaluateLinksAfterSubtitle: 0
+  useLinearGroupMode: 0
   includeSimStatus: 0
-  instantiateDatabase: 0
+  instantiateDatabase: 1
   preloadResources: 1
   warmUpConversationController: 0
   dontHideImmediateDuringWarmup: 0
@@ -214,3 +222,30 @@ MonoBehaviour:
   onUseTouch:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4615832367443312916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c54f930af957f4488bf65838d4ed623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unregisterOnDisable: 0
+--- !u!114 &6047255849767226730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c139516016bca084288d1ee836fc024b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_processQuestMachineTags: 1
+  m_overrideQuestLog: 1

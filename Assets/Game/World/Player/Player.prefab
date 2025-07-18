@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 9073834756898180909}
   - component: {fileID: 5189694117708244299}
   - component: {fileID: 1485007603123560472}
+  - component: {fileID: -6413635285065943946}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -334,6 +335,7 @@ MonoBehaviour:
   maxSelectionDistance: 3
   runRaycasts: 1
   raycastAll: 0
+  selectBehindUIObjects: 0
   useDefaultGUI: 1
   guiSkin: {fileID: 0}
   guiStyleName: label
@@ -349,7 +351,7 @@ MonoBehaviour:
     height: 64
   useKey: 32
   useButton: Fire2
-  defaultUseMessage: (spacebar to interact)
+  m_defaultUseMessage: (spacebar to interact)
   broadcastToChildren: 1
   actorTransform: {fileID: 0}
   tooFarMessage: 
@@ -377,6 +379,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagSpecificElements: []
   layerSpecificElements: []
+--- !u!114 &-6413635285065943946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785337296576349982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e934de1a262c41478a844f227d499e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_forwardEventsToListeners: 1
+  m_includeInSavedGameData: 1
+  m_addNewQuestsSinceSavedGame: 0
+  m_questList: []
+  m_deletedStaticQuests: []
+  m_id:
+    m_text: Player
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_displayName:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_image: {fileID: 0}
+  m_questJournalUI: {fileID: 0}
+  m_questHUD: {fileID: 0}
+  m_rememberCompletedQuests: 1
+  m_onlyRememberHandwrittenQuests: 0
+  m_compressCompletedProcgenQuests: 0
+  m_onlyTrackOneQuestAtATime: 0
 --- !u!1 &1849287888122848713
 GameObject:
   m_ObjectHideFlags: 0

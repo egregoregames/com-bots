@@ -1,51 +1,72 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(RectTransform))]
-public class ImageStepResizer : MonoBehaviour
+namespace Game.UI.src
 {
-    [SerializeField] private float animationStepDelay = 0.1f;
-    [SerializeField] private int animationSteps = 5;
-    [SerializeField] private float shrinkScale = 0.6f;
-
-    private RectTransform rect;
-    private Vector3 originalScale;
-
-    private void Awake()
+    [RequireComponent(typeof(RectTransform))]
+    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(CanvasGroup))]
+    public class ImageStepResizer : MonoBehaviour
     {
-        rect = GetComponent<RectTransform>();
-        originalScale = rect.localScale;
-    }
+        [SerializeField] private float animationStepDelay = 0.1f;
+        [SerializeField] private int animationSteps = 5;
+        [SerializeField] private float shrinkScale = 0.6f;
+        [SerializeField] private float alphaThreshold = 0.99f; // Allow some float tolerance
 
-    private void OnEnable()
-    {
-        StartCoroutine(LoopAnimation());
-    }
+        RectTransform rect;
+        Vector3 originalScale;
+        CanvasGroup canvasGroup;
+        Button button;
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-        rect.localScale = originalScale;
-    }
-
-    private IEnumerator LoopAnimation()
-    {
-        while (true)
+        void Awake()
         {
-            // Shrink steps
-            for (int i = 0; i < animationSteps; i++)
-            {
-                float t = 1 - (1 - shrinkScale) * ((float)(i + 1) / animationSteps);
-                rect.localScale = new Vector3(t, t, 1);
-                yield return new WaitForSeconds(animationStepDelay);
-            }
+            rect = GetComponent<RectTransform>();
+            canvasGroup = GetComponent<CanvasGroup>();
+            button = GetComponent<Button>();
+            originalScale = rect.localScale;
+        }
 
-            // Expand steps
-            for (int i = animationSteps - 1; i >= 0; i--)
+        void OnEnable()
+        {
+            StartCoroutine(LoopAnimation());
+            StartCoroutine(WatchCanvasAlpha());
+        }
+
+        void OnDisable()
+        {
+            StopAllCoroutines();
+            rect.localScale = originalScale;
+        }
+
+        IEnumerator LoopAnimation()
+        {
+            while (true)
             {
-                float t = 1 - (1 - shrinkScale) * ((float)(i) / animationSteps);
-                rect.localScale = new Vector3(t, t, 1);
-                yield return new WaitForSeconds(animationStepDelay);
+                // Shrink steps
+                for (int i = 0; i < animationSteps; i++)
+                {
+                    float t = 1 - (1 - shrinkScale) * ((float)(i + 1) / animationSteps);
+                    rect.localScale = new Vector3(t, t, 1);
+                    yield return new WaitForSeconds(animationStepDelay);
+                }
+
+                // Expand steps
+                for (int i = animationSteps - 1; i >= 0; i--)
+                {
+                    float t = 1 - (1 - shrinkScale) * ((float)(i) / animationSteps);
+                    rect.localScale = new Vector3(t, t, 1);
+                    yield return new WaitForSeconds(animationStepDelay);
+                }
+            }
+        }
+
+        IEnumerator WatchCanvasAlpha()
+        {
+            while (true)
+            {
+                button.interactable = canvasGroup.alpha >= alphaThreshold;
+                yield return null; // check every frame
             }
         }
     }
