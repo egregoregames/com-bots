@@ -216,7 +216,6 @@ MonoBehaviour:
   newIcon: {fileID: 21300000, guid: 5dcfa595b0a983f45bfbcd1d5f6c9c9e, type: 3}
   updateIcon: {fileID: 21300000, guid: f4c96feb5e9d543448806d707ed1aacd, type: 3}
   completeIcon: {fileID: 21300000, guid: f8bf39dcd37477b4b994879e668fd203, type: 3}
-  questIconUpdater: {fileID: 2050014400969518560}
 --- !u!1 &105778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,10 +1262,34 @@ MonoBehaviour:
       m_Calls: []
   onCharacter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 587724665733857295}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_alpha
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onEnd:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 587724665733857295}
+        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+        m_MethodName: set_alpha
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &136800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3666,6 +3689,7 @@ GameObject:
   - component: {fileID: 6865704560680014534}
   - component: {fileID: 9004244403310365959}
   - component: {fileID: 4210232096067758861}
+  - component: {fileID: 587724665733857295}
   m_Layer: 5
   m_Name: Continue Button
   m_TagString: Untagged
@@ -3864,6 +3888,18 @@ MonoBehaviour:
   animationStepDelay: 0.1
   animationSteps: 5
   shrinkScale: 0.8
+--- !u!225 &587724665733857295
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178848}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &182688
 GameObject:
   m_ObjectHideFlags: 0
