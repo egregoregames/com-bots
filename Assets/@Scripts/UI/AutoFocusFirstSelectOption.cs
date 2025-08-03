@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-namespace Game.UI.src
+namespace ComBots.UI.src
 {
     public class AutoFocusFirstSelectOption : MonoBehaviour
     {

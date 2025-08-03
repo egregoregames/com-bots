@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Managers
+namespace ComBots.Managers
 {
     public class Singleton<T> : SerializedMonoBehaviour where T : MonoBehaviour
     {

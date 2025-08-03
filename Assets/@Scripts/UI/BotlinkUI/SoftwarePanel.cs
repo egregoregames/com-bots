@@ -1,4 +1,4 @@
-namespace Game.UI.src.BotlinkUI
+namespace ComBots.UI.src.BotlinkUI
 {
     public class SoftwarePanel : SubMenuPanel
     {

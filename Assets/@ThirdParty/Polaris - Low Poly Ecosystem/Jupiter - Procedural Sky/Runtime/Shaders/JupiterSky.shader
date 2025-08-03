@@ -478,6 +478,72 @@
 			}
 			ENDCG
 		}
+
+		// Meta pass for Global Illumination support
+		Pass
+		{
+			Name "META"
+			Tags { "LightMode"="Meta" }
+			Cull Off
+
+			CGPROGRAM
+			#pragma vertex vert_meta
+			#pragma fragment frag_meta
+
+			#include "UnityCG.cginc"
+			#include "UnityMetaPass.cginc"
+			#include "./CGIncludes/JCommon.cginc"
+			#include "./CGIncludes/JSkyGradient.cginc"
+
+			uniform fixed4 _SkyColor;
+			uniform fixed4 _HorizonColor;
+			uniform fixed4 _GroundColor;
+			uniform fixed _HorizonThickness;
+			uniform fixed _HorizonExponent;
+			uniform fixed _HorizonStep;
+
+			struct v2f_meta
+			{
+				float4 pos : SV_POSITION;
+				float4 localPos : TEXCOORD0;
+			};
+
+			v2f_meta vert_meta(appdata_full v)
+			{
+				v2f_meta o;
+				o.pos = UnityMetaVertexPosition(v.vertex, v.texcoord1.xy, v.texcoord2.xy, unity_LightmapST, unity_DynamicLightmapST);
+				o.localPos = v.vertex;
+				return o;
+			}
+
+			fixed4 frag_meta(v2f_meta i) : SV_Target
+			{
+				float4 localPos = float4(i.localPos.xyz, 1);
+				float4 normalizedLocalPos = float4(normalize(localPos.xyz), 1);
+				
+				fixed4 skyBlendColor;
+				fixed4 horizonBlendColor;
+				CalculateSkyGradientColor(
+					normalizedLocalPos,
+					_SkyColor, _HorizonColor, _GroundColor,
+					_HorizonThickness, _HorizonExponent, _HorizonStep,
+					skyBlendColor, horizonBlendColor);
+				
+				// Sample the main skybox color for GI
+				fixed4 emission = lerp(skyBlendColor, horizonBlendColor, 0.5);
+				
+				UnityMetaInput metaInput;
+				UNITY_INITIALIZE_OUTPUT(UnityMetaInput, metaInput);
+				metaInput.Albedo = emission.rgb;
+				metaInput.Emission = emission.rgb;
+				metaInput.SpecularColor = fixed3(0, 0, 0);
+				
+				return UnityMetaFragment(metaInput);
+			}
+			ENDCG
+		}
 	}
+	
+	CustomEditor "UnityEditor.SkyboxShaderGUI"
 	Fallback "Unlit/Color"
 }

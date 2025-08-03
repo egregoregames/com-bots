@@ -159,11 +159,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3261505426568811283}
+  - component: {fileID: 9073834756898180909}
+  - component: {fileID: 5711636980081737547}
   - component: {fileID: 1232480632487037904}
   - component: {fileID: 5118499582613897145}
   - component: {fileID: 1785093138463492803}
   - component: {fileID: 7643625825473963452}
-  - component: {fileID: 9073834756898180909}
   - component: {fileID: 5189694117708244299}
   - component: {fileID: 1485007603123560472}
   m_Layer: 0
@@ -191,6 +192,35 @@ Transform:
   - {fileID: 5436834678487302882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &9073834756898180909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785337296576349982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f3d47e76e8d5a944a9d69a783363c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  T: {fileID: 3261505426568811283}
+  _inputHandler: {fileID: 5711636980081737547}
+  _inputSO: {fileID: 11400000, guid: 394bda1ddbb12536a9de84f962a04b5e, type: 2}
+  _thirdPersonController: {fileID: 1785093138463492803}
+--- !u!114 &5711636980081737547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785337296576349982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1359333cb6fda44ac3123e02884cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controller: {fileID: 1785093138463492803}
 --- !u!95 &1232480632487037904
 Animator:
   serializedVersion: 7
@@ -250,7 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa17e7085e5651841a54dd2847d16ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 11400000, guid: 394bda1ddbb12536a9de84f962a04b5e, type: 2}
   MoveSpeed: 3
   SprintSpeed: 6
   RotationSmoothTime: 0.15
@@ -302,18 +331,6 @@ MonoBehaviour:
     m_Bits: 63
   canPush: 0
   strength: 1.1
---- !u!114 &9073834756898180909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1785337296576349982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3d47e76e8d5a944a9d69a783363c71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5189694117708244299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,7 +981,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 2808324801239970530, guid: 14204c391a0d22b40a34c765f6f33c91, type: 3}
+  m_Mesh: {fileID: 3410531269643947605, guid: fc23b1c68255dac4aadeaa2cb0cc2efb, type: 3}
   m_Bones:
   - {fileID: 1906505456779130286}
   - {fileID: 6486008322312078588}

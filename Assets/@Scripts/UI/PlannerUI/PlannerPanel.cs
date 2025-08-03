@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
 
-namespace Game.UI.src.PlannerUI
+namespace ComBots.UI.src.PlannerUI
 {
     public class PlannerPanel: MenuPanel
     {

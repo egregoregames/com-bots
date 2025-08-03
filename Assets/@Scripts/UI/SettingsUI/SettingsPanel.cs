@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Game.UI.src.SettingsUI
+namespace ComBots.UI.src.SettingsUI
 {
     public class SettingsPanel : MenuPanel
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.UI.src
+namespace ComBots.UI.src
 {
     public class SubMenuPanel : MonoBehaviour
     {

@@ -1,6 +1,6 @@
-using Game.Battles.Stats;
+using ComBots.Battles.Stats;
 
-namespace Game.Managers
+namespace ComBots.Managers
 {
     public class GlobalDefinitions : Singleton<GlobalDefinitions>
     {

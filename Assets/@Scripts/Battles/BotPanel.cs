@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Game.Managers;
+using ComBots.Managers;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TMPro;
@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Game.Battles.BattleUI
+namespace ComBots.Battles.BattleUI
 {
     public class BotPanel : SerializedMonoBehaviour
     {

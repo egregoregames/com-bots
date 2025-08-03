@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Game.UI.src.PlannerUI
+namespace ComBots.UI.src.PlannerUI
 {
     public class PlannerTab : MenuTab
     {

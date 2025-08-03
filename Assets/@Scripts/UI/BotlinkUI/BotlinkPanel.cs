@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI.src.BotlinkUI
+namespace ComBots.UI.src.BotlinkUI
 {
     public class BotlinkPanel : MenuPanel
     {

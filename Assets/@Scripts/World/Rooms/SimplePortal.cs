@@ -1,35 +1,26 @@
+using ComBots.Game.Players;
+using ComBots.Game.StateMachine;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SimplePortal : Portal
+namespace ComBots.Game.Portals
 {
-    public Portal nextPortal;
-    public UISo uiSo;
-    public AudioClip clip;
-    public string areaName = "AREA NAME NOT SET";
-    protected override void OnPlayerEnter(GameObject playerThatEntered)
+    public class SimplePortal : Portal
     {
-        OnTriggerPortal(0);
-    }
-    void ReleasePlayerMovement()
-    {
-        player.GetComponent<Animator>().enabled = true;
-        player.GetComponent<ThirdPersonController>().enabled = true;
-    }
-    private void OnTriggerPortal(int roomIndex)
-    {
-        // player.GetComponent<Animator>().enabled = false;
-        // player.GetComponent<ThirdPersonController>().enabled = false;
-        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayer, ReleasePlayerMovement, areaName);
-    }
-    private void TeleportPlayer()
-    {
+        public Portal nextPortal;
+        public AudioClip clip;
+        public string areaName = "AREA NAME NOT SET";
+        protected override void OnPlayerEnter(Player playerThatEntered)
+        {
+            OnTriggerPortal();
+        }
         
-        nextPortal.player = player;
-        
-        nextPortal.SpawnPlayerAtPortal();
-        
-        uiSo.SoundSelected?.Invoke(clip);
+        private void OnTriggerPortal()
+        {
+            Player.InputSO.CanPlayerMove = false;
+            State_AreaTransition_ToPortal_Args args = new(nextPortal, Player, areaName, clip);
+            GameStateMachine.I.SetState<GameStateMachine.State_AreaTransition>(args);
+        }
     }
 }

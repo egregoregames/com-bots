@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.src
+namespace ComBots.src
 {
     public class ChatBubble : MonoBehaviour, IDialogueUI
     {

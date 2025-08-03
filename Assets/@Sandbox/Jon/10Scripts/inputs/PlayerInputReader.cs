@@ -1,6 +1,8 @@
-using System;
+	using System;
 using UnityEngine;
 using UnityEngine.Serialization;
+using ComBots.Logs;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -12,17 +14,30 @@ namespace StarterAssets
 		[SerializeField] InputSO inputSo;
 		[SerializeField] PlayerInput playerInput;
 
+		private const string INPUT_SUBMIT = "Submit";
+		private const string INPUT_INTERACT = "Interact";
+		private const string INPUT_UP = "Up";
+		private const string INPUT_DOWN = "Down";
+		private const string INPUT_SPRINT = "Sprint";
+		private const string INPUT_OPEN_MENU = "Open Menu";
+		private const string INPUT_CANCEL = "Cancel";
+		private const string INPUT_LEFT = "Left";
+		private const string INPUT_RIGHT = "Right";
+		private const string INPUT_MOVE = "Move";
+		private const string INPUT_JUMP = "Jump";
+		private const string INPUT_NAVIGATE = "Navigate";
+		private const string INPUT_LOOK = "Look";
+		
+
 		private void Awake()
 		{
-	
 			inputSo.switchToPlayerInput += () => playerInput.SwitchCurrentActionMap("Player");
 			inputSo.switchToPlayerInput += () => playerInput.actions.FindActionMap("UI").Disable();
 
-			
+
 			inputSo.switchToUIInput += () => playerInput.SwitchCurrentActionMap("UI");
 			inputSo.switchToUIInput += () => playerInput.actions.FindActionMap("Player").Disable();
 			//inputSo.switchToUIInput += () => Debug.Log("Current Action Map: " + playerInput.currentActionMap.name);
-
 		}
 
 		private void Start()
@@ -41,13 +56,10 @@ namespace StarterAssets
 		{
 			inputSo.openMenu = value.isPressed;
 		}
+		
 		void OnCancel(InputValue value)
 		{
 			inputSo.cancel = value.isPressed;
-		}
-		void OnMove(InputValue value)
-		{ 
-			inputSo.move = value.Get<Vector2>();
 		}
 
 		void OnInteract(InputValue value)
@@ -55,14 +67,6 @@ namespace StarterAssets
 			inputSo.interact = value.isPressed;
 		}
 		//yield return new WaitUntil(() => playerInput.actions["Submit"].WasPressedThisFrame());
-
-		public void OnLook(InputValue value)
-		{
-			if(inputSo.cursorInputForLook)
-			{
-				inputSo.look = value.Get<Vector2>();
-			}
-		}
 
 		public void OnJump(InputValue value)
 		{
@@ -73,12 +77,12 @@ namespace StarterAssets
 		{
 			inputSo.sprint = value.isPressed;
 		}
-		
+
 		public void OnNavigate(InputValue value)
 		{
 			inputSo.navigate = value.Get<Vector2>();
 		}
-		
+
 		// public void OnSubmit(InputValue value)
 		// {
 		// 	inputSo.submit = value.isPressed;
@@ -86,15 +90,21 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			inputSo.submit = playerInput.actions["Submit"].WasPressedThisFrame();
-			inputSo.interact = playerInput.actions["Interact"].WasPressedThisFrame();
-			inputSo.up = playerInput.actions["Up"].WasPressedThisFrame();
-			inputSo.down = playerInput.actions["Down"].WasPressedThisFrame();
-			inputSo.sprint = playerInput.actions["Sprint"].IsPressed();
-			inputSo.openMenu = playerInput.actions["Open Menu"].WasPressedThisFrame();
-			inputSo.cancel = playerInput.actions["Cancel"].WasPressedThisFrame();
-			inputSo.left = playerInput.actions["Left"].WasPressedThisFrame();
-			inputSo.right = playerInput.actions["Right"].WasPressedThisFrame();
+			inputSo.submit = playerInput.actions[INPUT_SUBMIT].WasPressedThisFrame();
+			inputSo.interact = playerInput.actions[INPUT_INTERACT].WasPressedThisFrame();
+			inputSo.up = playerInput.actions[INPUT_UP].WasPressedThisFrame();
+			inputSo.down = playerInput.actions[INPUT_DOWN].WasPressedThisFrame();
+			inputSo.sprint = playerInput.actions[INPUT_SPRINT].IsPressed();
+			inputSo.openMenu = playerInput.actions[INPUT_OPEN_MENU].WasPressedThisFrame();
+			inputSo.cancel = playerInput.actions[INPUT_CANCEL].WasPressedThisFrame();
+			inputSo.left = playerInput.actions[INPUT_LEFT].WasPressedThisFrame();
+			inputSo.right = playerInput.actions[INPUT_RIGHT].WasPressedThisFrame();
+			inputSo.Move = playerInput.actions[INPUT_MOVE].ReadValue<Vector2>();
+
+			if (inputSo.cursorInputForLook)
+			{
+				inputSo.look = playerInput.actions[INPUT_LOOK].ReadValue<Vector2>();
+			}
 
 			if (inputSo.openMenu)
 			{
@@ -141,10 +151,12 @@ namespace StarterAssets
 		// {
 		// 	inputSo.up = value.isPressed;
 		// }
+		
 		// public void OnDown(InputValue value)
 		// {
 		// 	inputSo.down = value.isPressed;
 		// }
+
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(inputSo.cursorLocked);
@@ -154,5 +166,5 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
+
 }

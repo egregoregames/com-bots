@@ -1,0 +1,206 @@
+:root {
+}
+
+.background {
+    flex-grow: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.top {
+    flex-grow: 0;
+    height: 40px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/Shadow%20Bar2.png?fileID=2800000&guid=712d9d4df121c194eb0824f19c1d290f&type=3#Shadow Bar2");
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.bottom {
+    flex-grow: 0;
+    height: 40px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/00-Shadow%20Bar.png?fileID=2800000&guid=c39b6374ed6f4af4b9264e9262431d54&type=3#00-Shadow Bar");
+    justify-content: flex-end;
+    align-content: flex-end;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.4s;
+}
+
+.body {
+    flex-grow: 1;
+}
+
+.nav-item-label {
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    -unity-text-align: middle-center;
+    margin-top: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 1px;
+    -unity-font-style: bold;
+}
+
+.nav-item-icon {
+    flex-grow: 0;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/01-Planner%20App.png?fileID=2800000&guid=e1c3fd6ba13e5e54bb69a6d5e72dfa43&type=3#01-Planner App");
+    flex-shrink: 0;
+    height: 105px;
+    width: 105px;
+}
+
+.nav-item {
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-self: auto;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: auto;
+    margin-left: 0;
+    margin-right: 0;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-bounce;
+    transition-property: scale;
+}
+
+.nav-items {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: flex-end;
+    align-self: center;
+    justify-content: space-between;
+    width: 1151px;
+    transition-timing-function: ease-in-out-bounce;
+    transition-duration: 0.7s;
+}
+
+.nav-item-highlighted {
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-self: auto;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: auto;
+    margin-left: 0;
+    margin-right: 0;
+    scale: 1.6 1.6;
+    translate: 0 0;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-bounce;
+    transition-property: scale;
+}
+
+.nav-item-notification {
+    flex-grow: 0;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    flex-shrink: 0;
+    height: 26px;
+    width: 26px;
+    border-top-left-radius: 81px;
+    border-top-right-radius: 81px;
+    border-bottom-right-radius: 81px;
+    border-bottom-left-radius: 81px;
+    top: 0%;
+    right: 0;
+    translate: 50% -50%;
+}
+
+.nav-item-notification-label {
+    margin-top: 3px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-text-align: middle-center;
+    font-size: 17px;
+    color: rgb(247, 147, 30);
+}
+
+.nav-description {
+    flex-grow: 0;
+    position: absolute;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/01-Planner%20Textbox.png?fileID=2800000&guid=8ff799c9282aec547803f3d696fa6b45&type=3#01-Planner Textbox");
+    width: 705px;
+    height: 158px;
+    padding-top: 13px;
+    padding-right: 13px;
+    padding-bottom: 13px;
+    padding-left: 13px;
+    bottom: 185px;
+    left: 29px;
+}
+
+.nav-description-title {
+    color: rgb(255, 255, 255);
+    margin-top: 5px;
+    -unity-font-style: bold;
+    font-size: 26px;
+    margin-left: 6px;
+    margin-right: 4px;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+
+.nav-description-label {
+    color: rgb(255, 255, 255);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 26px;
+    margin-left: 6px;
+    padding-left: 0;
+    padding-top: 2px;
+    width: 664px;
+    height: 86px;
+    white-space: normal;
+}
+
+.menu-hidden {
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+}
+
+.menu-hidden #Top {
+    translate: 0 -100%;
+    transform-origin: bottom;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.menu-hidden #Bottom {
+    translate: 0 100%;
+    transform-origin: bottom;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.menu-hidden #NavDescription {
+    transform-origin: left;
+    translate: -110% 0;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out-back;
+}
+
+.menu-hidden #NavigationItems {
+    transform-origin: left;
+    translate: 0 -32px;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out-back;
+}
+
+.menu-hidden #Background {
+    transform-origin: left;
+    translate: 0 -32px;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out-back;
+    background-color: rgba(0, 0, 0, 0);
+}

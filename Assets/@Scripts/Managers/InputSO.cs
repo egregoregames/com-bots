@@ -24,9 +24,17 @@ public class InputSO : ScriptableObject
     {
         setInput?.Invoke(status);
     }
+
+    public bool CanPlayerMove = true;
     
     [Header("Character Input Values")]
-    public Vector2 move;
+    private Vector2 _move;
+    public Vector2 Move
+    {
+        get => CanPlayerMove ? _move : Vector2.zero;
+        set => _move = value;
+    }
+    
     public Vector2 navigate;
     public Vector2 look;
     public bool jump;

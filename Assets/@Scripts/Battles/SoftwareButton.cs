@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Game.Battles.BattleUI
+namespace ComBots.Battles.BattleUI
 {
     public class SoftwareButton : Button
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Game.UI.src.SaveUI
+namespace ComBots.UI.src.SaveUI
 {
     public class SavePanel : MenuPanel
     {

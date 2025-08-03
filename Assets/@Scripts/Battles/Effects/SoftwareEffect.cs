@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Battles.Effects
+namespace ComBots.Battles.Effects
 {
     public abstract class SoftwareEffect : ScriptableObject, IAttackEffect
     {

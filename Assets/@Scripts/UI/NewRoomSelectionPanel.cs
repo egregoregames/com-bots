@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ComBots.Game.Worlds.Rooms;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;

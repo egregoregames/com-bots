@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Battles.BattleUI
+namespace ComBots.Battles.BattleUI
 {
     public class BotTeamPanel : MonoBehaviour
     {

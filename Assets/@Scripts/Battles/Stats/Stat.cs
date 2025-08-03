@@ -1,9 +1,9 @@
 using Sirenix.OdinInspector;
 using System;
-using Game.Battles.Vitals;
+using ComBots.Battles.Vitals;
 using UnityEngine;
 
-namespace Game.Battles.Stats
+namespace ComBots.Battles.Stats
 {
     [Serializable]
     [InlineProperty] // Display values directly in the dictionary

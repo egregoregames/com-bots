@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.UI.src.SaveUI
+namespace ComBots.UI.src.SaveUI
 {
     public class SaveTab : MenuTab
     {

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Battles.Stats;
-using Game.Battles.Vitals;
+using ComBots.Battles.Stats;
+using ComBots.Battles.Vitals;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Battles
+namespace ComBots.Battles
 {
     [CreateAssetMenu(fileName = "Bot")]
     public class BotSo : SerializedScriptableObject

@@ -3,7 +3,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game
+namespace ComBots
 {
     /// <summary>
     /// Handles a simple NPC interaction logic with no quest strings attached, including showing a talk prompt on hover,

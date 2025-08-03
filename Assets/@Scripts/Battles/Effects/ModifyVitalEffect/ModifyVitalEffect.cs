@@ -1,8 +1,8 @@
-using Game.Battles.Stats;
+using ComBots.Battles.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.Battles.Effects
+namespace ComBots.Battles.Effects
 {
     [CreateAssetMenu(menuName = "Effects/Modify Vital", fileName = "Modify Vital")]
     public class ModifyVitalEffect : SoftwareEffect

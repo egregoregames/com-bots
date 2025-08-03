@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.Battles.Effects
+namespace ComBots.Battles.Effects
 {
     [CreateAssetMenu(menuName = "Effects/Damage Modifying Effect", fileName = "Damage Modifying Effect")]
     public class DamageModifyingEffect : ScriptableObject

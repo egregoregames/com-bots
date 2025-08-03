@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.UI.src.SocialyteUI
+namespace ComBots.UI.src.SocialyteUI
 {
     public class SocialyteTab : MenuTab
     {

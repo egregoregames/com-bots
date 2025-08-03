@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Game.Battles;
-using Game.Battles.Stats;
+using ComBots.Battles;
+using ComBots.Battles.Stats;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;

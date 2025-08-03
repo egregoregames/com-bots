@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Battles.Effects
+namespace ComBots.Battles.Effects
 {
     [CreateAssetMenu(menuName = "Effects/Condition Effect", fileName = "Condition Effect")]
     public class ConditionEffect : SoftwareEffect

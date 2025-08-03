@@ -1,7 +1,8 @@
 using System;
+using ComBots.Game.Worlds.Rooms;
 using UnityEngine;
 
-namespace Game.src
+namespace ComBots.src
 {
     public class Relay : MonoBehaviour
     {
@@ -13,8 +14,7 @@ namespace Game.src
 
         private void Awake()
         {
-            uiSo.TriggerAreaChangeTransition += OnRoomTransition;
-            uiSo.PlayerEnteredRoomSelector += OnPlayerEnteredSelectionPortal;
+            //uiSo.PlayerEnteredRoomSelector += OnPlayerEnteredSelectionPortal;
 
             uiSo.OnPushDialogue += OnDialogue;
         }
@@ -25,14 +25,9 @@ namespace Game.src
         }
         
 
-        public void OnPlayerEnteredSelectionPortal(Room[] rooms, Action<Room> roomSelected, string cancelText, string optionMessage)
-        {
-            menuController.RoomSelectPanel(rooms, roomSelected, cancelText, optionMessage);
-        }
-
-        public void OnRoomTransition(Action onTransitionStart, Action onTransitionEnd, string areaName)
-        {
-            
-        }
+        // public void OnPlayerEnteredSelectionPortal(Room[] rooms, Action<Room> roomSelected, string cancelText, string optionMessage)
+        // {
+        //     menuController.RoomSelectPanel(rooms, roomSelected, cancelText, optionMessage);
+        // }
     }
 }

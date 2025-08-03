@@ -1,9 +1,9 @@
 using System;
-using Game.Battles.Stats;
+using ComBots.Battles.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.Battles.Effects
+namespace ComBots.Battles.Effects
 {
    [CreateAssetMenu(menuName = "Effects/Simple Damage", fileName = "Simple Damage")]
    public class SimpleDamage : ScriptableObject

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Battles.Effects;
+using ComBots.Battles.Effects;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
-namespace Game.Battles
+namespace ComBots.Battles
 {
     [CreateAssetMenu(menuName = "Software/Standard Software", fileName = "Standard Software")]
     public class Software : SerializedScriptableObject

@@ -1,31 +1,28 @@
-using System;
-using StarterAssets;
-using Unity.VisualScripting;
+using ComBots.Game.Players;
+using ComBots.Logs;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-public class Portal : MonoBehaviour
+namespace ComBots.Game.Portals
 {
-    [HideInInspector] public GameObject player;
-    [SerializeField] private Transform portalExit;
-    protected virtual void OnPlayerEnter(GameObject player){}
-    
-    private void OnTriggerEnter(Collider other)
+    public class Portal : MonoBehaviour
     {
-        if (other.CompareTag("Trigger"))
+        public Player Player { get; protected set; }
+        [SerializeField] private Transform portalExit;
+        protected virtual void OnPlayerEnter(Player player) { }
+
+        private void OnTriggerEnter(Collider other)
         {
-            var player = other.transform.parent.gameObject;
-            this.player = player;
-            OnPlayerEnter(player);
+            if (other.CompareTag(Player.TAG_TRIGGER))
+            {
+                Player = other.GetComponentInParent<Player>();
+                OnPlayerEnter(Player);
+            }
         }
-            
-    }
-    public void SpawnPlayerAtPortal()
-    {
-        
-        //player.transform.position =  transform.position + (this.player.transform.forward * 1.5f);
-        player.transform.position = portalExit.position;
-        player.transform.rotation = portalExit.transform.rotation;
+
+        public void TeleportPlayer(Player player)
+        {
+            //player.transform.position =  transform.position + (this.player.transform.forward * 1.5f);
+            player.Controller.TeleportTo(portalExit.position, portalExit.rotation);
+        }
     }
 }

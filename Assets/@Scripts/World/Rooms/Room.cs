@@ -1,17 +1,22 @@
 using System;
+using ComBots.Game.Players;
+using ComBots.Game.Portals;
+using ComBots.Logs;
 using UnityEngine;
 
-public class Room : MonoBehaviour
+namespace ComBots.Game.Worlds.Rooms
 {
-    public Portal Portal;
-    public AudioClip clip;
-    public string optionName;
-    public string bannerName;
-
-    public void TeleportPlayerToRoom(GameObject player)
+    public class Room : MonoBehaviour
     {
-        Portal.player = player;
-        Portal.SpawnPlayerAtPortal();
+        public Portal Portal;
+        public AudioClip clip;
+        public string optionName;
+        public string bannerName;
+
+        public void TeleportPlayerToRoom(Player player)
+        {
+            Portal.TeleportPlayer(player);
+            MyLogger<Room>.StaticLog($"Teleported player<{player.name}> to room<{optionName}>");
+        }
     }
-    
 }

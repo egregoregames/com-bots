@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Battles
+namespace ComBots.Battles
 {
     public static class DiceRoll 
     {

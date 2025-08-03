@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Game.Battles.BattleUI
+namespace ComBots.Battles.BattleUI
 {
     public class BotTargettingUI : MonoBehaviour
     {

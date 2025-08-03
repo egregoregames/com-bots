@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Game.UI.src
+namespace ComBots.UI.src
 {
     public class MainHudButtons : MonoBehaviour
     {

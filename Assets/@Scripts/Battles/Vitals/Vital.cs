@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace Game.Battles.Vitals
+namespace ComBots.Battles.Vitals
 {
     [Serializable]
     [InlineProperty] // Ensures the fields are directly displayed instead of a dropdown

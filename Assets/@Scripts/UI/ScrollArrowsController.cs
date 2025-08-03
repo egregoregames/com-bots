@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI.src
+namespace ComBots.UI.src
 {
     public class ScrollArrowsController : MonoBehaviour
     {

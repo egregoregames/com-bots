@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
-using Game.src;
+using ComBots.src;
+using ComBots.Utils.EntryPoints;
 using UnityEngine;
 
-public class StageDoorTransitions : MonoBehaviour
+public class StageDoorTransitions : EntryPointMono
 {
+    public override Dependency Dependency => Dependency.Independent;
+
     public RectTransform leftPanel;
     public RectTransform rightPanel;
     public float transitionTime = 0.5f;
@@ -14,47 +17,47 @@ public class StageDoorTransitions : MonoBehaviour
     private Vector2 leftStartPos, rightStartPos;
     private Vector2 leftClosePos, rightClosePos;
 
-    private void Awake()
-    {
-        uiSo.TriggerAreaChangeTransition += DoStageDoorTransition;
-    }
-
-    void Start()
-    {
-        // Store initial positions
-        leftStartPos = leftPanel.anchoredPosition;
-        rightStartPos = rightPanel.anchoredPosition;
-
-        // Compute closed positions (panels meet at center)
-        leftClosePos = new Vector2(0, 0);
-        rightClosePos = new Vector2(0, 0);
-    }
-
-    public void DoStageDoorTransition(Action onTransitionMidPoint, Action onTransitionEnd, string areaName)
-    {
-        StartCoroutine(TransitionCoRo(onTransitionMidPoint, onTransitionEnd, areaName));
-    }
-
     private bool _isClosed = false;
     private bool _isOpen = true;
-    IEnumerator TransitionCoRo(Action onTransitionMidPoint, Action onTransitionEnd, string areaName)
+
+    protected override void Init()
+    {
+        uiSo.TriggerAreaChangeTransition += DoTransition;
+        leftStartPos = leftPanel.anchoredPosition;
+        rightStartPos = rightPanel.anchoredPosition;
+        leftClosePos = Vector2.zero;
+        rightClosePos = Vector2.zero;
+    }
+
+    public override void Dispose()
+    {
+    }
+
+    public void DoTransition(Action onTransitionMidPoint, Action onTransitionEnd, string bannerLabel)
+    {
+        StartCoroutine(Async_Transition(onTransitionMidPoint, onTransitionEnd, bannerLabel));
+    }
+
+    private IEnumerator Async_Transition(Action onTransitionMidPoint, Action onTransitionEnd, string bannerLabel)
     {
         CloseTransition();
-        
+
         yield return new WaitUntil(() => _isClosed);
 
         onTransitionMidPoint?.Invoke();
-        
+
         yield return new WaitForSeconds(delayTime);
-        
+
         OpenTransition();
-        
+
         yield return new WaitUntil(() => _isOpen);
+
+        if (!string.IsNullOrEmpty(bannerLabel))
+        {
+            AreaDisplayPanels.DoTransition(bannerLabel);
+        }
         
-        AreaDisplayPanels.DoTransition(areaName);
-
         onTransitionEnd?.Invoke();
-
     }
 
     void SetClosed()

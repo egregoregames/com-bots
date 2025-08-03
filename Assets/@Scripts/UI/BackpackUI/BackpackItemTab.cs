@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Game.UI.src.BackpackUI
+namespace ComBots.UI.src.BackpackUI
 {
     public class BackpackItemTab : MenuTab
     {

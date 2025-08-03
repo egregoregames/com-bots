@@ -1,4 +1,4 @@
-namespace Game.UI.src.PlannerUI
+namespace ComBots.UI.src.PlannerUI
 {
     public class PlannerCategoryTab : CategoryTab
     {

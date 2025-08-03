@@ -10,6 +10,7 @@ public class AreaDisplayPanels : MonoBehaviour
     //public Vector2 moveVector; // How far to move in UI space
     public float moveDuration = 0.2f; // Time to move
     public float holdTime = 1f; // Time to stay visible
+    private string _currentAreaName;
 
     void Start()
     {
@@ -25,6 +26,9 @@ public class AreaDisplayPanels : MonoBehaviour
 
     public void DoTransition(string areaName)
     {
+        if(_currentAreaName == areaName)
+            return; // No need to do anything if the area name hasn't changed
+
         if (moveRoutine != null)
         {
             StopCoroutine(moveRoutine); // Stop ongoing animation
@@ -36,8 +40,9 @@ public class AreaDisplayPanels : MonoBehaviour
 
     private IEnumerator MoveRoutine(string areaName)
     {
+        _currentAreaName = areaName;
         GetComponentInChildren<TextMeshProUGUI>().text = areaName;
-        Vector2 targetPosition = new Vector2(0, -180);
+        Vector2 targetPosition = new (0, -180);
 
         // Move down
         yield return MoveToPosition(targetPosition, moveDuration);

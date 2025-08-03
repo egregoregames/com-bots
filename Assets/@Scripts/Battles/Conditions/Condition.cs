@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Game.Battles.Effects;
-using Game.Battles.Stats;
+using ComBots.Battles.Effects;
+using ComBots.Battles.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.Battles
+namespace ComBots.Battles
 {
    [CreateAssetMenu(fileName = "Condition")]
    public class Condition : ScriptableObject

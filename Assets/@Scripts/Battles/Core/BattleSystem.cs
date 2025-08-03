@@ -2,16 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Battles.BattleUI;
-using Game.Battles.Stats;
-using Game.Managers;
+using ComBots.Battles.BattleUI;
+using ComBots.Battles.Stats;
+using ComBots.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace Game.Battles
+namespace ComBots.Battles
 {
     public class BattleSystem : MonoBehaviour
     {

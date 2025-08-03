@@ -1,4 +1,4 @@
-namespace Game.Battles
+namespace ComBots.Battles
 {
     public enum AuraType 
     {

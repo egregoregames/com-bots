@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ComBots.Game.Worlds.Rooms;
 using StarterAssets;
 using TMPro;
 using UnityEngine;
@@ -18,21 +19,10 @@ public class RoomSelectionPanel : MonoBehaviour
     private string _cancelText;
     private void Awake()
     {
-        uiSo.PlayerEnteredRoomSelector += PushRoomList;
         
         inputSO.OnUp += RoomSelectUp;
         inputSO.OnDown += RoomSelectDown;
         inputSO.OnSubmit += OnRoomSelected;
-    }
-    void PushRoomList(Room[] roomNames, Action<Room> callback, string cancelText, string optionMessage)
-    {
-        // _cancelText = cancelText;
-        // onRoomSelected = callback;
-        // inputSO.SwitchToUIInput();
-        // var panel = transform.GetChild(0).gameObject;
-        // panel.SetActive(true);
-        //
-        // SetObjectsActive(roomNames);
     }
     private void OnRoomSelected()
     {

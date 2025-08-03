@@ -3,7 +3,13 @@ using DependencyInjection;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
-#if ENABLE_INPUT_SYSTEM 
+using ComBots.Inputs;
+using ComBots.Game;
+using ComBots.Logs;
+
+
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
@@ -13,16 +19,14 @@ using UnityEngine.InputSystem;
 namespace StarterAssets
 {
     [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM 
+#if ENABLE_INPUT_SYSTEM
 #endif
-    
-
 
     public class ThirdPersonController : MonoBehaviour
     {
-        public InputSO input;
-	//public menuManager menu;
-	[Header("Player")]
+        public bool FreezeMovement = false;
+
+        [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
@@ -129,6 +133,12 @@ namespace StarterAssets
             }
         }
 
+        // Input
+        private bool _INPUT_sprint;
+        private Vector2 _INPUT_move;
+        private Vector2 _INPUT_look;
+        private bool _INPUT_jump;
+        private bool _INPUT_isAnalogMovement;
 
         private void Awake()
         {
@@ -138,7 +148,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
 #if ENABLE_INPUT_SYSTEM 
@@ -156,16 +166,15 @@ namespace StarterAssets
 
         public void AllowPlayerInput()
         {
-            enabled = true;
-            input.SwitchToPlayerInput();
-        }
-        
-        public void DisAllowPlayerInput()
-        {
-            input.SwitchToUIInput();
+            GlobalConfig.I.InputSO.CanPlayerMove = true;
         }
 
-        private void Update()
+        public void DisAllowPlayerInput()
+        {
+            GlobalConfig.I.InputSO.CanPlayerMove = false;
+        }
+
+        private void FixedUpdate()
         {
             _hasAnimator = TryGetComponent(out _animator);
 
@@ -206,13 +215,13 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (_INPUT_look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _INPUT_look.x * deltaTimeMultiplier;
+                _cinemachineTargetPitch += _INPUT_look.y * deltaTimeMultiplier;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -223,27 +232,31 @@ namespace StarterAssets
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
         }
-	private void OpenMenu()
-	{
-		//menu.menuID = -1;	
-	}
+
         private void Move()
         {
-	    //menu.menuID = -1;
+            if (FreezeMovement)
+            {
+                _INPUT_move = Vector2.zero;
+                _INPUT_sprint = false;
+                _INPUT_jump = false;
+                _INPUT_isAnalogMovement = false;
+            }
+            //menu.menuID = -1;
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = _INPUT_sprint ? SprintSpeed : MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (_INPUT_move == Vector2.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
+            float inputMagnitude = _INPUT_isAnalogMovement ? _INPUT_move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -252,7 +265,7 @@ namespace StarterAssets
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
                 _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
-                    Time.deltaTime * SpeedChangeRate);
+                    Time.fixedDeltaTime * SpeedChangeRate);
 
                 // round speed to 3 decimal places
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
@@ -262,16 +275,16 @@ namespace StarterAssets
                 _speed = targetSpeed;
             }
 
-            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.fixedDeltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(input.move.x, 0.0f, input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(_INPUT_move.x, 0.0f, _INPUT_move.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
-            if (input.move != Vector2.zero)
-            { 
+            if (_INPUT_move != Vector2.zero)
+            {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                 _mainCamera.transform.eulerAngles.y;
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
@@ -284,8 +297,8 @@ namespace StarterAssets
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            _controller.Move(targetDirection.normalized * (_speed * Time.fixedDeltaTime) +
+                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.fixedDeltaTime);
 
             // update animator if using character
             if (_hasAnimator)
@@ -316,7 +329,7 @@ namespace StarterAssets
                 }
 
                 // Jump
-                if (input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_INPUT_jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -331,7 +344,7 @@ namespace StarterAssets
                 // jump timeout
                 if (_jumpTimeoutDelta >= 0.0f)
                 {
-                    _jumpTimeoutDelta -= Time.deltaTime;
+                    _jumpTimeoutDelta -= Time.fixedDeltaTime;
                 }
             }
             else
@@ -342,7 +355,7 @@ namespace StarterAssets
                 // fall timeout
                 if (_fallTimeoutDelta >= 0.0f)
                 {
-                    _fallTimeoutDelta -= Time.deltaTime;
+                    _fallTimeoutDelta -= Time.fixedDeltaTime;
                 }
                 else
                 {
@@ -354,13 +367,13 @@ namespace StarterAssets
                 }
 
                 // if we are not grounded, do not jump
-                input.jump = false;
+                _INPUT_jump = false;
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
             if (_verticalVelocity < _terminalVelocity)
             {
-                _verticalVelocity += Gravity * Time.deltaTime;
+                _verticalVelocity += Gravity * Time.fixedDeltaTime;
             }
         }
 
@@ -373,8 +386,8 @@ namespace StarterAssets
 
         private void OnDrawGizmosSelected()
         {
-            Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-            Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+            Color transparentGreen = new(0.0f, 1.0f, 0.0f, 0.35f);
+            Color transparentRed = new(1.0f, 0.0f, 0.0f, 0.35f);
 
             if (Grounded) Gizmos.color = transparentGreen;
             else Gizmos.color = transparentRed;
@@ -403,6 +416,92 @@ namespace StarterAssets
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
+        }
+
+        public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
+        {
+            switch (actionName)
+            {
+                case "move":
+                    if (context.performed || context.canceled)
+                    {
+                        _INPUT_move = context.ReadValue<Vector2>();
+                    }
+                    return true;
+                case "speed":
+                    if (context.performed)
+                    {
+                        _INPUT_sprint = true;
+                        return true;
+                    }
+                    else if (context.canceled)
+                    {
+                        _INPUT_sprint = false;
+                        return true;
+                    }
+                    break;
+
+                case "camera":
+                    // if (context.performed)
+                    // {
+                    //     _INPUT_look = context.ReadValue<Vector2>();
+                    //     return true;
+                    // }
+                    break;
+            }
+
+            _INPUT_isAnalogMovement = _INPUT_move.sqrMagnitude > _threshold;
+
+            return false;
+        }
+
+        public void OnInputContextEntered(InputContext context)
+        {
+        }
+
+        public void OnInputContextExited(InputContext context)
+        {
+            _INPUT_move = Vector2.zero;
+            _INPUT_look = Vector2.zero;
+            _INPUT_sprint = false;
+            _INPUT_jump = false;
+            _INPUT_isAnalogMovement = false;
+        }
+
+        public void OnInputContextPaused(InputContext context)
+        {
+        }
+
+        public void OnInputContextResumed(InputContext context)
+        {
+        }
+
+        /// <summary>
+        /// Teleports the player to a new position and rotation while properly handling CharacterController state
+        /// </summary>
+        /// <param name="position">Target position</param>
+        /// <param name="rotation">Target rotation</param>
+        public void TeleportTo(Vector3 position, Quaternion rotation)
+        {
+            // Temporarily disable CharacterController to prevent physics interference
+            bool wasEnabled = _controller.enabled;
+            _controller.enabled = false;
+
+            // Clear any residual movement state
+            _verticalVelocity = 0f;
+            _speed = 0f;
+            _animationBlend = 0f;
+
+            // Set new position and rotation
+            transform.SetPositionAndRotation(position, rotation);
+
+            // Re-enable CharacterController if it was previously enabled
+            if (wasEnabled)
+            {
+                _controller.enabled = true;
+            }
+
+            MyLogger<ThirdPersonController>.StaticLog($"Player teleported to position: {position}, rotation: {rotation}");
         }
     }
 }

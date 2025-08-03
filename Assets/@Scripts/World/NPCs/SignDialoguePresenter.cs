@@ -3,7 +3,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game
+namespace ComBots
 {
     /// <summary>
     /// Attach this to a sign and modify the sign text and on interaction with the player it'll show a simple

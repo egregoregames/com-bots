@@ -1,4 +1,4 @@
-namespace Game.UI.src.SocialyteUI
+namespace ComBots.UI.src.SocialyteUI
 {
     public class SocialyteCategoryTab : CategoryTab
     {

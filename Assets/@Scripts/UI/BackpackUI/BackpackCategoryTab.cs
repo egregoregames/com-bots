@@ -1,4 +1,4 @@
-namespace Game.UI.src.BackpackUI
+namespace ComBots.UI.src.BackpackUI
 {
     public class BackpackCategoryTab : CategoryTab
     {

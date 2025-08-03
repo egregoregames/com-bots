@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Game.UI.src.BackpackUI
+namespace ComBots.UI.src.BackpackUI
 {
     public class BackpackPanel : MenuPanel
     {

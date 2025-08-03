@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.UI.src.MapUI
+namespace ComBots.UI.src.MapUI
 {
     public class MapPanel : MenuPanel
     {

@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.Battles.Effects.AttackMultiplierEffect
+namespace ComBots.Battles.Effects.AttackMultiplierEffect
 {
     [CreateAssetMenu(menuName = "Effects/Attack Multiplier Effect", fileName = "Attack Multiplier Effect")]
     public class AttackMultiplierEffect : AttackModifyingEffect

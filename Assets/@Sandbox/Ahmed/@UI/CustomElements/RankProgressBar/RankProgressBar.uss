@@ -1,0 +1,68 @@
+:root {
+}
+
+#RankProgressBar Label {
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+    margin-top: 21px;
+    font-size: 23px;
+    left: -32px;
+    margin-left: -85px;
+}
+
+#RankProgressBar .unity-progress-bar__background {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/10-Rank%20Experience%20Container.png?fileID=2800000&guid=f55235b6b37583d47a4156280f027a06&type=3#10-Rank Experience Container");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    height: auto;
+    flex-grow: 1;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+#RankProgressBar .unity-progress-bar__progress {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/11-Rank%20Experience%20Bar.png?fileID=21300000&guid=072998234e963c246ad3afa4e0f43efd&type=3#11-Rank Experience Bar");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-slice-type: sliced;
+    -unity-slice-scale: 0.25px;
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+#RankProgressBar .unity-progress-bar__container {
+    flex-grow: 1;
+    min-width: auto;
+    min-height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+}

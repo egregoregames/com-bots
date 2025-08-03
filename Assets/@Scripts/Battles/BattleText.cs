@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Game.Managers;
+using ComBots.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Battles.BattleUI
+namespace ComBots.Battles.BattleUI
 {
     public class BattleText : Singleton<BattleText>
     {

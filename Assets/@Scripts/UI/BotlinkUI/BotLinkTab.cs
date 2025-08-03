@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-namespace Game.UI.src.BotlinkUI
+namespace ComBots.UI.src.BotlinkUI
 {
     public class BotLinkTab : MenuTab
     {

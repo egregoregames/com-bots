@@ -1,42 +1,50 @@
+using ComBots.Game.Players;
+using ComBots.Game.StateMachine;
+using ComBots.Game.Worlds.Rooms;
+using ComBots.Logs;
 using StarterAssets;
 using UnityEngine;
 
-
-public class SelectionPortal : Portal
+namespace ComBots.Game.Portals
 {
-    public SelectionPortal nextPortal;
-    public UISo uiSo;
-    public Room[] rooms;
-    public string cancelText;
-    public string optionMessage;
-    
-    Room _roomSelected;
-    protected override void OnPlayerEnter(GameObject playerWhoEntered)
+    public class SelectionPortal : Portal
     {
-        player = playerWhoEntered;
-        
-        uiSo.PlayerEnteredRoomSelector?.Invoke(rooms, OnRoomSelected, cancelText, optionMessage);
-    }
-    
-    private void OnRoomSelected(Room room)
-    {
-        _roomSelected = room;
-        player.GetComponent<ThirdPersonController>().enabled = false;
-        
-        uiSo.TriggerAreaChangeTransition?.Invoke(TeleportPlayerToRoom, ReleasePlayerMovement, room.bannerName);
-    }
+        public SelectionPortal nextPortal;
+        public UISo uiSo;
+        public Room[] rooms;
+        public string cancelText;
+        public string optionMessage;
 
-    void ReleasePlayerMovement()
-    {
-        
-        player.GetComponent<ThirdPersonController>().AllowPlayerInput();
+        private Room _roomSelected;
 
-    }
-    
-    private void TeleportPlayerToRoom()
-    {
-        _roomSelected.TeleportPlayerToRoom(player);
-        
-        uiSo.SoundSelected?.Invoke(_roomSelected.clip);
+        protected override void OnPlayerEnter(Player player)
+        {
+            Player = player;
+            //uiSo.PlayerEnteredRoomSelector?.Invoke(rooms, OnRoomSelected, cancelText, optionMessage);
+            string[] options = new string[rooms.Length];
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                options[i] = rooms[i].optionName;
+            }
+            State_Dialogue_Args.DialogueOptions dialogueOptions = new (options, cancelText, OnRoomSelected);
+            State_Dialogue_Args args = new (optionMessage, null, dialogueOptions);
+            GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
+        }
+
+        private void OnRoomSelected(int index)
+        {
+            _roomSelected = index > 0 ? rooms[index - 1] : null;
+            if (_roomSelected != null)
+            {
+                MyLogger<SelectionPortal>.StaticLog($"Selected room: {_roomSelected.name}");
+                State_AreaTransition_ToRoom_Args args = new(_roomSelected, Player);
+                GameStateMachine.I.SetState<GameStateMachine.State_AreaTransition>(args);
+            }
+            else
+            {
+                MyLogger<SelectionPortal>.StaticLog("No room selected, returning to previous state.");
+            }
+            Player = null;
+        }
     }
 }

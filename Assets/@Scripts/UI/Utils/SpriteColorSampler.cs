@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.UI
+namespace ComBots.UI
 {
     public class SpriteColorSampler
     {
