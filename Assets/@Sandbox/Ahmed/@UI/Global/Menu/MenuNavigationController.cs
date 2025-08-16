@@ -28,11 +28,11 @@ namespace ComBots.Global.UI.Menu
         [SerializeField] private NavigationItemConfig[] _navigationItemConfigs;
 
         // Description elements
+        private VisualElement _VE_root;
         private Label _VE_descriptionLabel;
         private Label _VE_headerLabel;
         private VisualElement _VE_description;
 
-        private VisualElement _VE_root;
         private List<VisualElement> _VE_navItems;
         private int _selectedIndex = 0;
 
@@ -74,7 +74,6 @@ namespace ComBots.Global.UI.Menu
                     _VE_navItems[_selectedIndex].RemoveFromClassList(CLASS_NAV_ITEM_HIGHLIGHTED);
                 }
             }
-
         }
 
         public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)

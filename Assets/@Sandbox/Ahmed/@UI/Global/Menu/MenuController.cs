@@ -18,11 +18,17 @@ namespace ComBots.Global.UI.Menu
     {
         protected override string UserInterfaceName => "Game.Menu";
 
+        private const string NAME_GLOBAL = "Global";
+        private const string CLASS_BOTTOM = "bottom";
+        private const string CLASS_BOTTOM_HIDDEN = "bottom-hidden";
+        private const string CLASS_BOTTOM_PEAKING = "bottom-peaking";
+
         public override Dependency Dependency => Dependency.Independent;
 
         [Header("UI")]
         [SerializeField] private UIDocument uiDocument;
-        private VisualElement VE_root;
+        private VisualElement _VE_root;
+        private VisualElement _VE_Bottom;
         private const string CLASS_ROOT_HIDDEN = "menu-hidden";
 
         [SerializeField] MenuNavigationController _navigationController;
@@ -30,28 +36,60 @@ namespace ComBots.Global.UI.Menu
 
         protected override void Init()
         {
-            VE_root = uiDocument.rootVisualElement.Q<VisualElement>(name = "Global");
+            _VE_root = uiDocument.rootVisualElement.Q<VisualElement>(name = NAME_GLOBAL);
+            _VE_Bottom = _VE_root.Q<VisualElement>(className: CLASS_BOTTOM);
         }
 
         public override void Dispose()
         {
-            VE_root = null;
+            _VE_root = null;
         }
 
         public void SetActive(bool isActive)
         {
             MyLogger<MenuController>.StaticLog($"SetActive({isActive})");
-            if (isActive)
-            {
-                VE_root.EnableInClassList(CLASS_ROOT_HIDDEN, false);
-            }
-            else
-            {
-                VE_root.EnableInClassList(CLASS_ROOT_HIDDEN, true);
-            }
+            _VE_root.EnableInClassList(CLASS_ROOT_HIDDEN, !isActive);
+            SetBottomState(isActive ? BottomState.Visible : BottomState.Peaking);
             _isMenuOpen = isActive;
             _navigationController.SetActive(isActive);
             //GlobalConfig.I.UISo.OnCameraTransition?.Invoke(_isMenuOpen);
+        }
+
+        public void SetBottomBarVisible(bool isVisible)
+        {
+            if (isVisible)
+            {
+                SetBottomState(_isMenuOpen ? BottomState.Visible : BottomState.Peaking);
+            }
+            else
+            {
+                SetBottomState(BottomState.Hidden);
+            }
+        }
+
+        private enum BottomState
+        {
+            Peaking,
+            Hidden,
+            Visible
+        }
+        private void SetBottomState(BottomState state)
+        {
+            switch (state)
+            {
+                case BottomState.Peaking:
+                    _VE_Bottom.EnableInClassList(CLASS_BOTTOM_PEAKING, true);
+                    _VE_Bottom.EnableInClassList(CLASS_BOTTOM_HIDDEN, false);
+                    break;
+                case BottomState.Hidden:
+                    _VE_Bottom.EnableInClassList(CLASS_BOTTOM_PEAKING, false);
+                    _VE_Bottom.EnableInClassList(CLASS_BOTTOM_HIDDEN, true);
+                    break;
+                case BottomState.Visible:
+                    _VE_Bottom.EnableInClassList(CLASS_BOTTOM_PEAKING, false);
+                    _VE_Bottom.EnableInClassList(CLASS_BOTTOM_HIDDEN, false);
+                    break;
+            }
         }
 
         private void Input_Pause()

@@ -29,6 +29,14 @@
     transition-duration: 0.4s;
 }
 
+.bottom-peaking {
+    translate: 0 129px;
+}
+
+.bottom-hidden {
+    translate: 0 186px;
+}
+
 .body {
     flex-grow: 1;
 }
@@ -169,15 +177,8 @@
     transition-timing-function: ease-in-out;
 }
 
-.menu-hidden #Top {
+.menu-hidden .top {
     translate: 0 -100%;
-    transform-origin: bottom;
-    transition-duration: 0.4s;
-    transition-timing-function: ease-in-out-cubic;
-}
-
-.menu-hidden #Bottom {
-    translate: 0 100%;
     transform-origin: bottom;
     transition-duration: 0.4s;
     transition-timing-function: ease-in-out-cubic;
@@ -197,7 +198,7 @@
     transition-timing-function: ease-in-out-back;
 }
 
-.menu-hidden #Background {
+.menu-hidden .background {
     transform-origin: left;
     translate: 0 -32px;
     transition-duration: 0.4s;

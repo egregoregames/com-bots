@@ -33,6 +33,9 @@ namespace ComBots.Game.StateMachine
                 if (canEnter)
                 {
                     GlobalUIRefs.I.DialogueController.SetActive((State_Dialogue_Args)args);
+                    // Hide the menu's bottom bar
+                    GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
+                    // Push the dialogue input context
                     InputManager.I.PushContext(_stateMachine._dialogueContextData, DialogueInputHandler.I);
                 }
 
@@ -46,6 +49,8 @@ namespace ComBots.Game.StateMachine
                 // Inform the dialogue controller of state exit & deactivate it
                 GlobalUIRefs.I.DialogueController.OnExit();
                 GlobalUIRefs.I.DialogueController.SetInactive();
+                // Display back the menu bottom bar
+                GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
 
                 return true;
             }

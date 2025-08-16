@@ -432,15 +432,12 @@ namespace StarterAssets
                     if (context.performed)
                     {
                         _INPUT_sprint = true;
-                        return true;
                     }
                     else if (context.canceled)
                     {
                         _INPUT_sprint = false;
-                        return true;
                     }
-                    break;
-
+                    return true;
                 case "camera":
                     // if (context.performed)
                     // {
