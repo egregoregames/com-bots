@@ -101,14 +101,14 @@ namespace ComBots.Global.UI.Dialogue
             {
                 if (_args.OptionsArgs != null && _args.OptionsArgs.Callback != null)
                 {
-                    int selectionIndex = IsSelectingCancelOption ? -1 : _selectionIndex;
+                    int selectionIndex = IsSelectingCancelOption ? -1 : _selectionIndex - 1; // Subtract 1 because cancel is at index 0
                     _args.OptionsArgs.Callback.Invoke(selectionIndex);
                 }
                 _args = null;
             }
         }
 
-        private bool IsSelectingCancelOption => _selectionIndex == _totalOptions - 1;
+        private bool IsSelectingCancelOption => _selectionIndex == 0;
 
         public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
         {
@@ -182,9 +182,9 @@ namespace ComBots.Global.UI.Dialogue
             if (args.OptionsArgs != null)
             {
                 _totalOptions = args.OptionsArgs.Options.Length + 1; // +1 for cancel option
-                // Select the "cancel" option (at the very bottom of the list)
-                _selectionIndex = _totalOptions - 1;
-                _scrollOffset = Mathf.Max(0, _totalOptions - MAX_VISIBLE_OPTIONS);
+                // Select the cancel option (at index 0)
+                _selectionIndex = 0;
+                _scrollOffset = 0;
                 // Create visual elements (limited to MAX_VISIBLE_OPTIONS)
                 int visibleCount = Mathf.Min(_totalOptions, MAX_VISIBLE_OPTIONS);
                 SetOptionCount(visibleCount);
@@ -217,7 +217,7 @@ namespace ComBots.Global.UI.Dialogue
 
         private void Input_Cancel()
         {
-            _selectionIndex = _totalOptions - 1; // Reset to cancel option
+            _selectionIndex = 0; // Reset to cancel option (now at index 0)
             GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
         }
 
@@ -228,14 +228,14 @@ namespace ComBots.Global.UI.Dialogue
             {
                 if (!IsSelectingCancelOption) // If not the cancel option
                 {
-                    MyLogger<DialogueController>.StaticLog($"Confirming selection: {_selectionIndex} (is not cancel option)");
+                    MyLogger<DialogueController>.StaticLog($"Confirming selection: {_selectionIndex - 1} (is not cancel option)"); // Subtract 1 for actual option index
                     var args = _args;
                     _args = null; // Clear args after handling so that OnExit doesn't invoke the callback again
-                    args.OptionsArgs.Callback.Invoke(_selectionIndex);
+                    args.OptionsArgs.Callback.Invoke(_selectionIndex - 1); // Subtract 1 because cancel is at index 0
                     return;
                 }
             }
-            MyLogger<DialogueController>.StaticLog($"Confirming selection: {_selectionIndex} (is cancel option)");
+            MyLogger<DialogueController>.StaticLog($"Confirming selection: -1 (is cancel option)");
 
             // Go back to playing state
             GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
@@ -306,15 +306,15 @@ namespace ComBots.Global.UI.Dialogue
 
                 int dataIndex = i + _scrollOffset;
 
-                if (dataIndex == _args.OptionsArgs.Options.Length)
+                if (dataIndex == 0)
                 {
-                    // Cancel option (always at the very bottom of the list)
+                    // Cancel option (now at index 0)
                     _optionControllers[i].Setup(dataIndex, _args.OptionsArgs.CancelOption);
                 }
-                else if (dataIndex < _args.OptionsArgs.Options.Length)
+                else if (dataIndex <= _args.OptionsArgs.Options.Length)
                 {
-                    // Regular option
-                    _optionControllers[i].Setup(dataIndex, _args.OptionsArgs.Options[dataIndex]);
+                    // Regular option (adjusted for cancel being at index 0)
+                    _optionControllers[i].Setup(dataIndex, _args.OptionsArgs.Options[dataIndex - 1]);
                 }
             }
 
@@ -345,8 +345,8 @@ namespace ComBots.Global.UI.Dialogue
             {
                 for (int i = _optionControllers.Count - 1; i >= count; i--)
                 {
-                    _optionControllers[i].VE = null;
                     _VE_optionParent.Remove(_optionControllers[i].VE);
+                    _optionControllers[i].VE = null;
                     _optionControllers.RemoveAt(i);
                 }
             }
@@ -361,15 +361,21 @@ namespace ComBots.Global.UI.Dialogue
                     InstantiateOption();
                 }
             }
-            //Set rounded corners
-            if (!_optionControllers[0].VE.ClassListContains(CLASS_OPTION_TOP_ROUNDED))
+            
+            // Only set rounded corners if we have options
+            if (_optionControllers.Count > 0)
             {
-                _optionControllers[0].VE.AddToClassList(CLASS_OPTION_TOP_ROUNDED);
+                //Set rounded corners
+                if (!_optionControllers[0].VE.ClassListContains(CLASS_OPTION_TOP_ROUNDED))
+                {
+                    _optionControllers[0].VE.AddToClassList(CLASS_OPTION_TOP_ROUNDED);
+                }
+                if (!_optionControllers[^1].VE.ClassListContains(CLASS_OPTION_BOTTOM_ROUNDED))
+                {
+                    _optionControllers[^1].VE.AddToClassList(CLASS_OPTION_BOTTOM_ROUNDED);
+                }
             }
-            if (!_optionControllers[^1].VE.ClassListContains(CLASS_OPTION_BOTTOM_ROUNDED))
-            {
-                _optionControllers[^1].VE.AddToClassList(CLASS_OPTION_BOTTOM_ROUNDED);
-            }
+            
             // Move overflow arrows the the bottom of the childen list
             _VE_optionParent.Remove(_VE_overflowBottom);
             _VE_optionParent.Add(_VE_overflowBottom);

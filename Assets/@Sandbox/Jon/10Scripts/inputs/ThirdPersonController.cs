@@ -214,23 +214,23 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
-            // if there is an input and camera position is not fixed
-            if (_INPUT_look.sqrMagnitude >= _threshold && !LockCameraPosition)
-            {
-                //Don't multiply mouse input by Time.deltaTime;
-                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+            // // if there is an input and camera position is not fixed
+            // if (_INPUT_look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            // {
+            //     //Don't multiply mouse input by Time.deltaTime;
+            //     float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _INPUT_look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _INPUT_look.y * deltaTimeMultiplier;
-            }
+            //     _cinemachineTargetYaw += _INPUT_look.x * deltaTimeMultiplier;
+            //     _cinemachineTargetPitch += _INPUT_look.y * deltaTimeMultiplier;
+            // }
 
-            // clamp our rotations so our values are limited 360 degrees
-            _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+            // // clamp our rotations so our values are limited 360 degrees
+            // _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+            // _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-            // Cinemachine will follow this target
-            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
-                _cinemachineTargetYaw, 0.0f);
+            // // Cinemachine will follow this target
+            // CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
+            //     _cinemachineTargetYaw, 0.0f);
         }
 
         private void Move()
@@ -285,14 +285,22 @@ namespace StarterAssets
             // if there is a move input rotate player when the player is moving
             if (_INPUT_move != Vector2.zero)
             {
+                // Calculate rotation relative to camera for movement direction
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                 _mainCamera.transform.eulerAngles.y;
+                
+                // Use smooth rotation instead of instant rotation
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
-                // rotate to face input direction relative to camera position
+                
+                // Apply the smoothed rotation
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
-
+            else
+            {
+                // When not moving, preserve current rotation (don't override it)
+                _targetRotation = transform.eulerAngles.y;
+            }
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
@@ -439,12 +447,21 @@ namespace StarterAssets
                     }
                     return true;
                 case "camera":
-                    // if (context.performed)
-                    // {
-                    //     _INPUT_look = context.ReadValue<Vector2>();
-                    //     return true;
-                    // }
-                    break;
+                    if (context.performed || context.canceled)
+                    {
+                        _INPUT_look = context.ReadValue<Vector2>();
+                    }
+                    return true;
+                case "jump":
+                    if (context.performed)
+                    {
+                        _INPUT_jump = true;
+                    }
+                    else if (context.canceled)
+                    {
+                        _INPUT_jump = false;
+                    }
+                    return true;
             }
 
             _INPUT_isAnalogMovement = _INPUT_move.sqrMagnitude > _threshold;
