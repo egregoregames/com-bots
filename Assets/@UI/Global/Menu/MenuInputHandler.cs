@@ -11,8 +11,8 @@ namespace ComBots.Global.UI.Menu
 
         public override Dependency Dependency => Dependency.Independent;
 
-        [SerializeField] private MenuController _menuController;
-        [SerializeField] private MenuNavigationController _navigationController;
+        [SerializeField] private ComBots.Sandbox.Global.UI.Menu.MenuController _menuController;
+        [SerializeField] private ComBots.Sandbox.Global.UI.Menu.MenuNavigationController _navigationController;
 
         protected override void Init()
         {

@@ -7,7 +7,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ComBots.UI.Game.Players
+namespace ComBots.Game.Players
 {
     public class PlayerInputHandler : EntryPointMono, IInputHandler
     {
@@ -15,7 +15,8 @@ namespace ComBots.UI.Game.Players
 
         public override Dependency Dependency => Dependency.Independent;
 
-        [SerializeField] private ThirdPersonController _controller;
+        [Header("Player")]
+        [SerializeField] private Player _player;
 
         public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
         {
@@ -28,27 +29,35 @@ namespace ComBots.UI.Game.Players
                     }
                     return true;
             }
-            return _controller.HandleInput(context, actionName, inputFlag);
+            if (_player.Interactor.HandleInput(context, actionName, inputFlag))
+            {
+                return true;
+            }
+            if (_player.Controller.HandleInput(context, actionName, inputFlag))
+            {
+                return true;
+            }
+            return false;
         }
 
         public void OnInputContextEntered(InputContext context)
         {
-            _controller.OnInputContextEntered(context);
+            _player.Controller.OnInputContextEntered(context);
         }
 
         public void OnInputContextExited(InputContext context)
         {
-            _controller.OnInputContextExited(context);
+            _player.Controller.OnInputContextExited(context);
         }
 
         public void OnInputContextPaused(InputContext context)
         {
-            _controller.OnInputContextPaused(context);
+            _player.Controller.OnInputContextPaused(context);
         }
 
         public void OnInputContextResumed(InputContext context)
         {
-            _controller.OnInputContextResumed(context);
+            _player.Controller.OnInputContextResumed(context);
         }
 
         protected override void Init()
@@ -62,7 +71,7 @@ namespace ComBots.UI.Game.Players
             {
                 I = null;
             }
-            _controller = null;
+            _player = null;
         }
     }
 }

@@ -1,5 +1,5 @@
+using ComBots.Game.Players;
 using ComBots.Inputs;
-using ComBots.UI.Game.Players;
 using ComBots.Utils.StateMachines;
 
 namespace ComBots.Game.StateMachine

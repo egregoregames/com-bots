@@ -1,0 +1,333 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/@UI/Global/Menu/Game.Menu.uss?fileID=7433441132597879392&amp;guid=1560e212259395843adbecfeb6c90951&amp;type=3#Game.Menu" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Game.MenuPanels.uss?fileID=7433441132597879392&amp;guid=725b9b5bc2a08e2449b6352b26f70857&amp;type=3#Game.MenuPanels" />
+    <Style src="project://database/Assets/@UI/Core/Text.uss?fileID=7433441132597879392&amp;guid=bd647a314724cec42b6d7398cef331b5&amp;type=3#Text" />
+    <Style src="project://database/Assets/@UI/CustomElements/RankProgressBar/RankProgressBar.uss?fileID=7433441132597879392&amp;guid=5f47dd9708225884bb31fe752b0b6f74&amp;type=3#RankProgressBar" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Planner.uss?fileID=7433441132597879392&amp;guid=6cb08fb2b1429824ebed4968ec15c9aa&amp;type=3#Global.Menu.Planner" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Botlink.uss?fileID=7433441132597879392&amp;guid=82e0aa5eff1acf5e197c1186dfb9119b&amp;type=3#Global.Menu.Botlink" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Backpack.uss?fileID=7433441132597879392&amp;guid=1d513cb878ddab6db82447f2ea0f4567&amp;type=3#Global.Menu.Backpack" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Map.uss?fileID=7433441132597879392&amp;guid=9b91f7c0092bc8c0f93d54ae9537ebfd&amp;type=3#Global.Menu.Map" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Socialyte.uss?fileID=7433441132597879392&amp;guid=aa37966b1a47565799cc3c5b78b34f95&amp;type=3#Global.Menu.Socialyte" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Settings.uss?fileID=7433441132597879392&amp;guid=e793fbde81e1f3b3480f2e7dc5ad902a&amp;type=3#Global.Menu.Settings" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Save.uss?fileID=7433441132597879392&amp;guid=069d1d14db4837a43a0c03a6a8efa622&amp;type=3#Global.Menu.Save" />
+    <ui:VisualElement name="Global" class="menu-hidden" style="flex-grow: 1;">
+        <ui:VisualElement name="Top" class="top" style="flex-direction: row; justify-content: space-between; height: 105px; padding-right: 23px; padding-left: 23px; padding-top: 19px;">
+            <ui:VisualElement name="RankProgress" style="flex-grow: 0; flex-shrink: 0; width: 267px; align-self: flex-start; height: 29px;">
+                <RankProgressBar title="RANK 10" name="RankProgressBar" value="47.23" class="label-digits" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; width: auto; height: 35px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 1; flex-shrink: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="TimeLocation" style="flex-grow: 0; align-items: center; justify-content: center; align-content: center; position: absolute; left: 50%; flex-shrink: 0; align-self: flex-start; translate: -50% 0;">
+                <ui:Label text="Thu 10:17 PM (Early Fall)" name="TimeLabel" class="label" style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255); font-size: 23px;" />
+                <ui:VisualElement name="Location" style="flex-grow: 0; flex-direction: row; flex-shrink: 0;">
+                    <ui:VisualElement name="Icon" style="flex-grow: 0; flex-shrink: 0; width: 22px; height: 22px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/12-Location%20Icon.png?fileID=2800000&amp;guid=95d157407c2f2764cb19ac93703ee15b&amp;type=3#12-Location Icon&quot;); margin-right: 4px;" />
+                    <ui:Label text="Pauli Arena" name="LocationLabel" class="label" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; color: rgb(255, 255, 255); font-size: 23px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 0; width: auto; justify-content: center; align-items: flex-end; align-self: flex-start;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 0; flex-shrink: 0; flex-direction: row; margin-bottom: 5px;">
+                    <ui:VisualElement style="flex-grow: 0; flex-shrink: 10; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/13-Credits%20Icon.png?fileID=2800000&amp;guid=0652ccf416f5ae944a3d0b4ffc81e5aa&amp;type=3#13-Credits Icon&quot;); align-self: center; margin-right: 7px;" />
+                    <ui:Label text="120.0" class="label-digits" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: -6px; margin-left: 0; font-size: 18px; -unity-font-style: normal;" />
+                </ui:VisualElement>
+                <ui:Label text="23,000" name="Label" class="label-digits" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: -6px; margin-left: 0; font-size: 18px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Body" class="body">
+            <ui:VisualElement name="BackpackLayout" class="backpack-layout" style="display: none;">
+                <ui:VisualElement name="BackpackScreen" class="backpack-screen">
+                    <ui:VisualElement name="BackpackHeader" class="backpack-header">
+                        <ui:Label name="BackpackHeaderTitle" text="BACKPACK" class="backpack-header-title" />
+                        <ui:VisualElement name="BackpackHeaderIcon" class="backpack-header-icon" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="BackpackTabs" class="backpack-tabs">
+                        <ui:VisualElement id="KeyTab" name="KeyTab" class="backpack-tab backpack-tab-active">
+                            <ui:Label text="KEY" class="backpack-tab-label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement id="BattleTab" name="BattleTab" class="backpack-tab">
+                            <ui:Label text="BATTLE" class="backpack-tab-label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement id="GeneralTab" name="GeneralTab" class="backpack-tab">
+                            <ui:Label text="GENERAL" class="backpack-tab-label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement id="HardwareTab" name="HardwareTab" class="backpack-tab">
+                            <ui:Label text="HARDWARE" class="backpack-tab-label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement id="PartsTab" name="PartsTab" class="backpack-tab">
+                            <ui:Label text="PARTS" class="backpack-tab-label" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="BackpackBody" class="backpack-body">
+                        <ui:VisualElement name="BackpackGrid" class="backpack-grid">
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot backpack-slot-filled">
+                                <ui:VisualElement name="BackpackItemIcon" class="backpack-item-icon" style="background-image: url(&apos;project://database/Assets/@Art/Sprites/Items/RepairKit.png&apos;);" />
+                                <ui:Label text="5" class="backpack-item-quantity" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="BackpackDetail" class="detail-panel detail-panel-backpack">
+                    <ui:VisualElement name="BackpackDetailHeader" class="detail-header">
+                        <ui:VisualElement class="detail-header-icon" />
+                        <ui:Label text="REPAIR KIT" class="detail-header-title" />
+                        <ui:Label text="x5" class="detail-header-quantity" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="detail-content">
+                        <ui:Label name="BackpackDetailDescription" text="A box of various repair supplies. Restores some of a Bot&apos;s Endurance." class="detail-desc" />
+                        <ui:VisualElement name="BackpackDetailImage" class="detail-image" style="background-image: url(&apos;project://database/Assets/@Art/Sprites/Items/RepairKit.png&apos;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="SettingsLayout" class="settings-layout" style="display: none;">
+                <ui:VisualElement name="SettingsScreen" class="settings-screen" style="background-color: rgb(192, 192, 192);">
+                    <ui:VisualElement name="SettingsHeader" class="settings-header" style="background-color: rgb(190, 205, 213); width: 690px; justify-content: space-between; align-self: auto; align-content: flex-start; align-items: auto; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Settings/00-Settings%20Banner.png?fileID=2800000&amp;guid=3835f074c4fa9e84faf3b8f6651802ed&amp;type=3#00-Settings Banner&quot;); padding-bottom: 2px; padding-top: 2px; margin-bottom: 0; height: 101px;" />
+                    <ui:VisualElement name="SettingsBody" class="settings-body" style="width: 70%;">
+                        <ui:VisualElement name="DisplaySection" class="settings-top-bar">
+                            <ui:Label text="DISPLAY" class="settings-section-title label" style="height: 45px; margin-left: 14px; margin-right: 0; padding-right: 0;" />
+                            <ui:VisualElement name="DisplayOptions" class="settings-options" style="position: absolute; justify-content: flex-start; align-self: center; align-content: flex-start; right: 0; flex-grow: 0; top: 24px;">
+                                <ui:VisualElement name="WindowedOption" class="settings-option settings-option-selected" style="background-color: rgb(142, 153, 159); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 215px;">
+                                    <ui:Label text="WINDOWED" class="settings-option-label label" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="FullscreenOption" class="settings-option" style="position: relative; background-color: rgb(255, 255, 255); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 215px; justify-content: center;">
+                                    <ui:Label text="FULLSCREEN" class="settings-option-label label" style="color: rgb(145, 156, 161); -unity-font-style: bold;" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="TextSpeedSection" class="settings-section">
+                            <ui:Label text="TEXT SPEED" class="settings-section-title label" />
+                            <ui:VisualElement name="TextSpeedOptions" class="settings-options">
+                                <ui:VisualElement name="SlowOption" class="settings-option" style="background-color: rgb(255, 255, 255); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                                    <ui:Label text="SLOW" class="settings-option-label label" style="color: rgb(145, 156, 161);" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="NormalOption" class="settings-option settings-option-selected" style="background-color: rgb(142, 153, 159); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                                    <ui:Label text="NORMAL" class="settings-option-label label" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="FastOption" class="settings-option" style="background-color: rgb(255, 255, 255); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                                    <ui:Label text="FAST" class="settings-option-label label" style="color: rgb(145, 156, 161); -unity-text-align: middle-center;" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="MusicVolumeSection" class="settings-section">
+                            <ui:Label text="MUSIC VOLUME" class="settings-section-title label" />
+                            <ui:VisualElement name="MusicVolumeSlider" class="settings-slider">
+                                <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                                    <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/no-sound.png?fileID=2800000&amp;guid=8b315e49a1b097b46ba7fbefa10cf6dc&amp;type=3#no-sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="MusicVolumeTrack" class="settings-slider-track" style="background-color: rgb(244, 244, 244);">
+                                    <ui:VisualElement name="MusicVolumeThumb" class="settings-slider-thumb" style="left: 60%; background-color: rgb(189, 204, 212);" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                                    <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/sound.png?fileID=2800000&amp;guid=5289167f2f112ad4fb3932dfb668d014&amp;type=3#sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="SfxVolumeSection" class="settings-section">
+                            <ui:Label text="SFX VOLUME" class="settings-section-title label" />
+                            <ui:VisualElement name="SfxVolumeSlider" class="settings-slider">
+                                <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                                    <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/no-sound.png?fileID=2800000&amp;guid=8b315e49a1b097b46ba7fbefa10cf6dc&amp;type=3#no-sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="SfxVolumeTrack" class="settings-slider-track" style="background-color: rgb(244, 244, 244);">
+                                    <ui:VisualElement name="SfxVolumeProgress" class="settings-slider-progress" style="width: 75%; background-color: rgb(244, 244, 244);" />
+                                    <ui:VisualElement name="SfxVolumeThumb" class="settings-slider-thumb" style="left: 75%; background-color: rgb(189, 204, 212);" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                                    <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/sound.png?fileID=2800000&amp;guid=5289167f2f112ad4fb3932dfb668d014&amp;type=3#sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="ControlsSection" class="settings-section">
+                            <ui:Label text="CONTROLS" class="settings-section-title label" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="SaveLayout" class="save-layout" style="display: none;">
+                <ui:VisualElement name="SaveDialog" class="save-dialog" style="width: 500px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; max-width: none; height: 100px;">
+                    <ui:VisualElement name="SaveHeader" class="save-header" style="width: 218px; align-items: center; align-self: flex-start; align-content: center; margin-left: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 30px; padding-left: -28px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/01-Save%20Banner.png?fileID=2800000&amp;guid=502e4ba156c77bb4bae0af5d17547caa&amp;type=3#01-Save Banner&quot;); position: absolute; top: -15px; left: 16px;" />
+                    <ui:VisualElement name="SaveBody" class="save-body">
+                        <ui:Label name="SaveQuestion" text="Would you like to save your progress?" class="save-question label" style="margin-left: 4px; -unity-text-align: middle-left; align-self: stretch;" />
+                        <ui:VisualElement name="SaveButtons" class="save-buttons" style="justify-content: space-around; width: 231px; align-items: stretch; align-self: auto; align-content: auto;">
+                            <ui:VisualElement name="YesButton" class="save-button save-button-yes" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/02-Save%20Button%20-%20Selected.png?fileID=2800000&amp;guid=fbb838e2162170b47af9476333aa70d9&amp;type=3#02-Save Button - Selected&quot;); height: 30px; width: 80px; -unity-text-align: upper-left; padding-right: 3px; padding-left: 3px; padding-top: 2px; padding-bottom: 2px; position: absolute; bottom: -45px; left: 15px;">
+                                <ui:Label text="YES" class="save-button-label label" style="justify-content: flex-start; align-content: flex-start; align-items: stretch; align-self: center; -unity-text-align: upper-center; padding-top: 4px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="NoButton" class="save-button save-button-no" style="width: 80px; height: 30px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/03-Save%20Button%20-%20Unselected.png?fileID=2800000&amp;guid=5ed4e00cb151d4a40a0b44764d84a225&amp;type=3#03-Save Button - Unselected&quot;); padding-top: 2px; padding-bottom: 2px; padding-left: 3px; padding-right: 3px; position: absolute; right: 15px; left: auto; bottom: -45px;">
+                                <ui:Label text="NO" class="save-button-label label" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="PlannerLayout" class="planner-layout" style="display: none;">
+                <ui:VisualElement name="PlannerScreen" class="planner-screen" style="padding-top: 0; padding-right: 0; padding-left: 0;">
+                    <ui:VisualElement name="PlannerHeader" class="planner-header" style="display: flex;" />
+                    <ui:VisualElement name="PlannerTabs" class="planner-tabs">
+                        <ui:VisualElement id="RequirementsTab" name="RequirementsTab" class="planner-tab tab-active" style="margin-right: 6px;">
+                            <ui:Label text="REQUIREMENTS" class="planner-tab-label label" />
+                            <ui:VisualElement class="planner-tab-indicator" />
+                        </ui:VisualElement>
+                        <ui:VisualElement id="ElectivesTab" name="ElectivesTab" class="planner-tab">
+                            <ui:Label text="ELECTIVES" class="planner-tab-label label" style="padding-top: 2px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PlannerList" class="planner-body">
+                        <ui:ScrollView name="Electives" class="planner-list planner-list-electives" style="display: none;">
+                            <ui:VisualElement class="planner-row planner-row-selected">
+                                <ui:VisualElement class="planner-row-bar" />
+                                <ui:Label text="INTRO TO BOTANY" class="planner-row-label" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="planner-row">
+                                <ui:Label text="ADVANCED PAINTING" class="planner-row-label" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="planner-row">
+                                <ui:Label text="MUSIC THEORY" class="planner-row-label" />
+                            </ui:VisualElement>
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="PlannerDetail" class="detail-panel detail-panel-planner">
+                    <ui:VisualElement name="PlannerDetailProgress" class="planner-detail-progress" style="width: 100%; height: 37px; padding-top: 0; margin-bottom: 9px; min-height: 37px;">
+                        <ui:VisualElement class="planner-progress-line planner-details-hline" />
+                        <ui:VisualElement name="Badge" class="planner-progress-badge" style="position: absolute;">
+                            <ui:Label text="1.0" class="label-digits planner-details-badge-label" />
+                            <ui:VisualElement class="planner-details-badge-star" />
+                        </ui:VisualElement>
+                        <ui:Label text="FINANCIAL LITERACY" class="planner-progress-title label" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-top: 8px; font-size: 17px; position: absolute; right: 18px; justify-content: flex-start;" />
+                    </ui:VisualElement>
+                    <ui:Label name="PlannerDetailDescription" text="You received a message on your OmniPhone from your Grandmother. She has set up an account for you at Los Servos Bank, but you&apos;ll have to get a Bank Card to access it." class="label planner-details-label" style="font-size: 27px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="BotlinkLayout" class="botlink-layout" style="display: none; justify-content: center;">
+                <ui:VisualElement name="BotlinkScreen" class="botlink-screen" style="padding-right: 0; padding-left: 0; padding-top: 0;">
+                    <ui:VisualElement name="BotlinkHeader" class="botlink-header" style="height: 100px;" />
+                    <ui:VisualElement name="BotlinkBody" class="botlink-body">
+                        <ui:VisualElement name="BotlinkGrid" class="botlink-grid" style="justify-content: space-evenly; align-items: auto; width: 592px; align-content: flex-start; flex-direction: row; align-self: center;">
+                            <ui:VisualElement name="Team" class="botlink-icon-selected botlink-item" />
+                            <ui:VisualElement name="Blueprint" class="botlink-item" />
+                            <ui:VisualElement name="Software" class="botlink-item" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/06-Software%20Tab%20-%20Unselected.png?fileID=2800000&amp;guid=7c04d8a695112f34d977fcc61dc58988&amp;type=3#06-Software Tab - Unselected&quot;);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="BotlinkDetail" class="detail-panel detail-panel-botlink" style="padding-left: 0; padding-right: 0;">
+                    <ui:VisualElement name="BotlinkDetailHeader" class="botlink-detail-header" style="width: 100%;">
+                        <ui:VisualElement class="botlink-header-line botlink-header-hline" style="background-color: rgb(63, 169, 245);" />
+                        <ui:Label text="TEAM" class="botlink-header-title label" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-top: 7px; font-size: 17px; position: absolute; right: 18px; width: 214px; background-color: rgb(63, 169, 245); padding-right: 6px; padding-left: 6px; padding-bottom: 5px;">
+                            <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/08-Bot%20Icon%20-%20Small.png?fileID=2800000&amp;guid=1d2a93ebd53b26047a58123d68f3a09d&amp;type=3#08-Bot Icon - Small&quot;); width: 19px; height: 19px; align-self: flex-end;" />
+                        </ui:Label>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="detail-content">
+                        <ui:Label name="BotlinkDetailDescription" text="Check the stats and Hardware of you and your teammates&apos; Bots, and change their Software and Abilities." class="label detail-desc" style="font-size: 27px; color: rgb(0, 0, 0);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="SocialyteLayout" class="socialyte-layout" style="display: none;">
+                <ui:VisualElement name="SocialyteScreen" class="socialyte-screen">
+                    <ui:VisualElement name="SocialyteHeader" class="socialyte-header" />
+                    <ui:VisualElement name="SocialyteTabs" class="socialyte-tabs" style="width: 100%; justify-content: center; align-content: center; padding-right: 0;">
+                        <ui:VisualElement id="ConnectionsTab" name="ConnectionsTab" class="socialyte-tab socialyte-tab-active" style="align-self: center; align-content: center; margin-right: 8px;">
+                            <ui:Label text="CONNECTIONS" class="socialyte-tab-label label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement id="FeedTab" name="FeedTab" class="socialyte-tab">
+                            <ui:Label text="FEED" class="socialyte-tab-label label" style="color: rgb(244, 81, 108); margin-top: 4px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SocialyteBody" class="socialyte-body" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SocialyteDetail" class="detail-panel detail-panel-socialyte" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Socialyte/08-Socialyte%20Textbox.png?fileID=2800000&amp;guid=9a6943437a96db34c9ca63c9a8ea3409&amp;type=3#08-Socialyte Textbox&quot;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                    <ui:Label text="While only in his second year at GCA, Simon has already made a name for&#10;himself as one of the schoolís strongest Meisters. When leading Ukibot in&#10;battle, Simon pursues a strategy of overwhelming strength, keeping each&#10;opponent on their back foot from the start. In recognition of Simonís&#10;potential, Dr. Yama entrusted the Solex of Strength to him.&#10;&#10;" name="DescriptionLabel" style="position: absolute; top: 158px; left: -5px; padding-right: 12px; padding-left: 33px; font-size: 16px; flex-grow: 1; width: 709px; -unity-text-align: upper-left; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 10px; -unity-font-style: bold;" />
+                    <ui:Label text="CHECKED IN AT STUDENT BLABLA " name="Label" class="socialyte-tab-label label" style="color: rgb(244, 81, 108); margin-top: 4px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 68px; top: 300px; -unity-text-align: middle-left;" />
+                    <ui:Label text="SIMON" name="NameLabel" class="socialyte-tab-label label" style="width: 185px; left: 272px; -unity-text-align: middle-left; padding-left: 12px;" />
+                    <ui:Label text="Second-year Student" class="socialyte-tab-label label" style="top: 20px; width: 712px; -unity-text-align: middle-left; margin-left: 0; padding-left: 324px; margin-top: 3px;" />
+                    <ui:Label text="Los Servos" class="socialyte-tab-label label" style="top: 20px; width: auto; -unity-text-align: middle-left; margin-left: 0; padding-left: 324px; padding-top: 16px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="MapLayout" class="map-layout" style="display: none; left: 3px;">
+                <ui:VisualElement name="MapScreen" class="map-screen">
+                    <ui:VisualElement name="MapHeader" class="map-header">
+                        <ui:Label name="MapHeaderTitle" text="MAP" class="map-header-title label" />
+                        <ui:VisualElement name="MapHeaderIcon" class="map-header-icon" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MapBody" class="map-body">
+                        <ui:VisualElement name="MapArea" class="map-area">
+                            <ui:VisualElement name="PlayerMarker" class="map-marker" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/01-Map%20Cursor.png?fileID=2800000&amp;guid=2ea643afc7b267349b912e6bb384dc23&amp;type=3#01-Map Cursor&quot;); background-color: rgba(255, 255, 255, 0); rotate: 0;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="MapDetail" class="detail-panel detail-panel-map" style="flex-direction: row-reverse; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/02-Location%20Textbox.png?fileID=2800000&amp;guid=cf8393f1dfeef6241ad7b8cfc456f9a6&amp;type=3#02-Location Textbox&quot;);">
+                    <ui:Label name="MapHeaderTitle" text="Vector Beach" class="map-header-title label" style="width: 274px; height: 32px; left: 385px; top: 31px; position: absolute;" />
+                    <ui:VisualElement name="MapPicture" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/mapscreen.png?fileID=2800000&amp;guid=de43408f15ea9bf4680015bcc8513f11&amp;type=3#mapscreen&quot;); height: 214px; width: 330px; top: 67px; left: 384px; position: absolute;" />
+                    <ui:Label text="With its many youth-oriented attractions, Dynaboarders and street punks of every stripe&#10;affectionately call this beach &quot;home.&quot;" parse-escape-sequences="false" class="label" style="width: 311px; height: 163px; top: 46px; left: 12px; position: absolute; color: rgb(0, 0, 0); flex-grow: 1; white-space: normal; -unity-text-align: upper-left; font-size: 22px;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 306px; left: 64px; position: absolute;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 330px; left: 64px; position: absolute;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 351px; left: 64px; position: absolute;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 306px; left: 213px; position: absolute;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 328px; left: 213px; position: absolute;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 350px; left: 213px; position: absolute;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Bottom" class="bottom bottom-peaking" style="height: 105px;">
+            <ui:VisualElement name="NavigationItems" class="nav-items">
+                <ui:VisualElement name="Planner" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" />
+                    <ui:Label text="PLANNER" class="nav-item-label label" />
+                    <ui:VisualElement name="Notification" class="nav-item-notification">
+                        <ui:Label text="3" name="NotificationLabel" class="label-digits nav-item-notification-label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Botlink" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/02-Botlink%20App.png?fileID=2800000&amp;guid=e70870fe1f513c44e9a768ca94257897&amp;type=3#02-Botlink App&quot;);" />
+                    <ui:Label text="BOTLINK" class="nav-item-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Backpack" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/03-Backpack%20App.png?fileID=2800000&amp;guid=beccc043fc095dd48a66eaafe90c04fb&amp;type=3#03-Backpack App&quot;);" />
+                    <ui:Label text="BACKPACK" class="nav-item-label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Map" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/04-Map%20App.png?fileID=2800000&amp;guid=4a4e2ceceb7a7b84e982425b9e3b5cc5&amp;type=3#04-Map App&quot;);" />
+                    <ui:Label text="MAP" class="nav-item-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Socialyte" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/05-Socialyte%20App.png?fileID=2800000&amp;guid=bb0cddf58b38a764d9e01b9964263549&amp;type=3#05-Socialyte App&quot;);" />
+                    <ui:Label text="SOCIALYTE" class="nav-item-label label" />
+                    <ui:VisualElement name="Notification" class="nav-item-notification">
+                        <ui:Label text="5" name="NotificationLabel" class="label-digits nav-item-notification-label" style="color: rgb(241, 73, 80);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Settings" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/07-Settings%20App.png?fileID=2800000&amp;guid=496364e353643244e9f0740bb4f0acb8&amp;type=3#07-Settings App&quot;);" />
+                    <ui:Label text="SETTINGS" class="nav-item-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Save" class="nav-item">
+                    <ui:VisualElement name="Icon" class="nav-item-icon" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/08-Save%20App.png?fileID=2800000&amp;guid=7abfd23fa7e134c4a873f7db315fa386&amp;type=3#08-Save App&quot;);" />
+                    <ui:Label text="SAVE" class="nav-item-label label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="NavDescription" class="nav-description" style="display: none;">
+            <ui:Label text="PLANNER" name="DescriptionTitle" class="label nav-description-title" />
+            <ui:Label text="Check your Requirements and Electives for this term.Check your Requirements and Electives for this term." name="DescriptionLabel" class="label nav-description-label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

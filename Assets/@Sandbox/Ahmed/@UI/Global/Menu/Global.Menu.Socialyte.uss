@@ -1,0 +1,325 @@
+.socialyte-layout {
+    flex-direction: row;
+    flex-grow: 1;
+    padding-top: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.socialyte-screen {
+    flex-direction: column;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-right: 10px;
+    width: 50%;
+    min-width: 560px;
+    max-width: 780px;
+}
+
+.socialyte-header {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Socialyte/00-Socialyte%20Banner.png?fileID=2800000&guid=29a11d9d9157b3048a400435c32eb917&type=3#00-Socialyte Banner");
+    width: 100%;
+    height: 101px;
+}
+
+.socialyte-header-title {
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+.socialyte-header-icon {
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/05-Socialyte%20App.png?fileID=2800000&guid=bb0cddf58b38a764d9e01b9964263549&type=3#05-Socialyte App");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.socialyte-tabs {
+    flex-direction: row;
+    margin-top: -2px;
+    gap: 2px;
+    padding-left: 0;
+    padding-right: 16px;
+}
+
+.socialyte-tab {
+    flex-direction: column;
+    height: 38px;
+    min-width: 140px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 3px 3px 0 0;
+    border: 1px solid rgb(244, 81, 108);
+    border-bottom: none;
+    box-shadow: 0 0 0 0 rgb(244, 81, 108) inset;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    flex-grow: 1;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.socialyte-tab-active {
+    box-shadow: 0 -4px 0 0 rgb(244, 81, 108) inset, 0 2px 4px 0 rgba(244, 81, 108, 0.3);
+    z-index: 1;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Socialyte/01-Socialyte%20Tab%20-%20Selected.png?fileID=2800000&guid=b24d485d486a460459d9b5cf4f5cf041&type=3#01-Socialyte Tab - Selected");
+}
+
+.socialyte-tab-label {
+    font-size: 21px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+    color: rgb(255, 255, 255);
+    margin-top: 4px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-text-align: middle-center;
+}
+
+.socialyte-tab-active > .socialyte-tab-label {
+    color: rgb(255, 255, 255);
+}
+
+.socialyte-body {
+    flex-grow: 1;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.02);
+    margin-top: 6px;
+}
+
+.socialyte-section-title {
+    color: rgb(34, 34, 34);
+    font-size: 14px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+    padding: 12px 16px 8px 16px;
+    background-color: rgb(240, 240, 240);
+}
+
+.socialyte-list {
+    flex-grow: 0;
+    padding-top: 0;
+    padding-right: 4px;
+    padding-left: 0;
+    padding-bottom: 0;
+    height: 320px;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    border-top: none;
+}
+
+.socialyte-contact {
+    background-color: rgb(255, 255, 255);
+    height: 48px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding-left: 20px;
+    padding-right: 12px;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.socialyte-contact:hover {
+    background-color: rgb(255, 240, 245);
+}
+
+.socialyte-contact-selected {
+    background-color: rgb(255, 245, 248);
+    border-left: 4px solid rgb(244, 81, 108);
+}
+
+.socialyte-contact-label {
+    color: rgb(34, 34, 34);
+    font-size: 17px;
+    -unity-font-style: bold;
+    letter-spacing: 0.3px;
+    line-height: 24px;
+    flex-grow: 1;
+    -unity-text-align: middle-left;
+}
+
+.socialyte-status-dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgb(255, 77, 77);
+    border-radius: 50%;
+}
+
+.socialyte-party-badge {
+    background-color: rgb(244, 81, 108);
+    color: rgb(255, 255, 255);
+    border-radius: 12px;
+    padding: 4px 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.socialyte-party-text {
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+.detail-panel-socialyte .detail-header {
+    background-color: rgb(244, 81, 108);
+    position: relative;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 80px;
+    padding: 8px 16px;
+    overflow: hidden;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.detail-panel-socialyte .detail-header-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/05-Socialyte%20App.png?fileID=2800000&guid=bb0cddf58b38a764d9e01b9964263549&type=3#05-Socialyte App");
+}
+
+.detail-panel-socialyte .detail-desc {
+    color: rgb(34, 34, 34);
+}
+
+.socialyte-avatar {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background-color: rgb(70, 130, 200);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 8px;
+    border: 2px solid rgb(255, 255, 255);
+    flex-shrink: 0;
+}
+
+.socialyte-stats {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.socialyte-header-info {
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 4px;
+}
+
+.socialyte-header-name {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+.socialyte-header-detail {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.socialyte-header-icon {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.socialyte-header-location-icon {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.socialyte-stat-heart {
+    width: 20px;
+    height: 18px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50% 50% 0 50%;
+    rotate: -45deg;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.socialyte-profile-section {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px 0;
+}
+
+.socialyte-profile-icon {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(244, 81, 108);
+    border-radius: 3px;
+    margin-right: 12px;
+}
+
+.socialyte-location-icon {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(244, 81, 108);
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.socialyte-profile-title {
+    color: rgb(34, 34, 34);
+    font-size: 16px;
+    -unity-font-style: normal;
+}
+
+.socialyte-checkin {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 16px;
+    padding: 12px;
+    background-color: rgb(255, 245, 248);
+    border-radius: 8px;
+    border-left: 4px solid rgb(244, 81, 108);
+}
+
+.socialyte-checkin-icon {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(244, 81, 108);
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+.socialyte-checkin-text {
+    color: rgb(244, 81, 108);
+    font-size: 14px;
+    -unity-font-style: bold;
+}

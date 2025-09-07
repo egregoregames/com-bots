@@ -26,7 +26,7 @@ namespace PixelCrushers.DialogueSystem
         /// </value>
         public DialogueEntry DestinationEntry
         {
-            get { return (response == null) ? null : response.destinationEntry; }
+            get { return response?.destinationEntry; }
         }
 
         /// <summary>

@@ -89,6 +89,8 @@
     text-shadow: 0 3.4px 0 rgba(0, 0, 0, 0.57);
     font-size: 32px;
     margin-top: 11px;
+    color: rgb(255, 255, 255);
+    white-space: normal;
 }
 
 .inactive {
@@ -178,4 +180,16 @@
 .option-top-rounded .option-background {
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
+}
+
+.option-lister-parent {
+    position: absolute;
+    width: 321px;
+    bottom: 181px;
+    right: 101px;
+}
+
+.option-lister-parent-hidden {
+    position: absolute;
+    right: -423px;
 }

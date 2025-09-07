@@ -205,3 +205,36 @@
     transition-timing-function: ease-in-out-back;
     background-color: rgba(0, 0, 0, 0);
 }
+
+.planner-details-badge-label {
+    padding-bottom: 2px;
+    padding-top: 9px;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.planner-details-badge-star {
+    flex-grow: 0;
+    width: 18px;
+    height: 18px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/13-Credits%20Icon.png?fileID=2800000&guid=0652ccf416f5ae944a3d0b4ffc81e5aa&type=3#13-Credits Icon");
+    align-self: center;
+    align-content: center;
+}
+
+.planner-details-hline {
+    position: absolute;
+    width: 100%;
+    margin-right: 0;
+}
+
+.settings-volume-btn {
+    flex-grow: 0;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(142, 153, 159);
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+}

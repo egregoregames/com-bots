@@ -1,0 +1,176 @@
+.botlink-layout {
+    flex-direction: row;
+    flex-grow: 1;
+    padding-top: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.botlink-screen {
+    flex-direction: column;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-right: 10px;
+    width: 50%;
+    min-width: 560px;
+    max-width: 780px;
+}
+
+.botlink-header {
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Botlink/00-Botlink%20Banner.png?fileID=2800000&guid=0c4e0884a4e42e14190773ce74a48d02&type=3#00-Botlink Banner");
+}
+
+.botlink-header-title {
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+.botlink-header-icon {
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/02-Botlink%20App.png?fileID=2800000&guid=e70870fe1f513c44e9a768ca94257897&type=3#02-Botlink App");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.botlink-body {
+    flex-grow: 1;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.botlink-grid {
+    flex-direction: row;
+    gap: 16px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.botlink-item {
+    width: 160px;
+    height: 160px;
+    border: 2px solid rgb(52, 152, 219);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    box-shadow: inset 0 0 15px rgba(200, 230, 255, 0.2), inset 0 -8px 15px rgba(180, 220, 255, 0.1), inset 0 8px 15px rgba(240, 250, 255, 0.2);
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Botlink/04-Blueprints%20Tab%20-%20Unselected.png?fileID=2800000&guid=ce3c2dedb2e2f90429f145c3821ede18&type=3#04-Blueprints Tab - Unselected");
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.botlink-icon:hover {
+    background-color: rgb(200, 230, 255);
+    box-shadow: inset 0 0 20px rgba(180, 220, 255, 0.3), inset 0 -10px 20px rgba(160, 210, 255, 0.2), inset 0 10px 20px rgba(230, 245, 255, 0.3);
+}
+
+.botlink-icon-selected {
+    border-color: rgb(30, 130, 200);
+    box-shadow: inset 0 0 20px rgba(20, 110, 180, 0.5), inset 0 -10px 20px rgba(20, 110, 180, 0.4), inset 0 10px 20px rgba(80, 170, 240, 0.3);
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Botlink/01-Bot%20Tab%20-%20Selected.png?fileID=2800000&guid=7ff8061677f90114ebf00e0ee00df90a&type=3#01-Bot Tab - Selected");
+}
+
+.botlink-icon-image {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.botlink-team-icon {
+    background-image: url('project://database/Assets/@Art/Sprites/UI/Botlink/02-Team%20Tab%20-%20Selected.png?fileID=2800000&guid=aa1b3e1d8b8b7924e8c5e3b5a1f5a2c3&type=3#02-Team Tab - Selected');
+}
+
+.botlink-bots-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Botlink/04-Blueprints%20Tab%20-%20Unselected.png?fileID=2800000&guid=ce3c2dedb2e2f90429f145c3821ede18&type=3#04-Blueprints Tab - Unselected");
+}
+
+.botlink-settings-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Botlink/06-Software%20Tab%20-%20Unselected.png?fileID=2800000&guid=7c04d8a695112f34d977fcc61dc58988&type=3#06-Software Tab - Unselected");
+}
+
+.detail-panel-botlink .detail-header {
+    background-color: rgb(52, 152, 219);
+}
+
+.detail-panel-botlink .detail-header-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/02-Botlink%20App.png?fileID=2800000&guid=e70870fe1f513c44e9a768ca94257897&type=3#02-Botlink App");
+}
+
+/* Removed redundant planner-* copies after botlink-* rename */
+
+/* Botlink-specific names for the copied header styles */
+.botlink-detail-header {
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 12px;
+}
+
+.botlink-header-badge {
+    background-color: rgb(245, 176, 58);
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 14px;
+    margin-right: 8px;
+}
+
+.botlink-header-line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: rgb(242, 154, 40);
+    margin-right: 8px;
+}
+
+.botlink-header-title {
+    background-color: rgb(242, 154, 40);
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    -unity-font-style: bold;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+/* Mirroring helpers from Global Game.Menu.uss so we can keep botlink-* naming locally */
+.botlink-header-badge-label {
+    padding-bottom: 2px;
+    padding-top: 9px;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.botlink-header-badge-star {
+    flex-grow: 0;
+    width: 18px;
+    height: 18px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/13-Credits%20Icon.png?fileID=2800000&guid=0652ccf416f5ae944a3d0b4ffc81e5aa&type=3#13-Credits Icon");
+    align-self: center;
+    align-content: center;
+}
+
+.botlink-header-hline {
+    position: absolute;
+    width: 100%;
+    margin-right: 0;
+}

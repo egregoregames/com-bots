@@ -1,0 +1,161 @@
+.backpack-layout {
+    flex-direction: row;
+    flex-grow: 1;
+    padding-top: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.backpack-screen {
+    flex-direction: column;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-right: 10px;
+    width: 50%;
+    min-width: 560px;
+    max-width: 780px;
+}
+
+.backpack-header {
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: rgb(255, 193, 7);
+}
+
+.backpack-header-title {
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+.backpack-header-icon {
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/03-Backpack%20App.png?fileID=2800000&guid=beccc043fc095dd48a66eaafe90c04fb&type=3#03-Backpack App");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.backpack-tabs {
+    flex-direction: row;
+    margin-top: -2px;
+    gap: 2px;
+    padding-left: 0;
+    padding-right: 16px;
+}
+
+.backpack-tab {
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    height: 38px;
+    min-width: 100px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 3px 3px 0 0;
+    border: 1px solid rgb(255, 193, 7);
+    border-bottom: none;
+    box-shadow: 0 0 0 0 rgb(255, 193, 7) inset;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.backpack-tab-active {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 -4px 0 0 rgb(255, 193, 7) inset, 0 2px 4px 0 rgba(255, 193, 7, 0.3);
+    z-index: 1;
+}
+
+.backpack-tab-label {
+    color: rgb(140, 140, 140);
+    font-size: 12px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+.backpack-tab-active > .backpack-tab-label {
+    color: rgb(230, 162, 0);
+}
+
+.backpack-body {
+    flex-grow: 1;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.02);
+    margin-top: 6px;
+}
+
+.backpack-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    width: 100%;
+    max-width: 500px;
+    gap: 8px;
+    padding: 16px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    border-top: none;
+}
+
+.backpack-slot {
+    width: 80px;
+    height: 80px;
+    background-color: rgb(245, 245, 245);
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.backpack-slot:hover {
+    background-color: rgb(255, 248, 220);
+    border-color: rgb(255, 193, 7);
+}
+
+.backpack-slot-filled {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(255, 193, 7);
+}
+
+.backpack-item-icon {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.backpack-item-quantity {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background-color: rgb(255, 193, 7);
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    -unity-font-style: bold;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 20px;
+    -unity-text-align: middle-center;
+}
+
+.detail-panel-backpack .detail-header {
+    background-color: rgb(255, 193, 7);
+}
+
+.detail-panel-backpack .detail-header-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/03-Backpack%20App.png?fileID=2800000&guid=beccc043fc095dd48a66eaafe90c04fb&type=3#03-Backpack App");
+}
+
+.detail-panel-backpack .detail-header-title {
+    flex-grow: 1;
+}

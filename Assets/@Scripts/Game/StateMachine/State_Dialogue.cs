@@ -2,6 +2,7 @@ using ComBots.Global.UI;
 using ComBots.Global.UI.Dialogue;
 using ComBots.Inputs;
 using ComBots.Utils.StateMachines;
+using PixelCrushers.DialogueSystem;
 using UnityEngine.Events;
 using static ComBots.Game.StateMachine.GameStateMachine;
 
@@ -25,14 +26,14 @@ namespace ComBots.Game.StateMachine
                 {
                     canEnter = false;
                 }
-                if (args == null || args is not State_Dialogue_Args)
+                if (args == null || args is not IState_Dialogue_Args)
                 {
                     canEnter = false;
                 }
 
                 if (canEnter)
                 {
-                    GlobalUIRefs.I.DialogueController.SetActive((State_Dialogue_Args)args);
+                    GlobalUIRefs.I.DialogueController.SetActive((IState_Dialogue_Args)args);
                     // Hide the menu's bottom bar
                     GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
                     // Push the dialogue input context
@@ -57,11 +58,15 @@ namespace ComBots.Game.StateMachine
         }
     }
 
-
-    public class State_Dialogue_Args
+    public interface IState_Dialogue_Args
     {
-        public string Dialogue;
-        public string Nametag;
+        public string Nametag { get; }
+    }
+
+    public class State_Dialogue_Args : IState_Dialogue_Args
+    {
+        public string Dialogue { get; private set; }
+        public string Nametag { get; private set; }
         public DialogueOptions OptionsArgs;
 
         public State_Dialogue_Args(string dialogue, string nametag, DialogueOptions options)
@@ -70,19 +75,34 @@ namespace ComBots.Game.StateMachine
             Nametag = nametag;
             OptionsArgs = options;
         }
+    }
 
-        public class DialogueOptions
+    public class DialogueOptions
+    {
+        public string[] Options;
+        public string CancelOption;
+        public UnityAction<int> Callback;
+
+        public DialogueOptions(string[] options, string cancelOption, UnityAction<int> callback)
         {
-            public string[] Options;
-            public string CancelOption;
-            public UnityAction<int> Callback;
+            Options = options;
+            CancelOption = cancelOption;
+            Callback = callback;
+        }
+    }
 
-            public DialogueOptions(string[] options, string cancelOption, UnityAction<int> callback)
-            {
-                Options = options;
-                CancelOption = cancelOption;
-                Callback = callback;
-            }
+    public class State_Dialogue_PixelCrushers_Args : IState_Dialogue_Args
+    {
+        public DialogueActor Actor { get; private set; }
+        public DialogueActor Conversant { get; private set; }
+        public string Nametag => Actor.GetActorName();
+        public string ConversationTitle { get; private set; }
+
+        public State_Dialogue_PixelCrushers_Args(string conversationTitle, DialogueActor actor, DialogueActor conversant)
+        {
+            ConversationTitle = conversationTitle;
+            Actor = actor;
+            Conversant = conversant;
         }
     }
 }

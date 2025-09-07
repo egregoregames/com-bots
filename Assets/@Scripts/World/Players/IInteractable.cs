@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ComBots
+namespace ComBots.Interact
 {
     public interface IInteractable 
     {

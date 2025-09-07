@@ -1,0 +1,285 @@
+.planner-screen {
+    flex-direction: column;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-right: 10px;
+    width: 50%;
+    min-width: 560px;
+    max-width: 780px;
+}
+
+.planner-layout {
+    flex-direction: row;
+    flex-grow: 1;
+    padding-top: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 16px;
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+}
+
+.planner-header {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/00-Planner%20Banner.png?fileID=2800000&guid=697ef230172989948ab0f59d51bb30ae&type=3#00-Planner Banner");
+    height: 100px;
+}
+
+.planner-body {
+    flex-grow: 1;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.02);
+    margin-top: 6px;
+}
+
+.planner-header-title {
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+.planner-header-icon {
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/01-Planner%20App.png?fileID=2800000&guid=e1c3fd6ba13e5e54bb69a6d5e72dfa43&type=3#01-Planner App");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.planner-tabs {
+    flex-direction: row;
+    gap: 2px;
+    padding-left: 0;
+    margin-top: 5px;
+    padding-right: 0;
+}
+
+.planner-tab {
+    flex-direction: column;
+    min-width: 180px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 3px 3px 0 0;
+    border: 1px solid rgb(233, 180, 104);
+    border-bottom: none;
+    box-shadow: 0 0 0 0 rgb(242, 154, 40) inset, 0 0 0 0 rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    opacity: 1;
+    background-color: rgb(255, 255, 255);
+    height: 44px;
+    flex-grow: 1;
+    margin-right: 0;
+    background-image: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.tab-active {
+    box-shadow: 0 -4px 0 0 rgb(242, 154, 40) inset, 0 2px 4px 0 rgba(242, 154, 40, 0.3);
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/01-Planner%20Tab%20-%20Selected.png?fileID=2800000&guid=cafc4a949cfd0554ca35e33826ce69b6&type=3#01-Planner Tab - Selected");
+}
+
+.planner-tab-label {
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+    color: rgb(242, 154, 40);
+    margin-bottom: 0;
+    padding-bottom: 0;
+    -unity-text-align: middle-center;
+    padding-top: 2px;
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.tab-active > .planner-tab-label {
+    color: rgb(255, 255, 255);
+}
+
+.planner-tab-indicator {
+    display: none;
+}
+
+.planner-list {
+    flex-grow: 0;
+    padding-top: 0;
+    padding-right: 4px;
+    padding-left: 0;
+    padding-bottom: 0;
+    height: 336px;
+    max-height: 336px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    border-top: none;
+}
+
+.planner-row {
+    background-color: rgb(255, 255, 255);
+    height: 48px;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 12px;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.planner-row:hover {
+    background-color: rgb(255, 248, 240);
+}
+
+.planner-row-label {
+    color: rgb(34, 34, 34);
+    font-size: 17px;
+    -unity-font-style: bold;
+    letter-spacing: 0.3px;
+    line-height: 24px;
+}
+
+.planner-row-selected {
+    background-color: rgb(255, 250, 242);
+}
+
+.planner-row-selected > .planner-row-label {
+    color: rgb(17, 17, 17);
+}
+
+.planner-row-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: rgb(242, 154, 40);
+}
+
+.planner-list .unity-scroll-view__vertical-scroller {
+    width: 8px;
+    right: 0;
+}
+
+.planner-list .unity-scroller {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.planner-list .unity-scroller .unity-slider {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.planner-list .unity-scrollbar {
+    background-color: rgba(200, 200, 200, 0.3);
+    border-radius: 4px;
+    opacity: 1;
+}
+
+.planner-list .unity-scrollbar .unity-dragger {
+    background-color: rgb(180, 180, 180);
+    border-radius: 4px;
+    min-height: 30px;
+}
+
+.planner-list-electives {
+    display: none;
+}
+
+.electives-active .planner-list-electives {
+    display: flex;
+}
+
+.electives-active .planner-list-requirements {
+    display: none;
+}
+
+.electives-active #RequirementsTab {
+    box-shadow: 0 0 0 0 rgb(242, 154, 40) inset;
+}
+
+.electives-active #ElectivesTab {
+    box-shadow: 0 -3px 0 0 rgb(242, 154, 40) inset;
+}
+
+.detail-panel-planner .detail-header {
+    background-color: rgb(242, 154, 40);
+}
+
+.detail-panel-planner .detail-header-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/01-Planner%20App.png?fileID=2800000&guid=e1c3fd6ba13e5e54bb69a6d5e72dfa43&type=3#01-Planner App");
+}
+
+.planner-detail-progress {
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 12px;
+}
+
+.planner-progress-badge {
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    border-radius: 14px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: rgb(242, 154, 40);
+    flex-grow: 0;
+    width: 53px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+    height: 24px;
+    left: 18px;
+}
+
+.planner-progress-line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: rgb(242, 154, 40);
+    margin-right: 8px;
+}
+
+.planner-progress-title {
+    background-color: rgb(242, 154, 40);
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    -unity-font-style: bold;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.planner-details-label {
+    font-size: 21px;
+    line-height: 28px;
+    white-space: normal;
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 0;
+}

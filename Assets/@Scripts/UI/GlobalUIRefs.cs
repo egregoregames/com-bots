@@ -11,9 +11,9 @@ namespace ComBots.Global.UI
         public override Dependency Dependency => Dependency.Independent;
 
         [Header("Menu")]
-        [SerializeField] private Menu.MenuController _menuController;
-        public Menu.MenuController MenuController => _menuController;
-        [SerializeField] private Menu.MenuNavigationController _menuNavigationController;
+        [SerializeField] private Sandbox.Global.UI.Menu.MenuController _menuController;
+        public Sandbox.Global.UI.Menu.MenuController MenuController => _menuController;
+        [SerializeField] private Sandbox.Global.UI.Menu.MenuNavigationController _menuNavigationController;
 
         [Header("Dialogue")]
         [SerializeField] private DialogueController _dialogueController;
