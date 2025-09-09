@@ -11,7 +11,7 @@
 .backpack-screen {
     flex-direction: column;
     padding-left: 10px;
-    padding-top: 8px;
+    padding-top: 0;
     padding-right: 10px;
     width: 50%;
     min-width: 560px;
@@ -21,10 +21,11 @@
 .backpack-header {
     flex-direction: row;
     align-items: center;
-    height: 64px;
+    height: 101px;
     padding-left: 16px;
     padding-right: 16px;
-    background-color: rgb(255, 193, 7);
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Backpack/00-Backpack%20Banner.png?fileID=2800000&guid=47780ef81be86434abe964773a7f0556&type=3#00-Backpack Banner");
+    width: auto;
 }
 
 .backpack-header-title {
@@ -45,16 +46,17 @@
 
 .backpack-tabs {
     flex-direction: row;
-    margin-top: -2px;
+    margin-top: 0;
     gap: 2px;
     padding-left: 0;
-    padding-right: 16px;
+    padding-right: 0;
+    justify-content: space-between;
+    padding-top: 11px;
 }
 
 .backpack-tab {
     flex-direction: column;
     background-color: rgb(255, 255, 255);
-    height: 38px;
     min-width: 100px;
     align-items: center;
     justify-content: center;
@@ -64,23 +66,32 @@
     border-bottom: none;
     box-shadow: 0 0 0 0 rgb(255, 193, 7) inset;
     transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    flex-grow: 1;
+    margin-right: 5px;
+    margin-left: 5px;
+    height: 38px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .backpack-tab-active {
-    background-color: rgb(255, 255, 255);
     box-shadow: 0 -4px 0 0 rgb(255, 193, 7) inset, 0 2px 4px 0 rgba(255, 193, 7, 0.3);
     z-index: 1;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Backpack/06-Backpack%20Tab%20-%20Selected.png?fileID=2800000&guid=c1d3b453f2ef05d4aa8e2ba0212bbf68&type=3#06-Backpack Tab - Selected");
 }
 
 .backpack-tab-label {
-    color: rgb(140, 140, 140);
-    font-size: 12px;
+    color: rgb(255, 193, 7);
+    font-size: 20px;
     -unity-font-style: bold;
     letter-spacing: 0.5px;
+    padding-top: 6px;
 }
 
 .backpack-tab-active > .backpack-tab-label {
-    color: rgb(230, 162, 0);
+    color: rgb(255, 255, 255);
 }
 
 .backpack-body {
@@ -91,39 +102,41 @@
 }
 
 .backpack-grid {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    width: 100%;
-    max-width: 500px;
     gap: 8px;
     padding: 16px;
-    background-color: rgb(255, 255, 255);
     border: 1px solid rgb(220, 220, 220);
     border-top: none;
+    justify-content: flex-start;
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
 }
 
 .backpack-slot {
-    width: 80px;
-    height: 80px;
-    background-color: rgb(245, 245, 245);
     border: 2px solid rgb(200, 200, 200);
     border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    position: relative;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.backpack-slot:hover {
-    background-color: rgb(255, 248, 220);
-    border-color: rgb(255, 193, 7);
+    height: 100px;
+    width: 100px;
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+    border-bottom-left-radius: 0%;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .backpack-slot-filled {
-    background-color: rgb(255, 255, 255);
     border-color: rgb(255, 193, 7);
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Backpack/09-Backpack%20Cursor.png?fileID=2800000&guid=3240a7053ecec774b936170150276f96&type=3#09-Backpack Cursor");
 }
 
 .backpack-item-icon {
@@ -136,16 +149,26 @@
 
 .backpack-item-quantity {
     position: absolute;
-    bottom: -2px;
-    right: -2px;
-    background-color: rgb(255, 193, 7);
-    color: rgb(255, 255, 255);
-    font-size: 14px;
+    bottom: -19px;
+    right: -4px;
+    color: rgb(255, 193, 7);
+    font-size: 31px;
     -unity-font-style: bold;
     padding: 2px 6px;
     border-radius: 10px;
     min-width: 20px;
     -unity-text-align: middle-center;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    display: none;
 }
 
 .detail-panel-backpack .detail-header {
@@ -158,4 +181,24 @@
 
 .detail-panel-backpack .detail-header-title {
     flex-grow: 1;
+}
+
+.backpack-slot-filled .backpack-slot-item {
+    display: flex;
+}
+
+.backpack-slot-item {
+    flex-grow: 0;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Map/03-V-Pass%20Icon.png?fileID=2800000&guid=43f3e0ff658c3cb48b805bfe5546c2d6&type=3#03-V-Pass Icon");
+    height: 80%;
+    width: 80px;
+    display: none;
+}
+
+.backpack-slot-filled .backpack-slot-circle {
+    display: none;
+}
+
+.backpack-slot-filled .backpack-item-quantity {
+    display: flex;
 }

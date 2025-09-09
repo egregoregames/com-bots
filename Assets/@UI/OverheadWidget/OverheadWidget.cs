@@ -21,6 +21,7 @@ namespace ComBots.UI.OverheadWidgets
 
         public void SetActive(string label)
         {
+            if(labelText)
             labelText.text = label;
         }
     }

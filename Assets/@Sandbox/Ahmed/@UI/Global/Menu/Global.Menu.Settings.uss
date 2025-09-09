@@ -1,6 +1,10 @@
 .settings-layout {
     flex-grow: 1;
     padding: 20px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
 }
 
 .settings-screen {
@@ -46,7 +50,7 @@
 }
 
 .settings-section-title {
-    font-size: 16px;
+    font-size: 20px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     min-width: auto;
@@ -75,7 +79,7 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    height: 27px;
+    height: 40px;
     width: auto;
     margin-left: 20px;
     margin-right: 10px;
@@ -83,7 +87,7 @@
     padding-right: 0;
     padding-bottom: 0;
     align-items: flex-start;
-    padding-left: 9px;
+    padding-left: 6px;
 }
 
 .settings-option-selected {
@@ -95,11 +99,11 @@
 }
 
 .settings-option-label {
-    font-size: 18px;
+    font-size: 21px;
     color: rgb(60, 60, 60);
     -unity-text-align: middle-left;
     -unity-font-style: bold;
-    padding-top: 8px;
+    padding-top: 2px;
     padding-bottom: 2px;
 }
 

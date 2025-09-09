@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/@UI/Global/Menu/Game.Menu.uss?fileID=7433441132597879392&amp;guid=1560e212259395843adbecfeb6c90951&amp;type=3#Game.Menu" />
-    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Game.MenuPanels.uss?fileID=7433441132597879392&amp;guid=725b9b5bc2a08e2449b6352b26f70857&amp;type=3#Game.MenuPanels" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.MenuPanels.uss?fileID=7433441132597879392&amp;guid=725b9b5bc2a08e2449b6352b26f70857&amp;type=3#Global.MenuPanels" />
     <Style src="project://database/Assets/@UI/Core/Text.uss?fileID=7433441132597879392&amp;guid=bd647a314724cec42b6d7398cef331b5&amp;type=3#Text" />
     <Style src="project://database/Assets/@UI/CustomElements/RankProgressBar/RankProgressBar.uss?fileID=7433441132597879392&amp;guid=5f47dd9708225884bb31fe752b0b6f74&amp;type=3#RankProgressBar" />
     <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Planner.uss?fileID=7433441132597879392&amp;guid=6cb08fb2b1429824ebed4968ec15c9aa&amp;type=3#Global.Menu.Planner" />
@@ -33,70 +33,162 @@
         <ui:VisualElement name="Body" class="body">
             <ui:VisualElement name="BackpackLayout" class="backpack-layout" style="display: none;">
                 <ui:VisualElement name="BackpackScreen" class="backpack-screen">
-                    <ui:VisualElement name="BackpackHeader" class="backpack-header">
-                        <ui:Label name="BackpackHeaderTitle" text="BACKPACK" class="backpack-header-title" />
-                        <ui:VisualElement name="BackpackHeaderIcon" class="backpack-header-icon" />
-                    </ui:VisualElement>
+                    <ui:VisualElement name="BackpackHeader" class="backpack-header" />
                     <ui:VisualElement name="BackpackTabs" class="backpack-tabs">
                         <ui:VisualElement id="KeyTab" name="KeyTab" class="backpack-tab backpack-tab-active">
-                            <ui:Label text="KEY" class="backpack-tab-label" />
+                            <ui:Label text="KEY" class="backpack-tab-label label" />
                         </ui:VisualElement>
                         <ui:VisualElement id="BattleTab" name="BattleTab" class="backpack-tab">
-                            <ui:Label text="BATTLE" class="backpack-tab-label" />
+                            <ui:Label text="BATTLE" class="backpack-tab-label label" />
                         </ui:VisualElement>
                         <ui:VisualElement id="GeneralTab" name="GeneralTab" class="backpack-tab">
-                            <ui:Label text="GENERAL" class="backpack-tab-label" />
+                            <ui:Label text="GENERAL" class="backpack-tab-label label" />
                         </ui:VisualElement>
                         <ui:VisualElement id="HardwareTab" name="HardwareTab" class="backpack-tab">
-                            <ui:Label text="HARDWARE" class="backpack-tab-label" />
+                            <ui:Label text="HARDWARE" class="backpack-tab-label label" />
                         </ui:VisualElement>
                         <ui:VisualElement id="PartsTab" name="PartsTab" class="backpack-tab">
-                            <ui:Label text="PARTS" class="backpack-tab-label" />
+                            <ui:Label text="PARTS" class="backpack-tab-label label" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="BackpackBody" class="backpack-body">
-                        <ui:VisualElement name="BackpackGrid" class="backpack-grid">
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot backpack-slot-filled">
-                                <ui:VisualElement name="BackpackItemIcon" class="backpack-item-icon" style="background-image: url(&apos;project://database/Assets/@Art/Sprites/Items/RepairKit.png&apos;);" />
-                                <ui:Label text="5" class="backpack-item-quantity" />
+                        <ui:VisualElement name="BackpackGrid" class="backpack-grid" style="justify-content: center;">
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot backpack-slot-filled" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
-                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" />
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BackpackSlot" class="backpack-slot" style="justify-content: center;">
+                                <ui:VisualElement name="Circle" class="backpack-slot-circle" style="flex-grow: 0; align-self: center; height: 25px; width: 25px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; background-color: rgb(255, 255, 255);" />
+                                <ui:VisualElement name="Icon" class="backpack-slot-item" />
+                                <ui:Label text="5" class="backpack-item-quantity label-digits" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="BackpackDetail" class="detail-panel detail-panel-backpack">
-                    <ui:VisualElement name="BackpackDetailHeader" class="detail-header">
-                        <ui:VisualElement class="detail-header-icon" />
-                        <ui:Label text="REPAIR KIT" class="detail-header-title" />
-                        <ui:Label text="x5" class="detail-header-quantity" />
+                <ui:VisualElement name="Details" style="flex-grow: 1; height: 435px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Planner/04-Quest%20or%20Connection%20-%20Unselected.png?fileID=2800000&amp;guid=614266642b3e6114b99616cf6c56efdb&amp;type=3#04-Quest or Connection - Unselected&quot;); margin-left: 24px;">
+                    <ui:VisualElement name="Line" class="backpack-details-line" style="top: 48px;" />
+                    <ui:VisualElement name="Header" style="flex-grow: 0; width: 337px; height: 46px; position: relative; align-items: stretch; justify-content: space-between; align-self: flex-end; background-color: rgb(255, 193, 7); padding-right: 8px; padding-left: 8px; flex-direction: row; margin-top: 26px; margin-right: 29px;">
+                        <ui:Label text="REPAIR KIT" class="label" style="height: 100%; -unity-text-align: middle-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 23px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                        <ui:Label text="x5" class="label" style="height: 100%; -unity-text-align: middle-right; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 26px; color: rgb(255, 255, 255); -unity-font-style: bold; align-self: flex-end; align-content: flex-end;" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="detail-content">
-                        <ui:Label name="BackpackDetailDescription" text="A box of various repair supplies. Restores some of a Bot&apos;s Endurance." class="detail-desc" />
-                        <ui:VisualElement name="BackpackDetailImage" class="detail-image" style="background-image: url(&apos;project://database/Assets/@Art/Sprites/Items/RepairKit.png&apos;);" />
-                    </ui:VisualElement>
+                    <ui:Label text="A box of various repair supplies. Restores&#10;some of a Bot&apos;s Endurance." name="DetailsLabel" class="label" style="font-size: 32px; margin-right: 30px; margin-left: 30px; padding-right: 0; padding-left: 0; margin-top: 15px;" />
+                    <ui:VisualElement name="DetailsIcon" style="flex-grow: 0; height: 180px; width: 180px; position: absolute; bottom: 29px; right: 22px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/03-Blueprints%20Tab%20-%20Selected.png?fileID=2800000&amp;guid=29d48e577674c744883def6c51b25b11&amp;type=3#03-Blueprints Tab - Selected&quot;);" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="SettingsLayout" class="settings-layout" style="display: none;">
@@ -164,17 +256,15 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="SaveLayout" class="save-layout" style="display: none;">
-                <ui:VisualElement name="SaveDialog" class="save-dialog" style="width: 500px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; max-width: none; height: 100px;">
-                    <ui:VisualElement name="SaveHeader" class="save-header" style="width: 218px; align-items: center; align-self: flex-start; align-content: center; margin-left: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 30px; padding-left: -28px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/01-Save%20Banner.png?fileID=2800000&amp;guid=502e4ba156c77bb4bae0af5d17547caa&amp;type=3#01-Save Banner&quot;); position: absolute; top: -15px; left: 16px;" />
-                    <ui:VisualElement name="SaveBody" class="save-body">
-                        <ui:Label name="SaveQuestion" text="Would you like to save your progress?" class="save-question label" style="margin-left: 4px; -unity-text-align: middle-left; align-self: stretch;" />
-                        <ui:VisualElement name="SaveButtons" class="save-buttons" style="justify-content: space-around; width: 231px; align-items: stretch; align-self: auto; align-content: auto;">
-                            <ui:VisualElement name="YesButton" class="save-button save-button-yes" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/02-Save%20Button%20-%20Selected.png?fileID=2800000&amp;guid=fbb838e2162170b47af9476333aa70d9&amp;type=3#02-Save Button - Selected&quot;); height: 30px; width: 80px; -unity-text-align: upper-left; padding-right: 3px; padding-left: 3px; padding-top: 2px; padding-bottom: 2px; position: absolute; bottom: -45px; left: 15px;">
-                                <ui:Label text="YES" class="save-button-label label" style="justify-content: flex-start; align-content: flex-start; align-items: stretch; align-self: center; -unity-text-align: upper-center; padding-top: 4px;" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="NoButton" class="save-button save-button-no" style="width: 80px; height: 30px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/03-Save%20Button%20-%20Unselected.png?fileID=2800000&amp;guid=5ed4e00cb151d4a40a0b44764d84a225&amp;type=3#03-Save Button - Unselected&quot;); padding-top: 2px; padding-bottom: 2px; padding-left: 3px; padding-right: 3px; position: absolute; right: 15px; left: auto; bottom: -45px;">
-                                <ui:Label text="NO" class="save-button-label label" />
-                            </ui:VisualElement>
+                <ui:VisualElement name="SaveDialog" class="save-dialog" style="width: 663px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; max-width: none; height: 144px;">
+                    <ui:VisualElement name="SaveHeader" class="save-header" />
+                    <ui:Label name="SaveQuestion" text="Would you like to save your progress?" class="save-question label" style="margin-left: 22px; -unity-text-align: middle-left; align-self: stretch; font-size: 25px;" />
+                    <ui:VisualElement name="SaveButtons" class="save-buttons" style="justify-content: space-between; width: 250px; align-items: stretch; align-self: center; align-content: auto; position: absolute; bottom: -15px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                        <ui:VisualElement name="YesButton" class="save-button save-button-yes">
+                            <ui:Label text="YES" class="label" style="justify-content: flex-start; align-content: flex-start; align-items: stretch; align-self: center; -unity-text-align: upper-center; padding-top: 4px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="NoButton" class="save-button save-button-no" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/03-Save%20Button%20-%20Unselected.png?fileID=2800000&amp;guid=5ed4e00cb151d4a40a0b44764d84a225&amp;type=3#03-Save Button - Unselected&quot;); padding-top: 2px; padding-bottom: 2px; padding-left: 3px; padding-right: 3px; position: relative; right: 0; left: auto; bottom: 0;">
+                            <ui:Label text="NO" class="label" style="font-size: 20px; -unity-font-style: bold; padding-top: 6px;" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
@@ -264,21 +354,20 @@
             </ui:VisualElement>
             <ui:VisualElement name="MapLayout" class="map-layout" style="display: none; left: 3px;">
                 <ui:VisualElement name="MapScreen" class="map-screen">
-                    <ui:VisualElement name="MapHeader" class="map-header">
-                        <ui:Label name="MapHeaderTitle" text="MAP" class="map-header-title label" />
-                        <ui:VisualElement name="MapHeaderIcon" class="map-header-icon" />
-                    </ui:VisualElement>
+                    <ui:VisualElement name="MapHeader" class="map-header" />
                     <ui:VisualElement name="MapBody" class="map-body">
                         <ui:VisualElement name="MapArea" class="map-area">
                             <ui:VisualElement name="PlayerMarker" class="map-marker" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/01-Map%20Cursor.png?fileID=2800000&amp;guid=2ea643afc7b267349b912e6bb384dc23&amp;type=3#01-Map Cursor&quot;); background-color: rgba(255, 255, 255, 0); rotate: 0;" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="MapDetail" class="detail-panel detail-panel-map" style="flex-direction: row-reverse; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/02-Location%20Textbox.png?fileID=2800000&amp;guid=cf8393f1dfeef6241ad7b8cfc456f9a6&amp;type=3#02-Location Textbox&quot;);">
-                    <ui:Label name="MapHeaderTitle" text="Vector Beach" class="map-header-title label" style="width: 274px; height: 32px; left: 385px; top: 31px; position: absolute;" />
-                    <ui:VisualElement name="MapPicture" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/mapscreen.png?fileID=2800000&amp;guid=de43408f15ea9bf4680015bcc8513f11&amp;type=3#mapscreen&quot;); height: 214px; width: 330px; top: 67px; left: 384px; position: absolute;" />
-                    <ui:Label text="With its many youth-oriented attractions, Dynaboarders and street punks of every stripe&#10;affectionately call this beach &quot;home.&quot;" parse-escape-sequences="false" class="label" style="width: 311px; height: 163px; top: 46px; left: 12px; position: absolute; color: rgb(0, 0, 0); flex-grow: 1; white-space: normal; -unity-text-align: upper-left; font-size: 22px;" />
-                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 306px; left: 64px; position: absolute;" />
+                <ui:VisualElement name="MapDetail" class="detail-panel-map" style="flex-direction: column; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/02-Location%20Textbox.png?fileID=2800000&amp;guid=cf8393f1dfeef6241ad7b8cfc456f9a6&amp;type=3#02-Location Textbox&quot;); flex-grow: 1; height: 69%;">
+                    <ui:Label name="MapHeaderTitle" text="VECTOR BEACH" class="map-header-title label" style="width: 346px; height: 32px; position: absolute; right: 29px; top: 37px; flex-grow: 0; padding-top: 0; margin-top: 0; -unity-text-align: middle-left; font-size: 24px;">
+                        <ui:VisualElement style="flex-grow: 0; width: 35px; height: 35px; position: absolute; right: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/03-V-Pass%20Icon.png?fileID=2800000&amp;guid=43f3e0ff658c3cb48b805bfe5546c2d6&amp;type=3#03-V-Pass Icon&quot;); top: -6px;" />
+                    </ui:Label>
+                    <ui:VisualElement name="MapPicture" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/mapscreen.png?fileID=2800000&amp;guid=de43408f15ea9bf4680015bcc8513f11&amp;type=3#mapscreen&quot;); height: 246px; width: 360px; position: absolute; right: 28px; top: 81px;" />
+                    <ui:Label text="With its many youth-oriented attractions, Dynaboarders and street punks of every stripe affectionately call this beach &quot;home.&quot;" parse-escape-sequences="false" class="label" style="width: 394px; height: 163px; top: 60px; left: 12px; position: absolute; color: rgb(0, 0, 0); flex-grow: 1; white-space: normal; -unity-text-align: upper-left; font-size: 25px; text-overflow: clip;" />
+                    <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; position: relative; color: rgb(255, 255, 255); bottom: -334px;" />
                     <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 330px; left: 64px; position: absolute;" />
                     <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 351px; left: 64px; position: absolute;" />
                     <ui:Label text="Hawk&apos;s board c o " class="label" style="width: 132px; height: 15px; top: 306px; left: 213px; position: absolute;" />

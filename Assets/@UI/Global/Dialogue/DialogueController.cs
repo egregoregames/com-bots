@@ -27,6 +27,8 @@ namespace ComBots.Global.UI.Dialogue
         private const string CLASS_NAMETAG_LABEL = "nametag-label";
         private const string CLASS_OPTION_LISTER_PARENT = "option-lister-parent";
         private const string CLASS_OPTION_LISTER_PARENT_HIDDEN = "option-lister-parent-hidden";
+        private const string CLASS_DIALOG_CONTINUE_ICON = "dialog-continue-icon";
+        private const string CLASS_DIALOG_END_ICON = "dialog-end-icon";
 
         private bool _isActive;
 
@@ -44,6 +46,8 @@ namespace ComBots.Global.UI.Dialogue
         private Label _VE_dialogLabel;
         private VisualElement _VE_optionListerParent;
         private VisualElement _VE_nametag;
+        private VisualElement _VE_dialogContinueIcon;
+        private VisualElement _VE_dialogEndIcon;
         private Label _VE_nametagLabel;
 
         // Animation state
@@ -62,6 +66,8 @@ namespace ComBots.Global.UI.Dialogue
             _VE_nametag = _VE_root.Q(className: CLASS_NAMETAG);
             _VE_nametagLabel = _VE_root.Q<Label>(className: CLASS_NAMETAG_LABEL);
             _VE_optionListerParent = _VE_root.Q(className: CLASS_OPTION_LISTER_PARENT);
+            _VE_dialogContinueIcon = _VE_root.Q(className: CLASS_DIALOG_CONTINUE_ICON);
+            _VE_dialogEndIcon = _VE_root.Q(className: CLASS_DIALOG_END_ICON);
             _WC_optionLister.TryInit();
 
             // Register this as the DialogueManager's UI
@@ -167,7 +173,7 @@ namespace ComBots.Global.UI.Dialogue
             }
             else if (args is State_Dialogue_Args standardArgs)
             {
-                ShowSubtitle(standardArgs.Dialogue, 2f);
+                ShowSubtitle(standardArgs.Dialogue, 2f, true);
             }
         }
 
@@ -288,10 +294,41 @@ namespace ComBots.Global.UI.Dialogue
                 float charsPerSecond = DialogueManager.displaySettings.subtitleSettings.subtitleCharsPerSecond;
                 float minSeconds = DialogueManager.displaySettings.subtitleSettings.minSubtitleSeconds;
                 float animationDuration = Mathf.Max(minSeconds, subtitle.formattedText.text.Length / charsPerSecond);
-                ShowSubtitle(subtitle.formattedText.text, animationDuration - 1f);
+                ShowSubtitle(subtitle.formattedText.text, animationDuration - 1f, IsLastSubtitle(subtitle));
             }
         }
 
+        private bool IsLastSubtitle(Subtitle subtitle)
+        {
+            try
+            {
+                var conversationModel = DialogueManager.conversationModel;
+
+                if (conversationModel == null || subtitle?.dialogueEntry == null)
+                {
+                    return true;
+                }
+
+                // Get the state for this dialogue entry, including evaluating its links
+                var currentState = conversationModel.GetState(subtitle.dialogueEntry, includeLinks: true);
+
+                if (currentState == null)
+                {
+                    return true;
+                }
+
+                // Check if the current state has any valid responses
+                bool hasResponses = currentState.hasAnyResponses;
+
+                // If no responses, this is the last subtitle
+                return !hasResponses;
+            }
+            catch (System.Exception ex)
+            {
+                MyLogger<DialogueController>.StaticLogError($"Error checking if subtitle is last: {ex.Message}");
+                return true;
+            }
+        }
 
         private System.Collections.IEnumerator ContinueAfterFrame()
         {
@@ -301,18 +338,20 @@ namespace ComBots.Global.UI.Dialogue
                                                SendMessageOptions.DontRequireReceiver);
         }
 
-        private void ShowSubtitle(string text, float animationDuration)
+        private void ShowSubtitle(string text, float animationDuration, bool isLast)
         {
+            // Hide dialog continue & end icons
+            _VE_dialogEndIcon.style.display = DisplayStyle.None;
+            _VE_dialogContinueIcon.style.display = DisplayStyle.None;
+            // Hide responses if any
             HideResponses();
             MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
-
             // Don't show empty text
             if (string.IsNullOrEmpty(text))
             {
                 MyLogger<DialogueController>.StaticLog($"Empty text provided to ShowSubtitle, skipping animation");
                 return;
             }
-
             // Display dialogue
             _VE_dialogLabel.text = string.Empty;
             _textAnimationTween = DOTween.To(() => _VE_dialogLabel.text, x => _VE_dialogLabel.text = x, text, animationDuration)
@@ -330,6 +369,17 @@ namespace ComBots.Global.UI.Dialogue
                     {
                         // For Pixel Crushers, the system will automatically call ShowResponses when needed
                         MyLogger<DialogueController>.StaticLog("Text animation complete for Pixel Crushers dialogue");
+                        // If this is the last subtitle, show the end icon, otherwise, just hide it using inline styles
+                        if (isLast)
+                        {
+                            _VE_dialogEndIcon.style.display = DisplayStyle.Flex;
+                            _VE_dialogContinueIcon.style.display = DisplayStyle.None;
+                        }
+                        else
+                        {
+                            _VE_dialogEndIcon.style.display = DisplayStyle.None;
+                            _VE_dialogContinueIcon.style.display = DisplayStyle.Flex;
+                        }
                     }
                 });
         }
