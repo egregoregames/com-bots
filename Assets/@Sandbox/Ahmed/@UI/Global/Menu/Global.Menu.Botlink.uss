@@ -29,9 +29,21 @@
 
 .botlink-header-title {
     color: rgb(255, 255, 255);
-    font-size: 26px;
     -unity-font-style: bold;
-    letter-spacing: 1px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 7px;
+    font-size: 28px;
+    position: relative;
+    right: 32px;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-bottom: 5px;
+    top: 20px;
+    align-self: flex-end;
+    width: 312px;
 }
 
 .botlink-header-icon {
@@ -57,8 +69,8 @@
 }
 
 .botlink-item {
-    width: 160px;
-    height: 160px;
+    width: 230px;
+    height: 230px;
     border: 2px solid rgb(52, 152, 219);
     border-radius: 8px;
     align-items: center;
@@ -111,9 +123,6 @@
     background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/02-Botlink%20App.png?fileID=2800000&guid=e70870fe1f513c44e9a768ca94257897&type=3#02-Botlink App");
 }
 
-/* Removed redundant planner-* copies after botlink-* rename */
-
-/* Botlink-specific names for the copied header styles */
 .botlink-detail-header {
     flex-direction: row;
     align-items: center;
@@ -140,19 +149,6 @@
     margin-right: 8px;
 }
 
-.botlink-header-title {
-    background-color: rgb(242, 154, 40);
-    color: rgb(255, 255, 255);
-    font-size: 12px;
-    -unity-font-style: bold;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    letter-spacing: 0.5px;
-}
-
-/* Mirroring helpers from Global Game.Menu.uss so we can keep botlink-* naming locally */
 .botlink-header-badge-label {
     padding-bottom: 2px;
     padding-top: 9px;

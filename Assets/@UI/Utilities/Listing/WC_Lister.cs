@@ -128,6 +128,13 @@ namespace ComBots.UI.Utilities
         public void SetInactive()
         {
             IsActive = false;
+            // Hide all options
+            foreach (var option in _optionControllers)
+            {
+                option.VE.style.display = DisplayStyle.None;
+                // Remove highlighting
+                option.VE.RemoveFromClassList(CLASS_OPTION_HIGHLIGHTED);
+            }
         }
 
         public bool Input_Navigate(Vector2 direction)
@@ -320,6 +327,12 @@ namespace ComBots.UI.Utilities
             {
                 _optionControllers[0].VE.AddToClassList(CLASS_OPTION_TOP_ROUNDED);
                 _optionControllers[^1].VE.AddToClassList(CLASS_OPTION_BOTTOM_ROUNDED);
+            }
+
+            // Enable all options
+            foreach (var option in _optionControllers)
+            {
+                option.VE.style.display = DisplayStyle.Flex;
             }
 
             // Ensure overflow arrows are at the end

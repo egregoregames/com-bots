@@ -3,21 +3,19 @@
     padding-left: 10px;
     padding-top: 8px;
     padding-right: 10px;
-    width: 50%;
-    min-width: 560px;
-    max-width: 780px;
+    flex-grow: 1;
 }
 
 .planner-layout {
     flex-direction: row;
     flex-grow: 1;
-    padding-top: 12px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-top: 0;
     gap: 16px;
-    align-items: flex-start;
-    display: flex;
     justify-content: center;
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: flex-start;
 }
 
 .planner-header {
@@ -27,29 +25,6 @@
     padding-right: 16px;
     background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/00-Planner%20Banner.png?fileID=2800000&guid=697ef230172989948ab0f59d51bb30ae&type=3#00-Planner Banner");
     height: 100px;
-}
-
-.planner-body {
-    flex-grow: 1;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.02);
-    margin-top: 6px;
-}
-
-.planner-header-title {
-    color: rgb(255, 255, 255);
-    font-size: 26px;
-    -unity-font-style: bold;
-    letter-spacing: 1px;
-}
-
-.planner-header-icon {
-    margin-left: auto;
-    width: 48px;
-    height: 48px;
-    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/01-Planner%20App.png?fileID=2800000&guid=e1c3fd6ba13e5e54bb69a6d5e72dfa43&type=3#01-Planner App");
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 
 .planner-tabs {
@@ -111,118 +86,6 @@
     color: rgb(255, 255, 255);
 }
 
-.planner-tab-indicator {
-    display: none;
-}
-
-.planner-list {
-    flex-grow: 0;
-    padding-top: 0;
-    padding-right: 4px;
-    padding-left: 0;
-    padding-bottom: 0;
-    height: 336px;
-    max-height: 336px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(220, 220, 220);
-    border-top: none;
-}
-
-.planner-row {
-    background-color: rgb(255, 255, 255);
-    height: 48px;
-    justify-content: center;
-    padding-left: 20px;
-    padding-right: 12px;
-    position: relative;
-    border: none;
-    border-bottom: 1px solid rgb(230, 230, 230);
-}
-
-.planner-row:hover {
-    background-color: rgb(255, 248, 240);
-}
-
-.planner-row-label {
-    color: rgb(34, 34, 34);
-    font-size: 17px;
-    -unity-font-style: bold;
-    letter-spacing: 0.3px;
-    line-height: 24px;
-}
-
-.planner-row-selected {
-    background-color: rgb(255, 250, 242);
-}
-
-.planner-row-selected > .planner-row-label {
-    color: rgb(17, 17, 17);
-}
-
-.planner-row-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background-color: rgb(242, 154, 40);
-}
-
-.planner-list .unity-scroll-view__vertical-scroller {
-    width: 8px;
-    right: 0;
-}
-
-.planner-list .unity-scroller {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.planner-list .unity-scroller .unity-slider {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.planner-list .unity-scrollbar {
-    background-color: rgba(200, 200, 200, 0.3);
-    border-radius: 4px;
-    opacity: 1;
-}
-
-.planner-list .unity-scrollbar .unity-dragger {
-    background-color: rgb(180, 180, 180);
-    border-radius: 4px;
-    min-height: 30px;
-}
-
-.planner-list-electives {
-    display: none;
-}
-
-.electives-active .planner-list-electives {
-    display: flex;
-}
-
-.electives-active .planner-list-requirements {
-    display: none;
-}
-
-.electives-active #RequirementsTab {
-    box-shadow: 0 0 0 0 rgb(242, 154, 40) inset;
-}
-
-.electives-active #ElectivesTab {
-    box-shadow: 0 -3px 0 0 rgb(242, 154, 40) inset;
-}
-
-.detail-panel-planner .detail-header {
-    background-color: rgb(242, 154, 40);
-}
-
-.detail-panel-planner .detail-header-icon {
-    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/01-Planner%20App.png?fileID=2800000&guid=e1c3fd6ba13e5e54bb69a6d5e72dfa43&type=3#01-Planner App");
-}
-
 .planner-detail-progress {
     flex-direction: row;
     align-items: center;
@@ -262,17 +125,27 @@
 .planner-progress-title {
     background-color: rgb(242, 154, 40);
     color: rgb(255, 255, 255);
-    font-size: 12px;
     -unity-font-style: bold;
     padding-left: 12px;
     padding-right: 12px;
-    padding-top: 6px;
     padding-bottom: 6px;
     letter-spacing: 0.5px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 8px;
+    font-size: 25px;
+    position: absolute;
+    right: 23px;
+    justify-content: flex-start;
+    width: 336px;
+    height: 42px;
+    -unity-text-align: middle-left;
 }
 
 .planner-details-label {
-    font-size: 21px;
+    font-size: 31px;
     line-height: 28px;
     white-space: normal;
     margin-bottom: 20px;
@@ -282,4 +155,45 @@
     margin-left: 0;
     margin-right: 0;
     padding-bottom: 0;
+    margin-top: 13px;
+    flex-grow: 1;
+}
+
+.planner-requirement-item {
+    height: 57px;
+    width: 422px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/04-Quest%20or%20Connection%20-%20Unselected.png?fileID=2800000&guid=614266642b3e6114b99616cf6c56efdb&type=3#04-Quest or Connection - Unselected");
+    justify-content: space-between;
+    padding-right: 10px;
+    padding-left: 10px;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 6px;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.planner-requirement-item-label {
+    font-size: 25px;
+    -unity-font-style: bold;
+    padding-top: 8px;
+}
+
+.planner-requirement-item-highlighted {
+    translate: 32px 0;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/01-Planner%20Tab%20-%20Selected.png?fileID=2800000&guid=cafc4a949cfd0554ca35e33826ce69b6&type=3#01-Planner Tab - Selected");
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.planner-requirement-item-highlighted .planner-requirement-item-label {
+    color: rgb(255, 255, 255);
+}
+
+.planner-requirement-item-completed {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/05-Quest%20-%20Completed.png?fileID=2800000&guid=2f3e8fd7460c2bd4db7fd91476b538a9&type=3#05-Quest - Completed");
+}
+
+.planner-requirement-item-completed .planner-requirement-item-label {
+    color: rgb(255, 255, 255);
 }

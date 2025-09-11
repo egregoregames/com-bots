@@ -209,7 +209,7 @@
 .planner-details-badge-label {
     padding-bottom: 2px;
     padding-top: 9px;
-    font-size: 13px;
+    font-size: 14px;
     margin-top: 5px;
 }
 
@@ -239,11 +239,68 @@
     padding-left: 4px;
 }
 
-.backpack-details-line {
+.button-set {
     flex-grow: 1;
     position: absolute;
-    width: 100%;
-    height: 3px;
-    background-color: rgb(255, 193, 7);
-    top: 57px;
+    width: 139px;
+    height: 49px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/11-Set%20Button.png?fileID=2800000&guid=b6e6e5e399602164b8ed9b66bc95afe1&type=3#11-Set Button");
+    bottom: 0;
+    right: 26px;
+    translate: 0 100%;
+}
+
+.button-set-label {
+    flex-grow: 1;
+    font-size: 30px;
+    margin-left: 20px;
+    -unity-text-align: middle-left;
+    padding-top: 6px;
+    padding-left: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+}
+
+.button-back {
+    flex-grow: 1;
+    position: absolute;
+    width: 139px;
+    height: 49px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Other/01-Back%20Button.png?fileID=2800000&guid=0868ac08c2a74e54a951ae46c9c96167&type=3#01-Back Button");
+    left: 26px;
+    bottom: 0;
+    translate: 0 100%;
+}
+
+.button-back-label {
+    flex-grow: 1;
+    font-size: 30px;
+    -unity-text-align: middle-right;
+    padding-top: 6px;
+    padding-left: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    margin-right: 21px;
+}
+
+.button-select {
+    flex-grow: 1;
+    position: absolute;
+    width: 155px;
+    height: 49px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Other/02-Select%20Button.png?fileID=2800000&guid=ccc9fd395ab269d4cad629de5d3b65d2&type=3#02-Select Button");
+    bottom: 0;
+    right: 26px;
+    translate: 0 100%;
+}
+
+.button-select-label {
+    flex-grow: 1;
+    font-size: 30px;
+    -unity-text-align: middle-left;
+    padding-top: 6px;
+    padding-left: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    margin-left: 23px;
 }

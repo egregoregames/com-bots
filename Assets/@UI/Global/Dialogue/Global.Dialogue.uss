@@ -202,6 +202,16 @@
     bottom: -16px;
     align-self: center;
     background-image: url("project://database/Assets/@Art/Sprites/UI/Dialogue/Dialog%20Continue%20Arrow.png?fileID=2800000&guid=e542e5513b1540845a2c02dc22d541d6&type=3#Dialog Continue Arrow");
+    display: flex;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.dialog-continue-icon-hidden {
+    transition-duration: 0.2s;
+    translate: 0 10px;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0);
+    transition-timing-function: ease-in-out-cubic;
 }
 
 .dialog-end-icon {
@@ -212,4 +222,14 @@
     align-self: center;
     background-image: url("project://database/Assets/@Art/Sprites/UI/Dialogue/Dialog%20End%20Square.png?fileID=2800000&guid=1756154ce633ff44dbd1b705c38183c4&type=3#Dialog End Square");
     bottom: -26px;
+    display: flex;
+    transition-duration: 0.6s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.dialog-end-icon-hidden {
+    scale: 0 0;
+    transition-timing-function: ease-in-out-cubic;
+    rotate: 270deg;
+    transition-duration: 0.6s;
 }

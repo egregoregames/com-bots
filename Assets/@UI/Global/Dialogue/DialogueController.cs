@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using ComBots.Game;
 using ComBots.Game.StateMachine;
 using ComBots.Inputs;
 using ComBots.Logs;
@@ -12,6 +9,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using DG.Tweening;
 using PixelCrushers.DialogueSystem;
+using System;
+using System.Collections;
 
 namespace ComBots.Global.UI.Dialogue
 {
@@ -28,7 +27,9 @@ namespace ComBots.Global.UI.Dialogue
         private const string CLASS_OPTION_LISTER_PARENT = "option-lister-parent";
         private const string CLASS_OPTION_LISTER_PARENT_HIDDEN = "option-lister-parent-hidden";
         private const string CLASS_DIALOG_CONTINUE_ICON = "dialog-continue-icon";
+        private const string CLASS_DIALOG_CONTINUE_ICON_HIDDEN = "dialog-continue-icon-hidden";
         private const string CLASS_DIALOG_END_ICON = "dialog-end-icon";
+        private const string CLASS_DIALOG_END_ICON_HIDDEN = "dialog-end-icon-hidden";
 
         private bool _isActive;
 
@@ -49,6 +50,7 @@ namespace ComBots.Global.UI.Dialogue
         private VisualElement _VE_dialogContinueIcon;
         private VisualElement _VE_dialogEndIcon;
         private Label _VE_nametagLabel;
+        private Coroutine _COR_responses;
 
         // Animation state
         private Tween _textAnimationTween;
@@ -194,6 +196,8 @@ namespace ComBots.Global.UI.Dialogue
                 _textAnimationTween = null;
             }
             // Hide Dialogue UI
+            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
+            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
             HideResponses();
             _VE_root.AddToClassList(CLASS_INACTIVE);
             _VE_optionListerParent.EnableInClassList(CLASS_OPTION_LISTER_PARENT_HIDDEN, true);
@@ -291,14 +295,16 @@ namespace ComBots.Global.UI.Dialogue
             }
             else
             {
-                float charsPerSecond = DialogueManager.displaySettings.subtitleSettings.subtitleCharsPerSecond;
-                float minSeconds = DialogueManager.displaySettings.subtitleSettings.minSubtitleSeconds;
-                float animationDuration = Mathf.Max(minSeconds, subtitle.formattedText.text.Length / charsPerSecond);
-                ShowSubtitle(subtitle.formattedText.text, animationDuration - 1f, IsLastSubtitle(subtitle));
+                // float charsPerSecond = DialogueManager.displaySettings.subtitleSettings.subtitleCharsPerSecond;
+                // float minSeconds = DialogueManager.displaySettings.subtitleSettings.minSubtitleSeconds;
+                //float animationDuration = Mathf.Max(minSeconds, subtitle.formattedText.text.Length / charsPerSecond);
+                float animationDuration = 0.02f * subtitle.formattedText.text.Length; // 20 chars per second
+                AnalyzeSubtitle(subtitle, out bool isLastSubtitle, out bool _);
+                ShowSubtitle(subtitle.formattedText.text, animationDuration, isLastSubtitle);
             }
         }
 
-        private bool IsLastSubtitle(Subtitle subtitle)
+        private void AnalyzeSubtitle(Subtitle subtitle, out bool isLast, out bool hasOptions)
         {
             try
             {
@@ -306,7 +312,9 @@ namespace ComBots.Global.UI.Dialogue
 
                 if (conversationModel == null || subtitle?.dialogueEntry == null)
                 {
-                    return true;
+                    isLast = true;
+                    hasOptions = false;
+                    return;
                 }
 
                 // Get the state for this dialogue entry, including evaluating its links
@@ -314,23 +322,26 @@ namespace ComBots.Global.UI.Dialogue
 
                 if (currentState == null)
                 {
-                    return true;
+                    isLast = true;
+                    hasOptions = false;
+                    return;
                 }
 
-                // Check if the current state has any valid responses
-                bool hasResponses = currentState.hasAnyResponses;
+                // Check if there are any player responses available
+                hasOptions = currentState.hasAnyResponses;
 
                 // If no responses, this is the last subtitle
-                return !hasResponses;
+                isLast = !hasOptions;
             }
             catch (System.Exception ex)
             {
-                MyLogger<DialogueController>.StaticLogError($"Error checking if subtitle is last: {ex.Message}");
-                return true;
+                MyLogger<DialogueController>.StaticLogError($"Error analyzing subtitle: {ex.Message}");
+                isLast = true;
+                hasOptions = false;
             }
         }
 
-        private System.Collections.IEnumerator ContinueAfterFrame()
+        private IEnumerator ContinueAfterFrame()
         {
             yield return null; // Wait one frame
             DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue,
@@ -340,9 +351,8 @@ namespace ComBots.Global.UI.Dialogue
 
         private void ShowSubtitle(string text, float animationDuration, bool isLast)
         {
-            // Hide dialog continue & end icons
-            _VE_dialogEndIcon.style.display = DisplayStyle.None;
-            _VE_dialogContinueIcon.style.display = DisplayStyle.None;
+            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
+            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
             // Hide responses if any
             HideResponses();
             MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
@@ -372,13 +382,14 @@ namespace ComBots.Global.UI.Dialogue
                         // If this is the last subtitle, show the end icon, otherwise, just hide it using inline styles
                         if (isLast)
                         {
-                            _VE_dialogEndIcon.style.display = DisplayStyle.Flex;
-                            _VE_dialogContinueIcon.style.display = DisplayStyle.None;
+                            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, false);
+                            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
                         }
                         else
                         {
-                            _VE_dialogEndIcon.style.display = DisplayStyle.None;
-                            _VE_dialogContinueIcon.style.display = DisplayStyle.Flex;
+                            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
+                            MyLogger<DialogueController>.StaticLog($"CLASS_DIALOG_CONTINUE_ICON_HIDDEN: {_COR_responses != null}");
+                            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, _COR_responses != null);
                         }
                     }
                 });
@@ -434,13 +445,13 @@ namespace ComBots.Global.UI.Dialogue
             );
         }
 
-        public void ShowResponses(Response[] responses)
+        private IEnumerator Async_ShowResponses(Response[] responses)
         {
-            ShowResponses(null, responses, 0f);
-        }
+            while (_textAnimationTween != null && _textAnimationTween.IsActive())
+            {
+                yield return null;
+            }
 
-        public void ShowResponses(Subtitle subtitle, Response[] responses, float timeout)
-        {
             MyLogger<DialogueController>.StaticLog($"Showing {responses.Length} responses...");
             _VE_optionListerParent.EnableInClassList(CLASS_OPTION_LISTER_PARENT_HIDDEN, false);
 
@@ -463,10 +474,19 @@ namespace ComBots.Global.UI.Dialogue
                 onBackSelected: () =>
                 {
                     MyLogger<DialogueController>.StaticLog($"Confirming selection: -1 (cancel option). Don't know what to do in this case.");
-                    // For cancel, we could close the conversation or do nothing
-                    // SelectedResponseHandler?.Invoke(this, new SelectedResponseEventArgs(null));
                 }
             );
+            _COR_responses = null;
+        }
+
+        public void ShowResponses(Subtitle subtitle, Response[] responses, float timeout)
+        {
+            MyLogger<DialogueController>.StaticLog($"Stored {responses.Length} responses in the buffer.");
+            if (_COR_responses != null)
+            {
+                StopCoroutine(_COR_responses);
+            }
+            _COR_responses = StartCoroutine(Async_ShowResponses(responses));
         }
 
         public void HideResponses()
@@ -474,6 +494,7 @@ namespace ComBots.Global.UI.Dialogue
             MyLogger<DialogueController>.StaticLog("Hiding responses.");
             _VE_optionListerParent.EnableInClassList(CLASS_OPTION_LISTER_PARENT_HIDDEN, true);
             _WC_optionLister.SetInactive();
+            _COR_responses = null;
         }
 
         public void ShowQTEIndicator(int index)
