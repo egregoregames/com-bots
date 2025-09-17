@@ -1,0 +1,41 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-direction: row; padding-left: 20px; margin-right: 20px;">
+        <ui:VisualElement name="Left" style="flex-grow: 0; margin-right: 15px; width: 50%;">
+            <ui:VisualElement name="Header" style="flex-grow: 0; height: 101px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/General/00-Botlink%20Banner.png?fileID=2800000&amp;guid=0c4e0884a4e42e14190773ce74a48d02&amp;type=3#00-Botlink Banner&quot;);" />
+            <ui:VisualElement name="Content" style="flex-grow: 0; height: 345px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/FormSelect/formselect_panel-01.png?fileID=2800000&amp;guid=a8556fb172cbdbb2196f8662d1761fd3&amp;type=3#formselect_panel-01&quot;);">
+                <ui:Label text="BASIC" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 145px; left: 53px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="COMBAT 1" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 147px; left: 185px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="COMBAT 2" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 147px; left: 335px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="COMBAT 3" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 146px; left: 488px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="UNKNOWN" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 147px; left: 637px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="ALPHABOT" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 284px; left: 28px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="PROTOBOT" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 284px; left: 182px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="ULTRA BOT" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 284px; left: 332px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="???" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 284px; left: 527px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:Label text="???" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: absolute; top: 284px; left: 682px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 21px; padding-bottom: 0; -unity-text-align: upper-center;" />
+                <ui:VisualElement name="Image1" class="botlink-formselect-image" />
+                <ui:VisualElement name="Image2" class="botlink-formselect-image" style="left: 183px;" />
+                <ui:VisualElement name="Image3" class="botlink-formselect-image" style="left: 335px;" />
+                <ui:VisualElement name="Image4" class="botlink-formselect-image" style="left: 487px; background-color: rgb(0, 0, 0);">
+                    <ui:Label text="?" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: relative; color: rgb(255, 255, 255); -unity-font-style: normal; font-size: 59px; padding-bottom: 0; -unity-text-align: upper-center; align-self: center; padding-left: 0; padding-right: 0;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Image5" class="botlink-formselect-image" style="left: 639px; background-color: rgb(0, 0, 0);">
+                    <ui:Label text="?" class="label botlink-formselect-left-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; position: relative; color: rgb(255, 255, 255); -unity-font-style: normal; font-size: 59px; padding-bottom: 0; -unity-text-align: upper-center; align-self: center; padding-left: 0; padding-right: 0;" />
+                </ui:VisualElement>
+                <ui:Label text="Sam" class="label botlink-formselect-name-label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Selector" class="botlink-formselect-selector" style="top: 450px; left: 192px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="flex-grow: 1; margin-left: 15px;">
+            <ui:VisualElement name="Panel" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Planner/04-Quest%20or%20Connection%20-%20Unselected.png?fileID=2800000&amp;guid=614266642b3e6114b99616cf6c56efdb&amp;type=3#04-Quest or Connection - Unselected&quot;); height: 101px; width: 100%;">
+                <ui:Label text="Choose a Form to View" class="label" style="flex-grow: 0; -unity-text-align: middle-center; font-size: 28px; width: 100%; height: 100%; margin-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; -unity-font-style: normal; padding-top: 8px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonSelect" class="button-select">
+            <ui:Label text="A" class="label button-select-label" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonBack" class="button-back">
+            <ui:Label text="S" class="label button-back-label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

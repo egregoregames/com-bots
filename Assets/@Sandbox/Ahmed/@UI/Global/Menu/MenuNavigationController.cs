@@ -74,6 +74,10 @@ namespace ComBots.Sandbox.Global.UI.Menu
                 _settingsController,
                 _saveController
             };
+            foreach (var controller in _panelControllers)
+            {
+                controller.TryInit();
+            }
             
             // Log panel controller references for debugging
             ValidateControllerReferences();

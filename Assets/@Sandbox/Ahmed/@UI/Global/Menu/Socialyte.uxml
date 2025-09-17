@@ -1,0 +1,25 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Socialyte" class="socialyte-layout">
+        <ui:VisualElement name="Left" class="socialyte-screen" style="padding-right: 0; padding-left: 0;">
+            <ui:VisualElement name="SocialyteHeader" class="socialyte-header" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+            <ui:VisualElement name="SocialyteTabs" class="socialyte-tabs" style="width: 100%; justify-content: center; align-content: center; padding-right: 0;">
+                <ui:VisualElement id="ConnectionsTab" name="ConnectionsTab" class="socialyte-tab socialyte-tab-active" style="align-self: center; align-content: center; margin-right: 8px;">
+                    <ui:Label text="CONNECTIONS" class="socialyte-tab-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement id="FeedTab" name="FeedTab" class="socialyte-tab">
+                    <ui:Label text="FEED" class="socialyte-tab-label label" style="color: rgb(244, 81, 108); margin-top: 4px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="SocialyteBody" class="socialyte-body" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Socialyte/08-Socialyte%20Textbox.png?fileID=2800000&amp;guid=9a6943437a96db34c9ca63c9a8ea3409&amp;type=3#08-Socialyte Textbox&quot;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 15px; height: 438px; flex-grow: 1;">
+            <ui:Label text="Los Servos" class="socialyte-tab-label label" style="top: 149px; width: auto; -unity-text-align: middle-left; margin-left: 0; padding-left: 0; padding-top: 0; position: absolute; left: 345px; padding-right: 0; padding-bottom: 0; margin-top: 0; margin-right: 0; margin-bottom: 0;" />
+            <ui:Label text="CHECKED IN AT STUDENT BLABLA " name="Label" class="socialyte-tab-label label" style="color: rgb(244, 81, 108); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-left; bottom: 22px; position: absolute; left: 72px;" />
+            <ui:Label text="While only in his second year at GCA, Simon has already made a name for himself as one of the schoolís strongest Meisters. When leading Ukibot in battle, Simon pursues a strategy of overwhelming strength, keeping each opponent on their back foot from the start. In recognition of Simonís potential, Dr. Yama entrusted the Solex of Strength to him.&#10;&#10;" name="DescriptionLabel" style="position: absolute; top: 205px; left: 27px; padding-right: 0; padding-left: 0; font-size: 18px; flex-grow: 1; width: 719px; -unity-text-align: upper-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; -unity-font-style: bold; padding-bottom: 0; height: 165px; white-space: normal;" />
+            <ui:Label text="Second-year Student" class="socialyte-tab-label label" style="top: 96px; -unity-text-align: middle-left; margin-left: 0; padding-left: 0; margin-top: 0; position: absolute; margin-right: 0; margin-bottom: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; left: 345px;" />
+            <ui:Label text="SIMON" name="NameLabel" class="socialyte-tab-label label" style="left: 303px; -unity-text-align: middle-left; padding-left: 0; position: absolute; height: 25px; top: 37px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0;" />
+            <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Socialyte/09-Empty%20Bond%20Hearts.png?fileID=2800000&amp;guid=edf22cbb84df3664e95c0a26a2effb49&amp;type=3#09-Empty Bond Hearts&quot;); position: absolute; width: 105px; height: 33px; top: 32px; left: 635px;" />
+            <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Socialyte/10-Bond%20Heart.png?fileID=2800000&amp;guid=871305187e440d64bac9e6ccc23b4f17&amp;type=3#10-Bond Heart&quot;); position: absolute; width: 39px; height: 35px; top: 31px; left: 632px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

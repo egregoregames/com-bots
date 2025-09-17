@@ -1,0 +1,28 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Map" class="map-layout">
+        <ui:VisualElement name="MapScreen" class="map-screen">
+            <ui:VisualElement name="MapHeader" class="map-header" />
+            <ui:VisualElement name="MapBody" class="map-body">
+                <ui:VisualElement name="MapArea" class="map-area">
+                    <ui:VisualElement name="PlayerMarker" class="map-marker" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/01-Map%20Cursor.png?fileID=2800000&amp;guid=2ea643afc7b267349b912e6bb384dc23&amp;type=3#01-Map Cursor&quot;); background-color: rgba(255, 255, 255, 0); rotate: 0; top: 151px; left: 392px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="MapDetail" class="detail-panel-map" style="flex-direction: column; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/02-Location%20Textbox.png?fileID=2800000&amp;guid=cf8393f1dfeef6241ad7b8cfc456f9a6&amp;type=3#02-Location Textbox&quot;); flex-grow: 1; height: 69%;">
+            <ui:Label name="MapHeaderTitle" text="VECTOR BEACH" class="map-header-title label">
+                <ui:VisualElement style="flex-grow: 0; width: 35px; height: 35px; position: absolute; right: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Map/03-V-Pass%20Icon.png?fileID=2800000&amp;guid=43f3e0ff658c3cb48b805bfe5546c2d6&amp;type=3#03-V-Pass Icon&quot;); top: -1px;" />
+            </ui:Label>
+            <ui:VisualElement name="MapPicture" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/mapscreen.png?fileID=2800000&amp;guid=de43408f15ea9bf4680015bcc8513f11&amp;type=3#mapscreen&quot;); height: 246px; width: 360px; position: absolute; right: 28px; top: 81px;" />
+            <ui:Label text="With its many youth-oriented attractions, Dynaboarders and street punks of every stripe affectionately call this beach &quot;home.&quot;" parse-escape-sequences="false" name="DetailsLabel" class="label map-details-label" style="left: 24px; width: 373px;" />
+            <ui:VisualElement style="flex-grow: 0; bottom: -362px; height: 77px; width: 672px; left: 68px; flex-wrap: wrap;">
+                <ui:Label text="Hawk&apos;s board c o " name="Label" class="label map-details-pos-label" />
+                <ui:Label text="The Memory Hole" name="Label" class="label map-details-pos-label" />
+                <ui:Label text="The Foundary" name="Label" class="label map-details-pos-label" />
+                <ui:Label text="The Sand Dollar" name="Label" class="label map-details-pos-label" />
+                <ui:Label text="Musclebot Beach" name="Label" class="label map-details-pos-label" />
+                <ui:Label text="Bottomfeeders&#10;" name="Label" class="label map-details-pos-label" />
+                <ui:Label text="The Bit Bucket" name="Label" class="label map-details-pos-label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

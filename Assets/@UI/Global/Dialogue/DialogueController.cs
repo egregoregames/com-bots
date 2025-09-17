@@ -11,6 +11,7 @@ using DG.Tweening;
 using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
+using UnityEngine.UIElements.Experimental;
 
 namespace ComBots.Global.UI.Dialogue
 {
@@ -49,6 +50,9 @@ namespace ComBots.Global.UI.Dialogue
         private VisualElement _VE_nametag;
         private VisualElement _VE_dialogContinueIcon;
         private VisualElement _VE_dialogEndIcon;
+        private float _continueIconOriginalY;
+
+        private float _endIconWidth, _endIconHeight;
         private Label _VE_nametagLabel;
         private Coroutine _COR_responses;
 
@@ -72,10 +76,50 @@ namespace ComBots.Global.UI.Dialogue
             _VE_dialogEndIcon = _VE_root.Q(className: CLASS_DIALOG_END_ICON);
             _WC_optionLister.TryInit();
 
+            // Start infinite loop animation for continue icon
+            _VE_dialogContinueIcon.schedule.Execute(_ =>
+            {
+                _continueIconOriginalY = -22;
+                StartContinueIconAnimation();
+            }).ExecuteLater(1);
+            
+            // Setup end icon dimensions
+            _VE_dialogContinueIcon.schedule.Execute(_ =>
+            {
+                // Use fallback dimensions first to avoid NaN issues
+                _endIconWidth = 49f; // From USS file
+                _endIconHeight = 49f; // From USS file
+                
+                // Try to get resolved dimensions if available
+                bool wasHidden = _VE_dialogEndIcon.ClassListContains(CLASS_DIALOG_END_ICON_HIDDEN);
+                if (wasHidden)
+                {
+                    _VE_dialogEndIcon.RemoveFromClassList(CLASS_DIALOG_END_ICON_HIDDEN);
+                }
+
+                float resolvedWidth = _VE_dialogEndIcon.resolvedStyle.width;
+                float resolvedHeight = _VE_dialogEndIcon.resolvedStyle.height;
+                
+                // Only use resolved dimensions if they're valid
+                if (!float.IsNaN(resolvedWidth) && resolvedWidth > 0)
+                {
+                    _endIconWidth = resolvedWidth;
+                }
+                
+                if (!float.IsNaN(resolvedHeight) && resolvedHeight > 0)
+                {
+                    _endIconHeight = resolvedHeight;
+                }
+                
+                // Restore hidden state
+                if (wasHidden)
+                {
+                    _VE_dialogEndIcon.AddToClassList(CLASS_DIALOG_END_ICON_HIDDEN);
+                }
+            }).ExecuteLater(3);
+
             // Register this as the DialogueManager's UI
-            MyLogger<DialogueController>.StaticLog($"Registering DialogueController as DialogueManager.dialogueUI");
             DialogueManager.dialogueUI = this;
-            MyLogger<DialogueController>.StaticLog($"DialogueManager.dialogueUI is now: {DialogueManager.dialogueUI?.GetType().Name}");
 
             // Check Display Settings
             if (DialogueManager.displaySettings != null)
@@ -87,12 +131,81 @@ namespace ComBots.Global.UI.Dialogue
             {
                 MyLogger<DialogueController>.StaticLogWarning("DialogueManager.displaySettings is null!");
             }
+        }
 
-            // Optional: Subscribe to some dialogue events for logging/debugging
-            // The main integration happens through IDialogueUI interface methods
-            // var events = _dialogueSystemEvents.conversationEvents;
-            // events.onConversationStart.AddListener(OnConversationStart);
-            // events.onConversationEnd.AddListener(OnConversationEnd);
+        private void StartContinueIconAnimation()
+        {
+            // Animate up
+            _VE_dialogContinueIcon.experimental.animation
+                .Start(new StyleValues { bottom = _continueIconOriginalY - 5f },
+                       new StyleValues { bottom = _continueIconOriginalY + 5f },
+                       500)
+                .Ease(Easing.InOutSine)
+                .OnCompleted(() =>
+                {
+                    // Animate down
+                    _VE_dialogContinueIcon.experimental.animation
+                        .Start(new StyleValues { bottom = _continueIconOriginalY + 5f },
+                               new StyleValues { bottom = _continueIconOriginalY - 5f },
+                               500)
+                        .Ease(Easing.InOutSine)
+                        .OnCompleted(StartContinueIconAnimation);
+                });
+        }
+
+        private void StartEndIconAnimation()
+        {
+            // Check if element is hidden
+            if (_VE_dialogEndIcon.ClassListContains(CLASS_DIALOG_END_ICON_HIDDEN))
+            {
+                return; // Don't animate hidden elements
+            }
+            
+            // Validate dimensions and use fallback if needed
+            if (_endIconWidth <= 0 || _endIconHeight <= 0 || float.IsNaN(_endIconWidth) || float.IsNaN(_endIconHeight))
+            {
+                _endIconWidth = 49f;
+                _endIconHeight = 49f;
+            }
+            
+            // Ensure the element is properly scaled to override CSS scale: 0 0
+            _VE_dialogEndIcon.style.scale = new StyleScale(new Scale(Vector3.one));
+            _VE_dialogEndIcon.style.width = _endIconWidth;
+            _VE_dialogEndIcon.style.height = _endIconHeight;
+            
+            // Animate scale up
+            _VE_dialogEndIcon.experimental.animation
+                .Start(
+                    new StyleValues { width = _endIconWidth, height = _endIconHeight },
+                    new StyleValues { width = _endIconWidth * 1.1f, height = _endIconHeight * 1.1f },
+                    500
+                )
+                .Ease(Easing.InOutSine)
+                .OnCompleted(() =>
+                {
+                    // Animate scale down
+                    _VE_dialogEndIcon.experimental.animation
+                        .Start(
+                            new StyleValues { width = _endIconWidth * 1.1f, height = _endIconHeight * 1.1f },
+                            new StyleValues { width = _endIconWidth, height = _endIconHeight },
+                            500
+                        )
+                        .Ease(Easing.InOutSine)
+                        .OnCompleted(() =>
+                        {
+                            // Restart animation if still visible
+                            if (!_VE_dialogEndIcon.ClassListContains(CLASS_DIALOG_END_ICON_HIDDEN))
+                            {
+                                StartEndIconAnimation();
+                            }
+                        });
+                });
+        }
+
+        private void StopEndIconAnimation()
+        {
+            // Animation will stop naturally when the element becomes hidden
+            // since the OnCompleted callback checks the hidden state
         }
 
         public override void Dispose()
@@ -166,6 +279,16 @@ namespace ComBots.Global.UI.Dialogue
             }
             _isActive = true;
             _args = args;
+            
+            // Ensure end icon is hidden at the start of every new conversation
+            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
+            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
+            
+            // Reset any explicit styles that might have been set previously
+            _VE_dialogEndIcon.style.scale = StyleKeyword.Initial;
+            _VE_dialogEndIcon.style.width = StyleKeyword.Initial;
+            _VE_dialogEndIcon.style.height = StyleKeyword.Initial;
+            
             if (args is State_Dialogue_PixelCrushers_Args pixelCrushersArgs)
             {
                 MyLogger<DialogueController>.StaticLog($"Starting PixelCrushers conversation '{pixelCrushersArgs.ConversationTitle}' between '{pixelCrushersArgs.Actor.GetActorName()}' and '{pixelCrushersArgs.Conversant.GetActorName()}'");
@@ -183,8 +306,12 @@ namespace ComBots.Global.UI.Dialogue
         {
             if (!_isActive) { return; }
             _isActive = false;
+            
+            // Stop end icon animation
+            StopEndIconAnimation();
+            
             // Stop the Pixel Crushers Dialogue
-            if (DialogueManager.isConversationActive) // If we were in a PixelCrushers conversation, stop it
+            if (DialogueManager.isConversationActive)
             {
                 MyLogger<DialogueController>.StaticLog($"PixelCrushers.DialogueManager.StopConversation()");
                 DialogueManager.StopConversation();
@@ -198,6 +325,12 @@ namespace ComBots.Global.UI.Dialogue
             // Hide Dialogue UI
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
+            
+            // Reset any explicit styles that might have been set
+            _VE_dialogEndIcon.style.scale = StyleKeyword.Initial;
+            _VE_dialogEndIcon.style.width = StyleKeyword.Initial;
+            _VE_dialogEndIcon.style.height = StyleKeyword.Initial;
+            
             HideResponses();
             _VE_root.AddToClassList(CLASS_INACTIVE);
             _VE_optionListerParent.EnableInClassList(CLASS_OPTION_LISTER_PARENT_HIDDEN, true);
@@ -231,6 +364,11 @@ namespace ComBots.Global.UI.Dialogue
             }
             // Show UI
             _VE_root.RemoveFromClassList(CLASS_INACTIVE);
+            
+            // Ensure icons are properly hidden when opening dialogue
+            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
+            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
+            
             // Handle nametag
             if (string.IsNullOrEmpty(_args.Nametag))
             {
@@ -353,6 +491,7 @@ namespace ComBots.Global.UI.Dialogue
         {
             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
+            
             // Hide responses if any
             HideResponses();
             MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
@@ -369,8 +508,8 @@ namespace ComBots.Global.UI.Dialogue
                 .OnComplete(() =>
                 {
                     _textAnimationTween = null;
+                    
                     // Display options if we have them
-                    //ShowOptions();
                     if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
                     {
                         ShowResponses(standardArgs.OptionsArgs.Options);
@@ -379,16 +518,26 @@ namespace ComBots.Global.UI.Dialogue
                     {
                         // For Pixel Crushers, the system will automatically call ShowResponses when needed
                         MyLogger<DialogueController>.StaticLog("Text animation complete for Pixel Crushers dialogue");
-                        // If this is the last subtitle, show the end icon, otherwise, just hide it using inline styles
+                        // If this is the last subtitle, show the end icon
                         if (isLast)
                         {
                             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, false);
                             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
+                            
+                            // Override CSS scale with explicit style to ensure visibility
+                            _VE_dialogEndIcon.style.scale = new StyleScale(new Scale(Vector3.one));
+                            _VE_dialogEndIcon.style.width = 49f;
+                            _VE_dialogEndIcon.style.height = 49f;
+                            
+                            // Start the animation
+                            _VE_dialogEndIcon.schedule.Execute(_ =>
+                            {
+                                StartEndIconAnimation();
+                            }).ExecuteLater(1);
                         }
                         else
                         {
                             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
-                            MyLogger<DialogueController>.StaticLog($"CLASS_DIALOG_CONTINUE_ICON_HIDDEN: {_COR_responses != null}");
                             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, _COR_responses != null);
                         }
                     }

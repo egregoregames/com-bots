@@ -23,7 +23,7 @@ namespace ComBots.Game
                 yield return null;
             }
             // Spawn Player
-            _playerSpawner.TryInit();
+            if(_playerSpawner.gameObject.activeSelf) _playerSpawner.TryInit();
             int playerInitAttempts = 0;
             while (Player.I == null && playerInitAttempts < 100)
             {

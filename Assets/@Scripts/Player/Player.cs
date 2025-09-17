@@ -1,5 +1,8 @@
+using System.Collections;
+using ComBots.Cameras;
 using ComBots.Game.Interactions;
 using PixelCrushers.DialogueSystem;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace ComBots.Game.Players
@@ -16,6 +19,10 @@ namespace ComBots.Game.Players
         // References
         [SerializeField] private Transform T;
         Transform IInteractor.T => T;
+
+        [Header("Camera")]
+        [SerializeField] private PlayerCamera _playerCamera;
+        public PlayerCamera PlayerCamera => _playerCamera;
 
         [Header("Input")]
         [SerializeField] private PlayerInputHandler _inputHandler;
@@ -69,6 +76,18 @@ namespace ComBots.Game.Players
         public void OnInteractionEnd(IInteractable interactable)
         {
             _interactor.OnInteractionEnd(interactable);
+        }
+
+        public void FreezeMovementFor(float seconds)
+        {
+            StartCoroutine(FreezeMovementCoroutine(seconds));
+        }
+
+        private IEnumerator FreezeMovementCoroutine(float seconds)
+        {
+            _thirdPersonController.FreezeMovement = true;
+            yield return new WaitForSeconds(seconds);
+            _thirdPersonController.FreezeMovement = false;
         }
     }
 }

@@ -1,3 +1,5 @@
+using ComBots.Cameras;
+using ComBots.Game.Players;
 using ComBots.Global.UI;
 using ComBots.Global.UI.Dialogue;
 using ComBots.Inputs;
@@ -38,6 +40,11 @@ namespace ComBots.Game.StateMachine
                     GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
                     // Push the dialogue input context
                     InputManager.I.PushContext(_stateMachine._dialogueContextData, DialogueInputHandler.I);
+                    // Camera
+                    if (args is State_Dialogue_PixelCrushers_Args pcArgs)
+                    {
+                        Player.I.PlayerCamera.SetState_Dialogue(pcArgs.CameraSequence);
+                    }
                 }
 
                 return canEnter;
@@ -52,6 +59,7 @@ namespace ComBots.Game.StateMachine
                 GlobalUIRefs.I.DialogueController.SetInactive();
                 // Display back the menu bottom bar
                 GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
+                Player.I.PlayerCamera.SetState_Orbital();
 
                 return true;
             }
@@ -95,14 +103,16 @@ namespace ComBots.Game.StateMachine
     {
         public DialogueActor Actor { get; private set; }
         public DialogueActor Conversant { get; private set; }
+        public CameraTarget CameraSequence { get; private set; }
         public string Nametag => Actor.GetActorName();
         public string ConversationTitle { get; private set; }
 
-        public State_Dialogue_PixelCrushers_Args(string conversationTitle, DialogueActor actor, DialogueActor conversant)
+        public State_Dialogue_PixelCrushers_Args(string conversationTitle, DialogueActor actor, DialogueActor conversant, CameraTarget cameraTarget)
         {
             ConversationTitle = conversationTitle;
             Actor = actor;
             Conversant = conversant;
+            CameraSequence = cameraTarget;
         }
     }
 }

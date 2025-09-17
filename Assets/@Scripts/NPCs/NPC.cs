@@ -6,6 +6,7 @@ using ComBots.Game.Players;
 using ComBots.Logs;
 using ComBots.Utils.ObjectPooling;
 using ComBots.UI.OverheadWidgets;
+using ComBots.Cameras;
 
 namespace ComBots.NPCs
 {
@@ -16,6 +17,9 @@ namespace ComBots.NPCs
 
         [Header("Overhead Widget")]
         [SerializeField] private Vector3 _overheadWidgetOffset;
+
+        [Header("Cameras")]
+        public CameraTarget CameraTarget;
 
         private const string overheadWidgetKey = "NPC_Overhead_Widget";
         private OverheadWidget _overheadWidget;
@@ -40,7 +44,7 @@ namespace ComBots.NPCs
                 _overheadWidget = null;
             }
             // Start dialogue
-            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor);
+            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 

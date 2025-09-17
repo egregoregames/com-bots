@@ -142,7 +142,8 @@ namespace StarterAssets
 
         private void Awake()
         {
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            if(_mainCamera == null)
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
 
         private void Start()

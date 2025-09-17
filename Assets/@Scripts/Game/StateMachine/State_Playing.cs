@@ -17,6 +17,8 @@ namespace ComBots.Game.StateMachine
 
             public override bool Enter(State previousState, object args = null)
             {
+                Player.I.PlayerCamera.SetState_Orbital();
+                Player.I.FreezeMovementFor(Player.I.PlayerCamera.BlendTime);
                 InputManager.I.PushContext(_stateMachine._overworldContextData, PlayerInputHandler.I);
                 return true;
             }
