@@ -82,14 +82,14 @@ namespace ComBots.Global.UI.Dialogue
                 _continueIconOriginalY = -22;
                 StartContinueIconAnimation();
             }).ExecuteLater(1);
-            
+
             // Setup end icon dimensions
             _VE_dialogContinueIcon.schedule.Execute(_ =>
             {
                 // Use fallback dimensions first to avoid NaN issues
                 _endIconWidth = 49f; // From USS file
                 _endIconHeight = 49f; // From USS file
-                
+
                 // Try to get resolved dimensions if available
                 bool wasHidden = _VE_dialogEndIcon.ClassListContains(CLASS_DIALOG_END_ICON_HIDDEN);
                 if (wasHidden)
@@ -99,18 +99,18 @@ namespace ComBots.Global.UI.Dialogue
 
                 float resolvedWidth = _VE_dialogEndIcon.resolvedStyle.width;
                 float resolvedHeight = _VE_dialogEndIcon.resolvedStyle.height;
-                
+
                 // Only use resolved dimensions if they're valid
                 if (!float.IsNaN(resolvedWidth) && resolvedWidth > 0)
                 {
                     _endIconWidth = resolvedWidth;
                 }
-                
+
                 if (!float.IsNaN(resolvedHeight) && resolvedHeight > 0)
                 {
                     _endIconHeight = resolvedHeight;
                 }
-                
+
                 // Restore hidden state
                 if (wasHidden)
                 {
@@ -160,19 +160,19 @@ namespace ComBots.Global.UI.Dialogue
             {
                 return; // Don't animate hidden elements
             }
-            
+
             // Validate dimensions and use fallback if needed
             if (_endIconWidth <= 0 || _endIconHeight <= 0 || float.IsNaN(_endIconWidth) || float.IsNaN(_endIconHeight))
             {
                 _endIconWidth = 49f;
                 _endIconHeight = 49f;
             }
-            
+
             // Ensure the element is properly scaled to override CSS scale: 0 0
             _VE_dialogEndIcon.style.scale = new StyleScale(new Scale(Vector3.one));
             _VE_dialogEndIcon.style.width = _endIconWidth;
             _VE_dialogEndIcon.style.height = _endIconHeight;
-            
+
             // Animate scale up
             _VE_dialogEndIcon.experimental.animation
                 .Start(
@@ -279,16 +279,16 @@ namespace ComBots.Global.UI.Dialogue
             }
             _isActive = true;
             _args = args;
-            
+
             // Ensure end icon is hidden at the start of every new conversation
             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
-            
+
             // Reset any explicit styles that might have been set previously
             _VE_dialogEndIcon.style.scale = StyleKeyword.Initial;
             _VE_dialogEndIcon.style.width = StyleKeyword.Initial;
             _VE_dialogEndIcon.style.height = StyleKeyword.Initial;
-            
+
             if (args is State_Dialogue_PixelCrushers_Args pixelCrushersArgs)
             {
                 MyLogger<DialogueController>.StaticLog($"Starting PixelCrushers conversation '{pixelCrushersArgs.ConversationTitle}' between '{pixelCrushersArgs.Actor.GetActorName()}' and '{pixelCrushersArgs.Conversant.GetActorName()}'");
@@ -306,10 +306,10 @@ namespace ComBots.Global.UI.Dialogue
         {
             if (!_isActive) { return; }
             _isActive = false;
-            
+
             // Stop end icon animation
             StopEndIconAnimation();
-            
+
             // Stop the Pixel Crushers Dialogue
             if (DialogueManager.isConversationActive)
             {
@@ -325,12 +325,12 @@ namespace ComBots.Global.UI.Dialogue
             // Hide Dialogue UI
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
-            
+
             // Reset any explicit styles that might have been set
             _VE_dialogEndIcon.style.scale = StyleKeyword.Initial;
             _VE_dialogEndIcon.style.width = StyleKeyword.Initial;
             _VE_dialogEndIcon.style.height = StyleKeyword.Initial;
-            
+
             HideResponses();
             _VE_root.AddToClassList(CLASS_INACTIVE);
             _VE_optionListerParent.EnableInClassList(CLASS_OPTION_LISTER_PARENT_HIDDEN, true);
@@ -364,11 +364,11 @@ namespace ComBots.Global.UI.Dialogue
             }
             // Show UI
             _VE_root.RemoveFromClassList(CLASS_INACTIVE);
-            
+
             // Ensure icons are properly hidden when opening dialogue
             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
-            
+
             // Handle nametag
             if (string.IsNullOrEmpty(_args.Nametag))
             {
@@ -440,6 +440,28 @@ namespace ComBots.Global.UI.Dialogue
                 AnalyzeSubtitle(subtitle, out bool isLastSubtitle, out bool _);
                 ShowSubtitle(subtitle.formattedText.text, animationDuration, isLastSubtitle);
             }
+
+            // Play animation
+            if (_args is State_Dialogue_PixelCrushers_Args pcArgs && pcArgs.PlayConversantAnimation != null)
+            {
+                string value = string.Empty;
+                for (int i = 0; i < subtitle.dialogueEntry.fields.Count; i++)
+                {
+                    if (subtitle.dialogueEntry.fields[i].title == "ConversantAnimation")
+                    {
+                        value = subtitle.dialogueEntry.fields[i].value;
+                        break;
+                    }
+                }
+                if (value != string.Empty)
+                {
+                    pcArgs.PlayConversantAnimation?.Invoke(value);
+                }
+                else
+                {
+                    pcArgs.PlayConversantAnimation?.Invoke("Talk");
+                }
+            }
         }
 
         private void AnalyzeSubtitle(Subtitle subtitle, out bool isLast, out bool hasOptions)
@@ -491,7 +513,7 @@ namespace ComBots.Global.UI.Dialogue
         {
             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
-            
+
             // Hide responses if any
             HideResponses();
             MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
@@ -508,7 +530,7 @@ namespace ComBots.Global.UI.Dialogue
                 .OnComplete(() =>
                 {
                     _textAnimationTween = null;
-                    
+
                     // Display options if we have them
                     if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
                     {
@@ -516,6 +538,7 @@ namespace ComBots.Global.UI.Dialogue
                     }
                     else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
                     {
+                        pcArgs.PlayConversantAnimation?.Invoke(string.Empty);
                         // For Pixel Crushers, the system will automatically call ShowResponses when needed
                         MyLogger<DialogueController>.StaticLog("Text animation complete for Pixel Crushers dialogue");
                         // If this is the last subtitle, show the end icon
@@ -523,12 +546,12 @@ namespace ComBots.Global.UI.Dialogue
                         {
                             _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, false);
                             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
-                            
+
                             // Override CSS scale with explicit style to ensure visibility
                             _VE_dialogEndIcon.style.scale = new StyleScale(new Scale(Vector3.one));
                             _VE_dialogEndIcon.style.width = 49f;
                             _VE_dialogEndIcon.style.height = 49f;
-                            
+
                             // Start the animation
                             _VE_dialogEndIcon.schedule.Execute(_ =>
                             {

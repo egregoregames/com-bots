@@ -1,4 +1,5 @@
 using System.Collections;
+using ComBots.Game.Interactions;
 using ComBots.Game.Players;
 using ComBots.Game.StateMachine;
 using ComBots.Global;
@@ -15,6 +16,9 @@ namespace ComBots.Game
         [Header("Game")]
         [SerializeField] private GameStateMachine _gameStateMachine;
 
+        [Header("Interactions")]
+        [SerializeField] private InteractionManager _interactionManager;
+
         IEnumerator Start()
         {
             // Wait for Global entry point to initialize
@@ -30,6 +34,8 @@ namespace ComBots.Game
                 yield return null;
                 playerInitAttempts++;
             }
+            // Interaction Manager
+            _interactionManager.TryInit();
             // Game State Machine
             _gameStateMachine.TryInit();
         }

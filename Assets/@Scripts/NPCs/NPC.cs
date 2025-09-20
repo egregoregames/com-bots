@@ -12,8 +12,13 @@ namespace ComBots.NPCs
 {
     public class NPC : MonoBehaviour, IInteractable
     {
+        public Transform T => transform;
         [SerializeField] private DialogueActor _dialogueActor;
         [SerializeField] private string _conversationTitle;
+        private IInteractor _currentInteractor;
+
+        [Header("Animations")]
+        [SerializeField] private Animator _animator;
 
         [Header("Overhead Widget")]
         [SerializeField] private Vector3 _overheadWidgetOffset;
@@ -21,6 +26,7 @@ namespace ComBots.NPCs
         [Header("Cameras")]
         public CameraTarget CameraTarget;
 
+        private Quaternion _idleRotation;
         private const string overheadWidgetKey = "NPC_Overhead_Widget";
         private OverheadWidget _overheadWidget;
 
@@ -30,11 +36,11 @@ namespace ComBots.NPCs
             Gizmos.DrawSphere(transform.position + _overheadWidgetOffset, 0.1f);
         }
 
-        public void Interact(IInteractor interactor)
+        public void OnInteractionStart(IInteractor interactor)
         {
             if (interactor is not Player player)
             {
-                MyLogger<NPC>.StaticLogWarning($"Only players can interact with NPCs. {interactor} is not a player.");
+                MyLogger<NPC>.StaticLogError($"Only players can interact with NPCs. {interactor} is not a player.");
                 return;
             }
             // Remove overhead widget
@@ -44,8 +50,36 @@ namespace ComBots.NPCs
                 _overheadWidget = null;
             }
             // Start dialogue
-            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget);
+            _currentInteractor = interactor;
+            _idleRotation = transform.rotation;
+            transform.rotation = Quaternion.LookRotation(interactor.T.position - transform.position);
+            transform.eulerAngles = new(0, transform.eulerAngles.y, 0);
+            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget, null, PlayConversantAnimation, StateDialogue_OnEnd);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
+        }
+
+        private void PlayConversantAnimation(string animation)
+        {
+            MyLogger<NPC>.StaticLog($"NPC.PlayConversantAnimation({animation})");
+            if (animation == "Talk")
+            {
+                _animator.SetBool(animation, true);
+            }
+            else
+            {
+                _animator.SetBool("Talk", false);
+                if (animation != string.Empty)
+                {
+                    _animator.SetTrigger(animation);
+                }
+            }
+        }
+
+        private void StateDialogue_OnEnd()
+        {
+            InteractionManager.I.EndInteraction(_currentInteractor, this);
+            _animator.SetBool("Talk", false);
+            _currentInteractor = null;
         }
 
         public void OnInteractorFar(IInteractor interactor)
@@ -64,6 +98,11 @@ namespace ComBots.NPCs
                 _overheadWidget = PoolManager.I.Pull<OverheadWidget>(overheadWidgetKey);
                 _overheadWidget.transform.position = transform.position + _overheadWidgetOffset;
             }
+        }
+
+        public void OnInteractionEnd(IInteractor interactor)
+        {
+            transform.rotation = _idleRotation;
         }
     }
 }

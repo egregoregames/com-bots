@@ -5,6 +5,7 @@ using ComBots.Global.UI.Dialogue;
 using ComBots.Inputs;
 using ComBots.Utils.StateMachines;
 using PixelCrushers.DialogueSystem;
+using UnityEngine;
 using UnityEngine.Events;
 using static ComBots.Game.StateMachine.GameStateMachine;
 
@@ -15,6 +16,7 @@ namespace ComBots.Game.StateMachine
         public class State_Dialogue : State
         {
             private readonly GameStateMachine _stateMachine;
+            private object _args;
 
             public State_Dialogue(GameStateMachine stateMachine) : base("Dialogue")
             {
@@ -35,6 +37,7 @@ namespace ComBots.Game.StateMachine
 
                 if (canEnter)
                 {
+                    _args = args;
                     GlobalUIRefs.I.DialogueController.SetActive((IState_Dialogue_Args)args);
                     // Hide the menu's bottom bar
                     GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
@@ -43,7 +46,8 @@ namespace ComBots.Game.StateMachine
                     // Camera
                     if (args is State_Dialogue_PixelCrushers_Args pcArgs)
                     {
-                        Player.I.PlayerCamera.SetState_Dialogue(pcArgs.CameraSequence);
+                        CameraTarget cameraTarget = pcArgs.CameraTarget == null ? Player.I.PlayerCamera.CameraTarget : pcArgs.CameraTarget;
+                        Player.I.PlayerCamera.SetState_Dialogue(cameraTarget);
                     }
                 }
 
@@ -52,6 +56,10 @@ namespace ComBots.Game.StateMachine
 
             public override bool Exit(State nextState)
             {
+                if(_args != null && _args is State_Dialogue_PixelCrushers_Args pcArgs)
+                {
+                    pcArgs.OnDialogueEnd?.Invoke();
+                }
                 // Pop the dialogue input context
                 InputManager.I.PopContext(_stateMachine._dialogueContextData.contextName);
                 // Inform the dialogue controller of state exit & deactivate it
@@ -76,6 +84,7 @@ namespace ComBots.Game.StateMachine
         public string Dialogue { get; private set; }
         public string Nametag { get; private set; }
         public DialogueOptions OptionsArgs;
+        public Animator Animator { get; private set; }
 
         public State_Dialogue_Args(string dialogue, string nametag, DialogueOptions options)
         {
@@ -103,16 +112,22 @@ namespace ComBots.Game.StateMachine
     {
         public DialogueActor Actor { get; private set; }
         public DialogueActor Conversant { get; private set; }
-        public CameraTarget CameraSequence { get; private set; }
+        public CameraTarget CameraTarget { get; private set; }
+        public UnityAction OnDialogueEnd;
         public string Nametag => Actor.GetActorName();
         public string ConversationTitle { get; private set; }
+        public UnityAction<string> PlayConversantAnimation { get; private set; }
+        public UnityAction<string> PlayActorAnimation { get; private set; }
 
-        public State_Dialogue_PixelCrushers_Args(string conversationTitle, DialogueActor actor, DialogueActor conversant, CameraTarget cameraTarget)
+        public State_Dialogue_PixelCrushers_Args(string conversationTitle, DialogueActor actor, DialogueActor conversant, CameraTarget cameraTarget, UnityAction<string> playActorAnimation, UnityAction<string> playConversantAnimation, UnityAction onDialogueEnd)
         {
             ConversationTitle = conversationTitle;
             Actor = actor;
             Conversant = conversant;
-            CameraSequence = cameraTarget;
+            CameraTarget = cameraTarget;
+            PlayConversantAnimation = playConversantAnimation;
+            PlayActorAnimation = playActorAnimation;
+            OnDialogueEnd = onDialogueEnd;
         }
     }
 }

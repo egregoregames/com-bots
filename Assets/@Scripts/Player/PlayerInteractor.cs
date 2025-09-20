@@ -43,7 +43,7 @@ namespace ComBots.Game.Players
 
         void Update()
         {
-            if(State == IInteractor.InteractorState.Interacting) { return; }
+            if (State == IInteractor.InteractorState.Interacting) { return; }
             // Check rate limiting
             if (_checkCounter < _checkRate)
             {
@@ -107,7 +107,11 @@ namespace ComBots.Game.Players
                         }
                         if (interactable != null) // Interact
                         {
-                            interactable.Interact(_player);
+                            InteractionManager.I.StartInteraction(_player, interactable);
+                            Quaternion targetRotation = Quaternion.LookRotation(interactable.T.position - _T.position);
+                            Vector3 euler = targetRotation.eulerAngles;
+                            targetRotation = Quaternion.Euler(0, euler.y, 0);
+                            _player.Controller.SetRotation(targetRotation);
                         }
                         return true;
                     }
@@ -135,8 +139,9 @@ namespace ComBots.Game.Players
         public void OnInteractionStart(IInteractable interactable)
         {
             State = IInteractor.InteractorState.Interacting;
+            _closestInteractable = null;
         }
-        
+
         public void OnInteractionEnd(IInteractable interactable)
         {
             State = IInteractor.InteractorState.Idle;

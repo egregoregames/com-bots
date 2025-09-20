@@ -16,6 +16,7 @@ namespace ComBots.Cameras
         [SerializeField] private CinemachineFollow _dialogueFollow;
         [SerializeField] private CinemachineHardLookAt _dialogueLookAt;
         [SerializeField] private Camera _camera;
+        public CameraTarget CameraTarget;
         public Camera Camera => _camera;
         public CinemachineCamera ActiveCinemachineCamera { get; private set; }
 
