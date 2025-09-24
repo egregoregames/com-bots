@@ -54,7 +54,7 @@ namespace ComBots.NPCs
             _idleRotation = transform.rotation;
             transform.rotation = Quaternion.LookRotation(interactor.T.position - transform.position);
             transform.eulerAngles = new(0, transform.eulerAngles.y, 0);
-            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget, null, PlayConversantAnimation, StateDialogue_OnEnd);
+            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 

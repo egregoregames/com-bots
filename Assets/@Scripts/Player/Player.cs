@@ -20,6 +20,9 @@ namespace ComBots.Game.Players
         [SerializeField] private Transform T;
         Transform IInteractor.T => T;
 
+        [Header("Animation")]
+        [SerializeField] private Animator _animator;
+
         [Header("Camera")]
         [SerializeField] private PlayerCamera _playerCamera;
         public PlayerCamera PlayerCamera => _playerCamera;
@@ -81,6 +84,15 @@ namespace ComBots.Game.Players
         public void FreezeMovementFor(float seconds)
         {
             StartCoroutine(FreezeMovementCoroutine(seconds));
+        }
+
+        public void PlayActorAnimation(string trigger)
+        {
+            Debug.Log("PLAY ACTOR ANIMATION: " + trigger);
+            if (trigger != string.Empty)
+            {
+                _animator.SetTrigger(trigger);
+            }
         }
 
         private IEnumerator FreezeMovementCoroutine(float seconds)

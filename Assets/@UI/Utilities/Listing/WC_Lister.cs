@@ -238,12 +238,10 @@ namespace ComBots.UI.Utilities
 
         private void SetSelected(int index)
         {
-            MyLogger<WC_Lister>.StaticLog($"Setting selection to index {index} (current is {_selectionIndex})");
             // Remove highlighting from current selection
             int currentVisualIndex = _selectionIndex - _scrollOffset;
             if (currentVisualIndex >= 0 && currentVisualIndex < _optionControllers.Count)
             {
-                MyLogger<WC_Lister>.StaticLog($"Removing highlight from index {currentVisualIndex}");
                 _optionControllers[currentVisualIndex].VE.RemoveFromClassList(CLASS_OPTION_HIGHLIGHTED);
             }
 
@@ -253,7 +251,6 @@ namespace ComBots.UI.Utilities
             int newVisualIndex = _selectionIndex - _scrollOffset;
             if (newVisualIndex >= 0 && newVisualIndex < _optionControllers.Count)
             {
-                MyLogger<WC_Lister>.StaticLog($"Adding highlight to index {newVisualIndex}");
                 _optionControllers[newVisualIndex].VE.AddToClassList(CLASS_OPTION_HIGHLIGHTED);
             }
         }

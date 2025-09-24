@@ -641,6 +641,19 @@ namespace ComBots.Global.UI.Dialogue
                 {
                     MyLogger<DialogueController>.StaticLog($"Confirming selection: {index}");
                     // Use the IDialogueUI event handler for PixelCrushers integration
+                    string animation = string.Empty;
+                    for (int i = 0; i < responses[index].destinationEntry.fields.Count; i++)
+                    {
+                        if (responses[index].destinationEntry.fields[i].title == "ActorAnimation")
+                        {
+                            animation = responses[index].destinationEntry.fields[i].value;
+                            break;
+                        }
+                    }
+                    if (animation != string.Empty && _args is State_Dialogue_PixelCrushers_Args pcArgs)
+                    {
+                        pcArgs.PlayActorAnimation?.Invoke(animation);
+                    }
                     SelectedResponseHandler?.Invoke(this, new SelectedResponseEventArgs(responses[index]));
                 },
                 onBackSelected: () =>
