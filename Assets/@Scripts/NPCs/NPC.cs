@@ -7,6 +7,7 @@ using ComBots.Logs;
 using ComBots.Utils.ObjectPooling;
 using ComBots.UI.OverheadWidgets;
 using ComBots.Cameras;
+using System.Collections;
 
 namespace ComBots.NPCs
 {
@@ -29,6 +30,7 @@ namespace ComBots.NPCs
         private Quaternion _idleRotation;
         private const string overheadWidgetKey = "NPC_Overhead_Widget";
         private OverheadWidget _overheadWidget;
+        private Coroutine _returnToIdleCoroutine;
 
         void OnDrawGizmosSelected()
         {
@@ -42,6 +44,10 @@ namespace ComBots.NPCs
             {
                 MyLogger<NPC>.StaticLogError($"Only players can interact with NPCs. {interactor} is not a player.");
                 return;
+            }
+            if(_returnToIdleCoroutine != null)
+            {
+                StopCoroutine(_returnToIdleCoroutine);
             }
             // Remove overhead widget
             if (_overheadWidget)
@@ -75,6 +81,21 @@ namespace ComBots.NPCs
             }
         }
 
+        private IEnumerator Async_ReturnToIdle()
+        {
+            yield return new WaitForSeconds(3f);
+            // Smoothly rotate back to idle rotation
+            float elapsedTime = 0f;
+            float duration = 0.7f;
+            Quaternion startingRotation = transform.rotation;
+            while (elapsedTime < duration)
+            {
+                transform.rotation = Quaternion.Slerp(startingRotation, _idleRotation, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+
         private void StateDialogue_OnEnd()
         {
             InteractionManager.I.EndInteraction(_currentInteractor, this);
@@ -102,7 +123,11 @@ namespace ComBots.NPCs
 
         public void OnInteractionEnd(IInteractor interactor)
         {
-            transform.rotation = _idleRotation;
+            if(_returnToIdleCoroutine != null)
+            {
+                StopCoroutine(_returnToIdleCoroutine);
+            }
+            _returnToIdleCoroutine = StartCoroutine(Async_ReturnToIdle());
         }
     }
 }
