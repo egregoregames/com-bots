@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ComBots
+namespace ComBots.Interact
 {
     public class Interactor : MonoBehaviour
     {

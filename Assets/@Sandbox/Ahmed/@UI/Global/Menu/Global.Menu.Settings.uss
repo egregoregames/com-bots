@@ -1,0 +1,174 @@
+.settings-layout {
+    flex-grow: 1;
+    padding: 20px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-screen {
+    flex-grow: 1;
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.settings-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+}
+
+.settings-header-title {
+    font-size: 42px;
+    color: rgb(80, 80, 80);
+    -unity-font-style: bold;
+}
+
+.settings-header-icon {
+    width: 48px;
+    height: 48px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/07-Settings%20App.png?fileID=2800000&guid=496364e353643244e9f0740bb4f0acb8&type=3#07-Settings App");
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.settings-body {
+    gap: 40px;
+    width: auto;
+}
+
+.settings-section {
+    margin-bottom: 35px;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-right: 0;
+    width: 880px;
+}
+
+.settings-section-title {
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    min-width: auto;
+    -unity-text-align: middle-left;
+    width: 180px;
+    margin-left: 29px;
+}
+
+.settings-options {
+    flex-direction: row;
+    gap: 0;
+    flex-grow: 1;
+    max-width: none;
+}
+
+.settings-option {
+    flex-grow: 1;
+    padding: 15px 25px;
+    justify-content: center;
+    border-width: 1px;
+    border-color: rgb(150, 150, 150);
+    cursor: pointer;
+    background-color: rgb(142, 153, 159);
+    position: relative;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 40px;
+    width: auto;
+    margin-left: 20px;
+    margin-right: 10px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    align-items: flex-start;
+    padding-left: 6px;
+}
+
+.settings-option-selected {
+    background-color: rgb(80, 80, 80);
+}
+
+.settings-option-selected .settings-option-label {
+    color: rgb(255, 255, 255);
+}
+
+.settings-option-label {
+    font-size: 21px;
+    color: rgb(60, 60, 60);
+    -unity-text-align: middle-left;
+    -unity-font-style: bold;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.settings-slider {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: 657px;
+    flex-grow: 0;
+}
+
+.settings-volume-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.settings-volume-icon-low {
+    background-color: rgb(255, 200, 0);
+}
+
+.settings-volume-icon-high {
+    background-color: rgb(255, 200, 0);
+}
+
+.settings-slider-track {
+    flex-grow: 1;
+    height: 3px;
+    background-color: rgb(180, 180, 180);
+    border-radius: 6px;
+    position: relative;
+}
+
+.settings-slider-progress {
+    height: 100%;
+    background-color: rgb(100, 100, 100);
+    border-radius: 6px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.settings-slider-thumb {
+    width: 24px;
+    height: 24px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    border-width: 3px;
+    border-color: rgb(100, 100, 100);
+    position: absolute;
+    top: -9px;
+    margin-left: -12px;
+    cursor: pointer;
+    align-items: stretch;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.settings-top-bar {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Settings/01-Settings%20Cursor.png?fileID=2800000&guid=ea916441e8280ae4c860a177f29da655&type=3#01-Settings Cursor");
+    padding-right: 0;
+    margin-top: 15px;
+    margin-right: 0;
+    margin-left: 30px;
+    margin-bottom: 57px;
+    width: 850px;
+}

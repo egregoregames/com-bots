@@ -1,3 +1,4 @@
+using ComBots.Interact;
 using PixelCrushers.DialogueSystem;
 using StarterAssets;
 using UnityEngine;

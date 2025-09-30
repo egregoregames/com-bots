@@ -1,0 +1,24 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Botlink" class="botlink-layout" style="justify-content: center;">
+        <ui:VisualElement name="BotlinkScreen" class="botlink-screen" style="padding-right: 0; padding-left: 0; padding-top: 0;">
+            <ui:VisualElement name="BotlinkHeader" class="botlink-header" style="height: 100px;" />
+            <ui:VisualElement name="BotlinkBody" class="botlink-body">
+                <!-- BotlinkGrid and other children go here -->
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BotlinkDetail" class="detail-panel detail-panel-botlink" style="padding-left: 0; padding-right: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/General/07-Feature%20Selection%20Textbox.png?fileID=2800000&amp;guid=73e0b51771e1c6f49944f0dd68a2b69d&amp;type=3#07-Feature Selection Textbox&quot;);">
+            <ui:Label text="TEAM" name="HeaderLabel" class="botlink-header-title label">
+                <!-- HeaderIcon goes here -->
+            </ui:Label>
+            <ui:VisualElement class="detail-content" style="top: 36px; flex-grow: 0; height: 242px;">
+                <ui:Label name="BotlinkDetailDescription" text="Check the stats and Hardware of you and your teammates&apos; Bots, and change their Software and Abilities." class="label detail-desc" style="font-size: 32px; color: rgb(0, 0, 0);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonSelect" class="button-select">
+            <ui:Label text="A" class="label button-select-label" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonBack" class="button-back">
+            <ui:Label text="S" class="label button-back-label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

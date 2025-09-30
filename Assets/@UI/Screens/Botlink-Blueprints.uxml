@@ -1,0 +1,71 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-right: 20px; margin-left: 20px;">
+        <ui:VisualElement name="Left" style="flex-grow: 0; width: 50%; margin-right: 15px;">
+            <ui:VisualElement name="Header" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/General/00-Botlink%20Banner.png?fileID=2800000&amp;guid=0c4e0884a4e42e14190773ce74a48d02&amp;type=3#00-Botlink Banner&quot;); height: 96px;">
+                <ui:VisualElement style="flex-grow: 0; width: 53px; height: 51px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/General/09-Blueprints%20Icon%20-%20Small.png?fileID=2800000&amp;guid=2c8e090af182b0c44bfc974fd439a95c&amp;type=3#09-Blueprints Icon - Small&quot;); position: absolute; top: 24px; left: 217px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="List" style="flex-grow: 1; flex-direction: row; margin-top: 13px;">
+                <ui:VisualElement name="Scrollbar" style="flex-grow: 0; width: 26px; align-items: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); width: 5px;" />
+                    <ui:VisualElement style="flex-grow: 1; position: absolute; width: 100%; height: 74px; background-image: url(&quot;project://database/Assets/@Sandbox/Jon/4Models/Raw%20Models/Licensed%20Terrain/ithappy/Furniture_Cute/Textures/Gradient_Blue.png?fileID=2800000&amp;guid=f2b52cd002d6fe0449cfa7c152ebe4d0&amp;type=3#Gradient_Blue&quot;); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Content" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                    <ui:VisualElement name="Item" class="botlink-blueprint-item botlink-blueprint-item-highlighted" style="align-items: center;">
+                        <ui:VisualElement name="Icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_blueprinticon_unseen-01.png?fileID=2800000&amp;guid=3c99fd1bcdf9be89eb8b4ca6fb9b05a5&amp;type=3#blueprints_blueprinticon_unseen-01&quot;); height: 88px; width: 100%;" />
+                        <ui:Label text="No. 1" name="Label" class="label" style="-unity-text-align: upper-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; padding-right: 0; padding-left: 0; font-size: 19px; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Item" class="botlink-blueprint-item" style="align-items: center;">
+                        <ui:VisualElement name="Icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_blueprinticon_unseen-01.png?fileID=2800000&amp;guid=3c99fd1bcdf9be89eb8b4ca6fb9b05a5&amp;type=3#blueprints_blueprinticon_unseen-01&quot;); height: 88px; width: 100%;" />
+                        <ui:Label text="No. 1" name="Label" class="label" style="-unity-text-align: upper-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; padding-right: 0; padding-left: 0; font-size: 19px; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                    <!-- More blueprint items -->
+                    <ui:VisualElement name="Item" class="botlink-blueprint-item" style="align-items: center;">
+                        <ui:VisualElement name="Icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_blueprinticon_unseen-01.png?fileID=2800000&amp;guid=3c99fd1bcdf9be89eb8b4ca6fb9b05a5&amp;type=3#blueprints_blueprinticon_unseen-01&quot;); height: 88px; width: 100%;" />
+                        <ui:Label text="No. 1" name="Label" class="label" style="-unity-text-align: upper-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; padding-right: 0; padding-left: 0; font-size: 19px; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="flex-grow: 1; margin-left: 15px;">
+            <ui:VisualElement name="DontOwn" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_textbox_seen-01.png?fileID=2800000&amp;guid=85e5350631885df67bb0686b502c2693&amp;type=3#blueprints_textbox_seen-01&quot;); height: 240px; display: none;">
+                <ui:Label text="You do not own this Blueprint." name="Label" class="label" style="position: absolute; top: 124px; left: 262px; font-size: 31px;" />
+                <ui:Label text="BEAGLEBOT" name="NameLabel" style="position: absolute; top: 33px; left: 566px; font-size: 23px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0;" />
+                <ui:Label text="No. 20" name="ValueLabel" style="position: absolute; top: 32px; left: 438px; font-size: 23px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0;" />
+                <ui:VisualElement name="Icon" style="flex-grow: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_icon_seen_white-01.png?fileID=2800000&amp;guid=2083409a9155f784882f12105b478bbb&amp;type=3#blueprints_icon_seen_white-01&quot;); position: absolute; top: 35px; left: 408px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Own" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_textbox_owned-01.png?fileID=2800000&amp;guid=8ef84f33213c1918a94da2f86940f47f&amp;type=3#blueprints_textbox_owned-01&quot;); height: 423px; display: flex;">
+                <ui:Label text="BEAGLEBOT" name="NameLabel" style="position: absolute; top: 33px; left: 566px; font-size: 23px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0;" />
+                <ui:Label text="No. 20" name="ValueLabel" style="position: absolute; top: 32px; left: 438px; font-size: 23px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0;" />
+                <ui:VisualElement name="Icon" style="flex-grow: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_icon_seen_white-01.png?fileID=2800000&amp;guid=2083409a9155f784882f12105b478bbb&amp;type=3#blueprints_icon_seen_white-01&quot;); position: absolute; top: 35px; left: 408px;" />
+                <!-- Stats bars -->
+                <ui:VisualElement name="MeleeDefenseBar" class="botlink-blueprint-bar" style="top: 73px; left: 222px; border-bottom-left-radius: 5px; border-top-left-radius: 5px; height: 33px; width: 122px; background-image: url(&quot;project://database/Assets/@Sandbox/Jon/4Models/Prefabs/4Terrain/1Surfaces/Covers/Rugs/Materials%20+%20Textures/zborder3Texture.png?fileID=2800000&amp;guid=afb9475024e1a57439432a85e4ab5cf0&amp;type=3#zborder3Texture&quot;);">
+                    <ui:VisualElement name="Icon" style="flex-grow: 0; position: relative; height: 20px; width: 20px; top: 0; left: 0; background-image: url(&quot;project://database/Assets/@ThirdParty/LeanTween/Examples/Textures/PowerUpStar.png?fileID=2800000&amp;guid=70141d51621e24facbca9196bbde84b4&amp;type=3#PowerUpStar&quot;);" />
+                </ui:VisualElement>
+                <!-- Abilities -->
+                <ui:Label text="LUMINESCENT" name="Ability1Label" class="label" style="position: absolute; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; top: 93px; left: 479px; color: rgb(93, 161, 255); -unity-font-style: bold;" />
+                <ui:Label text="Negates the &quot;Smokescreen&quot; arena effect. Additionally, no Bot&apos;s accuracy can be lowered. Outside of battle, boosts the appearance of Rogues." name="Ability1Description" class="label" style="position: absolute; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; top: 117px; left: 399px; color: rgb(0, 0, 0); -unity-font-style: normal; width: 318px; height: 58px; white-space: normal; font-size: 11px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_forms-01.png?fileID=2800000&amp;guid=34d5eb533e33d0c0383b1580ba5adf5c&amp;type=3#blueprints_forms-01&quot;); height: 217px;">
+                <ui:VisualElement name="SpeedBar" class="botlink-blueprint-bar" style="top: 12px; left: 58px; border-bottom-left-radius: 14px; border-top-left-radius: 14px; height: 24px; width: 479px; background-image: url(&quot;project://database/Assets/@Sandbox/Jon/4Models/Raw%20Models/Licensed%20Terrain/ithappy/Furniture_Cute/Textures/Gradient_Blue.png?fileID=2800000&amp;guid=f2b52cd002d6fe0449cfa7c152ebe4d0&amp;type=3#Gradient_Blue&quot;); padding-left: 0;">
+                    <ui:Label text="567 BXP" class="label" style="-unity-text-align: middle-left; color: rgb(255, 255, 255); left: 28px; font-size: 19px; -unity-font-style: normal;" />
+                    <ui:VisualElement name="Icon" style="flex-grow: 0; position: absolute; height: 40px; width: 40px; top: -8px; left: -8px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/5%20Blueprints%20Feature/blueprints_blueprinticon_unseen-01.png?fileID=2800000&amp;guid=3c99fd1bcdf9be89eb8b4ca6fb9b05a5&amp;type=3#blueprints_blueprinticon_unseen-01&quot;); margin-left: -10px;" />
+                </ui:VisualElement>
+                <ui:Label text="BASIC" name="Ability1Label" class="label" style="position: absolute; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; top: 177px; left: 28px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 26px;" />
+                <ui:Label text="COMBAT" name="Ability1Label" class="label" style="position: absolute; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; top: 175px; left: 320px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 26px;" />
+                <ui:Label text="? ? ?" name="Ability1Label" class="label" style="position: absolute; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; top: 176px; left: 654px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 26px;" />
+                <ui:VisualElement style="flex-grow: 1; position: absolute; height: 116px; width: 116px; top: 57px; left: 447px; background-image: url(&quot;project://database/Assets/@Sandbox/Jon/4Models/Raw%20Models/Licensed%20Terrain/ithappy/Furniture_Cute/Textures/Gradient_White.png?fileID=2800000&amp;guid=f5c73b84c1dac7f4e91055a89c2c5e28&quot;); -unity-background-image-tint-color: rgb(55, 55, 55); border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; justify-content: center; align-items: center;">
+                    <ui:Label text="?" class="label" style="position: relative; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 48px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; position: absolute; height: 117px; width: 117px; top: 57px; left: 623px; background-image: url(&quot;project://database/Assets/@Sandbox/Jon/4Models/Raw%20Models/Licensed%20Terrain/ithappy/Furniture_Cute/Textures/Gradient_White.png?fileID=2800000&amp;guid=f5c73b84c1dac7f4e91055a89c2c5e28&quot;); -unity-background-image-tint-color: rgb(55, 55, 55); border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; justify-content: center; align-items: center;">
+                    <ui:Label text="?" class="label" style="position: relative; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-bottom: 0; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 48px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonSort" class="button-select" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Botlink/General/11-Sort%20Button.png?fileID=2800000&amp;guid=575bfda8757c910429cc1c242a647d3b&amp;type=3#11-Sort Button&quot;); width: 144px;">
+            <ui:Label text="W" class="label button-select-label" style="margin-left: 20px; font-size: 26px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonBack" class="button-back">
+            <ui:Label text="S" class="label button-back-label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

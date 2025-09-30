@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Save" class="save-layout">
+        <ui:VisualElement name="SaveDialog" class="save-dialog" style="width: 663px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; max-width: none; height: 144px;">
+            <ui:VisualElement name="SaveHeader" class="save-header" />
+            <ui:Label name="SaveQuestion" text="Would you like to save your progress?" class="save-question label" style="margin-left: 22px; -unity-text-align: middle-left; align-self: stretch; font-size: 25px;" />
+            <ui:VisualElement name="SaveButtons" class="save-buttons" style="justify-content: space-between; width: 250px; align-items: stretch; align-self: center; align-content: auto; position: absolute; bottom: -15px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                <ui:VisualElement name="YesButton" class="save-button save-button-yes">
+                    <ui:Label text="YES" class="label" style="justify-content: flex-start; align-content: flex-start; align-items: stretch; align-self: center; -unity-text-align: upper-center; padding-top: 4px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="NoButton" class="save-button save-button-no" style="background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Save/03-Save%20Button%20-%20Unselected.png?fileID=2800000&amp;guid=5ed4e00cb151d4a40a0b44764d84a225&amp;type=3#03-Save Button - Unselected&quot;); padding-top: 2px; padding-bottom: 2px; padding-left: 3px; padding-right: 3px; position: relative; right: 0; left: auto; bottom: 0;">
+                    <ui:Label text="NO" class="label" style="font-size: 20px; -unity-font-style: bold; padding-top: 6px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

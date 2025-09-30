@@ -1,0 +1,78 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Menu.Backpack" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Backpack.uxml?fileID=9197481963319205126&amp;guid=5cc935d4fa07ff82db44b7e9838c183a&amp;type=3#Backpack" />
+    <ui:Template name="Menu.Settings" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Settings.uxml?fileID=9197481963319205126&amp;guid=d130c5abe3e1225f7b596fecebc0a710&amp;type=3#Settings" />
+    <ui:Template name="Menu.Save" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Save.uxml?fileID=9197481963319205126&amp;guid=9e3a29b1353ab221792c9f5f4936f543&amp;type=3#Save" />
+    <ui:Template name="Menu.Planner" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Planner.uxml?fileID=9197481963319205126&amp;guid=584bd700b7b6be2579ee148e428f6a6f&amp;type=3#Planner" />
+    <ui:Template name="Menu.Botlink" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Botlink.uxml?fileID=9197481963319205126&amp;guid=7497648f76ead60eda2581fb5771f4ec&amp;type=3#Botlink" />
+    <ui:Template name="Menu.Socialyte" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Socialyte.uxml?fileID=9197481963319205126&amp;guid=763a46b5bd5925ebb80f774c7cb09b51&amp;type=3#Socialyte" />
+    <ui:Template name="Menu.Map" src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Map.uxml?fileID=9197481963319205126&amp;guid=ab3c8050aeb4b988eafe965f94abb234&amp;type=3#Map" />
+    <ui:Template name="Botlink-FormSelect" src="project://database/Assets/@UI/Screens/Botlink-FormSelect.uxml?fileID=9197481963319205126&amp;guid=bd1de4956a1dc9e898ef0507604b3b8a&amp;type=3#Botlink-FormSelect" />
+    <ui:Template name="Botlink-StatsAndAbilities" src="project://database/Assets/@UI/Screens/Botlink-StatsAndAbilities.uxml?fileID=9197481963319205126&amp;guid=27f8f96ec1e8c54f58bac1cc96c90a16&amp;type=3#Botlink-StatsAndAbilities" />
+    <ui:Template name="Botlink-Blueprints" src="project://database/Assets/@UI/Screens/Botlink-Blueprints.uxml?fileID=9197481963319205126&amp;guid=febbd3c266e8cd8ed8b90ba31ac627d4&amp;type=3#Botlink-Blueprints" />
+    <ui:Template name="Botlink-Software" src="project://database/Assets/@UI/Screens/Botlink-Software.uxml?fileID=9197481963319205126&amp;guid=324415c817442f0819bc02e301fb9e0e&amp;type=3#Botlink-Software" />
+    <ui:Template name="Botlink-TeammateSelect" src="project://database/Assets/@UI/Screens/Botlink-TeammateSelect.uxml?fileID=9197481963319205126&amp;guid=03b6e5b7926226b638ae9024ff57f272&amp;type=3#Botlink-TeammateSelect" />
+    <Style src="project://database/Assets/@UI/Global/Menu/Game.Menu.uss?fileID=7433441132597879392&amp;guid=1560e212259395843adbecfeb6c90951&amp;type=3#Game.Menu" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.MenuPanels.uss?fileID=7433441132597879392&amp;guid=725b9b5bc2a08e2449b6352b26f70857&amp;type=3#Global.MenuPanels" />
+    <Style src="project://database/Assets/@UI/Core/Text.uss?fileID=7433441132597879392&amp;guid=bd647a314724cec42b6d7398cef331b5&amp;type=3#Text" />
+    <Style src="project://database/Assets/@UI/CustomElements/RankProgressBar/RankProgressBar.uss?fileID=7433441132597879392&amp;guid=5f47dd9708225884bb31fe752b0b6f74&amp;type=3#RankProgressBar" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Planner.uss?fileID=7433441132597879392&amp;guid=6cb08fb2b1429824ebed4968ec15c9aa&amp;type=3#Global.Menu.Planner" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Botlink.uss?fileID=7433441132597879392&amp;guid=82e0aa5eff1acf5e197c1186dfb9119b&amp;type=3#Global.Menu.Botlink" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Backpack.uss?fileID=7433441132597879392&amp;guid=1d513cb878ddab6db82447f2ea0f4567&amp;type=3#Global.Menu.Backpack" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Map.uss?fileID=7433441132597879392&amp;guid=9b91f7c0092bc8c0f93d54ae9537ebfd&amp;type=3#Global.Menu.Map" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Socialyte.uss?fileID=7433441132597879392&amp;guid=aa37966b1a47565799cc3c5b78b34f95&amp;type=3#Global.Menu.Socialyte" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Settings.uss?fileID=7433441132597879392&amp;guid=e793fbde81e1f3b3480f2e7dc5ad902a&amp;type=3#Global.Menu.Settings" />
+    <Style src="project://database/Assets/@Sandbox/Ahmed/@UI/Global/Menu/Global.Menu.Save.uss?fileID=7433441132597879392&amp;guid=069d1d14db4837a43a0c03a6a8efa622&amp;type=3#Global.Menu.Save" />
+    <Style src="project://database/Assets/@UI/Global/Menu/Global.Menu.Botlink.FormSelect.uss?fileID=7433441132597879392&amp;guid=b86b01b593c2591ea9a051b396218587&amp;type=3#Global.Menu.Botlink.FormSelect" />
+    <Style src="project://database/Assets/@UI/Global/Menu/Global.Menu.Botlink.StatsAndAbilities.uss?fileID=7433441132597879392&amp;guid=70e040d9a8406e6668b2675735db0e60&amp;type=3#Global.Menu.Botlink.StatsAndAbilities" />
+    <Style src="project://database/Assets/@UI/Global/Menu/Global.Menu.Botlink.Blueprints.uss?fileID=7433441132597879392&amp;guid=520968f0b38f837d5a51df1448546332&amp;type=3#Global.Menu.Botlink.Blueprints" />
+    <ui:VisualElement name="Global" class="menu-hidden" style="flex-grow: 1;">
+        <ui:VisualElement name="Top" class="top" style="flex-direction: row; justify-content: space-between; height: 105px; padding-right: 23px; padding-left: 23px; padding-top: 19px;">
+            <ui:VisualElement name="RankProgress" style="flex-grow: 0; flex-shrink: 0; width: 267px; align-self: flex-start; height: 29px;">
+                <RankProgressBar title="RANK 10" name="RankProgressBar" value="47.23" class="label-digits" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; width: auto; height: 35px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 1; flex-shrink: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="TimeLocation" style="flex-grow: 0; align-items: center; justify-content: center; align-content: center; position: absolute; left: 50%; flex-shrink: 0; align-self: flex-start; translate: -50% 0;">
+                <ui:Label text="Thu 10:17 PM (Early Fall)" name="TimeLabel" class="label" style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255); font-size: 23px;" />
+                <ui:VisualElement name="Location" style="flex-grow: 0; flex-direction: row; flex-shrink: 0;">
+                    <ui:VisualElement name="Icon" style="flex-grow: 0; flex-shrink: 0; width: 22px; height: 22px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/12-Location%20Icon.png?fileID=2800000&amp;guid=95d157407c2f2764cb19ac93703ee15b&amp;type=3#12-Location Icon&quot;); margin-right: 4px;" />
+                    <ui:Label text="Pauli Arena" name="LocationLabel" class="label" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; color: rgb(255, 255, 255); font-size: 23px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 0; width: auto; justify-content: center; align-items: flex-end; align-self: flex-start;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 0; flex-shrink: 0; flex-direction: row; margin-bottom: 5px;">
+                    <ui:VisualElement style="flex-grow: 0; flex-shrink: 10; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/HUD/13-Credits%20Icon.png?fileID=2800000&amp;guid=0652ccf416f5ae944a3d0b4ffc81e5aa&amp;type=3#13-Credits Icon&quot;); align-self: center; margin-right: 7px;" />
+                    <ui:Label text="120.0" class="label-digits" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: -6px; margin-left: 0; font-size: 18px; -unity-font-style: normal;" />
+                </ui:VisualElement>
+                <ui:Label text="23,000" name="Label" class="label-digits" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: -6px; margin-left: 0; font-size: 18px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Body" class="body">
+            <ui:Instance template="Menu.Backpack" name="BackpackPanel" class="backpack-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Menu.Settings" name="SettingsPanel" class="settings-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Menu.Save" name="SavePanel" class="save-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Menu.Planner" name="PlannerPanel" class="planner-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Menu.Botlink" name="BotlinkPanel" class="botlink-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Menu.Socialyte" name="SocialytePanel" class="socialyte-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Menu.Map" name="MapPanel" class="map-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Botlink-FormSelect" name="Botlink-FormSelectPanel" class="botlink-formselect-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Botlink-StatsAndAbilities" name="Botlink-StatsAndAbilitiesPanel" class="botlink-statsandabilities-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Botlink-Blueprints" name="Botlink-BlueprintsPanel" class="botlink-blueprints-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Botlink-Software" name="Botlink-SoftwarePanel" class="botlink-software-template" style="display: none; flex-grow: 1;" />
+            <ui:Instance template="Botlink-TeammateSelect" name="Botlink-TeammateSelectPanel" class="botlink-teammateselect-template" style="display: none; flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Bottom" class="bottom bottom-peaking" style="height: 105px;">
+            <ui:VisualElement name="NavigationItems" class="nav-items">
+                <ui:VisualElement name="Planner" class="nav-item" />
+                <ui:VisualElement name="Botlink" class="nav-item" />
+                <ui:VisualElement name="Backpack" class="nav-item" />
+                <ui:VisualElement name="Map" class="nav-item" />
+                <ui:VisualElement name="Socialyte" class="nav-item" />
+                <ui:VisualElement name="Settings" class="nav-item" />
+                <ui:VisualElement name="Save" class="nav-item" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="NavDescription" class="nav-description" style="display: none;">
+            <ui:Label text="PLANNER" name="DescriptionTitle" class="label nav-description-title" />
+            <ui:Label text="Check your Requirements and Electives for this term.Check your Requirements and Electives for this term." name="DescriptionLabel" class="label nav-description-label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

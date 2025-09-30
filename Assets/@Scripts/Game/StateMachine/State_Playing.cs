@@ -1,5 +1,5 @@
+using ComBots.Game.Players;
 using ComBots.Inputs;
-using ComBots.UI.Game.Players;
 using ComBots.Utils.StateMachines;
 
 namespace ComBots.Game.StateMachine
@@ -17,6 +17,8 @@ namespace ComBots.Game.StateMachine
 
             public override bool Enter(State previousState, object args = null)
             {
+                Player.I.PlayerCamera.SetState_Orbital();
+                Player.I.FreezeMovementFor(Player.I.PlayerCamera.BlendTime);
                 InputManager.I.PushContext(_stateMachine._overworldContextData, PlayerInputHandler.I);
                 return true;
             }

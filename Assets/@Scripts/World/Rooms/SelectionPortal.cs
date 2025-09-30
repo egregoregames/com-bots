@@ -20,13 +20,12 @@ namespace ComBots.Game.Portals
         protected override void OnPlayerEnter(Player player)
         {
             Player = player;
-            //uiSo.PlayerEnteredRoomSelector?.Invoke(rooms, OnRoomSelected, cancelText, optionMessage);
             string[] options = new string[rooms.Length];
             for (int i = 0; i < rooms.Length; i++)
             {
                 options[i] = rooms[i].optionName;
             }
-            State_Dialogue_Args.DialogueOptions dialogueOptions = new (options, cancelText, OnRoomSelected);
+            DialogueOptions dialogueOptions = new (options, cancelText, OnRoomSelected);
             State_Dialogue_Args args = new (optionMessage, null, dialogueOptions);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
@@ -43,7 +42,8 @@ namespace ComBots.Game.Portals
             }
             else
             {
-                MyLogger<SelectionPortal>.StaticLog("No room selected, returning to previous state.");
+                MyLogger<SelectionPortal>.StaticLog("No room selected, will set state to playing.");
+                GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
             }
             Player = null;
         }

@@ -142,7 +142,8 @@ namespace StarterAssets
 
         private void Awake()
         {
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            if (_mainCamera == null)
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
 
         private void Start()
@@ -288,11 +289,11 @@ namespace StarterAssets
                 // Calculate rotation relative to camera for movement direction
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                 _mainCamera.transform.eulerAngles.y;
-                
+
                 // Use smooth rotation instead of instant rotation
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
-                
+
                 // Apply the smoothed rotation
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
@@ -516,6 +517,11 @@ namespace StarterAssets
             }
 
             MyLogger<ThirdPersonController>.StaticLog($"Player teleported to position: {position}, rotation: {rotation}");
+        }
+        
+        public void SetRotation(Quaternion rotation)
+        {
+            transform.rotation = rotation;
         }
     }
 }

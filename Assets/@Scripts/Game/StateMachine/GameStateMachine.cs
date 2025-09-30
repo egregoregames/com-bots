@@ -1,16 +1,8 @@
-using ComBots.Game.Players;
-using ComBots.Game.UI;
-using ComBots.Game.UI.Menu;
-using ComBots.Global.UI;
-using ComBots.Global.UI.Dialogue;
-using ComBots.Global.UI.Menu;
 using ComBots.Inputs;
 using ComBots.Logs;
-using ComBots.UI.Game.Players;
 using ComBots.Utils.EntryPoints;
 using ComBots.Utils.StateMachines;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ComBots.Game.StateMachine
 {
@@ -60,6 +52,21 @@ namespace ComBots.Game.StateMachine
                     return;
                 }
             }
+        }
+
+        public bool ExitState<StateT>()
+        {
+            if (CurrentState is not StateT)
+            {
+                _logger.LogError($"Could not exit state {CurrentState} as it is not the current state.");
+                return false;
+            }
+            if (!SetState(STATE_Playing, null))
+            {
+                _logger.LogError($"Could not transition from state {CurrentState} to state Playing");
+                return false;
+            }
+            return true;
         }
     }
 }

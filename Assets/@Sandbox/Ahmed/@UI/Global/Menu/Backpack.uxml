@@ -1,0 +1,29 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Backpack" class="backpack-layout">
+        <ui:VisualElement name="BackpackScreen" class="backpack-screen">
+            <ui:VisualElement name="BackpackHeader" class="backpack-header" />
+            <ui:VisualElement name="BackpackTabs" class="backpack-tabs">
+                <ui:VisualElement id="KeyTab" name="KeyTab" class="backpack-tab backpack-tab-active">
+                    <ui:Label text="KEY" class="backpack-tab-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement id="BattleTab" name="BattleTab" class="backpack-tab">
+                    <ui:Label text="BATTLE" class="backpack-tab-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement id="GeneralTab" name="GeneralTab" class="backpack-tab">
+                    <ui:Label text="GENERAL" class="backpack-tab-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement id="HardwareTab" name="HardwareTab" class="backpack-tab">
+                    <ui:Label text="HARDWARE" class="backpack-tab-label label" />
+                </ui:VisualElement>
+                <ui:VisualElement id="PartsTab" name="PartsTab" class="backpack-tab">
+                    <ui:Label text="PARTS" class="backpack-tab-label label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="BackpackBody" class="backpack-body">
+                <ui:VisualElement name="BackpackGrid" class="backpack-grid" style="justify-content: center;">
+                    <!-- BackpackSlot elements go here -->
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

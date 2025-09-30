@@ -205,3 +205,102 @@
     transition-timing-function: ease-in-out-back;
     background-color: rgba(0, 0, 0, 0);
 }
+
+.planner-details-badge-label {
+    padding-bottom: 2px;
+    padding-top: 9px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.planner-details-badge-star {
+    flex-grow: 0;
+    width: 18px;
+    height: 18px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/13-Credits%20Icon.png?fileID=2800000&guid=0652ccf416f5ae944a3d0b4ffc81e5aa&type=3#13-Credits Icon");
+    align-self: center;
+    align-content: center;
+}
+
+.planner-details-hline {
+    position: absolute;
+    width: 100%;
+    margin-right: 0;
+}
+
+.settings-volume-btn {
+    flex-grow: 0;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(142, 153, 159);
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+}
+
+.button-set {
+    flex-grow: 1;
+    position: absolute;
+    width: 139px;
+    height: 49px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/11-Set%20Button.png?fileID=2800000&guid=b6e6e5e399602164b8ed9b66bc95afe1&type=3#11-Set Button");
+    bottom: 0;
+    right: 26px;
+    translate: 0 100%;
+}
+
+.button-set-label {
+    flex-grow: 1;
+    font-size: 30px;
+    margin-left: 20px;
+    -unity-text-align: middle-left;
+    padding-top: 6px;
+    padding-left: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+}
+
+.button-back {
+    flex-grow: 1;
+    position: absolute;
+    width: 139px;
+    height: 49px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Other/01-Back%20Button.png?fileID=2800000&guid=0868ac08c2a74e54a951ae46c9c96167&type=3#01-Back Button");
+    left: 26px;
+    bottom: 0;
+    translate: 0 100%;
+}
+
+.button-back-label {
+    flex-grow: 1;
+    font-size: 30px;
+    -unity-text-align: middle-right;
+    padding-top: 6px;
+    padding-left: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    margin-right: 21px;
+}
+
+.button-select {
+    flex-grow: 1;
+    position: absolute;
+    width: 155px;
+    height: 49px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Other/02-Select%20Button.png?fileID=2800000&guid=ccc9fd395ab269d4cad629de5d3b65d2&type=3#02-Select Button");
+    bottom: 0;
+    right: 26px;
+    translate: 0 100%;
+}
+
+.button-select-label {
+    flex-grow: 1;
+    font-size: 30px;
+    -unity-text-align: middle-left;
+    padding-top: 6px;
+    padding-left: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    margin-left: 23px;
+}

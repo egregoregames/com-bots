@@ -1,0 +1,78 @@
+:root {
+}
+
+.detail-panel {
+    flex-grow: 0;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 24px;
+    justify-content: flex-start;
+    width: 50%;
+    min-width: 480px;
+    max-width: 740px;
+    align-self: flex-start;
+    height: 50%;
+    overflow-y: auto;
+    margin-left: 28px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Planner/04-Quest%20or%20Connection%20-%20Unselected.png?fileID=2800000&guid=614266642b3e6114b99616cf6c56efdb&type=3#04-Quest or Connection - Unselected");
+}
+
+.detail-header {
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 4px;
+}
+
+.detail-header-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 12px;
+}
+
+.detail-header-title {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+.detail-content {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.detail-desc {
+    font-size: 21px;
+    line-height: 28px;
+    white-space: normal;
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 0;
+}
+
+.detail-image {
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    align-self: center;
+    margin-top: 20px;
+}
+
+.detail-header-quantity {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    -unity-font-style: bold;
+}

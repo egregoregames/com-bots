@@ -1,0 +1,66 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Settings" class="settings-layout">
+        <ui:VisualElement name="SettingsScreen" class="settings-screen" style="background-color: rgb(192, 192, 192);">
+            <ui:VisualElement name="SettingsHeader" class="settings-header" style="background-color: rgb(190, 205, 213); width: 690px; justify-content: space-between; align-self: auto; align-content: flex-start; align-items: auto; background-image: url(&quot;project://database/Assets/@Art/Sprites/UI/Settings/00-Settings%20Banner.png?fileID=2800000&amp;guid=3835f074c4fa9e84faf3b8f6651802ed&amp;type=3#00-Settings Banner&quot;); padding-bottom: 2px; padding-top: 2px; margin-bottom: 0; height: 101px;" />
+            <ui:VisualElement name="SettingsBody" class="settings-body" style="width: 70%;">
+                <ui:VisualElement name="DisplaySection" class="settings-top-bar">
+                    <ui:Label text="DISPLAY" class="settings-section-title label" style="height: 45px; margin-left: 14px; margin-right: 0; padding-right: 0;" />
+                    <ui:VisualElement name="DisplayOptions" class="settings-options" style="position: absolute; justify-content: flex-start; align-self: center; align-content: flex-start; right: 0; flex-grow: 0; top: 24px;">
+                        <ui:VisualElement name="WindowedOption" class="settings-option settings-option-selected" style="background-color: rgb(142, 153, 159); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 215px;">
+                            <ui:Label text="WINDOWED" class="settings-option-label label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="FullscreenOption" class="settings-option" style="position: relative; background-color: rgb(255, 255, 255); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 215px; justify-content: center;">
+                            <ui:Label text="FULLSCREEN" class="settings-option-label label" style="color: rgb(145, 156, 161); -unity-font-style: bold;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="TextSpeedSection" class="settings-section">
+                    <ui:Label text="TEXT SPEED" class="settings-section-title label" />
+                    <ui:VisualElement name="TextSpeedOptions" class="settings-options">
+                        <ui:VisualElement name="SlowOption" class="settings-option" style="background-color: rgb(255, 255, 255); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                            <ui:Label text="SLOW" class="settings-option-label label" style="color: rgb(145, 156, 161);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="NormalOption" class="settings-option settings-option-selected" style="background-color: rgb(142, 153, 159); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                            <ui:Label text="NORMAL" class="settings-option-label label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="FastOption" class="settings-option" style="background-color: rgb(255, 255, 255); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                            <ui:Label text="FAST" class="settings-option-label label" style="color: rgb(145, 156, 161); -unity-text-align: middle-center;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="MusicVolumeSection" class="settings-section">
+                    <ui:Label text="MUSIC VOLUME" class="settings-section-title label" />
+                    <ui:VisualElement name="MusicVolumeSlider" class="settings-slider">
+                        <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                            <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/no-sound.png?fileID=2800000&amp;guid=8b315e49a1b097b46ba7fbefa10cf6dc&amp;type=3#no-sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="MusicVolumeTrack" class="settings-slider-track" style="background-color: rgb(244, 244, 244);">
+                            <ui:VisualElement name="MusicVolumeThumb" class="settings-slider-thumb" style="left: 60%; background-color: rgb(189, 204, 212);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                            <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/sound.png?fileID=2800000&amp;guid=5289167f2f112ad4fb3932dfb668d014&amp;type=3#sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="SfxVolumeSection" class="settings-section">
+                    <ui:Label text="SFX VOLUME" class="settings-section-title label" />
+                    <ui:VisualElement name="SfxVolumeSlider" class="settings-slider">
+                        <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                            <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/no-sound.png?fileID=2800000&amp;guid=8b315e49a1b097b46ba7fbefa10cf6dc&amp;type=3#no-sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="SfxVolumeTrack" class="settings-slider-track" style="background-color: rgb(244, 244, 244);">
+                            <ui:VisualElement name="SfxVolumeProgress" class="settings-slider-progress" style="width: 75%; background-color: rgb(244, 244, 244);" />
+                            <ui:VisualElement name="SfxVolumeThumb" class="settings-slider-thumb" style="left: 75%; background-color: rgb(189, 204, 212);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="HighVolumeButton" class="settings-volume-btn">
+                            <ui:VisualElement name="SfxVolumeIconHigh" class="settings-volume-icon" style="background-image: url(&quot;project://database/Assets/@Sandbox/Ahmed/sound.png?fileID=2800000&amp;guid=5289167f2f112ad4fb3932dfb668d014&amp;type=3#sound&quot;); height: auto; width: auto; flex-grow: 1;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ControlsSection" class="settings-section">
+                    <ui:Label text="CONTROLS" class="settings-section-title label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

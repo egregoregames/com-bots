@@ -1,0 +1,188 @@
+.map-layout {
+    flex-direction: row;
+    flex-grow: 1;
+    padding-top: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 16px;
+    align-items: flex-start;
+    display: none;
+}
+
+.map-screen {
+    flex-direction: column;
+    padding-left: 0;
+    padding-top: 0;
+    padding-right: 15px;
+    width: 50%;
+    min-width: 560px;
+    max-width: 780px;
+}
+
+.map-header {
+    flex-direction: row;
+    align-items: center;
+    height: 98px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/Map/00-Map%20Banner.png?fileID=2800000&guid=f4ae1880bb4bc4f4aba18915518a9323&type=3#00-Map Banner");
+}
+
+.map-header-title {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    width: 346px;
+    height: 32px;
+    position: absolute;
+    right: 29px;
+    top: 36px;
+    flex-grow: 0;
+    padding-top: 8px;
+    margin-top: 0;
+    -unity-text-align: middle-left;
+    font-size: 24px;
+}
+
+.map-header-icon {
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/04-Map%20App.png?fileID=2800000&guid=4a4e2ceceb7a7b84e982425b9e3b5cc5&type=3#04-Map App");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.map-body {
+    flex-grow: 1;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.map-area {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    border: 2px solid rgb(139, 195, 74);
+    border-radius: 8px;
+}
+
+.map-marker {
+    position: absolute;
+    width: 32px;
+    height: 48px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 50% 50% 50% 0;
+    left: 45%;
+    top: 55%;
+    transform-origin: center bottom;
+    rotate: -45deg;
+}
+
+.detail-panel-map .detail-header {
+    background-color: rgb(139, 195, 74);
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+    height: 64px;
+    padding-right: 140px;
+    overflow: hidden;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.detail-panel-map {
+    height: 60%;
+}
+
+.detail-panel-map .detail-header-icon {
+    background-image: url("project://database/Assets/@Art/Sprites/UI/HUD/04-Map%20App.png?fileID=2800000&guid=4a4e2ceceb7a7b84e982425b9e3b5cc5&type=3#04-Map App");
+}
+
+.map-detail-image {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    bottom: 12px;
+    width: 110px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+    border: 2px solid rgb(255, 255, 255);
+    z-index: 1;
+}
+
+.map-poi-section {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: rgb(139, 195, 74);
+    border-radius: 8px;
+    padding: 12px 16px 16px 16px;
+}
+
+.map-poi-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.map-poi-icon {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50% 50% 50% 0;
+    margin-right: 6px;
+    rotate: -45deg;
+}
+
+.map-poi-title {
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+.map-poi-grid {
+    flex-direction: row;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.map-poi-column {
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 4px;
+}
+
+.map-poi-item {
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    -unity-font-style: normal;
+    white-space: normal;
+    padding: 2px 0;
+}
+
+.map-details-label {
+    width: 394px;
+    height: 163px;
+    top: 60px;
+    left: 12px;
+    position: absolute;
+    color: rgb(0, 0, 0);
+    flex-grow: 1;
+    white-space: normal;
+    -unity-text-align: upper-left;
+    font-size: 25px;
+    text-overflow: clip;
+}
+
+.map-details-pos-label {
+    width: 132px;
+    height: auto;
+    position: relative;
+    color: rgb(255, 255, 255);
+    margin-top: 0;
+    margin-right: 46px;
+    margin-bottom: 0;
+    margin-left: 0;
+    font-size: 14px;
+}
