@@ -192,6 +192,12 @@ public static partial class ComBotsSaveSystem
     /// <exception cref="Exception"></exception>
     public static async Task<OperationResult> Save(string name)
     {
+        if (!IsValidFileName(name))
+        {
+            throw new ArgumentException(
+                "The provided file name contains invalid characters", nameof(name));
+        }
+
         if (IsOperationInProgress)
         {
             throw new Exception(_operationInProgressMessage);
@@ -321,4 +327,30 @@ public static partial class ComBotsSaveSystem
 
         return onFail == null;
     }
+
+    private static bool IsValidFileName(string name)
+    {
+        foreach (char c in Path.GetInvalidFileNameChars())
+        {
+            if (name.Contains(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //private static bool IsPathValid(string path)
+    //{
+    //    try
+    //    {
+    //        var _ = Path.GetFullPath(path);
+    //        return true;
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.LogException(e);
+    //        return false;
+    //    }
+    //}
 }
