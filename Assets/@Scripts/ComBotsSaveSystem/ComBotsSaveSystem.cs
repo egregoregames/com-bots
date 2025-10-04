@@ -15,6 +15,11 @@ public static partial class ComBotsSaveSystem
         "A save/load operation is already in progress. " +
         "Check IsOperationInProgress before calling this method";
 
+    private const string _autoSavePlayerPrefKey = "ComBotsAutoSave";
+
+    // TODO: Make this configurable in settings
+    private const int _maxAutoSaves = 5;
+
     private static UnityEventR3 _onWillSave = new();
     /// <summary>
     /// Called when the user explicity requests a save or when an auto-save is triggered.
@@ -154,7 +159,38 @@ public static partial class ComBotsSaveSystem
         return new OperationResult(ResultType.Success);
     }
 
-    public static async Task<OperationResult> Save(bool isAutosave, string name)
+    /// <summary>
+    /// Saves file to disk. Should only ever be invoked automatically by 
+    /// certain in-game events. See <see cref="Save(string)"/>
+    /// </summary>
+    /// <returns></returns>
+    public static async Task<OperationResult> AutoSave()
+    {
+        int autoSaveNumber = 0;
+
+        if (PlayerPrefs.HasKey(_autoSavePlayerPrefKey))
+        {
+            autoSaveNumber = PlayerPrefs.GetInt(_autoSavePlayerPrefKey);
+        }
+
+        if (autoSaveNumber >= _maxAutoSaves)
+        {
+            autoSaveNumber = 0;
+        }
+
+        PlayerPrefs.SetInt(_autoSavePlayerPrefKey, ++autoSaveNumber);
+
+        return await Save($"autosave_{autoSaveNumber}");
+    }
+
+    /// <summary>
+    /// Saves file to disk. Outside of this script, should only ever be 
+    /// excplicitly invoked by UI. See <see cref="AutoSave"/>
+    /// </summary>
+    /// <param name="name">A file name. Should not contain invalid characters</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static async Task<OperationResult> Save(string name)
     {
         if (IsOperationInProgress)
         {
