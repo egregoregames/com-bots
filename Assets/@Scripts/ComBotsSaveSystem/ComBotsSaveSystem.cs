@@ -25,7 +25,7 @@ public static partial class ComBotsSaveSystem
     /// Called when the user explicity requests a save or when an auto-save is triggered.
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>A disposable meant for use in observable patterns</returns>
+    /// <returns>A disposable object for use in observable patterns to unsubscribe the action</returns>
     public static IDisposable OnWillSave(Action x) => _onWillSave.Subscribe(x);
 
     private static UnityEventR3 _onSaveComplete = new();
@@ -35,7 +35,7 @@ public static partial class ComBotsSaveSystem
     /// disabled during the save process. See <see cref="IsOperationInProgress"/>.
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>A disposable meant for use in observable patterns</returns>
+    /// <returns>A disposable object for use in observable patterns to unsubscribe the action</returns>
     public static IDisposable OnSaveComplete(Action x) => _onSaveComplete.Subscribe(x);
 
     private static UnityEventR3 _onLoadStarted = new();
@@ -44,7 +44,7 @@ public static partial class ComBotsSaveSystem
     /// This event is useful for disabling UI elements or controls during the loading operation.
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>A disposable meant for use in observable patterns</returns>
+    /// <returns>A disposable object for use in observable patterns to unsubscribe the action</returns>
     public static IDisposable OnLoadStarted(Action x) => _onLoadStarted.Subscribe(x);
 
     private static UnityEventR3 _onLoadSuccess = new();
@@ -54,7 +54,7 @@ public static partial class ComBotsSaveSystem
     /// This is to preserve existing data for listeners of this event.
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>A disposable meant for use in observable patterns</returns>
+    /// <returns>A disposable object for use in observable patterns to unsubscribe the action</returns>
     public static IDisposable OnLoadSuccess(Action x) => _onLoadSuccess.Subscribe(x);
 
     /// <summary>
