@@ -187,7 +187,11 @@ public static partial class ComBotsSaveSystem
     /// Saves file to disk. Outside of this script, should only ever be 
     /// excplicitly invoked by UI. See <see cref="AutoSave"/>
     /// </summary>
-    /// <param name="name">A file name. Should not contain invalid characters</param>
+    /// <param name="name">
+    /// A file name. Should not contain invalid characters. 
+    /// Use <see cref="IsValidFileName(string)"/> to check before 
+    /// calling this method
+    /// </param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public static async Task<OperationResult> Save(string name)
@@ -328,7 +332,7 @@ public static partial class ComBotsSaveSystem
         return onFail == null;
     }
 
-    private static bool IsValidFileName(string name)
+    public static bool IsValidFileName(string name)
     {
         foreach (char c in Path.GetInvalidFileNameChars())
         {
