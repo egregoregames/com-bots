@@ -1,6 +1,9 @@
+using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -70,12 +73,10 @@ public static partial class ComBotsSaveSystem
     private static string BackupSavesPath => 
         Path.Combine(SavePath, "Backups");
 
-    private static Dictionary<string, string> _incomingSaveData = new();
-    private static Dictionary<string, string> _loadedSaveData = new();
+    private static Dictionary<string, string> _data = new();
 
     /// <summary>
-    /// Should be called after a successful load operation to retrieve data. 
-    /// Uses ref pattern for convenient one-liners.
+    /// Should be called after a successful load operation to retrieve data
     /// </summary>
     /// 
     /// <typeparam name="T">Should be a primitive type</typeparam>
@@ -94,15 +95,66 @@ public static partial class ComBotsSaveSystem
     /// </param>
     public static void LoadSavedData<T>(string key, ref T value, object defaultValue = null)
     {
-        if (_loadedSaveData.ContainsKey(key))
+        if (_data.ContainsKey(key))
         {
-            value = (T)Convert.ChangeType(_loadedSaveData[key], typeof(T));
+            value = (T)Convert.ChangeType(_data[key], typeof(T));
         }
         else if (defaultValue != null)
         {
             value = (T)defaultValue;
         }
     }
+
+    /// <summary>
+    /// Should be called after a successful load operation to retrieve data
+    /// </summary>
+    /// 
+    /// <typeparam name="T">Should be a primitive type</typeparam>
+    /// 
+    /// <param name="key">
+    /// Unique key for this data that should match the key used in 
+    /// <see cref="SendSaveData(string, object)"/>
+    /// </param>
+    /// 
+    /// <param name="defaultValue">
+    /// The value to use if the saved data key 
+    /// does not exist. Useful when loading a save from an older game version 
+    /// that did not support this key yet
+    /// </param>
+    /// 
+    /// <returns>
+    /// Value if it exists, or defaultValue if a save has not been 
+    /// loaded or the loaded data is an earlier version that did not contain this key
+    /// </returns>
+    public static T LoadSavedData<T>(string key, T defaultValue)
+    {
+        if (_data.ContainsKey(key))
+        {
+            return (T)Convert.ChangeType(_data[key], typeof(T));
+        }
+
+        return defaultValue;
+    }
+
+    public static string LoadSavedData(string key)
+    {
+        if (_data.ContainsKey(key))
+        {
+            return _data[key];
+        }
+
+        throw new Exception($"No loaded save data exists for key {key}");
+    }
+
+    public static bool LoadedDataExists(string key)
+    {
+        return _data.ContainsKey(key);
+    }
+
+    //public static T LoadSavedData<T>(ComBotsSaveAttribute attribute)
+    //{
+    //    return LoadSavedData(attribute.Key, (T)attribute.DefaultValue);
+    //}
 
     /// <summary>
     /// Loads a save from disk. Should only ever be excplicitly invoked by UI
@@ -122,7 +174,7 @@ public static partial class ComBotsSaveSystem
         {
             throw new Exception(_operationInProgressMessage);
         }
-
+        _onLoadStarted?.Invoke();
         string path = Path.Combine(SavePath, name);
 
         if (!File.Exists(path))
@@ -146,7 +198,7 @@ public static partial class ComBotsSaveSystem
 
         try
         {
-            _loadedSaveData = JsonSerializer
+            _data = JsonSerializer
                 .Deserialize<Dictionary<string, string>>(bytes);
         }
         catch (Exception e)
@@ -156,6 +208,7 @@ public static partial class ComBotsSaveSystem
                 "Failed to parse save file. See log for details");
         }
 
+        _onLoadSuccess?.Invoke();
         return new OperationResult(ResultType.Success);
     }
 
@@ -208,13 +261,12 @@ public static partial class ComBotsSaveSystem
         }
 
         IsOperationInProgress = true;
-        _incomingSaveData.Clear();
 
         _onWillSave?.Invoke();
-        // All listeners of OnWillSave will now transmit their data
+        // All active listeners of OnWillSave will now transmit their data
 
         string path = Path.Combine(SavePath, name);
-        var bytes = JsonSerializer.SerializeToUtf8Bytes(_incomingSaveData);
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(_data);
 
         if (!TryCreateDirectory(SavePath))
         {
@@ -242,8 +294,7 @@ public static partial class ComBotsSaveSystem
     }
 
     /// <summary>
-    /// Receives save data from various parts of the game during a save 
-    /// operation. Should only be called when <see cref="IsOperationInProgress"/> is true.
+    /// Receives save data from various parts of the game
     /// </summary>
     /// 
     /// <param name="key">Unique key for this saved data</param>
@@ -253,26 +304,14 @@ public static partial class ComBotsSaveSystem
     /// <see cref="long"/>, <see cref="int"/>, <see cref="float"/>, 
     /// <see cref="bool"/> or <see cref="string"/>
     /// </param>
-    /// 
-    /// <exception cref="Exception">
-    /// Thrown if this method is called when 
-    /// <see cref="IsOperationInProgress"/> is false
-    /// </exception>
     public static void SendSaveData(string key, object value)
     {
-        if (!IsOperationInProgress)
-        {
-            throw new Exception(
-                "SendSaveData was called outside of a save operation. " +
-                $"Check {nameof(IsOperationInProgress)} before calling this method");
-        }
-
-        if (_incomingSaveData.ContainsKey(key))
+        if (_data.ContainsKey(key))
         {
             Debug.LogWarning($"Overwriting save data for key {key}");
         }
 
-        _incomingSaveData[key] = value.ToString();
+        _data[key] = value.ToString();
     }
 
     private static bool TryCreateDirectory(string path)
@@ -342,6 +381,161 @@ public static partial class ComBotsSaveSystem
             }
         }
         return true;
+    }
+
+    private static string GetSaveId(Type targetType, object instance)
+    {
+        MemberInfo[] members = targetType.GetMembers(
+            BindingFlags.Public | BindingFlags.NonPublic |
+            BindingFlags.Instance | BindingFlags.Static);
+
+        foreach (MemberInfo member in members)
+        {
+            ComBotsSaveIdAttribute attribute =
+                member.GetCustomAttribute<ComBotsSaveIdAttribute>();
+
+            if (attribute == null) continue;
+
+            var type = ReflectionUtils.GetType(member);
+
+            if (type != typeof(string))
+            {
+                throw new Exception(
+                    "ComBotsSaveId member must be of type string");
+            }
+
+            var value = member.GetMemberValue(instance) as string;
+            return value;
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// Will automatically load saved data into fields and properties for an 
+    /// instance or static class. Fields and properties must be marked with 
+    /// <see cref="ComBotsSaveAttribute"/>.
+    /// </summary>
+    /// 
+    /// <param name="targetType">
+    /// The type of the instance. Use <see cref="typeof"/>
+    /// </param>
+    /// 
+    /// <param name="instance">
+    /// The instance itself. Use <see cref="this"/>
+    /// </param>
+    /// 
+    /// <exception cref="Exception"></exception>
+    public static void LoadData(Type targetType, object instance)
+    {
+        MemberInfo[] members = targetType.GetMembers(
+            BindingFlags.Public | BindingFlags.NonPublic |
+            BindingFlags.Instance | BindingFlags.Static);
+
+        string saveId = GetSaveId(targetType, instance);
+
+        foreach (MemberInfo member in members)
+        {
+            ComBotsSaveAttribute attribute = member.GetCustomAttribute<ComBotsSaveAttribute>();
+            if (attribute == null) continue;
+            bool isList = ReflectionUtils.IsList(member);
+            bool isArray = ReflectionUtils.IsArray(member);
+            string key = $"{saveId}{(string.IsNullOrEmpty(saveId) ? "" : ".")}{attribute.Key}";
+            if (isList || isArray)
+            {
+                var type = ReflectionUtils.GetType(member);
+                var itemType = type.GetGenericArguments()[0];
+
+                var list = ReflectionUtils.CreateListFromType(itemType);
+                int index = 0;
+
+                while (true)
+                {
+                    string name = $"{key}{index++}";
+                    if (!LoadedDataExists(name))
+                    {
+                        break;
+                    }
+
+                    var listItemStringValue = LoadSavedData(name);
+                    list.Add(Convert.ChangeType(listItemStringValue, itemType));
+                }
+
+                if (isArray)
+                {
+                    var array = ReflectionUtils
+                        .ConvertToArrayRuntime(list, itemType);
+
+                    member.SetMemberValue(instance, array);
+                }
+                else if (isList)
+                {
+                    member.SetMemberValue(instance, list);
+                }
+                else
+                {
+                    throw new Exception("Unhandled collection type");
+                }
+
+                continue;
+            }
+
+            var value = LoadSavedData(key, attribute.DefaultValue);
+            member.SetMemberValue(instance, value);
+        }
+    }
+
+    /// <summary>
+    /// Will automatically send save data for fields and properties for an 
+    /// instance or static class. Fields and properties must be marked with 
+    /// <see cref="ComBotsSaveAttribute"/>.
+    /// </summary>
+    /// 
+    /// <param name="targetType">
+    /// The type of the instance. Use <see cref="typeof"/>
+    /// </param>
+    /// 
+    /// <param name="instance">
+    /// The instance itself. Use <see cref="this"/>
+    /// </param>
+    public static void SaveData(Type targetType, object instance)
+    {
+        MemberInfo[] members = targetType.GetMembers(
+            BindingFlags.Public | BindingFlags.NonPublic |
+            BindingFlags.Instance | BindingFlags.Static);
+
+        string saveId = GetSaveId(targetType, instance);
+
+        foreach (MemberInfo member in members)
+        {
+            ComBotsSaveAttribute attribute = member
+                .GetCustomAttribute<ComBotsSaveAttribute>();
+
+            if (attribute == null) continue;
+
+            string key = $"{saveId}{(string.IsNullOrEmpty(saveId) ? "" : ".")}{attribute.Key}";
+
+            bool isList = ReflectionUtils.IsList(member);
+            bool isArray = ReflectionUtils.IsArray(member);
+
+            if (isList || isArray)
+            {
+                var enumerable = member.GetMemberValue(instance) 
+                    as System.Collections.IEnumerable;
+
+                if (enumerable == null) continue;
+                int index = 0;
+                foreach (var item in enumerable)
+                {
+                    string name = key + index++;
+                    SendSaveData(name, item);
+                }
+                continue;
+            }
+
+            var value = member.GetMemberValue(instance);
+            SendSaveData(key, value);
+        }
     }
 
     //private static bool IsPathValid(string path)
