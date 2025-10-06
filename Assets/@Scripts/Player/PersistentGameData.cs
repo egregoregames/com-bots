@@ -94,6 +94,12 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentDateTime, 0)]
     private long DateTimeTicks { get; set; } = 0;
 
+    /// <summary>
+    /// A list of NPC unique IDs that the player has connected with on Socialyte
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcConnections, null)]
+    public List<string> PlayerNpcConnections { get; private set; } = new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
