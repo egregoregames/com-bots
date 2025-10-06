@@ -22,6 +22,12 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerStudentId, "")]
     public string PlayerStudentId { get; set; } = "";
 
+    /// <summary>
+    /// Used to calculate the player’s rank
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 0)]
+    public int PlayerRankExperience { get; private set; } = 0;
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
@@ -30,6 +36,17 @@ public partial class PersistentGameData : MonoBehaviourR3
             DontDestroyOnLoad(
                 new GameObject("PersistentGameData", typeof(PersistentGameData)));
         }
+    }
+
+    public void AddPlayerRankExperience(int amount)
+    {
+        PlayerRankExperience += amount;
+        ComBotsSaveSystem.SaveData(SaveKeys.PlayerRankExperience, PlayerRankExperience);
+    }
+
+    private void Reset()
+    {
+        PlayerRankExperience = 0;
     }
 
     protected override void Initialize()
@@ -50,16 +67,24 @@ public partial class PersistentGameData : MonoBehaviourR3
         );
 
         LoadSavedData();
+        GenerateStudentIdIfNoneExists();
+    }
 
+    private void GenerateStudentIdIfNoneExists()
+    {
         if (string.IsNullOrWhiteSpace(PlayerStudentId))
         {
             PlayerStudentId = StudentIdGenerator.Generate();
-            ComBotsSaveSystem.SendSaveData(SaveKeys.PlayerStudentId, PlayerStudentId);
+            ComBotsSaveSystem.SaveData(SaveKeys.PlayerStudentId, PlayerStudentId);
         }
     }
 
-    private void LoadSavedData() => 
+    private void LoadSavedData() 
+    {
+        Reset();
         ComBotsSaveSystem.LoadData(typeof(PersistentGameData), this);
+    }
+        
 
     private void SaveData() => 
         ComBotsSaveSystem.SaveData(typeof(PersistentGameData), this);
