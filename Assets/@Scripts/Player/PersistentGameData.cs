@@ -14,7 +14,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     public string PlayerName { get; set; } = "Player";
 
     /// <summary>
-    /// The player’s Student ID number is generated automatically upon 
+    /// The player's Student ID number is generated automatically upon 
     /// starting a new game. The ID number is alphanumeric in the following 
     /// format: A00-A00-A00-A00, where A is a letter (except I) and 0 is a 
     /// number from 1 to 9.
@@ -23,7 +23,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     public string PlayerStudentId { get; set; } = "";
 
     /// <summary>
-    /// Used to calculate the player’s rank
+    /// Used to calculate the player's rank
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 0)]
     public int PlayerRankExperience { get; private set; } = 0;
@@ -34,8 +34,27 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentTerm, Term.FirstTerm)]
     public Term CurrentTerm { get; set; }
 
+    /// <summary>
+    /// The player's current location shows on the homescreen of the pause 
+    /// menu and on Your Profile in the Socialyte App
+    /// 
+    /// When the player loads their game, the location banner will pull 
+    /// down and show the name of the player's current location, as it would 
+    /// when the player passes through a door.
+    /// 
+    /// This field should be updated when the player starts the game and when 
+    /// the player passes through a door to a new location.
+    /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentLocationName, "")]
     public string CurrentLocationName { get; set; } = "";
+
+    /// <summary>
+    /// Ranges between 0 and 5. Each time the player wins a Promotion Battle, 
+    /// increases by 1. Displays on Your Profile in the Socialyte App if the 
+    /// player has received the "The Academy Trial" quest.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PromotionBattleVictoryCount, 0)]
+    public int PromotionBattleVictoryCount { get; set; } = 0;
 
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
