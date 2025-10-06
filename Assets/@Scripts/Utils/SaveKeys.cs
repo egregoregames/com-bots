@@ -6,4 +6,5 @@ public static class SaveKeys
     public const string CurrentTerm = "CurrentTerm";
     public const string CurrentLocationName = "CurrentLocationName";
     public const string PromotionBattleVictoryCount = "PromotionBattleVictoryCount";
+    public const string PlayerCredits = "PlayerCredits";
 }

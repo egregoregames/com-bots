@@ -56,6 +56,16 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PromotionBattleVictoryCount, 0)]
     public int PromotionBattleVictoryCount { get; set; } = 0;
 
+    /// <summary>
+    /// The total credits the player has received from completing quests, 
+    /// starting at 0 and increasing each time a quest is completed. It 
+    /// displays on the homescreen of the pause menu from the start of the 
+    /// game (with a “.0” after the value). A minimum credit value is required 
+    /// in order to schedule a Promotion Battle.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerCredits, 0)]
+    public int PlayerCredits { get; set; } = 0;
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
