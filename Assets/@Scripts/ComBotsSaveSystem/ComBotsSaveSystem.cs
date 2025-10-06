@@ -75,6 +75,12 @@ public static partial class ComBotsSaveSystem
 
     private static Dictionary<string, string> _data = new();
 
+    [RuntimeInitializeOnLoadMethod]
+    public static void OnAppStart()
+    {
+        Debug.LogWarning("todo: hook into new game event to wipe data");
+    }
+
     /// <summary>
     /// Should be called after a successful load operation to retrieve data
     /// </summary>
@@ -83,7 +89,7 @@ public static partial class ComBotsSaveSystem
     /// 
     /// <param name="key">
     /// Unique key for this data that should match the key used in 
-    /// <see cref="SendSaveData(string, object)"/>
+    /// <see cref="SaveData(string, object)"/>
     /// </param>
     /// 
     /// <param name="value">Should be a primitive type</param>
@@ -113,7 +119,7 @@ public static partial class ComBotsSaveSystem
     /// 
     /// <param name="key">
     /// Unique key for this data that should match the key used in 
-    /// <see cref="SendSaveData(string, object)"/>
+    /// <see cref="SaveData(string, object)"/>
     /// </param>
     /// 
     /// <param name="defaultValue">
@@ -304,13 +310,8 @@ public static partial class ComBotsSaveSystem
     /// <see cref="long"/>, <see cref="int"/>, <see cref="float"/>, 
     /// <see cref="bool"/> or <see cref="string"/>
     /// </param>
-    public static void SendSaveData(string key, object value)
+    public static void SaveData(string key, object value)
     {
-        if (_data.ContainsKey(key))
-        {
-            Debug.LogWarning($"Overwriting save data for key {key}");
-        }
-
         _data[key] = value.ToString();
     }
 
@@ -528,13 +529,13 @@ public static partial class ComBotsSaveSystem
                 foreach (var item in enumerable)
                 {
                     string name = key + index++;
-                    SendSaveData(name, item);
+                    SaveData(name, item);
                 }
                 continue;
             }
 
             var value = member.GetMemberValue(instance);
-            SendSaveData(key, value);
+            SaveData(key, value);
         }
     }
 
