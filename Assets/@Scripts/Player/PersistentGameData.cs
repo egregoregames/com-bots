@@ -34,6 +34,9 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentTerm, Term.FirstTerm)]
     public Term CurrentTerm { get; set; }
 
+    [field: SerializeField, ComBotsSave(SaveKeys.CurrentLocationName, "")]
+    public string CurrentLocationName { get; set; } = "";
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
