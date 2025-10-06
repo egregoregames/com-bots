@@ -28,8 +28,11 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 0)]
     public int PlayerRankExperience { get; private set; } = 0;
 
-    [field: SerializeField, ComBotsSave(SaveKeys.CurrentTerm, new string[0])]
-    public 
+    /// <summary>
+    /// Changes after player wins Promotion Battles
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.CurrentTerm, Term.FirstTerm)]
+    public Term CurrentTerm { get; set; }
 
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
