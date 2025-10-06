@@ -81,6 +81,15 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerMoney, 0)]
     public int PlayerMoney { get; set; } = 0;
 
+    /// <summary>
+    /// A currency that is only used to purchase Items at an Arena. It starts 
+    /// at 0 and only displays when the player is interacting with a Shopkeeper 
+    /// in the Arena. It increases when the player wins an Arena battle and 
+    /// decreases when the player purchases from a Shopkeeper in the Arena.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerBattlePoints, 0)]
+    public int PlayerBattlePoints { get; set; } = 0;
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {

@@ -8,4 +8,5 @@ public static class SaveKeys
     public const string PromotionBattleVictoryCount = "PromotionBattleVictoryCount";
     public const string PlayerCredits = "PlayerCredits";
     public const string PlayerMoney = "PlayerMoney";
+    public const string PlayerBattlePoints = "PlayerBattlePoints";
 }
