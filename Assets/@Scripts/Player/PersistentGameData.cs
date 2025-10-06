@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.Android.Gradle.Manifest;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -65,6 +67,19 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerCredits, 0)]
     public int PlayerCredits { get; set; } = 0;
+
+    /// <summary>
+    /// The total money the player has (called Cybers in-game). The value 
+    /// starts at 0 (and jumps from 0 to 500 upon receiving the Bank Card Key 
+    /// Item), and it increases or decreases when the player purchases from a 
+    /// Shopkeeper, sells to a Shopkeeper, is assessed a fee for using Omnifix 
+    /// (resurrection service after being defeated in a battle), or is 
+    /// assessed a fee for using OmniRide (fast-travel service). It displays 
+    /// on the homescreen of the pause menu.It also displays when the player 
+    /// is interacting with a Shopkeeper or the Omnifix or OmniRide services.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerMoney, 0)]
+    public int PlayerMoney { get; set; } = 0;
 
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
