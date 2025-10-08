@@ -1,5 +1,7 @@
+using ComBots.Battles;
 using Language.Lua;
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO.Pipelines;
 using System.Xml;
@@ -83,6 +85,34 @@ public class BotStatusDatum
     /// Requires combat or awakened form
     /// </summary>
     public string BootHardwareId { get; set; } = null;
+
+    /// <summary>
+    /// Each form (up to 5 total), of each of the player’s Bot and all the 
+    /// potential teammates' Bots, can have between 3 (2 for teammates) and 
+    /// 8 pieces of Software installed at a time. 
+    /// <para />
+    /// The “Attack,” “Focus,” and “Flee” Software are always installed on the
+    /// player’s Bot.The “Attack” and “Focus” Software are always installed on 
+    /// each teammate’s Bot.
+    /// <para />
+    /// A Bot form’s Software loadout can be changed in the Botlink App (for a 
+    /// teammate’s Bot, only if the teammate’s Bond is sufficient).
+    /// <para />
+    /// Each Blueprint and its upgradeable forms is compatible with only certain 
+    /// pieces of Software.If the Blueprint of a team member’s Bot is changed, 
+    /// any incompatible Software is automatically uninstalled.
+    /// <para />
+    /// Each Bot form can only have Software installed where the total of all 
+    /// the installed Software’s RAM costs is less than or equal to the Bot 
+    /// form’s RAM. 
+    /// <para />
+    /// If the Blueprint of a team member’s Bot is changed, and the RAM of a 
+    /// Bot form of the new Blueprint is less than the RAM cost of the form’s 
+    /// Software loadout, Software is automatically uninstalled in reverse 
+    /// chronological order until the form’s RAM is greater than or equal to 
+    /// the RAM cost.
+    /// </summary>
+    public List<string> InstalledSoftwareIds { get; set; } = new();
 
     public List<BotStatusDisplay> GetBotStatusDisplay()
     {
