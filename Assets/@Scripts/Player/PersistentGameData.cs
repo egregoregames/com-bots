@@ -116,6 +116,20 @@ public partial class PersistentGameData : MonoBehaviourR3
     public List<InventoryItemDatum> PlayerInventoryItemData { get; private set; } = 
         new();
 
+    /// <summary>
+    /// List of quests the player has accepted and their current status
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerQuestTrackingData, null)]
+    public List<QuestTrackingDatum> PlayerQuestTrackingData { get; private set; } = 
+        new();
+
+    /// <summary>
+    /// List of quest objectives and their current status
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerQuestObjectiveTrackingData, null)]
+    public List<QuestObjectiveTrackingDatum> PlayerQuestObjectiveTrackingData { get; private set; } =
+        new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {

@@ -1,3 +1,7 @@
+/// <summary>
+/// Should the string values of these keys be changed, 
+/// old save data will break
+/// </summary>
 public static class SaveKeys
 {
     public const string PlayerName = "PlayerName";
@@ -13,4 +17,6 @@ public static class SaveKeys
     public const string PlayerNpcConnections = "PlayerNpcConnections";
     public const string PlayerNpcTeamMembers = "PlayerNpcTeamMembers";
     public const string PlayerInventoryItemData = "PlayerInventoryItemData";
+    public const string PlayerQuestTrackingData = "PlayerQuestTrackingData";
+    public const string PlayerQuestObjectiveTrackingData = "PlayerQuestObjectiveTrackingData";
 }
