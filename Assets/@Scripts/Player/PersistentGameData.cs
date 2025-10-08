@@ -137,6 +137,13 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerBlueprintData, null)]
     public List<PlayerBlueprintDatum> PlayerBlueprintData { get; private set; } = new();
 
+    /// <summary>
+    /// List of software the player owns. If a software is not in this list, 
+    /// consider it unowned.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerOwnedSoftware, null)]
+    public List<PlayerSoftwareOwnershipDatum> PlayerOwnedSoftware { get; private set; } = new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
