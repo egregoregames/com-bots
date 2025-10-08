@@ -123,6 +123,13 @@ public partial class PersistentGameData : MonoBehaviourR3
     public List<QuestTrackingDatum> PlayerQuestTrackingData { get; private set; } = 
         new();
 
+    /// <summary>
+    /// List of current or former NPC teammates and their <see cref="TeammateBond"/> with the 
+    /// player. If an NPC is not in this list, consider their bond level to be 0.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeammateBonds, null)]
+    public List<TeammateBondDatum> PlayerTeammateBonds { get; private set; } = new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
