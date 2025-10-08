@@ -1,14 +1,4 @@
-using ComBots.Battles;
-using Language.Lua;
-using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO.Pipelines;
-using System.Xml;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BotStatusDatum
 {
@@ -123,6 +113,17 @@ public class BotStatusDatum
     /// Abilities mainly have passive, in-battle effects.
     /// </summary>
     public string ActiveAbilityId { get; set; } = null;
+
+    /// <summary>
+    /// For each member of the player’s party (always includes the player, 
+    /// and may include 1 or 2 teammates), tracks the Blueprint that the 
+    /// member’s Bot is currently formatted into. 
+    /// <para />
+    /// Blueprint determines the Bot’s name, appearance, next forms, 
+    /// base stats, potential abilities, and compatible (potentially 
+    /// installable) Software.
+    /// </summary>
+    public string BlueprintId { get; set; } = null;
 
     public List<BotStatusDisplay> GetBotStatusDisplay()
     {
