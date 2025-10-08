@@ -1,4 +1,12 @@
+using Language.Lua;
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO.Pipelines;
+using System.Xml;
+using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BotStatusDatum
 {
@@ -28,6 +36,53 @@ public class BotStatusDatum
     public bool IsOverloaded { get; set; }
 
     public bool IsRusted { get; set; }
+
+    /* HARDWARE NOTES. TODO: Move this to a design doc and hardware class xml
+    //    Each form(up to 5 total), of each of the player’s Bot and all the potential teammates' Bots, can have between 0 and 8 (6 for Basic forms) pieces of Hardware equipped at a time.
+
+    //This is further broken down to:
+
+    //-Up to 3 pieces of Internal Hardware
+
+    //-Up to 2 pieces of Arm Hardware
+
+    //-Up to 1 piece of Headgear Hardware
+
+    //-Up to 1 piece of Armor Hardware(for Combat and Awakened forms)
+
+    //-Up to 1 piece of Boot Hardware(for Combat and Awakened forms)
+
+    //A Bot form’s Hardware loadout can be changed by speaking to a unique NPC in the Engineering Bldg(for a teammate’s Bot, only if the teammate’s Bond is sufficient).
+
+    //Each Bot form can only have Hardware installed where the total of all the installed Hardware’s weight is less than or equal to the Bot form’s Load.
+
+    //If the Blueprint of a team member’s Bot is changed, and the Load of a Bot form of the new Blueprint is less than the weight of the form’s Hardware loadout, Hardware is automatically uninstalled in reverse chronological order(from Boot, to Armor, to Headgear, to Arm, to Internal) until the form’s Load is greater than or equal to the Hardware weight.
+
+    //A Bot form’s equipped Hardware is displayed in the Botlink App.
+
+    //Hardware mainly has passive, in-battle effects.*/
+
+    /// <summary>
+    /// Max 3
+    /// </summary>
+    public List<string> InternalHardwareIds { get; set; } = new();
+
+    /// <summary>
+    /// Max 2
+    /// </summary>
+    public List<string> ArmHardwareIds { get; set; } = new();
+
+    public string HeadgearHardwareId { get; set; } = null;
+
+    /// <summary>
+    /// Requires combat or awakened form
+    /// </summary>
+    public string ArmorHardwareId { get; set; } = null;
+
+    /// <summary>
+    /// Requires combat or awakened form
+    /// </summary>
+    public string BootHardwareId { get; set; } = null;
 
     public List<BotStatusDisplay> GetBotStatusDisplay()
     {
