@@ -114,6 +114,16 @@ public class BotStatusDatum
     /// </summary>
     public List<string> InstalledSoftwareIds { get; set; } = new();
 
+    /// <summary>
+    /// For each member of the player’s party (always includes the player, and 
+    /// may include 1 or 2 teammates), tracks the Ability that is currently 
+    /// assigned to the member’s Bot (either the Blueprint’s first, second, 
+    /// or third Ability).
+    /// <para />
+    /// Abilities mainly have passive, in-battle effects.
+    /// </summary>
+    public string ActiveAbilityId { get; set; } = null;
+
     public List<BotStatusDisplay> GetBotStatusDisplay()
     {
         if (Endurance <= 0)
