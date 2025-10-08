@@ -1,8 +1,12 @@
+using Language.Lua;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Unity.Android.Gradle.Manifest;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Singleton that must exist as soon as the game starts. Stores frequently 
@@ -149,6 +153,20 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeamBotStatusData, null)]
     public List<BotStatusDatum> PlayerTeamBotStatusData { get; private set; } = new();
+
+    /// <summary>
+    /// When the player first obtains the Cybercast App, only 3 channels are 
+    /// visible. 
+    /// <para />
+    /// Over the course of the game, 5 additional channels can be unlocked, 
+    /// becoming visible in the app.
+    /// <para />
+    /// For some of these channels, additional episodes within the channel are 
+    /// also unlockable (e.g., something like each term adds 1 new episode). 
+    /// The exact breakdown of episodes has not been designed yet.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerUnlockedCybercastChannels, null)]
+    public List<string> PlayerUnlockedCybercastChannelIds { get; private set; } = new();
 
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()

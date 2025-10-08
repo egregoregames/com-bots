@@ -23,4 +23,5 @@ public static class SaveKeys
     public const string PlayerBlueprintData = "PlayerBlueprintData";
     public const string PlayerOwnedSoftware = "PlayerOwnedSoftware";
     public const string PlayerTeamBotStatusData = "PlayerTeamBotStatusData";
+    public const string PlayerUnlockedCybercastChannels = "PlayerUnlockedCybercastChannels";
 }
