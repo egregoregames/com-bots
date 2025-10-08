@@ -144,6 +144,12 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerOwnedSoftware, null)]
     public List<PlayerSoftwareOwnershipDatum> PlayerOwnedSoftware { get; private set; } = new();
 
+    /// <summary>
+    /// Will be no more than 3 entries. Index 0 is the player's bot. Index 1 and 2 are teammates' bots.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeamBotStatusData, null)]
+    public List<BotStatusDatum> PlayerTeamBotStatusData { get; private set; } = new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {

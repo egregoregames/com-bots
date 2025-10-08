@@ -22,4 +22,5 @@ public static class SaveKeys
     public const string PlayerTeammateBonds = "PlayerTeammateBonds";
     public const string PlayerBlueprintData = "PlayerBlueprintData";
     public const string PlayerOwnedSoftware = "PlayerOwnedSoftware";
+    public const string PlayerTeamBotStatusData = "PlayerTeamBotStatusData";
 }
