@@ -123,13 +123,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     public List<QuestTrackingDatum> PlayerQuestTrackingData { get; private set; } = 
         new();
 
-    /// <summary>
-    /// List of quest objectives and their current status
-    /// </summary>
-    [field: SerializeField, ComBotsSave(SaveKeys.PlayerQuestObjectiveTrackingData, null)]
-    public List<QuestObjectiveTrackingDatum> PlayerQuestObjectiveTrackingData { get; private set; } =
-        new();
-
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
