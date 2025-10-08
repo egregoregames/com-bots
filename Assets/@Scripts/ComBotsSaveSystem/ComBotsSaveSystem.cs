@@ -85,14 +85,14 @@ public static partial class ComBotsSaveSystem
     /// Should be called after a successful load operation to retrieve data
     /// </summary>
     /// 
-    /// <typeparam name="T">Should be a primitive type</typeparam>
+    /// <typeparam name="T"></typeparam>
     /// 
     /// <param name="key">
     /// Unique key for this data that should match the key used in 
     /// <see cref="SaveData(string, object)"/>
     /// </param>
     /// 
-    /// <param name="value">Should be a primitive type</param>
+    /// <param name="value"></param>
     /// 
     /// <param name="defaultValue">
     /// The value to use if the saved data key 
@@ -103,6 +103,21 @@ public static partial class ComBotsSaveSystem
     {
         if (_data.ContainsKey(key))
         {
+            if (typeof(T).IsEnum)
+            {
+                if (int.TryParse(_data[key], out int enumValue))
+                {
+                    value = (T)Enum.ToObject(typeof(T), enumValue);
+                    return;
+                }
+            }
+
+            if (!typeof(T).IsPrimitive)
+            {
+                value = JsonSerializer.Deserialize<T>(_data[key]);
+                return;
+            }
+
             value = (T)Convert.ChangeType(_data[key], typeof(T));
         }
         else if (defaultValue != null)
@@ -115,7 +130,7 @@ public static partial class ComBotsSaveSystem
     /// Should be called after a successful load operation to retrieve data
     /// </summary>
     /// 
-    /// <typeparam name="T">Should be a primitive type</typeparam>
+    /// <typeparam name="T"></typeparam>
     /// 
     /// <param name="key">
     /// Unique key for this data that should match the key used in 
@@ -134,25 +149,62 @@ public static partial class ComBotsSaveSystem
     /// </returns>
     public static T LoadSavedData<T>(string key, T defaultValue)
     {
-        if (_data.ContainsKey(key))
+        Type type = typeof(T);
+
+        if (!_data.ContainsKey(key))
         {
-            return (T)Convert.ChangeType(_data[key], typeof(T));
+            return defaultValue;
         }
 
-        return defaultValue;
+        if (type.IsEnum)
+        {
+            if (int.TryParse(_data[key], out int enumValue))
+            {
+                return (T)Enum.ToObject(type, enumValue);
+            }
+        }
+
+        if (!type.IsPrimitive)
+        {
+            if (_data.ContainsKey(key))
+            {
+                return JsonSerializer.Deserialize<T>(_data[key]);
+            }
+        }
+
+        return (T)Convert.ChangeType(_data[key], typeof(T));
     }
 
-    public static string LoadSavedData(string key)
+    private static object LoadSavedData(string key, Type type)
     {
-        if (_data.ContainsKey(key))
+        if (!_data.ContainsKey(key))
         {
-            return _data[key];
+            throw new Exception($"No loaded save data exists for key {key}");
         }
 
-        throw new Exception($"No loaded save data exists for key {key}");
+        if (type.IsEnum)
+        {
+            if (int.TryParse(_data[key], out int enumValue))
+            {
+                return Enum.ToObject(type, enumValue);
+            }
+            throw new Exception($"Failed to parse enum value for key {key}");
+        }
+
+        if (!type.IsPrimitive)
+        {
+            return JsonSerializer.Deserialize(_data[key], type);
+        }
+
+        return Convert.ChangeType(_data[key], type);
     }
 
-    public static bool LoadedDataExists(string key)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private static bool LoadedDataExists(string key)
     {
         return _data.ContainsKey(key);
     }
@@ -306,12 +358,24 @@ public static partial class ComBotsSaveSystem
     /// <param name="key">Unique key for this saved data</param>
     /// 
     /// <param name="value">
-    /// Should be a primitive, such as 
-    /// <see cref="long"/>, <see cref="int"/>, <see cref="float"/>, 
-    /// <see cref="bool"/> or <see cref="string"/>
     /// </param>
     public static void SaveData(string key, object value)
     {
+        Type type = value.GetType();
+
+        if (type.IsEnum)
+        {
+            _data[key] = ((int)value).ToString();
+            return;
+        }
+
+        if (!type.IsPrimitive)
+        {
+            var serialized = JsonSerializer.Serialize(value, type);
+            _data[key] = serialized;
+            return;
+        }
+
         _data[key] = value.ToString();
     }
 
@@ -458,8 +522,7 @@ public static partial class ComBotsSaveSystem
                         break;
                     }
 
-                    var listItemStringValue = LoadSavedData(name);
-                    list.Add(Convert.ChangeType(listItemStringValue, itemType));
+                    list.Add(LoadSavedData(name, itemType));
                 }
 
                 if (isArray)
