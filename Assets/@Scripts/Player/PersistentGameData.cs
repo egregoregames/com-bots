@@ -130,6 +130,13 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeammateBonds, null)]
     public List<TeammateBondDatum> PlayerTeammateBonds { get; private set; } = new();
 
+    /// <summary>
+    /// List of blueprints the player has either seen or not seen and their 
+    /// current status. If a blueprint is not in this list, consider it unseen.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerBlueprintData, null)]
+    public List<PlayerBlueprintDatum> PlayerBlueprintData { get; private set; } = new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {

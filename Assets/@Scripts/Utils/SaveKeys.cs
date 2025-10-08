@@ -20,4 +20,5 @@ public static class SaveKeys
     public const string PlayerQuestTrackingData = "PlayerQuestTrackingData";
     public const string PlayerQuestObjectiveTrackingData = "PlayerQuestObjectiveTrackingData";
     public const string PlayerTeammateBonds = "PlayerTeammateBonds";
+    public const string PlayerBlueprintData = "PlayerBlueprintData";
 }
