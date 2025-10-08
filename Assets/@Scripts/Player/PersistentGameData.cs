@@ -13,6 +13,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 {
     public static PersistentGameData Instance { get; private set; }
 
+    /// <summary>
+    /// Entered by the player at the start of a new game
+    /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerName, "Player")]
     public string PlayerName { get; set; } = "Player";
 
@@ -95,6 +98,12 @@ public partial class PersistentGameData : MonoBehaviourR3
     private long DateTimeTicks { get; set; } = 0;
 
     /// <summary>
+    /// A list of NPC unique IDs that are currently in the player's team. Max of 2
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcTeamMembers, null)]
+    public List<string> PlayerNpcTeamMembers { get; private set; } = new();
+
+    /// <summary>
     /// A list of NPC unique IDs that the player has connected with on Socialyte
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcConnections, null)]
@@ -140,8 +149,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// <summary>
     /// Retrieves the stored DateTime for the gmae
     /// </summary>
-    public DateTime GetCurrentDateTime() =>
-        new DateTime(DateTimeTicks);
+    public DateTime GetCurrentDateTime() => new(DateTimeTicks);
 
     public void AddPlayerRankExperience(int amount)
     {
