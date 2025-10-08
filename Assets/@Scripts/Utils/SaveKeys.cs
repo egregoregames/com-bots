@@ -12,4 +12,5 @@ public static class SaveKeys
     public const string CurrentDateTime = "CurrentDateTime";
     public const string PlayerNpcConnections = "PlayerNpcConnections";
     public const string PlayerNpcTeamMembers = "PlayerNpcTeamMembers";
+    public const string PlayerInventoryItemData = "PlayerInventoryItemData";
 }

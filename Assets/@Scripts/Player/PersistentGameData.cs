@@ -109,6 +109,13 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcConnections, null)]
     public List<string> PlayerNpcConnections { get; private set; } = new();
 
+    /// <summary>
+    /// Defines the player's inventory. Each entry contains an Item ID and a quantity.
+    /// </summary>
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerInventoryItemData, null)]
+    public List<InventoryItemDatum> PlayerInventoryItemData { get; private set; } = 
+        new();
+
     [RuntimeInitializeOnLoadMethod]
     private static void OnGameStart()
     {
