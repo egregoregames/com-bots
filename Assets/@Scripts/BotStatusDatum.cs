@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class BotStatusDatum
@@ -14,6 +15,7 @@ public class BotStatusDatum
     /// same ratio of Current Energy/Max Energy that existed before the Max 
     /// Energy changed.
     /// </summary>
+    [field: SerializeField]
     public int Energy { get; set; }
 
     /// <summary>
@@ -25,10 +27,13 @@ public class BotStatusDatum
     /// yields the same ratio of Current Endurance/Max Endurance that existed 
     /// before the Max Endurance changed.
     /// </summary>
+    [field: SerializeField]
     public int Endurance { get; set; }
 
+    [field: SerializeField]
     public bool IsOverloaded { get; set; }
 
+    [field: SerializeField]
     public bool IsRusted { get; set; }
 
     /* HARDWARE NOTES. TODO: Move this to a design doc and hardware class xml
@@ -59,23 +64,28 @@ public class BotStatusDatum
     /// <summary>
     /// Max 3
     /// </summary>
+    [field: SerializeField]
     public List<string> InternalHardwareIds { get; set; } = new();
 
     /// <summary>
     /// Max 2
     /// </summary>
+    [field: SerializeField]
     public List<string> ArmHardwareIds { get; set; } = new();
 
+    [field: SerializeField]
     public string HeadgearHardwareId { get; set; } = null;
 
     /// <summary>
     /// Requires combat or awakened form
     /// </summary>
+    [field: SerializeField]
     public string ArmorHardwareId { get; set; } = null;
 
     /// <summary>
     /// Requires combat or awakened form
     /// </summary>
+    [field: SerializeField]
     public string BootHardwareId { get; set; } = null;
 
     /// <summary>
@@ -104,6 +114,7 @@ public class BotStatusDatum
     /// chronological order until the form’s RAM is greater than or equal to 
     /// the RAM cost.
     /// </summary>
+    [field: SerializeField]
     public List<string> InstalledSoftwareIds { get; set; } = new();
 
     /// <summary>
@@ -114,6 +125,7 @@ public class BotStatusDatum
     /// <para />
     /// Abilities mainly have passive, in-battle effects.
     /// </summary>
+    [field: SerializeField]
     public string ActiveAbilityId { get; set; } = null;
 
     /// <summary>
@@ -125,8 +137,10 @@ public class BotStatusDatum
     /// base stats, potential abilities, and compatible (potentially 
     /// installable) Software.
     /// </summary>
+    [field: SerializeField]
     public string BlueprintId { get; set; } = null;
 
+    /// <returns>List of statuses to show in the UI, and in what order</returns>
     public List<BotStatusDisplay> GetBotStatusDisplay()
     {
         if (Endurance <= 0)
