@@ -1,12 +1,7 @@
-using Language.Lua;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using Unity.Android.Gradle.Manifest;
-using UnityEditor;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// Singleton that must exist as soon as the game starts. Stores frequently 
@@ -15,7 +10,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public partial class PersistentGameData : MonoBehaviourR3
 {
-    public static PersistentGameData Instance { get; private set; }
+    private static PersistentGameData Instance { get; set; }
 
     /// <summary>
     /// Entered by the player at the start of a new game
@@ -70,7 +65,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// The total credits the player has received from completing quests, 
     /// starting at 0 and increasing each time a quest is completed. It 
     /// displays on the homescreen of the pause menu from the start of the 
-    /// game (with a “.0” after the value). A minimum credit value is required 
+    /// game (with a '.0' after the value). A minimum credit value is required 
     /// in order to schedule a Promotion Battle.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerCredits, 0)]
@@ -176,6 +171,19 @@ public partial class PersistentGameData : MonoBehaviourR3
             DontDestroyOnLoad(
                 new GameObject("PersistentGameData", typeof(PersistentGameData)));
         }
+    }
+
+    /// <summary>
+    /// Await this to get the instanced singleton of <see cref="PersistentGameData"/>
+    /// </summary>
+    /// <returns>The instanced singleton of this class</returns>
+    public static async Task<PersistentGameData> GetInstanceAsync()
+    {
+        while (Instance == null)
+        {
+            await Task.Yield();
+        }
+        return Instance;
     }
 
     /// <summary>
