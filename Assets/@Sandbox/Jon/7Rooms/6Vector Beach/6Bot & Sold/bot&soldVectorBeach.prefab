@@ -952,6 +952,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2585893991308380959}
+  - {fileID: 1626593594522754591}
   m_Father: {fileID: 8883463167412094793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7133340592921213773
@@ -2295,6 +2296,72 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 569924374277662302, guid: 83c465aeee8d87e408b67b33fe506ef7, type: 3}
   m_PrefabInstance: {fileID: 2050561714722539603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2080058194671590241
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1244416135874792001}
+    m_Modifications:
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133207846840749268, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: _conversationTitle
+      value: Bot+Sold (Vector Beach) Honor Roll 1A
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656046448749808980, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+      propertyPath: m_Name
+      value: 107 honorRollB
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+--- !u!4 &1626593594522754591 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 742825287757989246, guid: 536a11d9e46c6094991266c6f123b731, type: 3}
+  m_PrefabInstance: {fileID: 2080058194671590241}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2083129348731734891
 PrefabInstance:
@@ -5739,6 +5806,10 @@ PrefabInstance:
     - target: {fileID: 5099356659201370134, guid: feee12c84ea3cab459b1411933765235, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8444058977367814617, guid: feee12c84ea3cab459b1411933765235, type: 3}
+      propertyPath: persistentDataName
+      value: Standard Shopkeeper 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

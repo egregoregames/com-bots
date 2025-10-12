@@ -18,6 +18,7 @@ public class dataHolderHardware : ScriptableObject
 	public hardwareType hardwareType;
 	public bool craftable;
 	public int weight;
+	[TextArea(3, 10)]
 	public string flavorText;
 	public GameObject image;	
 }

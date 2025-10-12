@@ -31,6 +31,7 @@ public enum priority
 
 public class dataHolderSoftware : ScriptableObject
 {
+	public bool allDataEntered;
 	public string softwareName;
 	public GameObject image; //just graphic? not model?
 	public ScriptableObject aura;
@@ -48,6 +49,7 @@ public class dataHolderSoftware : ScriptableObject
 	public targetType targetType; //should be enumerator
 	public int minHits;
 	public int maxHits;
+	[TextArea(3, 10)]
 	public string flavorText;
 
 	//Chances of inflicting condition on target(s)
@@ -79,7 +81,7 @@ public class dataHolderSoftware : ScriptableObject
 		public int targetDefenseBeamChangeChance;
 		public int targetDefenseBeamChangeVector;
 		public int targetDefenseBlastChangeChance;
-		public int targetrDefenseBlastChangeVector;
+		public int targetDefenseBlastChangeVector;
 
 		public int targetAccuracyChangeChance;
 		public int targetAccuracyChangeVector;
@@ -114,7 +116,7 @@ public class dataHolderSoftware : ScriptableObject
 		public int userDefenseMeleeChangeVector;
 		public int userDefenseBeamChangeChance;
 		public int userDefenseBeamChangeVector;
-		public int useDefenseBlastChangeChance;
+		public int userDefenseBlastChangeChance;
 		public int userDefenseBlastChangeVector;
 
 		public int userAccuracyChangeChance;
@@ -124,5 +126,6 @@ public class dataHolderSoftware : ScriptableObject
 
 	public bool atypicalEffects;
 	public bool punchingSoftware;
+	public bool drainingSoftware;
 	public bool uplinkGloveCompatible;
 }
