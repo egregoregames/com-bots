@@ -14,7 +14,6 @@ namespace ComBots.UI.src.SocialyteUI
 {
     public class SocialytePanel : MenuPanel
     {
-        [SerializeField] PlayerData playerData;
         [SerializeField] ScrollRect scrollRect;
         [SerializeField] GameObject connectionDescriptionPanel;
         [SerializeField] SocialyteCategoryTab connectionTab;
@@ -80,16 +79,16 @@ namespace ComBots.UI.src.SocialyteUI
         {
             for (var i = 1; i < socialyteTabs.Count; i++)
             {
-                if (i > playerData.KnownConnections.Count)
-                {
-                    socialyteTabs[i].gameObject.SetActive(false);
-                    continue;
-                }
+                //if (i > PersistentGameData.KnownConnections.Count)
+                //{
+                //    socialyteTabs[i].gameObject.SetActive(false);
+                //    continue;
+                //}
                 
-                socialyteTabs[i].gameObject.SetActive(true);
-                var connection = playerData.KnownConnections[i - 1];
-                socialyteTabs[i].connection = connection;
-                socialyteTabs[i].SetConnectionStatus();
+                //socialyteTabs[i].gameObject.SetActive(true);
+                //var connection = PersistentGameData.KnownConnections[i - 1];
+                //socialyteTabs[i].connection = connection;
+                //socialyteTabs[i].SetConnectionStatus();
             }
         }
 
@@ -129,12 +128,12 @@ namespace ComBots.UI.src.SocialyteUI
             playerProfileGameObject.SetActive(true);
             connectionProfileGameObject.SetActive(false);
             
-            playerNameText.text = playerData.playerName;
-            playerOccupationText.text = $"{playerData.playerOccupation}";
-            playerConnectionText.text = $"{playerData.KnownConnections.Count} Connections";
-            playerRankText.text = $"I'm a Rank {playerData.rank} Meister!";
-            playerBlueprintsText.text = $"I've collected {playerData.ownedBlueprints} Blueprints!";
-            playerSoftwareText.text = $"I've collected {playerData.CollectedSoftware.Count} Software!";
+            //playerNameText.text = PersistentGameData.Instance.PlayerName;
+            //playerOccupationText.text = $"{PersistentGameData.playerOccupation}";
+            //playerConnectionText.text = $"{PersistentGameData.KnownConnections.Count} Connections";
+            //playerRankText.text = $"I'm a Rank {PersistentGameData.rank} Meister!";
+            //playerBlueprintsText.text = $"I've collected {PersistentGameData.ownedBlueprints} Blueprints!";
+            //playerSoftwareText.text = $"I've collected {PersistentGameData.CollectedSoftware.Count} Software!";
         }
 
         void SetConnectionInfo(dataHolderSocialyteProfile connection)
