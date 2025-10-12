@@ -5,15 +5,12 @@ using UnityEngine;
 public class dataHolderSocialyteProfile : ScriptableObject
 {
 	public string profileName;
-	public GameObject imagePortrait;
-	public GameObject imageOverworld;
+	public GameObject modelPortrait;
+	public GameObject modelOverworld;
+	[Tooltip("Whether this NPC can also be a teammate.")]
 	public bool potentialTeammate;
-	public int bond;
 	public string occupation;
 	public string origin;
+	[TextArea(3, 10)]
 	public string bio;
-	public ScriptableObject location;
-	public bool currentConnection;
-	public bool newConnection;
-	public bool inParty;
 }

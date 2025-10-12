@@ -23,6 +23,7 @@ public class dataHolderItem : ScriptableObject
 	public bool fromLitter;
 	public bool fromBrokenPart;
 	public bool fromCorruptDisc;
+	[TextArea(3, 10)]
 	public string flavorText;
 	public GameObject image;	
 }

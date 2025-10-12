@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2493190703797767095}
+  - component: {fileID: 1041771967964374179}
+  - component: {fileID: 6373653558262826737}
+  - component: {fileID: 7295150665111712075}
   m_Layer: 0
   m_Name: 108 prefectA
   m_TagString: Untagged
@@ -32,6 +35,77 @@ Transform:
   - {fileID: 2687763407836707721}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1041771967964374179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485689064822740620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64578247383140469c45370654a984a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: PREFECT
+  persistentDataName: 
+  portrait: {fileID: 0}
+  spritePortrait: {fileID: 0}
+  barkUISettings:
+    barkUI: {fileID: 0}
+    barkUIOffset: {x: 0, y: 2, z: 0}
+  standardDialogueUISettings:
+    subtitlePanelNumber: 0
+    customSubtitlePanel: {fileID: 0}
+    customSubtitlePanelOffset: {x: 0, y: 0, z: 0}
+    menuPanelNumber: 0
+    customMenuPanel: {fileID: 0}
+    customMenuPanelOffset: {x: 0, y: 0, z: 0}
+    useMenuPanelFor: 0
+    portraitAnimatorController: {fileID: 0}
+    setSubtitleColor: 0
+    applyColorToPrependedName: 0
+    prependActorNameSeparator: ': '
+    prependActorNameFormat: '{0}{1}'
+    subtitleColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &6373653558262826737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485689064822740620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a387fc97759b2025abaaba6cc2078cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueActor: {fileID: 1041771967964374179}
+  _conversationTitle: 
+  _animator: {fileID: 5965306607996696916}
+  _overheadWidgetOffset: {x: 0, y: 1.44, z: 0}
+  CameraTarget: {fileID: 0}
+--- !u!65 &7295150665111712075
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485689064822740620}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &2505800096178445410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,10 +173,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4c611f5574f1d214ba103e80893dc54d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5965306607996696916}
   m_SourcePrefab: {fileID: 100100000, guid: 4c611f5574f1d214ba103e80893dc54d, type: 3}
 --- !u!4 &2687763407836707721 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c611f5574f1d214ba103e80893dc54d, type: 3}
   m_PrefabInstance: {fileID: 2505800096178445410}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3316630889015157043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4c611f5574f1d214ba103e80893dc54d, type: 3}
+  m_PrefabInstance: {fileID: 2505800096178445410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5965306607996696916
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316630889015157043}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 6631d91d19c90ab9f96fd72be3aeb0b0, type: 3}
+  m_Controller: {fileID: 9100000, guid: e3a15b72350a21c4eba89f24eaed1552, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/*
+
 namespace ComBots.UI.src.SocialyteUI
 {
     public class SocialytePanel : MenuPanel
@@ -245,3 +247,5 @@ namespace ComBots.UI.src.SocialyteUI
         }
     }
 }
+
+*/

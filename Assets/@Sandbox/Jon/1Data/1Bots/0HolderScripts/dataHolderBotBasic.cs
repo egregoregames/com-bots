@@ -5,7 +5,8 @@ using UnityEngine;
 public class dataHolderBotBasic : ScriptableObject
 {
 	public string botName;
-	public GameObject image;
+	public GameObject modelAlly;
+	public GameObject modelFoe;
 	public GameObject blueprintImage;
 	public ScriptableObject combatForm1;
 	public ScriptableObject combatForm2;
@@ -26,6 +27,6 @@ public class dataHolderBotBasic : ScriptableObject
 	public int EnduranceBase;
 	public int energyBase;
 	public ScriptableObject softwareSignature;
-	public bool owned;
-	public bool analyzed;
+	public ScriptableObject moveset;
+	public ScriptableObject drops;
 }
