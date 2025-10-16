@@ -7,7 +7,6 @@ using ComBots.Utils.EntryPoints;
 
 namespace ComBots.Inputs
 {
-    // Remove the RequireComponent attribute - we don't need PlayerInput anymore
     public class InputManager : EntryPointMono
     {
         public static InputManager I { get; private set; }

@@ -1,4 +1,5 @@
 using ComBots.Inputs;
+using ComBots.Sandbox.Global.UI.Menu;
 using ComBots.Utils.EntryPoints;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +12,6 @@ namespace ComBots.Global.UI.Menu
 
         public override Dependency Dependency => Dependency.Independent;
 
-        [SerializeField] private ComBots.Sandbox.Global.UI.Menu.MenuController _menuController;
         [SerializeField] private ComBots.Sandbox.Global.UI.Menu.MenuNavigationController _navigationController;
 
         protected override void Init()
@@ -33,7 +33,7 @@ namespace ComBots.Global.UI.Menu
             {
                 case "pause":
                 case "cancel":
-                    _menuController.HandleInput(context, actionName, inputFlag);
+                    PauseMenu.Instance.HandleInput(context, actionName, inputFlag);
                     return true;
             }
             return _navigationController.HandleInput(context, actionName, inputFlag);

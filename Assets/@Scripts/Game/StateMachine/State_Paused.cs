@@ -1,8 +1,7 @@
 using ComBots.Global.UI;
-using ComBots.Global.UI.Menu;
 using ComBots.Inputs;
+using ComBots.Sandbox.Global.UI.Menu;
 using ComBots.Utils.StateMachines;
-using static ComBots.Game.StateMachine.GameStateMachine;
 
 namespace ComBots.Game.StateMachine
 {
@@ -22,8 +21,7 @@ namespace ComBots.Game.StateMachine
                 bool canEnter = previousState is State_Playing;
                 if (canEnter)
                 {
-                    GlobalUIRefs.I.MenuController.SetActive(true);
-                    InputManager.I.PushContext(_stateMachine._pauseContextData, MenuInputHandler.I);
+                    InputManager.I.PushContext(_stateMachine._pauseContextData, PauseMenu.Instance);
                 }
                 return canEnter;
             }
@@ -34,7 +32,6 @@ namespace ComBots.Game.StateMachine
                 if (canExit)
                 {
                     InputManager.I.PopContext(_stateMachine._pauseContextData.contextName);
-                    GlobalUIRefs.I.MenuController.SetActive(false);
                 }
                 return canExit;
             }
