@@ -25,8 +25,17 @@ namespace ComBots.Game.Players
                 case "pause":
                     if (context.phase == InputActionPhase.Performed)
                     {
-                        Debug.Log("Pausing game...");
-                        GameStateMachine.I.SetState<GameStateMachine.State_Paused>(null);
+                        
+                        if (GameStateMachine.I.CurrentState is GameStateMachine.State_Paused)
+                        {
+                            Debug.Log("Pausing game...");
+                            GameStateMachine.I.SetState<GameStateMachine.State_Paused>(null);
+                        }
+                        else
+                        {
+                            Debug.Log("Unpausing game...");
+                            GameStateMachine.I.ExitState<GameStateMachine.State_Paused>();
+                        }
                     }
                     return true;
             }

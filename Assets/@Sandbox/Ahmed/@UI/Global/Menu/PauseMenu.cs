@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace ComBots.Sandbox.Global.UI.Menu
 {
-    public class PauseMenu : MonoBehaviourR3, IInputHandler
+    public class PauseMenu : MonoBehaviourR3
     {
         public static PauseMenu Instance { get; private set; }
         [SerializeField] MenuNavigationController _navigationController;
@@ -111,39 +111,14 @@ namespace ComBots.Sandbox.Global.UI.Menu
             _movementProgress = 0;
         }
 
-        #region IInputHandler Implementation
-        public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
+        public void Open()
         {
-            Debug.Log($"PauseMenu: HandleInput actionName={actionName}, inputFlag={inputFlag}, phase={context.phase}");
-            switch (actionName)
-            {
-                case "pause":
-                    if (context.performed)
-                    {
-                        Debug.Log("PauseMenu: Pause input received.");
-                        //GameStateMachine.I.
-                        SetActive(!_isMenuOpen);
-                    }
-                    return true;
-            }
-            return false;
+            SetActive(true);
         }
 
-        public void OnInputContextPaused(InputContext context)
+        public void Close()
         {
+            SetActive(false);
         }
-
-        public void OnInputContextResumed(InputContext context)
-        {
-        }
-
-        public void OnInputContextEntered(InputContext context)
-        {
-        }
-
-        public void OnInputContextExited(InputContext context)
-        {
-        }
-        #endregion
     }
 }

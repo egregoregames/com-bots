@@ -2,6 +2,7 @@ using ComBots.Global.UI;
 using ComBots.Inputs;
 using ComBots.Sandbox.Global.UI.Menu;
 using ComBots.Utils.StateMachines;
+using UnityEngine;
 
 namespace ComBots.Game.StateMachine
 {
@@ -21,19 +22,19 @@ namespace ComBots.Game.StateMachine
                 bool canEnter = previousState is State_Playing;
                 if (canEnter)
                 {
-                    InputManager.I.PushContext(_stateMachine._pauseContextData, PauseMenu.Instance);
+                    Debug.Log("Entering Paused state...");
+                    //InputManager.I.PushContext(_stateMachine._pauseContextData, );
+                    PauseMenu.Instance.Open();
                 }
                 return canEnter;
             }
 
             public override bool Exit(State nextState)
             {
-                bool canExit = true;
-                if (canExit)
-                {
-                    InputManager.I.PopContext(_stateMachine._pauseContextData.contextName);
-                }
-                return canExit;
+                Debug.Log("Exiting Paused state...");
+                //InputManager.I.PopContext(_stateMachine._pauseContextData.contextName);
+                PauseMenu.Instance.Close();
+                return true;
             }
         }
     }

@@ -9,7 +9,7 @@ namespace ComBots.Utils.StateMachines
     {
         protected State[] States { get; private set; }
         private int _currentStateIndex = -1;
-        protected State CurrentState => IsStateMachineInitialized ? States[_currentStateIndex] : null;
+        public State CurrentState => IsStateMachineInitialized ? States[_currentStateIndex] : null;
 
         protected bool IsStateMachineInitialized { get; private set; } = false;
 
