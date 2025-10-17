@@ -69,7 +69,9 @@ namespace ComBots.Utils.StateMachines
                 _logger.LogError($"Failed to enter state '{newState.Name}'. Cannot transition from '{previousState?.Name ?? "null"}'.");
                 return false;
             }
+            
             _currentStateIndex = GetStateIndex(newState);
+            Debug.Log($"Entered new state. Current state index is {_currentStateIndex}");
             return true;
         }
 

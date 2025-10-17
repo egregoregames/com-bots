@@ -236,6 +236,7 @@ namespace ComBots.Inputs
 
         private void ProcessInput(InputAction.CallbackContext context)
         {
+            Debug.Log($"InputManager.ProcessInput: action={context.action.name}, phase={context.phase}, value={context.ReadValueAsObject()}");
             string actionName = context.action.name;
 
             // Handle global inputs first (search through entire stack)
@@ -272,7 +273,7 @@ namespace ComBots.Inputs
                 }
             }
 
-            //_logger.Log($"Unhandled input: {actionName}, value: {context.ReadValueAsObject()}");
+            _logger.Log($"Unhandled input: {actionName}, value: {context.ReadValueAsObject()}");
         }
 
         // Debug method

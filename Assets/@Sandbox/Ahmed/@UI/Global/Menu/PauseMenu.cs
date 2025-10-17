@@ -6,14 +6,17 @@ using ComBots.Inputs;
 using ComBots.Logs;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using R3;
 
 namespace ComBots.Sandbox.Global.UI.Menu
 {
     public class PauseMenu : MonoBehaviourR3
     {
         public static PauseMenu Instance { get; private set; }
-        [SerializeField] MenuNavigationController _navigationController;
-        private bool _isMenuOpen;
+        public bool IsOpen { get; private set; }
+
+        [field: SerializeField]
+        private InputSystem_Actions Inputs { get; set; }
 
         [field: SerializeField]
         private RectTransform MenuSelector { get; set; }
@@ -39,6 +42,30 @@ namespace ComBots.Sandbox.Global.UI.Menu
         {
             base.Initialize();
             Instance = this;
+            Inputs = new();
+
+            var onOpenMenu = Observable.FromEvent<InputAction.CallbackContext>(
+                h => Inputs.Player.OpenMenu.performed += h,
+                h => Inputs.Player.OpenMenu.performed -= h);
+
+            AddEvents(
+                onOpenMenu.Subscribe(OpenMenu_performed));
+        }
+
+        private new void OnEnable()
+        {
+            base.OnEnable();
+            Inputs.Enable();
+        }
+
+        private void OnDisable()
+        {
+            Inputs.Disable();
+        }
+
+        private void OpenMenu_performed(InputAction.CallbackContext obj)
+        {
+            SetActive(!IsOpen);
         }
 
         public void SetActive(bool isActive)
@@ -46,15 +73,14 @@ namespace ComBots.Sandbox.Global.UI.Menu
             MyLogger<PauseMenu>.StaticLog($"SetActive({isActive})");
             //gameObject.SetActive(isActive);
             SetBottomState(isActive ? BottomState.Visible : BottomState.Partial);
-            _isMenuOpen = isActive;
-            _navigationController.SetActive(isActive);
+            IsOpen = isActive;
         }
 
         public void SetBottomBarVisible(bool isVisible)
         {
             if (isVisible)
             {
-                SetBottomState(_isMenuOpen ? BottomState.Visible : BottomState.Partial);
+                SetBottomState(IsOpen ? BottomState.Visible : BottomState.Partial);
             }
             else
             {
