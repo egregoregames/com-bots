@@ -33,10 +33,12 @@ namespace ComBots.Game.Players
             {
                 return true;
             }
+
             if (_player.Controller.HandleInput(context, actionName, inputFlag))
             {
                 return true;
             }
+
             return false;
         }
 
