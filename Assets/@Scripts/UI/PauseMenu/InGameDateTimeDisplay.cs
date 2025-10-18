@@ -31,10 +31,7 @@ public class InGameDateTimeDisplay : MonoBehaviourR3
             // Update the text when save data is loaded
             PersistentGameData.GameEvents.OnSaveDataLoaded(UpdateText)
         );
-    }
 
-    private void Start()
-    {
         CacheTermDescriptions();
         UpdateText();
     }
