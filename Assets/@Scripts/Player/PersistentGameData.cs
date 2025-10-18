@@ -189,12 +189,20 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
     }
 
+    /// <returns>
+    /// An integer that represents the player's rank. A new player 
+    /// in the game will have a rank of 5
+    /// </returns>
     public static async Task<int> GetPlayerRank()
     {
         var rankXp = (await GetInstanceAsync()).PlayerRankExperience;
         return (int)Math.Floor(Math.Cbrt(rankXp)) + 1;
     }
 
+    /// <summary>
+    /// Used for the rank xp bar UI element (<see cref="UnityEngine.UI.Slider"/>)
+    /// </summary>
+    /// <returns>A percentage value between 0 and 1, inclusive</returns>
     public static async Task<float> GetProgressToNextRank()
     {
         int rank = await GetPlayerRank();
