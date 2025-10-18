@@ -19,6 +19,8 @@ public partial class PersistentGameData : MonoBehaviourR3
 
     private static UnityEventR3 _onRankXpUpdated = new();
 
+    private static UnityEventR3 _onCreditsUpdated = new();
+
     public static class GameEvents
     {
         public static IDisposable OnTermUpdated(Action x)
@@ -29,6 +31,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnRankXpUpdated(Action x)
             => _onRankXpUpdated.Subscribe(x);
+
+        public static IDisposable OnCreditsUpdated(Action x)
+            => _onCreditsUpdated.Subscribe(x);
     }
 
     /// <summary>
@@ -88,7 +93,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// in order to schedule a Promotion Battle.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerCredits, 0)]
-    public int PlayerCredits { get; set; } = 0;
+    public int PlayerCredits { get; private set; } = 0;
 
     /// <summary>
     /// The total money the player has (called Cybers in-game). The value 
@@ -241,6 +246,28 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerRankExperience += amount;
         _onRankXpUpdated.Invoke();
+    }
+
+    /// <summary>
+    /// Adds credits to the player data and invokes 
+    /// <see cref="GameEvents.OnCreditsUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount">Credits to add</param>
+    public void AddPlayerCredits(int amount)
+    {
+        PlayerCredits += amount;
+        _onCreditsUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Should check to ensure amount will not bring credit balance below 
+    /// 0 before calling this. Invokes <see cref="GameEvents.OnCreditsUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount">Amount of credits to deduct</param>
+    public void DeductPlayerCredits(int amount)
+    {
+        PlayerCredits -= amount;
+        _onCreditsUpdated?.Invoke();
     }
 
     private void Reset()
