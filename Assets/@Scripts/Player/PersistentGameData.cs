@@ -21,6 +21,8 @@ public partial class PersistentGameData : MonoBehaviourR3
 
     private static UnityEventR3 _onCreditsUpdated = new();
 
+    private static UnityEventR3 _onMoneyUpdated = new();
+
     public static class GameEvents
     {
         public static IDisposable OnTermUpdated(Action x)
@@ -34,6 +36,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnCreditsUpdated(Action x)
             => _onCreditsUpdated.Subscribe(x);
+
+        public static IDisposable OnMoneyUpdated(Action x)
+            => _onMoneyUpdated.Subscribe(x);
     }
 
     /// <summary>
@@ -106,7 +111,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// is interacting with a Shopkeeper or the Omnifix or OmniRide services.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerMoney, 0)]
-    public int PlayerMoney { get; set; } = 0;
+    public int PlayerMoney { get; private set; } = 0;
 
     /// <summary>
     /// A currency that is only used to purchase Items at an Arena. It starts 
@@ -268,6 +273,26 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerCredits -= amount;
         _onCreditsUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Adds money (cybers) and invokes <see cref="GameEvents.OnMoneyUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount">Amount of money (cybers) to add</param>
+    public void AddPlayerMoney(int amount)
+    {
+        PlayerMoney += amount;
+        _onMoneyUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Deducts money (cybers) and invokes <see cref="GameEvents.OnMoneyUpdated(Action)"/> 
+    /// </summary>
+    /// <param name="amount">The amount of money (cybers) to deduct</param>
+    public void DeductPlayerMoney(int amount)
+    {
+        PlayerMoney -= amount;
+        _onMoneyUpdated?.Invoke();
     }
 
     private void Reset()
