@@ -10,7 +10,20 @@ using UnityEngine;
 /// </summary>
 public partial class PersistentGameData : MonoBehaviourR3
 {
-    private static PersistentGameData Instance { get; set; }
+    public static PersistentGameData Instance { get; private set; }
+
+    private static UnityEventR3 _onTermUpdated = new();
+
+    private static UnityEventR3 _onSaveDataLoaded = new();
+
+    public static class GameEvents
+    {
+        public static IDisposable OnTermUpdated(Action x)
+            => _onTermUpdated.Subscribe(x);
+
+        public static IDisposable OnSaveDataLoaded(Action x)
+            => _onSaveDataLoaded.Subscribe(x);
+    }
 
     /// <summary>
     /// Entered by the player at the start of a new game
@@ -37,7 +50,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// Changes after player wins Promotion Battles
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentTerm, Term.FirstTerm)]
-    public Term CurrentTerm { get; set; }
+    public Term CurrentTerm { get; private set; }
 
     /// <summary>
     /// The player's current location shows on the homescreen of the pause 
@@ -92,9 +105,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerBattlePoints, 0)]
     public int PlayerBattlePoints { get; set; } = 0;
-
-    [field: SerializeField, ComBotsSave(SaveKeys.CurrentDateTime, 0)]
-    private long DateTimeTicks { get; set; } = 0;
 
     /// <summary>
     /// A list of NPC unique IDs that are currently in the player's team. Max of 2
@@ -174,6 +184,16 @@ public partial class PersistentGameData : MonoBehaviourR3
     }
 
     /// <summary>
+    /// Sets the in-game <see cref="Term"/> and invokes 
+    /// <see cref="GameEvents.OnTermUpdated(Action)"/>
+    /// </summary>
+    public static async void SetTerm(Term term)
+    {
+        (await GetInstanceAsync()).CurrentTerm = term;
+        _onTermUpdated.Invoke();
+    }
+
+    /// <summary>
     /// Await this to get the instanced singleton of <see cref="PersistentGameData"/>
     /// </summary>
     /// <returns>The instanced singleton of this class</returns>
@@ -185,38 +205,6 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
         return Instance;
     }
-
-    /// <summary>
-    /// Sets a specific time of day for the game.
-    /// </summary>
-    /// <param name="hour">0 to 23</param>
-    /// <param name="minute">0 to 59</param>
-    /// <param name="second">0 to 59</param>
-    public void SetTimeOfDay(int hour, int minute, int second = 0)
-    {
-        var dt = GetCurrentDateTime().Date; // Midnight
-        dt.AddHours(hour);
-        dt.AddMinutes(minute);
-        dt.AddSeconds(second);
-        DateTimeTicks = dt.Ticks;
-    }
-
-    /// <summary>
-    /// Sets the day of the week for the game
-    /// </summary>
-    /// <param name="dayOfWeek"></param>
-    public void SetDayOfWeek(DayOfWeek dayOfWeek)
-    {
-        var dt = GetCurrentDateTime();
-        int daysToAdd = ((int)dayOfWeek - (int)dt.DayOfWeek + 7) % 7;
-        dt = dt.AddDays(daysToAdd);
-        DateTimeTicks = dt.Ticks;
-    }
-
-    /// <summary>
-    /// Retrieves the stored DateTime for the gmae
-    /// </summary>
-    public DateTime GetCurrentDateTime() => new(DateTimeTicks);
 
     public void AddPlayerRankExperience(int amount)
     {
@@ -263,6 +251,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         Reset();
         ComBotsSaveSystem.LoadData(typeof(PersistentGameData), this);
+        _onSaveDataLoaded?.Invoke();
     }
         
 
