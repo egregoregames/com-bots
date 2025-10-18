@@ -1,12 +1,14 @@
-using System;
-using System.Collections.Generic;
 using ComBots.Game;
 using ComBots.Game.StateMachine;
 using ComBots.Inputs;
 using ComBots.Logs;
-using UnityEngine;
-using UnityEngine.InputSystem;
 using R3;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace ComBots.Sandbox.Global.UI.Menu
 {
@@ -33,7 +35,11 @@ namespace ComBots.Sandbox.Global.UI.Menu
         [field: SerializeField]
         private float MovementSpeed { get; set; } = 5f;
 
+        [field: SerializeField]
+        private List<ScalableButton> Buttons { get; set; }
+
         private BottomState _currentBottomState = BottomState.Partial;
+        private int _selectedButtonIndex;
         private bool _isMoving;
         private float _movementProgress = 0;
         private float _startingYPosition;
@@ -74,6 +80,35 @@ namespace ComBots.Sandbox.Global.UI.Menu
             //gameObject.SetActive(isActive);
             SetBottomState(isActive ? BottomState.Visible : BottomState.Partial);
             IsOpen = isActive;
+            UpdateButtonSelection();
+        }
+
+        private void UpdateButtonSelection()
+        {
+            if (IsOpen)
+            {
+                Buttons[_selectedButtonIndex].Select();
+            }
+            else
+            {
+                var selected = EventSystem.current.currentSelectedGameObject;
+
+                if (selected != null)
+                {
+                    var matching = Buttons
+                        .FirstOrDefault(x => x.gameObject == selected);
+
+                    if (matching != null)
+                    {
+                        _selectedButtonIndex = Buttons.IndexOf(matching);
+                    }
+                }
+
+                foreach (var item in Buttons)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                }
+            }
         }
 
         public void SetBottomBarVisible(bool isVisible)
