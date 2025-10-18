@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class MoneyDisplay : MonoBehaviourR3
+public class CurrentLocationDisplay : MonoBehaviourR3
 {
     [field: SerializeField]
     private TextMeshProUGUI Text { get; set; }
@@ -12,8 +12,8 @@ public class MoneyDisplay : MonoBehaviourR3
 
         AddEvents(
 
-            // Udpate the text when the money is updated
-            PersistentGameData.GameEvents.OnMoneyUpdated(UpdateText),
+            // Udpate the text when the location is updated
+            PersistentGameData.GameEvents.OnLocationUpdated(UpdateText),
 
             // Update the text when save data is loaded
             PersistentGameData.GameEvents.OnSaveDataLoaded(UpdateText)
@@ -25,6 +25,6 @@ public class MoneyDisplay : MonoBehaviourR3
     private async void UpdateText()
     {
         var instance = await PersistentGameData.GetInstanceAsync();
-        Text.text = $"{instance.PlayerMoney}";
+        Text.text = $"{instance.CurrentLocationName}";
     }
 }

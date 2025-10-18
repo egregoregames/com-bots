@@ -23,6 +23,8 @@ public partial class PersistentGameData : MonoBehaviourR3
 
     private static UnityEventR3 _onMoneyUpdated = new();
 
+    private static UnityEventR3 _onLocationUpdated = new();
+
     public static class GameEvents
     {
         public static IDisposable OnTermUpdated(Action x)
@@ -39,6 +41,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnMoneyUpdated(Action x)
             => _onMoneyUpdated.Subscribe(x);
+
+        public static IDisposable OnLocationUpdated(Action x)
+            => _onLocationUpdated.Subscribe(x);
     }
 
     /// <summary>
@@ -80,7 +85,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// the player passes through a door to a new location.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentLocationName, "")]
-    public string CurrentLocationName { get; set; } = "";
+    public string CurrentLocationName { get; private set; } = "";
 
     /// <summary>
     /// Ranges between 0 and 5. Each time the player wins a Promotion Battle, 
@@ -262,6 +267,12 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerCredits += amount;
         _onCreditsUpdated?.Invoke();
+    }
+
+    public void UpdateLocationName(string locationName)
+    {
+        CurrentLocationName = locationName;
+        _onLocationUpdated?.Invoke();
     }
 
     /// <summary>
