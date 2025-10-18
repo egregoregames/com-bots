@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
 
 /// <summary>
@@ -16,6 +17,8 @@ public partial class PersistentGameData : MonoBehaviourR3
 
     private static UnityEventR3 _onSaveDataLoaded = new();
 
+    private static UnityEventR3 _onRankXpUpdated = new();
+
     public static class GameEvents
     {
         public static IDisposable OnTermUpdated(Action x)
@@ -23,6 +26,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnSaveDataLoaded(Action x)
             => _onSaveDataLoaded.Subscribe(x);
+
+        public static IDisposable OnRankXpUpdated(Action x)
+            => _onRankXpUpdated.Subscribe(x);
     }
 
     /// <summary>
@@ -43,8 +49,8 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// <summary>
     /// Used to calculate the player's rank
     /// </summary>
-    [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 0)]
-    public int PlayerRankExperience { get; private set; } = 0;
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 64)]
+    public int PlayerRankExperience { get; private set; } = 64;
 
     /// <summary>
     /// Changes after player wins Promotion Battles
@@ -183,6 +189,23 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
     }
 
+    public static async Task<int> GetPlayerRank()
+    {
+        var rankXp = (await GetInstanceAsync()).PlayerRankExperience;
+        return (int)Math.Floor(Math.Cbrt(rankXp)) + 1;
+    }
+
+    public static async Task<float> GetProgressToNextRank()
+    {
+        int rank = await GetPlayerRank();
+        var rankXp = (await GetInstanceAsync()).PlayerRankExperience;
+        int rankMinXp = (int)Math.Pow(rank - 1, 3);
+        int rankMaxXp = (int)Math.Pow(rank, 3);
+        int range = rankMaxXp - rankMinXp;
+        int progress = rankXp - rankMinXp;
+        return progress / range;
+    }
+
     /// <summary>
     /// Sets the in-game <see cref="Term"/> and invokes 
     /// <see cref="GameEvents.OnTermUpdated(Action)"/>
@@ -209,12 +232,22 @@ public partial class PersistentGameData : MonoBehaviourR3
     public void AddPlayerRankExperience(int amount)
     {
         PlayerRankExperience += amount;
-        ComBotsSaveSystem.SaveData(SaveKeys.PlayerRankExperience, PlayerRankExperience);
+        _onRankXpUpdated.Invoke();
     }
 
     private void Reset()
     {
-        PlayerRankExperience = 0;
+        PlayerRankExperience = 64;
+        PlayerCredits = 0;
+        PlayerBattlePoints = 0;
+        PromotionBattleVictoryCount = 0;
+        PlayerQuestTrackingData = new();
+        PlayerNpcTeamMembers = new();
+        PlayerTeammateBonds = new();
+        PlayerBlueprintData = new();
+        PlayerOwnedSoftware = new();
+        PlayerTeamBotStatusData = new();
+        PlayerUnlockedCybercastChannelIds = new();
     }
 
     protected override void Initialize()

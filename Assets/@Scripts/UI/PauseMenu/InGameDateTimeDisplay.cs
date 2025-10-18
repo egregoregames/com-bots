@@ -5,13 +5,17 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Automatically updates a <see cref="TextMeshProUGUI"/> component to display
+/// the in-game time (which happens to equate to the user's local time)
+/// </summary>
 public class InGameDateTimeDisplay : MonoBehaviourR3
 {
     [field: SerializeField]
     private TextMeshProUGUI Text { get; set; }
 
     [field: SerializeField]
-    private string DateTimeFormat { get; set; } = "ddd hh:mm tt";
+    private string DateTimeFormat { get; set; } = "ddd h:mm tt";
 
     private Dictionary<Term, string> TermNames { get; set; } = new();
     
