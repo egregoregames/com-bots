@@ -2,10 +2,14 @@ using ComBots.Game;
 using ComBots.Game.StateMachine;
 using ComBots.Inputs;
 using ComBots.Logs;
+using PixelCrushers.DialogueSystem;
 using R3;
+using R3.Triggers;
+using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,9 +19,15 @@ namespace ComBots.Sandbox.Global.UI.Menu
     public class PauseMenu : MonoBehaviourR3
     {
         public static PauseMenu Instance { get; private set; }
+
+        private static UnityEventR3 _onButtonsVisible = new();
+        public static IDisposable OnButtonsVisible(Action x) => _onButtonsVisible.Subscribe(x);
+
+        private static UnityEventR3 _onButtonsMinimized = new();
+        public static IDisposable OnButtonsMinimized(Action x) => _onButtonsMinimized.Subscribe(x);
+
         public bool IsOpen { get; private set; }
 
-        [field: SerializeField]
         private InputSystem_Actions Inputs { get; set; }
 
         [field: SerializeField]
@@ -36,7 +46,17 @@ namespace ComBots.Sandbox.Global.UI.Menu
         private float MovementSpeed { get; set; } = 5f;
 
         [field: SerializeField]
-        private List<ScalableButton> Buttons { get; set; }
+        private List<PauseMenuButton> Buttons { get; set; }
+
+        [Serializable]
+        private class PauseMenuButton
+        {
+            [field: SerializeField]
+            public ScalableButton Button { get; private set; }
+
+            [field: SerializeField]
+            public GameObject MenuToOpen { get; private set; }
+        }
 
         private BottomState _currentBottomState = BottomState.Partial;
         private int _selectedButtonIndex;
@@ -55,7 +75,11 @@ namespace ComBots.Sandbox.Global.UI.Menu
                 h => Inputs.Player.OpenMenu.performed -= h);
 
             AddEvents(
-                onOpenMenu.Subscribe(OpenMenu_performed));
+                onOpenMenu.Subscribe(_ => SetActive(!IsOpen)),
+                PauseMenuApp.OnMenuOpened(() => SetActive(false)),
+                PauseMenuApp.OnMenuClosed(() => SetActive(true)));
+
+            InitializeButtons();
         }
 
         private new void OnEnable()
@@ -69,25 +93,41 @@ namespace ComBots.Sandbox.Global.UI.Menu
             Inputs.Disable();
         }
 
-        private void OpenMenu_performed(InputAction.CallbackContext obj)
-        {
-            SetActive(!IsOpen);
-        }
-
         public void SetActive(bool isActive)
         {
-            MyLogger<PauseMenu>.StaticLog($"SetActive({isActive})");
+            //MyLogger<PauseMenu>.StaticLog($"SetActive({isActive})");
             //gameObject.SetActive(isActive);
             SetBottomState(isActive ? BottomState.Visible : BottomState.Partial);
             IsOpen = isActive;
             UpdateButtonSelection();
+            if (IsOpen)
+            {
+                _onButtonsVisible?.Invoke();
+            }
+            else
+            {
+                _onButtonsMinimized?.Invoke();
+            }
+        }
+
+        private void InitializeButtons()
+        {
+            foreach (var button in Buttons)
+            {
+                var menu = button.MenuToOpen;
+                button.Button.onClick.AddListener(() =>
+                {
+                    Buttons.ForEach(x => x.MenuToOpen.SetActive(false));
+                    menu.SetActive(true);
+                });
+            }
         }
 
         private void UpdateButtonSelection()
         {
             if (IsOpen)
             {
-                Buttons[_selectedButtonIndex].Select();
+                Buttons[_selectedButtonIndex].Button.Select();
             }
             else
             {
@@ -96,7 +136,7 @@ namespace ComBots.Sandbox.Global.UI.Menu
                 if (selected != null)
                 {
                     var matching = Buttons
-                        .FirstOrDefault(x => x.gameObject == selected);
+                        .FirstOrDefault(x => x.Button.gameObject == selected);
 
                     if (matching != null)
                     {
