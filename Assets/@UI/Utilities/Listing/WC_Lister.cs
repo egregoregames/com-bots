@@ -1,141 +1,120 @@
 using System;
 using System.Collections.Generic;
 using ComBots.Logs;
-using ComBots.UI.Controllers;
-using ComBots.Utils.EntryPoints;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-namespace ComBots.UI.Utilities
+namespace ComBots.UI.Utilities.Listing
 {
     /// <summary>
     /// A reusable utility for creating scrollable lists with input navigation.
     /// Extracted from the dialogue system for general use throughout the project.
     /// </summary>
-    public class WC_Lister : UIController
+    [System.Serializable]
+    public class WC_Lister<WC_OptionT> where WC_OptionT : WC_ListerOption
     {
-        protected override string UserInterfaceName => "Utility.Listing";
-
-        public override Dependency Dependency => Dependency.Independent;
-
-        // CSS class constants
-        private const string CLASS_OPTION_LABEL = "utility-lister-option-label";
-        private const string CLASS_OPTION = "utility-lister-option";
-        private const string CLASS_OPTION_PARENT = "utility-lister";
-        private const string CLASS_OPTION_HIGHLIGHTED = "utility-lister-option-highlighted";
-        private const string CLASS_OPTION_TOP_ROUNDED = "utility-lister-option-top-rounded";
-        private const string CLASS_OPTION_BOTTOM_ROUNDED = "utility-lister-option-bottom-rounded";
-        private const string CLASS_OPTION_OVERFLOW_TOP = "utility-lister-option-overflow-top";
-        private const string CLASS_OPTION_OVERFLOW_BOTTOM = "utility-lister-option-overflow-bottom";
-
-        [Header("UI Configuration")]
-        [SerializeField] private UIDocument _uiDocument;
-        [SerializeField] private VisualTreeAsset _optionTemplate;
-
-        [Header("Settings")]
+        // ============ Settings ============ //
+        [Header("Listing Settings")]
         [SerializeField] private int _maxVisibleOptions = 8;
 
-        // UI Elements
-        private VisualElement _optionParent;
-        private VisualElement _overflowTop;
-        private VisualElement _overflowBottom;
+        // ============ Overflow Arrows ============ //
+        [Header("Overflow Arrows")]
+        [SerializeField] private GameObject _overflowTop;
+        [SerializeField] private GameObject _overflowBottom;
 
-        // Option management
-        private List<OptionController> _optionControllers;
-        private List<string> _currentOptions;
+        // ============ Options ============ //
+        [Header("Options")]
+        [SerializeField] private Transform _optionParent;
+        [SerializeField] private WC_OptionT _optionPrefab;
+        private List<WC_OptionT> _optionControllers;
+        private bool _hasBackOption = false;
         private int _selectionIndex = 0;
         private int _totalOptions = 0;
         private int _scrollOffset = 0;
-        private bool _hasBackOption = false;
 
-        // Callbacks
+        // ============ Callbacks ============ //
         private Action<int> _onOptionSelected;
-        private Action _onBackSelected;
+        private UnityAction<WC_OptionT, int> _SetupOption;
 
         public bool IsActive { get; private set; }
 
-        protected override void Init()
+        // ----------------------------------------
+        // Creation & Freeing
+        // ----------------------------------------
+        #region Creation & Freeing
+
+        public WC_Lister()
         {
-            MyLogger<WC_Lister>.StaticLog($"Init()");
             _optionControllers = new();
-            _currentOptions = new();
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             _optionControllers?.Clear();
-            _currentOptions?.Clear();
             _onOptionSelected = null;
-            _onBackSelected = null;
             _optionParent = null;
             _overflowTop = null;
             _overflowBottom = null;
         }
 
+        #endregion
+
+        #region Public API
+        // ----------------------------------------
+        // Public API 
+        // ----------------------------------------
+
         /// <summary>
         /// Shows the lister with the specified options
         /// </summary>
-        /// <param name="widget">The visual element container for the lister</param>
-        /// <param name="options">Array of option strings to display</param>
+        /// <param name="count">Number of options to display</param>
+        /// <param name="SetupOption">Callback to setup each option</param>
         /// <param name="onOptionSelected">Callback when an option is selected (index parameter)</param>
-        /// <param name="onBackSelected">Callback when back is selected (optional)</param>
-        /// <param name="backOptionLabel">Label for back option, null to disable back option</param>
-        public void SetActive(VisualElement widget, string[] options, Action<int> onOptionSelected, Action onBackSelected = null, string backOptionLabel = null)
+        /// <param name="addBackOption">Whether to include a back option at the top of the list. Index for the back option will be the count of items passed-in.</param>
+        public void SetActive(int count, UnityAction<WC_OptionT, int> SetupOption, Action<int> onOptionSelected, bool addBackOption)
         {
-            MyLogger<WC_Lister>.StaticLog($"WC_Lister: SetActive called with {options?.Length ?? 0} options");
-            if (options == null || options.Length == 0)
+            if (count <= 0)
             {
-                MyLogger<WC_Lister>.StaticLogError("UtilityListerController: Cannot show lister with null or empty options");
+                Debug.LogError("WC_Lister:: Cannot show lister with zero or negative options");
                 return;
             }
 
-            // Get UI elements
-            _optionParent = widget.Q<VisualElement>(className: CLASS_OPTION_PARENT);
-            _overflowTop = widget.Q<VisualElement>(className: CLASS_OPTION_OVERFLOW_TOP);
-            _overflowBottom = widget.Q<VisualElement>(className: CLASS_OPTION_OVERFLOW_BOTTOM);
-
-            // Set callbacks
+            // ============ Update Cache ============ //
+            IsActive = true;
             _onOptionSelected = onOptionSelected;
-            _onBackSelected = onBackSelected;
-
-            // Prepare options list
-            _currentOptions.Clear();
-            _hasBackOption = !string.IsNullOrEmpty(backOptionLabel);
-
-            if (_hasBackOption)
-            {
-                _currentOptions.Add(backOptionLabel);
-            }
-
-            _currentOptions.AddRange(options);
-            _totalOptions = _currentOptions.Count;
-
-            // Reset selection and scrolling
+            _hasBackOption = addBackOption;
+            _totalOptions = addBackOption ? count + 1 : count;
             _selectionIndex = 0;
             _scrollOffset = 0;
-
-            // Create visual elements
+            _SetupOption = SetupOption;
             int visibleCount = Mathf.Min(_totalOptions, _maxVisibleOptions);
+
+            // ============ Update Widgets ============ //
+            _overflowBottom.SetActive(false);
+            _overflowTop.SetActive(false);
             SetOptionCount(visibleCount);
-
-            // Update display
-            UpdateVisibleOptions();
-
-            IsActive = true;
+            UpdateOptionWidgets();
         }
 
         public void SetInactive()
         {
             IsActive = false;
+            _overflowBottom.SetActive(false);
+            _overflowTop.SetActive(false);
             // Hide all options
             foreach (var option in _optionControllers)
             {
-                option.VE.style.display = DisplayStyle.None;
-                // Remove highlighting
-                option.VE.RemoveFromClassList(CLASS_OPTION_HIGHLIGHTED);
+                option.gameObject.SetActive(false);
             }
         }
+        #endregion
+
+        #region Input Handling
+        // ----------------------------------------
+        // Input Handling 
+        // ----------------------------------------
 
         public bool Input_Navigate(Vector2 direction)
         {
@@ -157,17 +136,13 @@ namespace ComBots.UI.Utilities
         {
             if (!IsActive)
             {
-                MyLogger<WC_Lister>.StaticLogError("Input_Cancel called while lister is not active");
+                Debug.LogError("Input_Cancel called while lister is not active");
                 return;
             }
             if (_hasBackOption)
             {
-                _selectionIndex = 0; // Select back option
+                _selectionIndex = _totalOptions - 1; // Select back option
                 Input_Confirm(); // Execute back action
-            }
-            else
-            {
-                _onBackSelected?.Invoke();
             }
         }
 
@@ -175,27 +150,17 @@ namespace ComBots.UI.Utilities
         {
             if (!IsActive)
             {
-                MyLogger<WC_Lister>.StaticLogError("Input_Confirm called while lister is not active");
+                Debug.LogError("Input_Confirm called while lister is not active");
                 return;
             }
-            if (_hasBackOption && _selectionIndex == 0)
-            {
-                // Back option selected
-                _onBackSelected?.Invoke();
-            }
-            else
-            {
-                // Regular option selected
-                int actualIndex = _hasBackOption ? _selectionIndex - 1 : _selectionIndex;
-                _onOptionSelected?.Invoke(actualIndex);
-            }
+            _onOptionSelected?.Invoke(_selectionIndex);
         }
 
         public void Input_Down()
         {
             if (!IsActive)
             {
-                MyLogger<WC_Lister>.StaticLogError("Input_Down called while lister is not active");
+                Debug.LogError("Input_Down called while lister is not active");
                 return;
             }
 
@@ -211,14 +176,14 @@ namespace ComBots.UI.Utilities
             }
 
             SetSelected(newIndex);
-            UpdateVisibleOptions();
+            UpdateOptionWidgets();
         }
 
         public void Input_Up()
         {
             if (!IsActive)
             {
-                MyLogger<WC_Lister>.StaticLogError("Input_Up called while lister is not active");
+                Debug.LogError("Input_Up called while lister is not active");
                 return;
             }
             int newIndex = _selectionIndex - 1;
@@ -233,43 +198,45 @@ namespace ComBots.UI.Utilities
             }
 
             SetSelected(newIndex);
-            UpdateVisibleOptions();
+            UpdateOptionWidgets();
         }
+        #endregion
 
-        private void SetSelected(int index)
+        #region Private API
+        // ----------------------------------------
+        // Private API 
+        // ----------------------------------------
+
+        /// <param name="optionIndex">Is the index of the option not the widget</param>
+        private void SetSelected(int optionIndex)
         {
-            // Remove highlighting from current selection
-            int currentVisualIndex = _selectionIndex - _scrollOffset;
-            if (currentVisualIndex >= 0 && currentVisualIndex < _optionControllers.Count)
+            int oldWidgetIndex = _selectionIndex - _scrollOffset;
+
+            if (oldWidgetIndex >= 0 && oldWidgetIndex < _optionControllers.Count)
             {
-                _optionControllers[currentVisualIndex].VE.RemoveFromClassList(CLASS_OPTION_HIGHLIGHTED);
+                _optionControllers[oldWidgetIndex].SetIsHighlighted(false);
             }
 
-            _selectionIndex = index;
+            _selectionIndex = optionIndex;
 
             // Add highlighting to new selection
-            int newVisualIndex = _selectionIndex - _scrollOffset;
-            if (newVisualIndex >= 0 && newVisualIndex < _optionControllers.Count)
+            int newWidgetIndex = _selectionIndex - _scrollOffset;
+            if (newWidgetIndex >= 0 && newWidgetIndex < _optionControllers.Count)
             {
-                _optionControllers[newVisualIndex].VE.AddToClassList(CLASS_OPTION_HIGHLIGHTED);
+                _optionControllers[newWidgetIndex].SetIsHighlighted(true);
             }
         }
 
-        private void UpdateVisibleOptions()
+        private void UpdateOptionWidgets()
         {
-            if (_currentOptions == null || _currentOptions.Count == 0) return;
-
             // Update each visible option controller with the correct data
             for (int i = 0; i < _optionControllers.Count; i++)
             {
-                // Clear highlighting
-                _optionControllers[i].VE.RemoveFromClassList(CLASS_OPTION_HIGHLIGHTED);
+                _optionControllers[i].SetIsHighlighted(false);
 
                 int dataIndex = i + _scrollOffset;
-                if (dataIndex < _currentOptions.Count)
-                {
-                    _optionControllers[i].Setup(dataIndex, _currentOptions[dataIndex]);
-                }
+                _SetupOption(_optionControllers[i], dataIndex);
+                _optionControllers[i].gameObject.SetActive(true);
             }
 
             // Update overflow arrows
@@ -279,7 +246,7 @@ namespace ComBots.UI.Utilities
             int visualIndex = _selectionIndex - _scrollOffset;
             if (visualIndex >= 0 && visualIndex < _optionControllers.Count)
             {
-                _optionControllers[visualIndex].VE.AddToClassList(CLASS_OPTION_HIGHLIGHTED);
+                _optionControllers[visualIndex].SetIsHighlighted(true);
             }
         }
 
@@ -288,81 +255,32 @@ namespace ComBots.UI.Utilities
             bool hasOptionsAbove = _scrollOffset > 0;
             bool hasOptionsBelow = _scrollOffset + _optionControllers.Count < _totalOptions;
 
-            _overflowTop.style.display = hasOptionsAbove ? DisplayStyle.Flex : DisplayStyle.None;
-            _overflowBottom.style.display = hasOptionsBelow ? DisplayStyle.Flex : DisplayStyle.None;
+            _overflowTop.SetActive(hasOptionsAbove);
+            _overflowBottom.SetActive(hasOptionsBelow);
         }
 
         private void SetOptionCount(int count)
         {
-            MyLogger<WC_Lister>.StaticLog($"Setting option count to {count} (current is {_optionControllers.Count})");
             // Remove excess options
             if (_optionControllers.Count > count)
             {
                 for (int i = _optionControllers.Count - 1; i >= count; i--)
                 {
-                    _optionParent.Remove(_optionControllers[i].VE);
-                    _optionControllers[i].VE = null;
-                    _optionControllers.RemoveAt(i);
+                    GameObject.Destroy(_optionControllers[i].gameObject);
                 }
+                _optionControllers.RemoveRange(count, _optionControllers.Count - count);
             }
             // Add missing options
             else if (_optionControllers.Count < count)
             {
-                if (_optionControllers.Count > 0)
-                {
-                    _optionControllers[^1].VE.RemoveFromClassList(CLASS_OPTION_BOTTOM_ROUNDED);
-                }
-
                 for (int i = _optionControllers.Count; i < count; i++)
                 {
-                    InstantiateOption();
+                    WC_OptionT option = GameObject.Instantiate(_optionPrefab, _optionParent);
+                    option.gameObject.SetActive(true);
+                    _optionControllers.Add(option);
                 }
             }
-
-            // Set rounded corners
-            if (_optionControllers.Count > 0)
-            {
-                _optionControllers[0].VE.AddToClassList(CLASS_OPTION_TOP_ROUNDED);
-                _optionControllers[^1].VE.AddToClassList(CLASS_OPTION_BOTTOM_ROUNDED);
-            }
-
-            // Enable all options
-            foreach (var option in _optionControllers)
-            {
-                option.VE.style.display = DisplayStyle.Flex;
-            }
-
-            // Ensure overflow arrows are at the end
-            _optionParent.Remove(_overflowBottom);
-            _optionParent.Add(_overflowBottom);
-            _optionParent.Remove(_overflowTop);
-            _optionParent.Add(_overflowTop);
         }
-
-        private void InstantiateOption()
-        {
-            VisualElement optionElement = _optionTemplate.Instantiate().contentContainer;
-            optionElement.AddToClassList(CLASS_OPTION);
-            _optionParent.Add(optionElement);
-            _optionControllers.Add(new OptionController(optionElement));
-        }
-
-        private class OptionController
-        {
-            public VisualElement VE;
-            public int Index;
-
-            public OptionController(VisualElement ve)
-            {
-                VE = ve;
-                Index = -1;
-            }
-
-            public void Setup(int index, string label)
-            {
-                Index = index;
-                VE.Q<Label>(className: CLASS_OPTION_LABEL).text = label;
-            }
-        }
+        #endregion
     }
 }
