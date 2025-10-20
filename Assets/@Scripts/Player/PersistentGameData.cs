@@ -12,6 +12,9 @@ using UnityEngine;
 /// </summary>
 public partial class PersistentGameData : MonoBehaviourR3
 {
+    /// <summary>
+    /// Reference to the singleton
+    /// </summary>
     public static PersistentGameData Instance { get; private set; }
 
     private static UnityEventR3 _onTermUpdated = new();
@@ -205,6 +208,43 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
     }
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        AddEvents(
+            ComBotsSaveSystem.OnLoadSuccess(LoadSavedData),
+            ComBotsSaveSystem.OnWillSave(SaveData),
+            SimplePortal.OnPortalTriggered(UpdateLocationName)
+        );
+
+        LoadSavedData();
+        GenerateStudentIdIfNoneExists();
+    }
+
+    private void Reset()
+    {
+        PlayerRankExperience = 64;
+        PlayerCredits = 0;
+        PlayerBattlePoints = 0;
+        PromotionBattleVictoryCount = 0;
+        PlayerQuestTrackingData = new();
+        PlayerNpcTeamMembers = new();
+        PlayerTeammateBonds = new();
+        PlayerBlueprintData = new();
+        PlayerOwnedSoftware = new();
+        PlayerTeamBotStatusData = new();
+        PlayerUnlockedCybercastChannelIds = new();
+    }
+
     /// <returns>
     /// An integer that represents the player's rank. A new player 
     /// in the game will have a rank of 5
@@ -253,6 +293,11 @@ public partial class PersistentGameData : MonoBehaviourR3
         return Instance;
     }
 
+    /// <summary>
+    /// Adds to <see cref="PlayerRankExperience"/> and invokes 
+    /// <see cref="GameEvents.OnRankXpUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount"></param>
     public void AddPlayerRankExperience(int amount)
     {
         PlayerRankExperience += amount;
@@ -260,7 +305,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     }
 
     /// <summary>
-    /// Adds credits to the player data and invokes 
+    /// Adds to <see cref="PlayerCredits"/> and invokes 
     /// <see cref="GameEvents.OnCreditsUpdated(Action)"/>
     /// </summary>
     /// <param name="amount">Credits to add</param>
@@ -270,6 +315,11 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onCreditsUpdated?.Invoke();
     }
 
+    /// <summary>
+    /// Sets the location name property and fires the 
+    /// <see cref="GameEvents.OnLocationUpdated(Action)"/> event
+    /// </summary>
+    /// <param name="locationName"></param>
     public void UpdateLocationName(string locationName)
     {
         CurrentLocationName = locationName;
@@ -305,43 +355,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerMoney -= amount;
         _onMoneyUpdated?.Invoke();
-    }
-
-    private void Reset()
-    {
-        PlayerRankExperience = 64;
-        PlayerCredits = 0;
-        PlayerBattlePoints = 0;
-        PromotionBattleVictoryCount = 0;
-        PlayerQuestTrackingData = new();
-        PlayerNpcTeamMembers = new();
-        PlayerTeammateBonds = new();
-        PlayerBlueprintData = new();
-        PlayerOwnedSoftware = new();
-        PlayerTeamBotStatusData = new();
-        PlayerUnlockedCybercastChannelIds = new();
-    }
-
-    protected override void Initialize()
-    {
-        base.Initialize();
-
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-
-        AddEvents(
-            ComBotsSaveSystem.OnLoadSuccess(LoadSavedData),
-            ComBotsSaveSystem.OnWillSave(SaveData),
-            SimplePortal.OnPortalTriggered(UpdateLocationName)
-        );
-
-        LoadSavedData();
-        GenerateStudentIdIfNoneExists();
     }
 
     private void GenerateStudentIdIfNoneExists()
