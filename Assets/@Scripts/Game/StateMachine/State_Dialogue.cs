@@ -66,7 +66,7 @@ namespace ComBots.Game.StateMachine
                 GlobalUIRefs.I.DialogueController.OnExit();
                 GlobalUIRefs.I.DialogueController.SetInactive();
                 // Display back the menu bottom bar
-                GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
+                //GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
                 Player.I.PlayerCamera.SetState_Orbital();
 
                 return true;
