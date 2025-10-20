@@ -1,3 +1,4 @@
+using ComBots.Game.Portals;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -335,7 +336,8 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(LoadSavedData),
-            ComBotsSaveSystem.OnWillSave(SaveData)
+            ComBotsSaveSystem.OnWillSave(SaveData),
+            SimplePortal.OnPortalTriggered(UpdateLocationName)
         );
 
         LoadSavedData();

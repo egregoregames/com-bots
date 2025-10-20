@@ -33,7 +33,7 @@ namespace ComBots.Global
             _globalUIRefs.TryInit();
             // Input
             _inputManager.TryInit();
-            //_dialogueInputHandler.TryInit();
+            _dialogueInputHandler.TryInit();
             //_menuInputHandler.TryInit();
             
             //// Dependent initialization

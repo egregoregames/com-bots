@@ -28,7 +28,7 @@ namespace ComBots.Global.UI
             //Independent
             //_menuController.TryInit();
             //_menuNavigationController.TryInit();
-            //_dialogueController.TryInit();
+            _dialogueController.TryInit();
             _stageDoorTransitions.TryInit();
             I = this;
         }

@@ -1,11 +1,5 @@
-using ComBots.Game;
-using ComBots.Game.StateMachine;
-using ComBots.Inputs;
-using ComBots.Logs;
 using PixelCrushers.DialogueSystem;
 using R3;
-using R3.Triggers;
-using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +28,16 @@ namespace ComBots.Sandbox.Global.UI.Menu
         private RectTransform MenuSelector { get; set; }
 
         [field: SerializeField]
+        private RectTransform TopBar { get; set; }
+
+        [field: SerializeField]
         private float MenuSelectorYPartial { get; set; } = -108f;
 
         [field: SerializeField]
         private float MenuSelectorYHidden { get; set; } = -200f;
+
+        [field: SerializeField]
+        private float MenuTopBarYHidden { get; set; } = 200f;
 
         [field: SerializeField]
         private float MenuSelectorYVisible { get; set; } = 0f;
@@ -58,11 +58,12 @@ namespace ComBots.Sandbox.Global.UI.Menu
             public GameObject MenuToOpen { get; private set; }
         }
 
-        private BottomState _currentBottomState = BottomState.Partial;
+        private Visibility _currentBottomState = Visibility.Partial;
         private int _selectedButtonIndex;
         private bool _isMoving;
         private float _movementProgress = 0;
-        private float _startingYPosition;
+        private float _startingYPositionBottom;
+        private float _startingYPositionTop;
 
         protected override void Initialize()
         {
@@ -74,12 +75,26 @@ namespace ComBots.Sandbox.Global.UI.Menu
                 h => Inputs.Player.OpenMenu.performed += h,
                 h => Inputs.Player.OpenMenu.performed -= h);
 
+            DialogueManager.instance.conversationStarted += ConversationStarted;
+            DialogueManager.instance.conversationEnded += ConversationEnded;
+
             AddEvents(
-                onOpenMenu.Subscribe(_ => SetActive(!IsOpen)),
-                PauseMenuApp.OnMenuOpened(() => SetActive(false)),
-                PauseMenuApp.OnMenuClosed(() => SetActive(true)));
+                onOpenMenu.Subscribe(_ => ToggleIsOpen(!IsOpen)),
+                PauseMenuApp.OnMenuOpened(UpdateVisibility),
+                PauseMenuApp.OnMenuClosed(UpdateVisibility));
 
             InitializeButtons();
+            SetVisibility(Visibility.Partial);
+        }
+
+        private void ConversationEnded(Transform t)
+        {
+            SetBottomBarVisible(true);
+        }
+
+        private void ConversationStarted(Transform t)
+        {
+            SetBottomBarVisible(false);
         }
 
         private new void OnEnable()
@@ -93,14 +108,34 @@ namespace ComBots.Sandbox.Global.UI.Menu
             Inputs.Disable();
         }
 
-        public void SetActive(bool isActive)
+        private new void OnDestroy()
         {
-            //MyLogger<PauseMenu>.StaticLog($"SetActive({isActive})");
-            //gameObject.SetActive(isActive);
-            SetBottomState(isActive ? BottomState.Visible : BottomState.Partial);
-            IsOpen = isActive;
+            base.OnDestroy();
+            DialogueManager.instance.conversationStarted -= ConversationStarted;
+            DialogueManager.instance.conversationEnded -= ConversationEnded;
+        }
+
+        private void ToggleIsOpen(bool isOpen)
+        {
+            IsOpen = isOpen;
+            UpdateVisibility();
+        }
+
+        public void UpdateVisibility()
+        {
+            
+            if (DialogueManager.instance.activeConversation != null || PauseMenuApp.IsAnyOpen)
+            {
+                SetVisibility(Visibility.Hidden);
+            }
+            else
+            {
+                SetVisibility(IsOpen ? Visibility.Visible : Visibility.Partial);
+            }
+                
             UpdateButtonSelection();
-            if (IsOpen)
+
+            if (_currentBottomState == Visibility.Visible)
             {
                 _onButtonsVisible?.Invoke();
             }
@@ -125,7 +160,7 @@ namespace ComBots.Sandbox.Global.UI.Menu
 
         private void UpdateButtonSelection()
         {
-            if (IsOpen)
+            if (_currentBottomState == Visibility.Visible)
             {
                 Buttons[_selectedButtonIndex].Button.Select();
             }
@@ -155,15 +190,15 @@ namespace ComBots.Sandbox.Global.UI.Menu
         {
             if (isVisible)
             {
-                SetBottomState(IsOpen ? BottomState.Visible : BottomState.Partial);
+                SetVisibility(IsOpen ? Visibility.Visible : Visibility.Partial);
             }
             else
             {
-                SetBottomState(BottomState.Hidden);
+                SetVisibility(Visibility.Hidden);
             }
         }
 
-        private enum BottomState
+        private enum Visibility
         {
             Partial,
             Hidden,
@@ -180,22 +215,28 @@ namespace ComBots.Sandbox.Global.UI.Menu
             if (!_isMoving) return;
 
             _movementProgress += Time.deltaTime * MovementSpeed;
-            float destinationY = 0;
+            float destinationYBottom = 0;
+            float destinationYTop = 0;
             switch (_currentBottomState)
             {
-                case BottomState.Partial:
-                    destinationY = MenuSelectorYPartial;
+                case Visibility.Partial:
+                    destinationYBottom = MenuSelectorYPartial;
+                    destinationYTop = MenuTopBarYHidden;
                     break;
-                case BottomState.Hidden:
-                    destinationY = MenuSelectorYHidden;
+                case Visibility.Hidden:
+                    destinationYBottom = MenuSelectorYHidden;
+                    destinationYTop = MenuTopBarYHidden;
                     break;
-                case BottomState.Visible:
-                    destinationY = MenuSelectorYVisible;
+                case Visibility.Visible:
+                    destinationYBottom = MenuSelectorYVisible;
+                    destinationYTop = 0;
                     break;
             }
 
-            float y = Mathf.Lerp(_startingYPosition, destinationY, _movementProgress);
-            MenuSelector.anchoredPosition = new Vector2(MenuSelector.anchoredPosition.x, y);
+            float yBottom = Mathf.Lerp(_startingYPositionBottom, destinationYBottom, _movementProgress);
+            float yTop = Mathf.Lerp(_startingYPositionTop, destinationYTop, _movementProgress);
+            MenuSelector.anchoredPosition = new Vector2(MenuSelector.anchoredPosition.x, yBottom);
+            TopBar.anchoredPosition = new Vector2(TopBar.anchoredPosition.x, yTop);
 
             if (_movementProgress >= 1)
             {
@@ -204,22 +245,23 @@ namespace ComBots.Sandbox.Global.UI.Menu
             }
         }
 
-        private void SetBottomState(BottomState state)
+        private void SetVisibility(Visibility state)
         {
             _currentBottomState = state;
             _isMoving = true;
-            _startingYPosition = MenuSelector.anchoredPosition.y;
+            _startingYPositionBottom = MenuSelector.anchoredPosition.y;
+            _startingYPositionTop = TopBar.anchoredPosition.y;
             _movementProgress = 0;
         }
 
-        public void Open()
-        {
-            SetActive(true);
-        }
+        //public void Open()
+        //{
+        //    UpdateVisibility();
+        //}
 
-        public void Close()
-        {
-            SetActive(false);
-        }
+        //public void Close()
+        //{
+        //    UpdateVisibility();
+        //}
     }
 }

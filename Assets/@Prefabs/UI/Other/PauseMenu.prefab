@@ -2794,8 +2794,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ComBots.Sandbox.Global.UI.Menu.PauseMenu
   <Logging>k__BackingField: 4
   <MenuSelector>k__BackingField: {fileID: 2790717350915205750}
+  <TopBar>k__BackingField: {fileID: 8881855787387509149}
   <MenuSelectorYPartial>k__BackingField: -108
   <MenuSelectorYHidden>k__BackingField: -200
+  <MenuTopBarYHidden>k__BackingField: 200
   <MenuSelectorYVisible>k__BackingField: 0
   <MovementSpeed>k__BackingField: 5
   <Buttons>k__BackingField:
@@ -6074,6 +6076,10 @@ PrefabInstance:
     - target: {fileID: 456452954113563351, guid: 89ebbb60a5fcfdd4aa1a84d9cdf28356, type: 3}
       propertyPath: m_FillAmount
       value: 0.498
+      objectReference: {fileID: 0}
+    - target: {fileID: 995819280047690434, guid: 89ebbb60a5fcfdd4aa1a84d9cdf28356, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1172961324320404030, guid: 89ebbb60a5fcfdd4aa1a84d9cdf28356, type: 3}
       propertyPath: m_AnchorMax.x
