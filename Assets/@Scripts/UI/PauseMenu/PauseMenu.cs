@@ -10,16 +10,35 @@ using UnityEngine.InputSystem;
 
 namespace ComBots.Sandbox.Global.UI.Menu
 {
+    /// <summary>
+    /// Singleton that controls the main HUD that appears in-game, as well as 
+    /// the menus that appear when the game is paused. Should always be present 
+    /// in any scene where the user has player control, aside from special 
+    /// situations. 
+    /// </summary>
     public class PauseMenu : MonoBehaviourR3
     {
         public static PauseMenu Instance { get; private set; }
 
         private static UnityEventR3 _onButtonsVisible = new();
+        /// <summary>
+        /// Fires when the bottom app buttons become visible (game paused)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public static IDisposable OnButtonsVisible(Action x) => _onButtonsVisible.Subscribe(x);
 
         private static UnityEventR3 _onButtonsMinimized = new();
+        /// <summary>
+        /// Invoked when the bottom buttons become partially visible (game unpaused) or hidden (dialog, submenus)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public static IDisposable OnButtonsMinimized(Action x) => _onButtonsMinimized.Subscribe(x);
 
+        /// <summary>
+        /// True if the game is paused and the entire HUD is visible
+        /// </summary>
         public bool IsOpen { get; private set; }
 
         private InputSystem_Actions Inputs { get; set; }
@@ -121,7 +140,7 @@ namespace ComBots.Sandbox.Global.UI.Menu
             UpdateVisibility();
         }
 
-        public void UpdateVisibility()
+        private void UpdateVisibility()
         {
             
             if (DialogueManager.instance.activeConversation != null || PauseMenuApp.IsAnyOpen)
@@ -186,7 +205,7 @@ namespace ComBots.Sandbox.Global.UI.Menu
             }
         }
 
-        public void SetBottomBarVisible(bool isVisible)
+        private void SetBottomBarVisible(bool isVisible)
         {
             if (isVisible)
             {
@@ -253,15 +272,5 @@ namespace ComBots.Sandbox.Global.UI.Menu
             _startingYPositionTop = TopBar.anchoredPosition.y;
             _movementProgress = 0;
         }
-
-        //public void Open()
-        //{
-        //    UpdateVisibility();
-        //}
-
-        //public void Close()
-        //{
-        //    UpdateVisibility();
-        //}
     }
 }
