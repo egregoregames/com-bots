@@ -33,7 +33,7 @@ namespace ComBots.Game.Portals
         private void OnRoomSelected(int index)
         {
             MyLogger<SelectionPortal>.StaticLog($"Room selection index: {index}");
-            _roomSelected = index != -1 ? rooms[index] : null;
+            _roomSelected = index < rooms.Length ? rooms[index] : null;
             if (_roomSelected != null)
             {
                 MyLogger<SelectionPortal>.StaticLog($"Selected room: {_roomSelected.name}");

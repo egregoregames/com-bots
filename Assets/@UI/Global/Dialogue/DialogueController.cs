@@ -41,9 +41,13 @@ namespace ComBots.Global.UI.Dialogue
         [SerializeField] private Image _nametagIcon;
         [SerializeField] private TextMeshProUGUI _nametagText;
 
-        [Header("End & Continue")]
-        [SerializeField] private GameObject _dialogContinueIcon;
-        [SerializeField] private GameObject _dialogEndIcon;
+        [Header("End & Continue Icons")]
+        [SerializeField] private float _iconSpeed;
+        [SerializeField] private Transform _continueIcon;
+        [SerializeField] private float _continueIcon_moveAmount;
+        [SerializeField] private Transform _endIcon;
+        [SerializeField] private float _endIcon_scaleAmount;
+
         // Responses
         private Response[] _pcArgs_responsesBuffer;
         private Coroutine _COR_responses;
@@ -72,6 +76,20 @@ namespace ComBots.Global.UI.Dialogue
             {
                 MyLogger<DialogueController>.StaticLogWarning("DialogueManager.displaySettings is null!");
             }
+
+            // ============ Animate Continue Icon ============ //
+            Vector3 startPos = _continueIcon.localPosition;
+            Vector3 targetPos = startPos + Vector3.up * _continueIcon_moveAmount;
+            _continueIcon.DOLocalMoveY(targetPos.y, _iconSpeed)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+
+            // ============ Animate End Icon ============ //
+            Vector3 startScale = _endIcon.localScale;
+            Vector3 targetScale = startScale * _endIcon_scaleAmount;
+            _endIcon.DOScale(targetScale, _iconSpeed)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
         }
 
         public override void Dispose()
@@ -86,8 +104,8 @@ namespace ComBots.Global.UI.Dialogue
             _dialogueText = null;
             _optionLister?.Dispose();
             _optionLister = null;
-            _dialogContinueIcon = null;
-            _dialogEndIcon = null;
+            _continueIcon = null;
+            _endIcon = null;
             _args = null;
         }
         #endregion
@@ -107,8 +125,8 @@ namespace ComBots.Global.UI.Dialogue
             _args = args;
 
             // Hide icons at start
-            _dialogEndIcon.SetActive(false);
-            _dialogContinueIcon.SetActive(false);
+            _endIcon.gameObject.SetActive(false);
+            _continueIcon.gameObject.SetActive(false);
 
             if (args is State_Dialogue_PixelCrushers_Args pixelCrushersArgs)
             {
@@ -143,8 +161,8 @@ namespace ComBots.Global.UI.Dialogue
                 _textAnimationTween = null;
             }
             // Hide Dialogue UI
-            _dialogContinueIcon.SetActive(false);
-            _dialogEndIcon.SetActive(false);
+            _continueIcon.gameObject.SetActive(false);
+            _endIcon.gameObject.SetActive(false);
 
             HideResponses();
             _w_root.SetActive(false);
@@ -205,7 +223,7 @@ namespace ComBots.Global.UI.Dialogue
                     if (!context.performed) { return true; }
                     if (!_optionLister.IsActive) { break; }
                     Vector2 inputValue = context.ReadValue<Vector2>();
-                    _optionLister.Input_Navigate(new(inputValue.x, -inputValue.y));
+                    _optionLister.Input_Navigate(inputValue);
                     return true;
             }
 
@@ -365,13 +383,13 @@ namespace ComBots.Global.UI.Dialogue
                                                SendMessageOptions.DontRequireReceiver);
         }
 
-        private void ShowSubtitle(string text, float animationDuration, bool isLast)
+        private async void ShowSubtitle(string text, float animationDuration, bool isLast)
         {
             MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
 
             // Hide end & continue icons
-            _dialogEndIcon.SetActive(false);
-            _dialogContinueIcon.SetActive(false);
+            _endIcon.gameObject.SetActive(false);
+            _continueIcon.gameObject.SetActive(false);
             // Hide responses if any
             HideResponses();
 
@@ -381,6 +399,19 @@ namespace ComBots.Global.UI.Dialogue
                 MyLogger<DialogueController>.StaticLog($"Empty text provided to ShowSubtitle, skipping animation");
                 return;
             }
+
+            // ============ Substitute values ============ //
+            var gameData = await PersistentGameData.GetInstanceAsync();
+
+            string playerName = gameData.PlayerName;
+            string basicBot = "FlameBot"; // Default fallback
+            if (gameData.PlayerTeamBotStatusData.Count > 0)
+            {
+                basicBot = gameData.PlayerTeamBotStatusData[0].BlueprintId ?? "FlameBot";
+            }
+            // Replace player name
+            text = text.Replace("${varName}", playerName);
+            text = text.Replace("${varBasicBot.name}", basicBot);
 
             // Display dialogue
             _dialogueText.text = string.Empty;
@@ -402,14 +433,14 @@ namespace ComBots.Global.UI.Dialogue
                         if (isLast)
                         {
                             MyLogger<DialogueController>.StaticLog($"Showing end icon for last subtitle.");
-                            _dialogEndIcon.SetActive(true);
-                            _dialogContinueIcon.SetActive(false);
+                            _endIcon.gameObject.SetActive(true);
+                            _continueIcon.gameObject.SetActive(false);
                         }
                         else
                         {
                             MyLogger<DialogueController>.StaticLog($"Showing continue icon for non-last subtitle.");
-                            _dialogEndIcon.SetActive(false);
-                            _dialogContinueIcon.SetActive(_COR_responses == null);
+                            _endIcon.gameObject.SetActive(false);
+                            _continueIcon.gameObject.SetActive(_COR_responses == null);
                         }
                     }
                 });
@@ -534,7 +565,6 @@ namespace ComBots.Global.UI.Dialogue
         private void StandardArgs_ShowResponses(string[] responses)
         {
             MyLogger<DialogueController>.StaticLog($"Showing responses: {string.Join(", ", responses)}");
-            _optionLister.SetActive(responses.Length, OptionLister_SetupOption, null, true);
             _optionLister.SetActive(
                 responses.Length,
                 OptionLister_SetupOption,
@@ -565,7 +595,7 @@ namespace ComBots.Global.UI.Dialogue
                 responses.Length,
                 OptionLister_SetupOption,
                 OptionLister_OnSelected,
-                true
+                false
             );
             _COR_responses = null;
         }
@@ -587,8 +617,8 @@ namespace ComBots.Global.UI.Dialogue
             _w_root.SetActive(true);
 
             // Ensure icons are properly hidden when opening dialogue
-            _dialogEndIcon.SetActive(false);
-            _dialogContinueIcon.SetActive(false);
+            _endIcon.gameObject.SetActive(false);
+            _continueIcon.gameObject.SetActive(false);
 
             // Handle nametag
             if (string.IsNullOrEmpty(_args.Nametag))
