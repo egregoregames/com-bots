@@ -26,14 +26,14 @@ namespace ComBots.Game
             {
                 yield return null;
             }
-            // Spawn Player
-            if(_playerSpawner.gameObject.activeSelf) _playerSpawner.TryInit();
-            int playerInitAttempts = 0;
-            while (Player.I == null && playerInitAttempts < 100)
-            {
-                yield return null;
-                playerInitAttempts++;
-            }
+            //// Spawn Player
+            //if(_playerSpawner.gameObject.activeSelf) _playerSpawner.TryInit();
+            //int playerInitAttempts = 0;
+            //while (Player.I == null && playerInitAttempts < 100)
+            //{
+            //    yield return null;
+            //    playerInitAttempts++;
+            //}
             // Interaction Manager
             _interactionManager.TryInit();
             // Game State Machine

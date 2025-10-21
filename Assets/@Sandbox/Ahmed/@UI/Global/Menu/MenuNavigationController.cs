@@ -53,37 +53,38 @@ namespace ComBots.Sandbox.Global.UI.Menu
 
         protected override void Init()
         {
-            _VE_root = _uiDocument.rootVisualElement;
+            //_VE_root = _uiDocument.rootVisualElement;
 
-            // Navigation items
-            _VE_navItems = _VE_root.Query<VisualElement>(className: CLASS_NAV_ITEM).ToList();
-            // Description elements
-            _VE_descriptionLabel = _VE_root.Q<Label>(className: CLASS_NAV_DESCRIPTION_LABEL);
-            _VE_headerLabel = _VE_root.Q<Label>(className: CLASS_NAV_DESCRIPTION_HEADER);
-            _VE_description = _VE_root.Q<VisualElement>(className: CLASS_NAV_DESCRIPTION);
+            //// Navigation items
+            //_VE_navItems = _VE_root.Query<VisualElement>(className: CLASS_NAV_ITEM).ToList();
+            //// Description elements
+            //_VE_descriptionLabel = _VE_root.Q<Label>(className: CLASS_NAV_DESCRIPTION_LABEL);
+            //_VE_headerLabel = _VE_root.Q<Label>(className: CLASS_NAV_DESCRIPTION_HEADER);
+            //_VE_description = _VE_root.Q<VisualElement>(className: CLASS_NAV_DESCRIPTION);
             
-            // Initialize panel controllers array in the same order as navigation items
-            // Based on UXML: Planner, Botlink, Backpack, Map, Socialyte, Settings, Save
-            _panelControllers = new UIController[]
-            {
-                _plannerController,
-                _botlinkController, 
-                _backpackController,
-                _mapController,
-                _socialyteController,
-                _settingsController,
-                _saveController
-            };
-            foreach (var controller in _panelControllers)
-            {
-                controller.TryInit();
-            }
+            //// Initialize panel controllers array in the same order as navigation items
+            //// Based on UXML: Planner, Botlink, Backpack, Map, Socialyte, Settings, Save
+            //_panelControllers = new UIController[]
+            //{
+            //    _plannerController,
+            //    _botlinkController, 
+            //    _backpackController,
+            //    _mapController,
+            //    _socialyteController,
+            //    _settingsController,
+            //    _saveController
+            //};
+
+            //foreach (var controller in _panelControllers)
+            //{
+            //    controller.TryInit();
+            //}
             
-            // Log panel controller references for debugging
-            ValidateControllerReferences();
+            //// Log panel controller references for debugging
+            //ValidateControllerReferences();
             
-            // Set initial selection
-            _selectedIndex = 0;
+            //// Set initial selection
+            //_selectedIndex = 0;
         }
 
         public override void Dispose()

@@ -11,8 +11,8 @@ namespace ComBots.Global.UI
         public override Dependency Dependency => Dependency.Independent;
 
         [Header("Menu")]
-        [SerializeField] private Sandbox.Global.UI.Menu.MenuController _menuController;
-        public Sandbox.Global.UI.Menu.MenuController MenuController => _menuController;
+        [SerializeField] private Sandbox.Global.UI.Menu.PauseMenu _menuController;
+        public Sandbox.Global.UI.Menu.PauseMenu MenuController => _menuController;
         [SerializeField] private Sandbox.Global.UI.Menu.MenuNavigationController _menuNavigationController;
 
         [Header("Dialogue")]
@@ -26,8 +26,8 @@ namespace ComBots.Global.UI
         protected override void Init()
         {
             //Independent
-            _menuController.TryInit();
-            _menuNavigationController.TryInit();
+            //_menuController.TryInit();
+            //_menuNavigationController.TryInit();
             _dialogueController.TryInit();
             _stageDoorTransitions.TryInit();
             I = this;

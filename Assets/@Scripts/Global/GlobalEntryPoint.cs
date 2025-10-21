@@ -16,7 +16,7 @@ namespace ComBots.Global
         [Header("Input")]
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private DialogueInputHandler _dialogueInputHandler;
-        [SerializeField] private MenuInputHandler _menuInputHandler;
+        //[SerializeField] private MenuInputHandler _menuInputHandler;
 
         [Header("UI")]
         [SerializeField] private GlobalUIRefs _globalUIRefs;
@@ -34,7 +34,7 @@ namespace ComBots.Global
             // Input
             _inputManager.TryInit();
             _dialogueInputHandler.TryInit();
-            _menuInputHandler.TryInit();
+            //_menuInputHandler.TryInit();
             
             //// Dependent initialization
 

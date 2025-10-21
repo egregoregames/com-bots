@@ -6,10 +6,9 @@ using ComBots.Global.UI;
 using ComBots.Global.UI.Dialogue;
 using ComBots.Inputs;
 using ComBots.Logs;
+using ComBots.Sandbox.Global.UI.Menu;
 using ComBots.Utils.StateMachines;
 using UnityEngine;
-using UnityEngine.Events;
-using static ComBots.Game.StateMachine.GameStateMachine;
 
 namespace ComBots.Game.StateMachine
 {
@@ -27,7 +26,7 @@ namespace ComBots.Game.StateMachine
             public override bool Enter(State previousState, object args)
             {
                 bool canEnter = true;
-                if (previousState is State_Paused)
+                if (PauseMenu.Instance.IsOpen)
                 {
                     canEnter = false;
                 }

@@ -67,6 +67,7 @@ namespace ComBots.Global.UI.Dialogue
 
         protected override void Init()
         {
+            Debug.Log("Initializing dialogue controller");
             _VE_root = _uiDocument.rootVisualElement.Q(name: "Root");
             _VE_dialogLabel = _VE_root.Q<Label>(className: CLASS_DIALOG_LABEL);
             _VE_nametag = _VE_root.Q(className: CLASS_NAMETAG);
@@ -281,7 +282,7 @@ namespace ComBots.Global.UI.Dialogue
             _args = args;
 
             // Ensure end icon is hidden at the start of every new conversation
-            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true);
+            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true); 
             _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
 
             // Reset any explicit styles that might have been set previously

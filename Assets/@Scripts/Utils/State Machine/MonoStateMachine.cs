@@ -9,7 +9,7 @@ namespace ComBots.Utils.StateMachines
     {
         protected State[] States { get; private set; }
         private int _currentStateIndex = -1;
-        protected State CurrentState => IsStateMachineInitialized ? States[_currentStateIndex] : null;
+        public State CurrentState => IsStateMachineInitialized ? States[_currentStateIndex] : null;
 
         protected bool IsStateMachineInitialized { get; private set; } = false;
 
@@ -69,7 +69,9 @@ namespace ComBots.Utils.StateMachines
                 _logger.LogError($"Failed to enter state '{newState.Name}'. Cannot transition from '{previousState?.Name ?? "null"}'.");
                 return false;
             }
+            
             _currentStateIndex = GetStateIndex(newState);
+            Debug.Log($"Entered new state. Current state index is {_currentStateIndex}");
             return true;
         }
 
