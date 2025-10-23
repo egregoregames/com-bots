@@ -7,7 +7,6 @@ using ComBots.Utils.EntryPoints;
 
 namespace ComBots.Inputs
 {
-    // Remove the RequireComponent attribute - we don't need PlayerInput anymore
     public class InputManager : EntryPointMono
     {
         public static InputManager I { get; private set; }
@@ -237,6 +236,7 @@ namespace ComBots.Inputs
 
         private void ProcessInput(InputAction.CallbackContext context)
         {
+            //Debug.Log($"InputManager.ProcessInput: action={context.action.name}, phase={context.phase}, value={context.ReadValueAsObject()}");
             string actionName = context.action.name;
 
             // Handle global inputs first (search through entire stack)

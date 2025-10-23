@@ -1,6 +1,8 @@
+using ComBots.Game.Portals;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
 
 /// <summary>
@@ -10,7 +12,43 @@ using UnityEngine;
 /// </summary>
 public partial class PersistentGameData : MonoBehaviourR3
 {
-    private static PersistentGameData Instance { get; set; }
+    /// <summary>
+    /// Reference to the singleton
+    /// </summary>
+    public static PersistentGameData Instance { get; private set; }
+
+    private static UnityEventR3 _onTermUpdated = new();
+
+    private static UnityEventR3 _onSaveDataLoaded = new();
+
+    private static UnityEventR3 _onRankXpUpdated = new();
+
+    private static UnityEventR3 _onCreditsUpdated = new();
+
+    private static UnityEventR3 _onMoneyUpdated = new();
+
+    private static UnityEventR3 _onLocationUpdated = new();
+
+    public static class GameEvents
+    {
+        public static IDisposable OnTermUpdated(Action x)
+            => _onTermUpdated.Subscribe(x);
+
+        public static IDisposable OnSaveDataLoaded(Action x)
+            => _onSaveDataLoaded.Subscribe(x);
+
+        public static IDisposable OnRankXpUpdated(Action x)
+            => _onRankXpUpdated.Subscribe(x);
+
+        public static IDisposable OnCreditsUpdated(Action x)
+            => _onCreditsUpdated.Subscribe(x);
+
+        public static IDisposable OnMoneyUpdated(Action x)
+            => _onMoneyUpdated.Subscribe(x);
+
+        public static IDisposable OnLocationUpdated(Action x)
+            => _onLocationUpdated.Subscribe(x);
+    }
 
     /// <summary>
     /// Entered by the player at the start of a new game
@@ -30,14 +68,14 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// <summary>
     /// Used to calculate the player's rank
     /// </summary>
-    [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 0)]
-    public int PlayerRankExperience { get; private set; } = 0;
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerRankExperience, 64)]
+    public int PlayerRankExperience { get; private set; } = 64;
 
     /// <summary>
     /// Changes after player wins Promotion Battles
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentTerm, Term.FirstTerm)]
-    public Term CurrentTerm { get; set; }
+    public Term CurrentTerm { get; private set; }
 
     /// <summary>
     /// The player's current location shows on the homescreen of the pause 
@@ -51,7 +89,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// the player passes through a door to a new location.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.CurrentLocationName, "")]
-    public string CurrentLocationName { get; set; } = "";
+    public string CurrentLocationName { get; private set; } = "";
 
     /// <summary>
     /// Ranges between 0 and 5. Each time the player wins a Promotion Battle, 
@@ -69,7 +107,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// in order to schedule a Promotion Battle.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerCredits, 0)]
-    public int PlayerCredits { get; set; } = 0;
+    public int PlayerCredits { get; private set; } = 0;
 
     /// <summary>
     /// The total money the player has (called Cybers in-game). The value 
@@ -82,7 +120,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// is interacting with a Shopkeeper or the Omnifix or OmniRide services.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerMoney, 0)]
-    public int PlayerMoney { get; set; } = 0;
+    public int PlayerMoney { get; private set; } = 0;
 
     /// <summary>
     /// A currency that is only used to purchase Items at an Arena. It starts 
@@ -92,9 +130,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerBattlePoints, 0)]
     public int PlayerBattlePoints { get; set; } = 0;
-
-    [field: SerializeField, ComBotsSave(SaveKeys.CurrentDateTime, 0)]
-    private long DateTimeTicks { get; set; } = 0;
 
     /// <summary>
     /// A list of NPC unique IDs that are currently in the player's team. Max of 2
@@ -173,62 +208,6 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
     }
 
-    /// <summary>
-    /// Await this to get the instanced singleton of <see cref="PersistentGameData"/>
-    /// </summary>
-    /// <returns>The instanced singleton of this class</returns>
-    public static async Task<PersistentGameData> GetInstanceAsync()
-    {
-        while (Instance == null)
-        {
-            await Task.Yield();
-        }
-        return Instance;
-    }
-
-    /// <summary>
-    /// Sets a specific time of day for the game.
-    /// </summary>
-    /// <param name="hour">0 to 23</param>
-    /// <param name="minute">0 to 59</param>
-    /// <param name="second">0 to 59</param>
-    public void SetTimeOfDay(int hour, int minute, int second = 0)
-    {
-        var dt = GetCurrentDateTime().Date; // Midnight
-        dt.AddHours(hour);
-        dt.AddMinutes(minute);
-        dt.AddSeconds(second);
-        DateTimeTicks = dt.Ticks;
-    }
-
-    /// <summary>
-    /// Sets the day of the week for the game
-    /// </summary>
-    /// <param name="dayOfWeek"></param>
-    public void SetDayOfWeek(DayOfWeek dayOfWeek)
-    {
-        var dt = GetCurrentDateTime();
-        int daysToAdd = ((int)dayOfWeek - (int)dt.DayOfWeek + 7) % 7;
-        dt = dt.AddDays(daysToAdd);
-        DateTimeTicks = dt.Ticks;
-    }
-
-    /// <summary>
-    /// Retrieves the stored DateTime for the gmae
-    /// </summary>
-    public DateTime GetCurrentDateTime() => new(DateTimeTicks);
-
-    public void AddPlayerRankExperience(int amount)
-    {
-        PlayerRankExperience += amount;
-        ComBotsSaveSystem.SaveData(SaveKeys.PlayerRankExperience, PlayerRankExperience);
-    }
-
-    private void Reset()
-    {
-        PlayerRankExperience = 0;
-    }
-
     protected override void Initialize()
     {
         base.Initialize();
@@ -243,11 +222,139 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(LoadSavedData),
-            ComBotsSaveSystem.OnWillSave(SaveData)
+            ComBotsSaveSystem.OnWillSave(SaveData),
+            SimplePortal.OnPortalTriggered(UpdateLocationName)
         );
 
         LoadSavedData();
         GenerateStudentIdIfNoneExists();
+    }
+
+    private void Reset()
+    {
+        PlayerRankExperience = 64;
+        PlayerCredits = 0;
+        PlayerBattlePoints = 0;
+        PromotionBattleVictoryCount = 0;
+        PlayerQuestTrackingData = new();
+        PlayerNpcTeamMembers = new();
+        PlayerTeammateBonds = new();
+        PlayerBlueprintData = new();
+        PlayerOwnedSoftware = new();
+        PlayerTeamBotStatusData = new();
+        PlayerUnlockedCybercastChannelIds = new();
+    }
+
+    /// <returns>
+    /// An integer that represents the player's rank. A new player 
+    /// in the game will have a rank of 5
+    /// </returns>
+    public static async Task<int> GetPlayerRank()
+    {
+        var rankXp = (await GetInstanceAsync()).PlayerRankExperience;
+        return (int)Math.Floor(Math.Cbrt(rankXp)) + 1;
+    }
+
+    /// <summary>
+    /// Used for the rank xp bar UI element (<see cref="UnityEngine.UI.Slider"/>)
+    /// </summary>
+    /// <returns>A percentage value between 0 and 1, inclusive</returns>
+    public static async Task<float> GetProgressToNextRank()
+    {
+        int rank = await GetPlayerRank();
+        var rankXp = (await GetInstanceAsync()).PlayerRankExperience;
+        int rankMinXp = (int)Math.Pow(rank - 1, 3);
+        int rankMaxXp = (int)Math.Pow(rank, 3);
+        int range = rankMaxXp - rankMinXp;
+        int progress = rankXp - rankMinXp;
+        return progress / range;
+    }
+
+    /// <summary>
+    /// Sets the in-game <see cref="Term"/> and invokes 
+    /// <see cref="GameEvents.OnTermUpdated(Action)"/>
+    /// </summary>
+    public static async void SetTerm(Term term)
+    {
+        (await GetInstanceAsync()).CurrentTerm = term;
+        _onTermUpdated.Invoke();
+    }
+
+    /// <summary>
+    /// Await this to get the instanced singleton of <see cref="PersistentGameData"/>
+    /// </summary>
+    /// <returns>The instanced singleton of this class</returns>
+    public static async Task<PersistentGameData> GetInstanceAsync()
+    {
+        while (Instance == null)
+        {
+            await Task.Yield();
+        }
+        return Instance;
+    }
+
+    /// <summary>
+    /// Adds to <see cref="PlayerRankExperience"/> and invokes 
+    /// <see cref="GameEvents.OnRankXpUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount"></param>
+    public void AddPlayerRankExperience(int amount)
+    {
+        PlayerRankExperience += amount;
+        _onRankXpUpdated.Invoke();
+    }
+
+    /// <summary>
+    /// Adds to <see cref="PlayerCredits"/> and invokes 
+    /// <see cref="GameEvents.OnCreditsUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount">Credits to add</param>
+    public void AddPlayerCredits(int amount)
+    {
+        PlayerCredits += amount;
+        _onCreditsUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Sets the location name property and fires the 
+    /// <see cref="GameEvents.OnLocationUpdated(Action)"/> event
+    /// </summary>
+    /// <param name="locationName"></param>
+    public void UpdateLocationName(string locationName)
+    {
+        CurrentLocationName = locationName;
+        _onLocationUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Should check to ensure amount will not bring credit balance below 
+    /// 0 before calling this. Invokes <see cref="GameEvents.OnCreditsUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount">Amount of credits to deduct</param>
+    public void DeductPlayerCredits(int amount)
+    {
+        PlayerCredits -= amount;
+        _onCreditsUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Adds money (cybers) and invokes <see cref="GameEvents.OnMoneyUpdated(Action)"/>
+    /// </summary>
+    /// <param name="amount">Amount of money (cybers) to add</param>
+    public void AddPlayerMoney(int amount)
+    {
+        PlayerMoney += amount;
+        _onMoneyUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Deducts money (cybers) and invokes <see cref="GameEvents.OnMoneyUpdated(Action)"/> 
+    /// </summary>
+    /// <param name="amount">The amount of money (cybers) to deduct</param>
+    public void DeductPlayerMoney(int amount)
+    {
+        PlayerMoney -= amount;
+        _onMoneyUpdated?.Invoke();
     }
 
     private void GenerateStudentIdIfNoneExists()
@@ -263,6 +370,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         Reset();
         ComBotsSaveSystem.LoadData(typeof(PersistentGameData), this);
+        _onSaveDataLoaded?.Invoke();
     }
         
 

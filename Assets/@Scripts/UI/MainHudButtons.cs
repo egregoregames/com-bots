@@ -94,15 +94,15 @@ namespace ComBots.UI.src
     
         public void Init(MenuDescriptionPanel menuPanelDescription, InputSO inputSo, MainHudButtons hudButtons, int index)
         {
-            // set menu panel to open from button
-            menuButton.onClick.AddListener(() => menuPanel.OpenMenu());
-            menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
-            menuButton.onClick.AddListener(() =>  hudButtons.SetHudButtonsInteractability(false));
+            //// set menu panel to open from button
+            //menuButton.onClick.AddListener(() => menuPanel.OpenMenu());
+            //menuButton.onClick.AddListener(() => hudButtons.activePanel = menuPanel);
+            //menuButton.onClick.AddListener(() =>  hudButtons.SetHudButtonsInteractability(false));
 
-            menuButton.onSelect += () =>
-            {
-                menuPanelDescription.SetDescription(menuPanel, index);
-            };
+            //menuButton.onSelect += () =>
+            //{
+            //    menuPanelDescription.SetDescription(menuPanel, index);
+            //};
         
         }
     }

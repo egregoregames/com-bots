@@ -2,32 +2,32 @@ using ComBots.Game.Players;
 using ComBots.Utils.EntryPoints;
 using UnityEngine;
 
-public class PlayerSpawner : EntryPointMono
+public class PlayerSpawner : MonoBehaviourR3
 {
     [SerializeField] private GameObject _playerPrefab;
 
-    public override Dependency Dependency => Dependency.Independent;
+    private GameObject _spawnedPlayer;
 
-    protected override void Init()
+    protected override void Initialize()
     {
         SpawnPlayer();
-    }
-
-    public override void Dispose()
-    {
-        
     }
 
     [ContextMenu("Spawn Player")]
     public void SpawnPlayer()
     {
-        var playerGo = Instantiate(_playerPrefab, transform.position, Quaternion.identity);
+        if (_spawnedPlayer != null)
+        {
+            Debug.LogWarning("Player already spawned!");
+            return;
+        }
+        _spawnedPlayer = Instantiate(_playerPrefab, transform.position, Quaternion.identity);
 
-        Player player = playerGo.GetComponent<Player>();
+        Player player = _spawnedPlayer.GetComponent<Player>();
 
-        player.Controller._controller = playerGo.GetComponent<CharacterController>();
+        player.Controller._controller = _spawnedPlayer.GetComponent<CharacterController>();
         player.Controller._mainCamera = player.PlayerCamera.Camera.gameObject;
-        player.Controller.CinemachineCameraTarget = playerGo;
+        player.Controller.CinemachineCameraTarget = _spawnedPlayer;
     }
 }
 

@@ -2,6 +2,7 @@ using ComBots.Game;
 using ComBots.Game.StateMachine;
 using ComBots.Inputs;
 using ComBots.Logs;
+using ComBots.Sandbox.Global.UI.Menu;
 using ComBots.Utils.EntryPoints;
 using StarterAssets;
 using UnityEngine;
@@ -20,23 +21,24 @@ namespace ComBots.Game.Players
 
         public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
         {
-            switch (actionName)
+            //Debug.Log($"PlayerInputHandler.HandleInput: actionName={actionName}, phase={context.phase}, value={context.ReadValueAsObject()}");
+
+            if (PauseMenu.Instance.IsOpen || PauseMenuApp.IsAnyOpen)
             {
-                case "pause":
-                    if (context.phase == InputActionPhase.Performed)
-                    {
-                        GameStateMachine.I.SetState<GameStateMachine.State_Paused>(null);
-                    }
-                    return true;
+                // When pause menu is open, do not process player inputs
+                return false;
             }
+
             if (_player.Interactor.HandleInput(context, actionName, inputFlag))
             {
                 return true;
             }
+
             if (_player.Controller.HandleInput(context, actionName, inputFlag))
             {
                 return true;
             }
+
             return false;
         }
 

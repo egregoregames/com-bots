@@ -40,7 +40,7 @@ namespace ComBots.Game.StateMachine
                     _args = args;
                     GlobalUIRefs.I.DialogueController.SetActive((IState_Dialogue_Args)args);
                     // Hide the menu's bottom bar
-                    GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
+                    //GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
                     // Push the dialogue input context
                     InputManager.I.PushContext(_stateMachine._dialogueContextData, DialogueInputHandler.I);
                     // Camera
@@ -66,7 +66,7 @@ namespace ComBots.Game.StateMachine
                 GlobalUIRefs.I.DialogueController.OnExit();
                 GlobalUIRefs.I.DialogueController.SetInactive();
                 // Display back the menu bottom bar
-                GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
+                //GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
                 Player.I.PlayerCamera.SetState_Orbital();
 
                 return true;
