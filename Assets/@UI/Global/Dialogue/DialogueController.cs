@@ -65,56 +65,6 @@ namespace ComBots.Global.UI.Dialogue
         protected override void Init()
         {
             Debug.Log("Initializing dialogue controller");
-            _VE_root = _uiDocument.rootVisualElement.Q(name: "Root");
-            _VE_dialogLabel = _VE_root.Q<Label>(className: CLASS_DIALOG_LABEL);
-            _VE_nametag = _VE_root.Q(className: CLASS_NAMETAG);
-            _VE_nametagLabel = _VE_root.Q<Label>(className: CLASS_NAMETAG_LABEL);
-            _VE_optionListerParent = _VE_root.Q(className: CLASS_OPTION_LISTER_PARENT);
-            _VE_dialogContinueIcon = _VE_root.Q(className: CLASS_DIALOG_CONTINUE_ICON);
-            _VE_dialogEndIcon = _VE_root.Q(className: CLASS_DIALOG_END_ICON);
-            _WC_optionLister.TryInit();
-
-            // Start infinite loop animation for continue icon
-            _VE_dialogContinueIcon.schedule.Execute(_ =>
-            {
-                _continueIconOriginalY = -22;
-                StartContinueIconAnimation();
-            }).ExecuteLater(1);
-
-            // Setup end icon dimensions
-            _VE_dialogContinueIcon.schedule.Execute(_ =>
-            {
-                // Use fallback dimensions first to avoid NaN issues
-                _endIconWidth = 49f; // From USS file
-                _endIconHeight = 49f; // From USS file
-
-                // Try to get resolved dimensions if available
-                bool wasHidden = _VE_dialogEndIcon.ClassListContains(CLASS_DIALOG_END_ICON_HIDDEN);
-                if (wasHidden)
-                {
-                    _VE_dialogEndIcon.RemoveFromClassList(CLASS_DIALOG_END_ICON_HIDDEN);
-                }
-
-                float resolvedWidth = _VE_dialogEndIcon.resolvedStyle.width;
-                float resolvedHeight = _VE_dialogEndIcon.resolvedStyle.height;
-
-                // Only use resolved dimensions if they're valid
-                if (!float.IsNaN(resolvedWidth) && resolvedWidth > 0)
-                {
-                    _endIconWidth = resolvedWidth;
-                }
-
-                if (!float.IsNaN(resolvedHeight) && resolvedHeight > 0)
-                {
-                    _endIconHeight = resolvedHeight;
-                }
-
-                // Restore hidden state
-                if (wasHidden)
-                {
-                    _VE_dialogEndIcon.AddToClassList(CLASS_DIALOG_END_ICON_HIDDEN);
-                }
-            }).ExecuteLater(3);
 
             // Register this as the DialogueManager's UI
             DialogueManager.dialogueUI = this;
@@ -176,14 +126,6 @@ namespace ComBots.Global.UI.Dialogue
             _isActive = true;
             _args = args;
 
-            // Ensure end icon is hidden at the start of every new conversation
-            _VE_dialogEndIcon.EnableInClassList(CLASS_DIALOG_END_ICON_HIDDEN, true); 
-            _VE_dialogContinueIcon.EnableInClassList(CLASS_DIALOG_CONTINUE_ICON_HIDDEN, true);
-
-            // Reset any explicit styles that might have been set previously
-            _VE_dialogEndIcon.style.scale = StyleKeyword.Initial;
-            _VE_dialogEndIcon.style.width = StyleKeyword.Initial;
-            _VE_dialogEndIcon.style.height = StyleKeyword.Initial;
             // Hide icons at start
             _endIcon.gameObject.SetActive(false);
             _continueIcon.gameObject.SetActive(false);
