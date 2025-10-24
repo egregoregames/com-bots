@@ -8,34 +8,67 @@ using ComBots.Utils.ObjectPooling;
 using ComBots.UI.OverheadWidgets;
 using ComBots.Cameras;
 using System.Collections;
+using ComBots.Utils;
+using ComBots.TimesOfDay;
 
-namespace ComBots.NPCs
+namespace ComBots.World.NPCs
 {
     public class NPC : MonoBehaviour, IInteractable
     {
+        // ============ IInteractable Implementation ============ //
         public Transform T => transform;
+        public bool IsActive => _isActive;
+
+        [Header("Config")]
+        [SerializeField] private NPC_Config _config;
+
+        [Header("PixelCrushers Dialogue")]
         [SerializeField] private DialogueActor _dialogueActor;
         [SerializeField] private string _conversationTitle;
-        private IInteractor _currentInteractor;
 
-        [Header("Animations")]
+        [Header("Visuals")]
         [SerializeField] private Animator _animator;
+        [SerializeField] private GameObject _visual;
 
         [Header("Overhead Widget")]
         [SerializeField] private Vector3 _overheadWidgetOffset;
+        private const string PK_OVERHEAD_WIDGET = "NPC_Overhead_Widget";
 
         [Header("Cameras")]
         public CameraTarget CameraTarget;
+        /// <summary> Pool key for the overhead widget </summary>
+        private OverheadWidget _overheadWidget;
+
+        // ============ State ============ //
+        /// <summary> Is affected by visibility config in NPC_Config. </summary>
+        private bool _isActive;
+
+        // ============ Cache ============ //
         /// <summary> The NPC's rotation at the start of the game </summary>
         private Quaternion _initialRot;
-        /// <summary> Pool key for the overhead widget </summary>
-        private const string PK_OVERHEAD_WIDGET = "NPC_Overhead_Widget";
-        private OverheadWidget _overheadWidget;
         private Coroutine _returnToIdleCoroutine;
+        private IInteractor _currentInteractor;
+
+        #region Unity Methods
+        // ----------------------------------------
+        // Unity Methods 
+        // ----------------------------------------
+
+        void OnEnable()
+        {
+            TimesOfDay_Manager.Async_SubscribeToTimeOfDayChange(TimesOfDay_Manager_OnTimeOfDayChanged);
+        }
+
+        void OnDisable()
+        {
+            TimesOfDay_Manager.Async_UnsubscribeFromTimeOfDayChange(TimesOfDay_Manager_OnTimeOfDayChanged);
+        }
 
         void Awake()
         {
             _initialRot = transform.rotation;
+            if (_visual)
+                _isActive = _visual.activeSelf;
         }
 
         void OnDrawGizmosSelected()
@@ -43,8 +76,13 @@ namespace ComBots.NPCs
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(transform.position + _overheadWidgetOffset, 0.1f);
         }
+        #endregion
 
         #region IInteractable Implementation
+        // ----------------------------------------
+        // IInteractable Implementation 
+        // ----------------------------------------
+
         public void OnInteractionStart(IInteractor interactor)
         {
             if (interactor is not Player player)
@@ -72,6 +110,11 @@ namespace ComBots.NPCs
 
         public void OnInteractorFar(IInteractor interactor)
         {
+            if (!_isActive) // NPC is not active
+            {
+                return;
+            }
+
             if (_overheadWidget)
             {
                 PoolManager.I.Push(PK_OVERHEAD_WIDGET, _overheadWidget);
@@ -81,6 +124,11 @@ namespace ComBots.NPCs
 
         public void OnInteractorNearby(IInteractor interactor)
         {
+            if (!_isActive) // NPC is not active
+            {
+                return;
+            }
+
             if (_overheadWidget == null)
             {
                 _overheadWidget = PoolManager.I.Pull<OverheadWidget>(PK_OVERHEAD_WIDGET);
@@ -98,6 +146,94 @@ namespace ComBots.NPCs
         }
 
         #endregion
+
+        #region State Management API
+        // ----------------------------------------
+        // State Management API 
+        // ----------------------------------------
+
+        private void StateDialogue_OnEnd()
+        {
+            InteractionManager.I.EndInteraction(_currentInteractor, this);
+            _animator.SetBool("Talk", false);
+            _currentInteractor = null;
+        }
+
+        #endregion
+
+        #region TimesOfDay Manager
+        // ----------------------------------------
+        // TimesOfDay Manager
+        // ----------------------------------------
+
+        private void TimesOfDay_Manager_OnTimeOfDayChanged(TimeOfDay newTimeOfDay)
+        {
+            UpdateActiveStatus(PersistentGameData.Instance.CurrentTerm, newTimeOfDay);
+        }
+
+        #endregion
+
+        #region Private Methods
+        // ----------------------------------------
+        // Private Methods
+        // ----------------------------------------
+
+        private void UpdateActiveStatus(Term term, TimeOfDay timeOfDay)
+        {
+            Debug.Log($"NPC.UpdateActiveStatus({term}, {timeOfDay})");
+            // Check currentterm in visibility config.terms
+            bool termVisible = false;
+            foreach (var t in _config.VisibilityConfig.Terms)
+            {
+                if (t == term)
+                {
+                    termVisible = true;
+                    break;
+                }
+            }
+            if (!termVisible)
+            {
+                SetActive(false);
+                return;
+            }
+
+            bool timeVisible = false;
+            foreach (var tod in _config.VisibilityConfig.TimesOfDay)
+            {
+                if (tod == timeOfDay)
+                {
+                    timeVisible = true;
+                    break;
+                }
+            }
+            if (!timeVisible)
+            {
+                SetActive(false);
+                return;
+            }
+            SetActive(true);
+        }
+
+        private void SetActive(bool active)
+        {
+            if (active == _isActive)
+            {
+                return;
+            }
+            MyLogger<NPC>.StaticLog($"SetActive({active})");
+
+            _isActive = active;
+            // Show/hide visual
+            if (_visual)
+                _visual.SetActive(active);
+
+            // Hide overhead widget if inactive
+            if (!_isActive && _overheadWidget)
+            {
+                PoolManager.I.Push(PK_OVERHEAD_WIDGET, _overheadWidget);
+                _overheadWidget = null;
+            }
+        }
 
         private void PlayConversantAnimation(string animation)
         {
@@ -131,11 +267,6 @@ namespace ComBots.NPCs
             }
         }
 
-        private void StateDialogue_OnEnd()
-        {
-            InteractionManager.I.EndInteraction(_currentInteractor, this);
-            _animator.SetBool("Talk", false);
-            _currentInteractor = null;
-        }
+        #endregion
     }
 }

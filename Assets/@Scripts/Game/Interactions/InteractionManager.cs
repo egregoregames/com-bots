@@ -28,9 +28,18 @@ namespace ComBots.Game.Interactions
             _activeInteractions = null;
         }
 
-        public void StartInteraction(IInteractor interactor, IInteractable interactable)
+        /// <summary>
+        /// Starts an interaction between an interactor and an interactable when possible.
+        /// </summary>
+        /// <returns> Whether the interaction was started successfully. </returns>
+        public bool StartInteraction(IInteractor interactor, IInteractable interactable)
         {
-            Interaction interaction = new Interaction
+            if (!interactable.IsActive)
+            {
+                return false;
+            }
+
+            Interaction interaction = new()
             {
                 interactor = interactor,
                 interactable = interactable
@@ -38,6 +47,7 @@ namespace ComBots.Game.Interactions
             _activeInteractions.Add(interaction);
             interactor.OnInteractionStart(interactable);
             interactable.OnInteractionStart(interactor);
+            return true;
         }
 
         public void EndInteraction(IInteractor interactor, IInteractable interactable)

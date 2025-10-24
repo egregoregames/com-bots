@@ -105,9 +105,8 @@ namespace ComBots.Game.Players
                                 interactable = k;
                             }
                         }
-                        if (interactable != null) // Interact
+                        if (interactable != null && InteractionManager.I.StartInteraction(_player, interactable))
                         {
-                            InteractionManager.I.StartInteraction(_player, interactable);
                             Quaternion targetRotation = Quaternion.LookRotation(interactable.T.position - _T.position);
                             Vector3 euler = targetRotation.eulerAngles;
                             targetRotation = Quaternion.Euler(0, euler.y, 0);
