@@ -12,6 +12,7 @@ using System.Collections;
 using ComBots.UI.Utilities.Listing;
 using TMPro;
 using UnityEngine.UI;
+using ComBots.UI.Utilities;
 
 namespace ComBots.Global.UI.Dialogue
 {
@@ -27,8 +28,7 @@ namespace ComBots.Global.UI.Dialogue
         [SerializeField] private GameObject _w_root;
 
         [Header("Dialogue")]
-        [SerializeField] private TextMeshProUGUI _dialogueText;
-        private Tween _textAnimationTween;
+        [SerializeField] private WC_Typewriter _dialogueTypewriter;
 
         [Header("Utility Lister")]
         [SerializeField] private WC_Lister<WC_DialogueOption> _optionLister;
@@ -48,7 +48,7 @@ namespace ComBots.Global.UI.Dialogue
         [SerializeField] private Transform _endIcon;
         [SerializeField] private float _endIcon_scaleAmount;
 
-        // Responses
+        // ============ Responses ============ //
         private Response[] _pcArgs_responsesBuffer;
         private Coroutine _COR_responses;
 
@@ -103,7 +103,7 @@ namespace ComBots.Global.UI.Dialogue
             }
 
             _w_root = null;
-            _dialogueText = null;
+            _dialogueTypewriter = null;
             _optionLister?.Dispose();
             _optionLister = null;
             _continueIcon = null;
@@ -156,12 +156,8 @@ namespace ComBots.Global.UI.Dialogue
                 MyLogger<DialogueController>.StaticLog($"PixelCrushers.DialogueManager.StopConversation()");
                 DialogueManager.StopConversation();
             }
-            // Kill the text animation if it's still running
-            if (_textAnimationTween != null && _textAnimationTween.IsActive())
-            {
-                _textAnimationTween.Kill();
-                _textAnimationTween = null;
-            }
+            _dialogueTypewriter.SetInactive(true, false);
+
             // Hide Dialogue UI
             _continueIcon.gameObject.SetActive(false);
             _endIcon.gameObject.SetActive(false);
@@ -192,7 +188,7 @@ namespace ComBots.Global.UI.Dialogue
         public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
         {
             // Ignore input while text is animating
-            if (_textAnimationTween != null && _textAnimationTween.IsActive())
+            if (_dialogueTypewriter.IsTyping)
             {
                 return true; // Consume the input but don't process it
             }
@@ -304,7 +300,7 @@ namespace ComBots.Global.UI.Dialogue
             if (string.IsNullOrEmpty(subtitle.sequence) || subtitle.sequence.Contains("None()@0"))
             {
                 MyLogger<DialogueController>.StaticLog($"Subtitle has short/empty sequence '{subtitle.sequence}', using custom timing");
-                _dialogueText.text = subtitle.formattedText.text;
+                _dialogueTypewriter.SetActive(subtitle.formattedText.text, null);
             }
             else
             {
@@ -416,13 +412,8 @@ namespace ComBots.Global.UI.Dialogue
             text = text.Replace("${varBasicBot.name}", basicBot);
 
             // Display dialogue
-            _dialogueText.text = string.Empty;
-            _textAnimationTween = DOTween.To(() => _dialogueText.text, x => _dialogueText.text = x, text, animationDuration)
-                .SetEase(Ease.Linear)
-                .OnComplete(() =>
+            _dialogueTypewriter.SetActive(text, () =>
                 {
-                    _textAnimationTween = null;
-
                     // Display options if we have them
                     if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
                     {
@@ -461,7 +452,7 @@ namespace ComBots.Global.UI.Dialogue
             }
 
             // Clear the dialogue text for empty subtitles or player text
-            _dialogueText.text = string.Empty;
+            _dialogueTypewriter.SetInactive(true, false);
             _nametag.SetActive(false);
         }
 
@@ -577,7 +568,7 @@ namespace ComBots.Global.UI.Dialogue
 
         private IEnumerator Async_PCArgs_ShowResponses(Response[] responses)
         {
-            while (_textAnimationTween != null && _textAnimationTween.IsActive())
+            while (_dialogueTypewriter.IsTyping)
             {
                 yield return null;
             }
