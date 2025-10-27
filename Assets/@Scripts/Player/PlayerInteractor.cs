@@ -72,11 +72,11 @@ namespace ComBots.Game.Players
             {
                 if (_closestInteractable != null)
                 {
-                    _closestInteractable.OnInteractorFar(_player);
+                    InteractionManager.I.OnInteractorFar(_player, _closestInteractable);
                 }
                 if (interactable != null)
                 {
-                    interactable.OnInteractorNearby(_player);
+                    InteractionManager.I.OnInteractorNearby(_player, interactable);
                 }
                 _closestInteractable = interactable;
             }

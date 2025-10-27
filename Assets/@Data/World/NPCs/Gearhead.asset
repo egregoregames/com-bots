@@ -12,18 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0470c42ad1f557c8fb393c63dc5fcbc0, type: 3}
   m_Name: Gearhead
   m_EditorClassIdentifier: Assembly-CSharp::ComBots.World.NPCs.NPC_Config
-  VisibilityConfig:
-    Terms: 000000000100000002000000030000000400000005000000
-    TimesOfDay: 000000000200000003000000
-    Quests:
-    - QuestName: Pharmacology
+  ActiveStateConfig:
+    TimeCondition:
+      Terms: 000000000100000002000000030000000400000005000000
+      TimesOfDay: 00000000010000000200000003000000
+    QuestConditions:
+    - QuestName: Combots 101
       MinQuestStage: 4
-    - QuestName: Combat 101
-      MinQuestStage: 100
-  portrait: {fileID: 0}
-  imageOverWorld: {fileID: 0}
-  potentialTeammate: 0
-  bond: 0
-  occupation: 
-  origin: 
-  bio: 
+  Conversations:
+  - NameInDatabase: Standard Gearhead
+    TimeCondition:
+      Terms: 000000000100000002000000030000000400000005000000
+      TimesOfDay: 00000000010000000200000003000000
+    QuestConditions: []

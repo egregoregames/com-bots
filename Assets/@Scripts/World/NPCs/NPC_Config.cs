@@ -8,36 +8,131 @@ namespace ComBots.World.NPCs
     [CreateAssetMenu(fileName = "NPC", menuName = "World/NPC/NPC Config")]
     public class NPC_Config : ScriptableObject
     {
-        [Header("Visibility Config")]
-        public NPC_VisibilityConfig VisibilityConfig;
+        // =============== Active State Config =============== //
+        [Header("Active State Config")]
+        public NPC_ActiveStateConfig ActiveStateConfig;
 
-        // ============ Legacy Variables ============ //
-        public Image portrait;
-        public Image imageOverWorld;
-        public bool potentialTeammate;
-        public int bond;
-        public string occupation;
-        public string origin;
-        public string bio;
+        // =============== Conversations =============== //
+        [Header("Conversations")]
+        public List<NPC_ConversationConfig> Conversations;
+
+        public NPC_ConversationConfig GetValidConversation(Term term, TimeOfDay timeOfDay)
+        {
+            foreach (var conversation in Conversations)
+            {
+                if (conversation.IsValid(term, timeOfDay))
+                {
+                    return conversation;
+                }
+            }
+            return null;
+        }
+
+        // =============== Conditions =============== //
+        [System.Serializable]
+        public class QuestCondition
+        {
+            public string QuestName;
+            public int MinQuestStage;
+
+            public bool IsStatisfied()
+            {
+                // TODO: Once the quest system is implemented, create a real implementation here.
+                return true;
+            }
+        }
+
+        [System.Serializable]
+        public class TimeCondition
+        {
+            // =============== Term =============== //
+            [Header("Term")]
+            public Term[] Terms = new Term[] { Term.FirstTerm, Term.SecondTerm, Term.ThirdTerm, Term.FourthTerm, Term.FifthTerm, Term.SixthTerm };
+            // =============== Time of Day =============== //
+            [Header("Time of Day")]
+            public TimeOfDay[] TimesOfDay = new TimeOfDay[] { TimeOfDay.Day, TimeOfDay.Morning, TimeOfDay.Evening, TimeOfDay.Night };
+
+            public bool IsStatisfied(Term term, TimeOfDay timeOfDay)
+            {
+                bool termSatisfied = false;
+                foreach (var t in Terms)
+                {
+                    if (t == term)
+                    {
+                        termSatisfied = true;
+                        break;
+                    }
+                }
+                if (!termSatisfied)
+                {
+                    return false;
+                }
+
+                bool timeSatisfied = false;
+                foreach (var tod in TimesOfDay)
+                {
+                    if (tod == timeOfDay)
+                    {
+                        timeSatisfied = true;
+                        break;
+                    }
+                }
+                if (!timeSatisfied)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
     }
 
+    /// <summary>
+    /// Configuration for an NPC's conversation, including time and quest conditions.
+    /// </summary>
     [System.Serializable]
-    public struct NPC_VisibilityConfig
+    public class NPC_ConversationConfig
     {
-        [Header("Term")]
-        public Term[] Terms;
-        
-        [Header("Time of Day")]
-        public TimeOfDay[] TimesOfDay;
+        /// <summary>
+        /// The name of the conversation in the PixelCrushers database.
+        /// </summary>
+        public string NameInDatabase;
+        // =============== Time Condition =============== //
+        [Header("Time Condition")]
+        public NPC_Config.TimeCondition TimeCondition;
+        // =============== Quest =============== //
+        [Header("Quest Condition")]
+        public NPC_Config.QuestCondition[] QuestConditions;
 
-        [Header("Quest")]
-        public List<NPC_VisibilityConfig_Quest> Quests;
+        public bool IsValid(Term term, TimeOfDay day)
+        {
+            // Check Time Conditions
+            if (!TimeCondition.IsStatisfied(term, day))
+            {
+                return false;
+            }
+            // Check quest Conditions
+            foreach (var questCondition in QuestConditions)
+            {
+                if (!questCondition.IsStatisfied())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
+    /// <summary>
+    /// Configuration for when an NPC is active in the world.
+    /// </summary>
     [System.Serializable]
-    public struct NPC_VisibilityConfig_Quest
+    public struct NPC_ActiveStateConfig
     {
-        public string QuestName;
-        public int MinQuestStage;
+        // =============== Time Condition =============== //
+        [Header("Time Condition")]
+        public NPC_Config.TimeCondition TimeCondition;
+        // =============== Quest Condition =============== //
+        [Header("Quest Condition")]
+        public List<NPC_Config.QuestCondition> QuestConditions;
     }
 }

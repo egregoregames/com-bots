@@ -24,7 +24,6 @@ namespace ComBots.World.NPCs
 
         [Header("PixelCrushers Dialogue")]
         [SerializeField] private DialogueActor _dialogueActor;
-        [SerializeField] private string _conversationTitle;
 
         [Header("Visuals")]
         [SerializeField] private Animator _animator;
@@ -83,6 +82,24 @@ namespace ComBots.World.NPCs
         // IInteractable Implementation 
         // ----------------------------------------
 
+        public bool CanInteract(IInteractor interactor)
+        {
+            // Check if interactor is a player
+            if (interactor is not Player player)
+            {
+                return false;
+            }
+            // Check if there is a conversation available
+            var term = PersistentGameData.Instance.CurrentTerm;
+            var timeOfDay = TimesOfDay_Manager.Instance.GetTimeOfDay();
+            NPC_ConversationConfig conversationConfig = _config.GetValidConversation(term, timeOfDay);
+            if(conversationConfig == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void OnInteractionStart(IInteractor interactor)
         {
             if (interactor is not Player player)
@@ -100,11 +117,21 @@ namespace ComBots.World.NPCs
                 PoolManager.I.Push(PK_OVERHEAD_WIDGET, _overheadWidget);
                 _overheadWidget = null;
             }
-            // Start dialogue
+            // Rotate NPC towards player
             _currentInteractor = interactor;
             transform.rotation = Quaternion.LookRotation(interactor.T.position - transform.position);
             transform.eulerAngles = new(0, transform.eulerAngles.y, 0);
-            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
+            // Determine the right conversation
+            var term = PersistentGameData.Instance.CurrentTerm;
+            var timeOfDay = TimesOfDay_Manager.Instance.GetTimeOfDay();
+            NPC_ConversationConfig conversationConfig = _config.GetValidConversation(term, timeOfDay);
+            if(conversationConfig == null) // This should not happen and it must be automatically prevented by the InteractionManager
+            {
+                MyLogger<NPC>.StaticLogError($"No valid conversation found for NPC {name} for Term {term} and TimeOfDay {timeOfDay}.");
+                InteractionManager.I.EndInteraction(interactor, this);
+                return;
+            }
+            State_Dialogue_PixelCrushers_Args args = new(conversationConfig.NameInDatabase, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 
@@ -182,36 +209,8 @@ namespace ComBots.World.NPCs
         {
             Debug.Log($"NPC.UpdateActiveStatus({term}, {timeOfDay})");
             // Check currentterm in visibility config.terms
-            bool termVisible = false;
-            foreach (var t in _config.VisibilityConfig.Terms)
-            {
-                if (t == term)
-                {
-                    termVisible = true;
-                    break;
-                }
-            }
-            if (!termVisible)
-            {
-                SetActive(false);
-                return;
-            }
-
-            bool timeVisible = false;
-            foreach (var tod in _config.VisibilityConfig.TimesOfDay)
-            {
-                if (tod == timeOfDay)
-                {
-                    timeVisible = true;
-                    break;
-                }
-            }
-            if (!timeVisible)
-            {
-                SetActive(false);
-                return;
-            }
-            SetActive(true);
+            bool isTimeConditionSatisfied = _config.ActiveStateConfig.TimeCondition.IsStatisfied(term, timeOfDay);
+            SetActive(isTimeConditionSatisfied);
         }
 
         private void SetActive(bool active)

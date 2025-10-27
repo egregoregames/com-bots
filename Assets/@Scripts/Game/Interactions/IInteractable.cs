@@ -5,6 +5,7 @@ namespace ComBots.Game.Interactions
     public interface IInteractable
     {
         public Transform T { get; }
+        public bool CanInteract(IInteractor interactor);
         public void OnInteractionStart(IInteractor interactor);
         public void OnInteractionEnd(IInteractor interactor);
         public void OnInteractorNearby(IInteractor interactor);
