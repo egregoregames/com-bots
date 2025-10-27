@@ -64,6 +64,8 @@ namespace ComBots.Global.UI.Dialogue
         // ----------------------------------------
         protected override void Init()
         {
+            Debug.Log("Initializing dialogue controller");
+
             // Register this as the DialogueManager's UI
             DialogueManager.dialogueUI = this;
             // Check Display Settings
