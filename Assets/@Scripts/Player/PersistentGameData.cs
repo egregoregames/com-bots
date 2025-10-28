@@ -1,6 +1,7 @@
 using ComBots.Game.Portals;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
@@ -29,6 +30,8 @@ public partial class PersistentGameData : MonoBehaviourR3
 
     private static UnityEventR3 _onLocationUpdated = new();
 
+    private static UnityEventR3<QuestTrackingDatum> _onQuestUpdated = new();
+
     public static class GameEvents
     {
         public static IDisposable OnTermUpdated(Action x)
@@ -48,6 +51,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnLocationUpdated(Action x)
             => _onLocationUpdated.Subscribe(x);
+
+        public static IDisposable OnQuestUpdated(Action<QuestTrackingDatum> x)
+            => _onQuestUpdated.Subscribe(x);
     }
 
     /// <summary>
@@ -291,6 +297,23 @@ public partial class PersistentGameData : MonoBehaviourR3
             await Task.Yield();
         }
         return Instance;
+    }
+
+    public static async void UpdateQuest(int questId, bool isActive, int currentStep)
+    {
+        // Todo, if the player doesn't have this quest, should we auto add it??
+
+        var quest = (await GetInstanceAsync()).PlayerQuestTrackingData
+            .First(x => x.QuestId == questId);
+
+        quest.IsActive = isActive;
+        quest.CurrentStep = currentStep;
+        if (quest.IsCompleted)
+        {
+            quest.Complete();
+        }
+
+        _onQuestUpdated?.Invoke(quest);
     }
 
     /// <summary>
