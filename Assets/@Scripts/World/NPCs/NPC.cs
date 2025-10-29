@@ -89,11 +89,7 @@ namespace ComBots.World.NPCs
             {
                 return false;
             }
-            // Check if there is a conversation available
-            var term = PersistentGameData.Instance.CurrentTerm;
-            var timeOfDay = TimesOfDay_Manager.Instance.GetTimeOfDay();
-            NPC_ConversationConfig conversationConfig = _config.GetValidConversation(term, timeOfDay);
-            if(conversationConfig == null)
+            if (!_isActive)
             {
                 return false;
             }
@@ -122,16 +118,7 @@ namespace ComBots.World.NPCs
             transform.rotation = Quaternion.LookRotation(interactor.T.position - transform.position);
             transform.eulerAngles = new(0, transform.eulerAngles.y, 0);
             // Determine the right conversation
-            var term = PersistentGameData.Instance.CurrentTerm;
-            var timeOfDay = TimesOfDay_Manager.Instance.GetTimeOfDay();
-            NPC_ConversationConfig conversationConfig = _config.GetValidConversation(term, timeOfDay);
-            if(conversationConfig == null) // This should not happen and it must be automatically prevented by the InteractionManager
-            {
-                MyLogger<NPC>.StaticLogError($"No valid conversation found for NPC {name} for Term {term} and TimeOfDay {timeOfDay}.");
-                InteractionManager.I.EndInteraction(interactor, this);
-                return;
-            }
-            State_Dialogue_PixelCrushers_Args args = new(conversationConfig.NameInDatabase, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
+            State_Dialogue_PixelCrushers_Args args = new(_config.conversationName, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 

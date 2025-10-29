@@ -12,21 +12,9 @@ namespace ComBots.World.NPCs
         [Header("Active State Config")]
         public NPC_ActiveStateConfig ActiveStateConfig;
 
-        // =============== Conversations =============== //
         [Header("Conversations")]
-        public List<NPC_ConversationConfig> Conversations;
-
-        public NPC_ConversationConfig GetValidConversation(Term term, TimeOfDay timeOfDay)
-        {
-            foreach (var conversation in Conversations)
-            {
-                if (conversation.IsValid(term, timeOfDay))
-                {
-                    return conversation;
-                }
-            }
-            return null;
-        }
+        [Tooltip("Conversation name in PixelCrushers Dialogue DataBase")]
+        public string conversationName;
 
         // =============== Conditions =============== //
         [System.Serializable]

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: Dialogue Database
+  m_Name: Dialogue Database (
   m_EditorClassIdentifier: 
   version: 
   author: 
@@ -3052,6 +3052,36 @@ MonoBehaviour:
     alternatePortraits: []
     spritePortraits: []
   items:
+  - id: 1
+    fields:
+    - title: Name
+      value: New Quest 1
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 2
     fields:
     - title: Name
@@ -3213,16 +3243,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3235,12 +3257,6 @@ MonoBehaviour:
         originDialogueID: 0
         destinationConversationID: 7
         destinationDialogueID: 1
-        isConnector: 0
-        priority: 2
-      - originConversationID: 7
-        originDialogueID: 0
-        destinationConversationID: 7
-        destinationDialogueID: 8
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -3294,16 +3310,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3369,16 +3377,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3450,16 +3450,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3525,16 +3517,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: CustomFieldType_Item
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3600,16 +3584,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3675,16 +3651,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: CustomFieldType_Item
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3744,16 +3712,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3771,71 +3731,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 47.111115
         y: 287.55554
-        width: 160
-        height: 30
-    - id: 8
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 79
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: ConversantAnimation
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: ActorAnimation
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Item
-        value: 3
-        type: 6
-        typeString: CustomFieldType_Item
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      conversationID: 7
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 586.458
-        y: 273.4949
         width: 160
         height: 30
     entryGroups: []
@@ -3927,16 +3822,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 6
       isRoot: 0
       isGroup: 0
@@ -4002,16 +3889,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 6
       isRoot: 0
       isGroup: 0
@@ -4077,16 +3956,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 6
       isRoot: 0
       isGroup: 0
@@ -4195,16 +4066,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 12
       isRoot: 0
       isGroup: 0
@@ -4271,16 +4134,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 12
       isRoot: 0
       isGroup: 0
@@ -4347,16 +4202,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 12
       isRoot: 0
       isGroup: 0
@@ -4465,16 +4312,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 13
       isRoot: 0
       isGroup: 0
@@ -4541,16 +4380,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 13
       isRoot: 0
       isGroup: 0
@@ -4616,16 +4447,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 13
       isRoot: 0
       isGroup: 0
@@ -4734,16 +4557,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 8
       isRoot: 0
       isGroup: 0
@@ -4810,16 +4625,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 8
       isRoot: 0
       isGroup: 0
@@ -4886,16 +4693,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 8
       isRoot: 0
       isGroup: 0
@@ -4962,16 +4761,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 8
       isRoot: 0
       isGroup: 0
@@ -5080,16 +4871,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 14
       isRoot: 0
       isGroup: 0
@@ -5156,16 +4939,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 14
       isRoot: 0
       isGroup: 0
@@ -5232,16 +5007,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 14
       isRoot: 0
       isGroup: 0
@@ -5350,16 +5117,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 9
       isRoot: 0
       isGroup: 0
@@ -5426,16 +5185,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 9
       isRoot: 0
       isGroup: 0
@@ -5501,16 +5252,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 9
       isRoot: 0
       isGroup: 0
@@ -5619,16 +5362,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 10
       isRoot: 0
       isGroup: 0
@@ -5695,16 +5430,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 10
       isRoot: 0
       isGroup: 0
@@ -5771,16 +5498,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 10
       isRoot: 0
       isGroup: 0
@@ -5889,16 +5608,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 11
       isRoot: 0
       isGroup: 0
@@ -5965,16 +5676,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 11
       isRoot: 0
       isGroup: 0
@@ -6040,16 +5743,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 11
       isRoot: 0
       isGroup: 0
@@ -6158,16 +5853,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6233,16 +5920,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6309,16 +5988,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6385,16 +6056,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6461,16 +6124,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6537,16 +6192,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6612,16 +6259,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 43
       isRoot: 0
       isGroup: 0
@@ -6730,16 +6369,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 45
       isRoot: 0
       isGroup: 0
@@ -6806,16 +6437,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 45
       isRoot: 0
       isGroup: 0
@@ -6881,16 +6504,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 45
       isRoot: 0
       isGroup: 0
@@ -6999,16 +6614,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 44
       isRoot: 0
       isGroup: 0
@@ -7075,16 +6682,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 44
       isRoot: 0
       isGroup: 0
@@ -7151,16 +6750,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 44
       isRoot: 0
       isGroup: 0
@@ -7269,16 +6860,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 46
       isRoot: 0
       isGroup: 0
@@ -7344,16 +6927,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 46
       isRoot: 0
       isGroup: 0
@@ -7420,16 +6995,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 46
       isRoot: 0
       isGroup: 0
@@ -7495,16 +7062,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 46
       isRoot: 0
       isGroup: 0
@@ -7571,16 +7130,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 46
       isRoot: 0
       isGroup: 0
@@ -7689,16 +7240,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 47
       isRoot: 0
       isGroup: 0
@@ -7765,16 +7308,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 47
       isRoot: 0
       isGroup: 0
@@ -7883,16 +7418,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 40
       isRoot: 0
       isGroup: 0
@@ -7958,16 +7485,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 40
       isRoot: 0
       isGroup: 0
@@ -8076,16 +7595,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 42
       isRoot: 0
       isGroup: 0
@@ -8152,16 +7663,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 42
       isRoot: 0
       isGroup: 0
@@ -8227,16 +7730,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 42
       isRoot: 0
       isGroup: 0
@@ -8345,16 +7840,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 39
       isRoot: 0
       isGroup: 0
@@ -8421,16 +7908,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 39
       isRoot: 0
       isGroup: 0
@@ -8497,16 +7976,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 39
       isRoot: 0
       isGroup: 0
@@ -8573,16 +8044,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 39
       isRoot: 0
       isGroup: 0
@@ -8691,16 +8154,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 41
       isRoot: 0
       isGroup: 0
@@ -8767,16 +8222,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 41
       isRoot: 0
       isGroup: 0
@@ -8843,16 +8290,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 41
       isRoot: 0
       isGroup: 0
@@ -8961,16 +8400,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 59
       isRoot: 0
       isGroup: 0
@@ -9036,16 +8467,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 59
       isRoot: 0
       isGroup: 0
@@ -9111,16 +8534,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 59
       isRoot: 0
       isGroup: 0
@@ -9229,16 +8644,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 60
       isRoot: 0
       isGroup: 0
@@ -9304,16 +8711,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 60
       isRoot: 0
       isGroup: 0
@@ -9379,16 +8778,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 60
       isRoot: 0
       isGroup: 0
@@ -9497,16 +8888,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 56
       isRoot: 0
       isGroup: 0
@@ -9572,16 +8955,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 56
       isRoot: 0
       isGroup: 0
@@ -9690,16 +9065,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -9766,16 +9133,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -9842,16 +9201,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -9918,16 +9269,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -9995,16 +9338,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -10072,16 +9407,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -10148,16 +9475,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 37
       isRoot: 0
       isGroup: 0
@@ -10266,16 +9585,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10342,16 +9653,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10418,16 +9721,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10494,16 +9789,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10571,16 +9858,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10648,16 +9927,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10724,16 +9995,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 38
       isRoot: 0
       isGroup: 0
@@ -10842,16 +10105,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 36
       isRoot: 0
       isGroup: 0
@@ -10917,16 +10172,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 36
       isRoot: 0
       isGroup: 0
@@ -10993,16 +10240,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 36
       isRoot: 0
       isGroup: 0
@@ -11068,16 +10307,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 36
       isRoot: 0
       isGroup: 0
@@ -11186,16 +10417,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 33
       isRoot: 0
       isGroup: 0
@@ -11262,16 +10485,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 33
       isRoot: 0
       isGroup: 0
@@ -11338,16 +10553,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 33
       isRoot: 0
       isGroup: 0
@@ -11456,16 +10663,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 34
       isRoot: 0
       isGroup: 0
@@ -11531,16 +10730,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 34
       isRoot: 0
       isGroup: 0
@@ -11606,16 +10797,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 34
       isRoot: 0
       isGroup: 0
@@ -11724,16 +10907,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 35
       isRoot: 0
       isGroup: 0
@@ -11800,16 +10975,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 35
       isRoot: 0
       isGroup: 0
@@ -11918,16 +11085,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 31
       isRoot: 0
       isGroup: 0
@@ -11994,16 +11153,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 31
       isRoot: 0
       isGroup: 0
@@ -12069,16 +11220,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 31
       isRoot: 0
       isGroup: 0
@@ -12144,16 +11287,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 31
       isRoot: 0
       isGroup: 0
@@ -12262,16 +11397,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 32
       isRoot: 0
       isGroup: 0
@@ -12337,16 +11464,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 32
       isRoot: 0
       isGroup: 0
@@ -12412,16 +11531,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 32
       isRoot: 0
       isGroup: 0
@@ -12487,16 +11598,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 32
       isRoot: 0
       isGroup: 0
@@ -12605,16 +11708,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 18
       isRoot: 0
       isGroup: 0
@@ -12680,16 +11775,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 18
       isRoot: 0
       isGroup: 0
@@ -12798,16 +11885,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 19
       isRoot: 0
       isGroup: 0
@@ -12873,16 +11952,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 19
       isRoot: 0
       isGroup: 0
@@ -12991,16 +12062,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 20
       isRoot: 0
       isGroup: 0
@@ -13067,16 +12130,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 20
       isRoot: 0
       isGroup: 0
@@ -13143,16 +12198,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 20
       isRoot: 0
       isGroup: 0
@@ -13261,16 +12308,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 21
       isRoot: 0
       isGroup: 0
@@ -13337,16 +12376,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 21
       isRoot: 0
       isGroup: 0
@@ -13413,16 +12444,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 21
       isRoot: 0
       isGroup: 0
@@ -13531,16 +12554,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 22
       isRoot: 0
       isGroup: 0
@@ -13606,16 +12621,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 22
       isRoot: 0
       isGroup: 0
@@ -13681,16 +12688,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 22
       isRoot: 0
       isGroup: 0
@@ -13799,16 +12798,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 23
       isRoot: 0
       isGroup: 0
@@ -13874,16 +12865,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 23
       isRoot: 0
       isGroup: 0
@@ -13949,16 +12932,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 23
       isRoot: 0
       isGroup: 0
@@ -14067,16 +13042,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 24
       isRoot: 0
       isGroup: 0
@@ -14142,16 +13109,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 24
       isRoot: 0
       isGroup: 0
@@ -14218,16 +13177,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 24
       isRoot: 0
       isGroup: 0
@@ -14294,16 +13245,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 24
       isRoot: 0
       isGroup: 0
@@ -14412,16 +13355,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 25
       isRoot: 0
       isGroup: 0
@@ -14488,16 +13423,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 25
       isRoot: 0
       isGroup: 0
@@ -14606,16 +13533,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 26
       isRoot: 0
       isGroup: 0
@@ -14682,16 +13601,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 26
       isRoot: 0
       isGroup: 0
@@ -14758,16 +13669,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 26
       isRoot: 0
       isGroup: 0
@@ -14834,16 +13737,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 26
       isRoot: 0
       isGroup: 0
@@ -14909,16 +13804,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 26
       isRoot: 0
       isGroup: 0
@@ -14985,16 +13872,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 26
       isRoot: 0
       isGroup: 0
@@ -15103,16 +13982,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 27
       isRoot: 0
       isGroup: 0
@@ -15179,16 +14050,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 27
       isRoot: 0
       isGroup: 0
@@ -15254,16 +14117,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 27
       isRoot: 0
       isGroup: 0
@@ -15372,16 +14227,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 28
       isRoot: 0
       isGroup: 0
@@ -15448,16 +14295,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 28
       isRoot: 0
       isGroup: 0
@@ -15523,16 +14362,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 28
       isRoot: 0
       isGroup: 0
@@ -15600,16 +14431,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 28
       isRoot: 0
       isGroup: 0
@@ -15718,16 +14541,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 57
       isRoot: 0
       isGroup: 0
@@ -15794,16 +14609,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 57
       isRoot: 0
       isGroup: 0
@@ -15912,16 +14719,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 29
       isRoot: 0
       isGroup: 0
@@ -15988,16 +14787,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 29
       isRoot: 0
       isGroup: 0
@@ -16063,16 +14854,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 29
       isRoot: 0
       isGroup: 0
@@ -16181,16 +14964,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 30
       isRoot: 0
       isGroup: 0
@@ -16256,16 +15031,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 30
       isRoot: 0
       isGroup: 0
@@ -16332,16 +15099,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 30
       isRoot: 0
       isGroup: 0
@@ -16408,16 +15167,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 30
       isRoot: 0
       isGroup: 0
@@ -16526,16 +15277,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 58
       isRoot: 0
       isGroup: 0
@@ -16602,16 +15345,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 58
       isRoot: 0
       isGroup: 0
@@ -16678,16 +15413,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 58
       isRoot: 0
       isGroup: 0
@@ -16796,16 +15523,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 17
       isRoot: 0
       isGroup: 0
@@ -16872,16 +15591,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 17
       isRoot: 0
       isGroup: 0
@@ -16990,16 +15701,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 16
       isRoot: 0
       isGroup: 0
@@ -17066,16 +15769,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 16
       isRoot: 0
       isGroup: 0
@@ -17184,16 +15879,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 15
       isRoot: 0
       isGroup: 0
@@ -17260,16 +15947,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 15
       isRoot: 0
       isGroup: 0
@@ -17382,16 +16061,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17462,16 +16133,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17553,16 +16216,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17632,16 +16287,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17711,16 +16358,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17794,16 +16433,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17876,16 +16507,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -17958,16 +16581,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -18038,16 +16653,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -18119,16 +16726,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -18212,16 +16811,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -18291,16 +16882,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -18409,16 +16992,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 55
       isRoot: 0
       isGroup: 0
@@ -18484,16 +17059,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 55
       isRoot: 0
       isGroup: 0
@@ -18602,16 +17169,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 54
       isRoot: 0
       isGroup: 0
@@ -18677,16 +17236,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 54
       isRoot: 0
       isGroup: 0
@@ -18753,16 +17304,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 54
       isRoot: 0
       isGroup: 0
@@ -18828,16 +17371,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 54
       isRoot: 0
       isGroup: 0
@@ -18946,16 +17481,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 51
       isRoot: 0
       isGroup: 0
@@ -19021,16 +17548,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 51
       isRoot: 0
       isGroup: 0
@@ -19096,16 +17615,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 51
       isRoot: 0
       isGroup: 0
@@ -19214,16 +17725,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 52
       isRoot: 0
       isGroup: 0
@@ -19289,16 +17792,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 52
       isRoot: 0
       isGroup: 0
@@ -19365,16 +17860,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 52
       isRoot: 0
       isGroup: 0
@@ -19441,16 +17928,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 52
       isRoot: 0
       isGroup: 0
@@ -19559,16 +18038,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 53
       isRoot: 0
       isGroup: 0
@@ -19636,16 +18107,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 53
       isRoot: 0
       isGroup: 0
@@ -19712,16 +18175,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 53
       isRoot: 0
       isGroup: 0
@@ -19787,16 +18242,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 53
       isRoot: 0
       isGroup: 0
@@ -19905,16 +18352,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 49
       isRoot: 0
       isGroup: 0
@@ -19981,16 +18420,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 49
       isRoot: 0
       isGroup: 0
@@ -20099,16 +18530,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 48
       isRoot: 0
       isGroup: 0
@@ -20175,16 +18598,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 48
       isRoot: 0
       isGroup: 0
@@ -20251,16 +18666,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 48
       isRoot: 0
       isGroup: 0
@@ -20327,16 +18734,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 48
       isRoot: 0
       isGroup: 0
@@ -20445,16 +18844,8 @@ MonoBehaviour:
         typeString: 
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 50
       isRoot: 0
       isGroup: 0
@@ -20521,16 +18912,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Item
         value: 
-        type: 6
-        typeString: 
-      - title: Item Quantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
-      - title: ItemQuantity
-        value: 0
-        type: 1
-        typeString: CustomFieldType_Number
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 50
       isRoot: 0
       isGroup: 0
@@ -20569,4 +18952,4 @@ MonoBehaviour:
     Item","value":"False","type":2,"typeString":"CustomFieldType_Boolean"}],"locationFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Description","value":"","type":0,"typeString":""}],"variableFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Initial
     Value","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"}],"conversationFields":[{"title":"Title","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Actor","value":"0","type":5,"typeString":"CustomFieldType_Actor"},{"title":"Conversant","value":"0","type":5,"typeString":"CustomFieldType_Actor"}],"dialogueEntryFields":[{"title":"Title","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Actor","value":"","type":5,"typeString":"CustomFieldType_Actor"},{"title":"Conversant","value":"","type":5,"typeString":"CustomFieldType_Actor"},{"title":"Menu
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Dialogue
-    Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"ConversantAnimation","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"ActorAnimation","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Item","value":"-1","type":6,"typeString":"CustomFieldType_Item"},{"title":"ItemQuantity","value":"0","type":1,"typeString":"CustomFieldType_Number"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":[],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'
+    Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"ConversantAnimation","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"ActorAnimation","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Item","value":"-1","type":6,"typeString":"CustomFieldType_Item"},{"title":"","value":"","type":0,"typeString":"CustomFieldType_Text"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":[],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'
