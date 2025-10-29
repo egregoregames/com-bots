@@ -13,6 +13,7 @@ using ComBots.UI.Utilities.Listing;
 using TMPro;
 using UnityEngine.UI;
 using ComBots.UI.Utilities;
+using ComBots.Global.UI.ItemReceival;
 
 namespace ComBots.Global.UI.Dialogue
 {
@@ -47,6 +48,10 @@ namespace ComBots.Global.UI.Dialogue
         [SerializeField] private float _continueIcon_moveAmount;
         [SerializeField] private Transform _endIcon;
         [SerializeField] private float _endIcon_scaleAmount;
+
+        // =============== Item-Receival =============== //
+        [Header("Item-Receival")]
+        [SerializeField] private WC_ItemReceival _itemReceival;
 
         // ============ Responses ============ //
         private Response[] _pcArgs_responsesBuffer;
@@ -138,7 +143,7 @@ namespace ComBots.Global.UI.Dialogue
             }
             else if (args is State_Dialogue_Args standardArgs)
             {
-                ShowSubtitle(standardArgs.Dialogue, 2f, true);
+                ShowSubtitle(standardArgs.Dialogue, true);
                 DisplayGUI();
             }
         }
@@ -178,9 +183,9 @@ namespace ComBots.Global.UI.Dialogue
 
         #endregion
 
-        #region InputManager API
+        #region IInputHandler Interface
         // ----------------------------------------
-        // Input 
+        // IInputHandler Interface
         // ----------------------------------------
 
         public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
@@ -305,9 +310,8 @@ namespace ComBots.Global.UI.Dialogue
                 // float charsPerSecond = DialogueManager.displaySettings.subtitleSettings.subtitleCharsPerSecond;
                 // float minSeconds = DialogueManager.displaySettings.subtitleSettings.minSubtitleSeconds;
                 //float animationDuration = Mathf.Max(minSeconds, subtitle.formattedText.text.Length / charsPerSecond);
-                float animationDuration = 0.02f * subtitle.formattedText.text.Length; // 20 chars per second
                 AnalyzeSubtitle(subtitle, out bool isLastSubtitle, out bool _);
-                ShowSubtitle(subtitle.formattedText.text, animationDuration, isLastSubtitle);
+                ShowSubtitle(subtitle.formattedText.text, isLastSubtitle);
             }
 
             // Play conversant animation
@@ -379,7 +383,7 @@ namespace ComBots.Global.UI.Dialogue
                                                SendMessageOptions.DontRequireReceiver);
         }
 
-        private async void ShowSubtitle(string text, float animationDuration, bool isLast)
+        private async void ShowSubtitle(string text, bool isLast)
         {
             MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
 
