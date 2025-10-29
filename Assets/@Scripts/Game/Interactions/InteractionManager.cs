@@ -28,9 +28,55 @@ namespace ComBots.Game.Interactions
             _activeInteractions = null;
         }
 
-        public void StartInteraction(IInteractor interactor, IInteractable interactable)
+        #region Public API
+        // ----------------------------------------
+        // Public API 
+        // ----------------------------------------
+
+        /// <summary>
+        /// Checks if an interaction can occure before notifying the interactable.
+        /// </summary>
+        /// <param name="interactor"></param>
+        /// <param name="interactable"></param>
+        public void OnInteractorNearby(IInteractor interactor, IInteractable interactable)
         {
-            Interaction interaction = new Interaction
+            if (!interactable.IsActive)
+            {
+                return;
+            }
+            if (!interactable.CanInteract(interactor))
+            {
+                return;
+            }
+            interactable.OnInteractorNearby(interactor);
+        }
+
+        /// <summary>
+        /// Notifies the interactable that the interactor is no longer nearby.
+        /// </summary>
+        /// <param name="interactor"></param>
+        /// <param name="interactable"></param>
+        public void OnInteractorFar(IInteractor interactor, IInteractable interactable)
+        {
+            interactable.OnInteractorFar(interactor);
+        }
+
+        /// <summary>
+        /// Starts an interaction between an interactor and an interactable when possible.
+        /// </summary>
+        /// <returns> Whether the interaction was started successfully. </returns>
+        public bool StartInteraction(IInteractor interactor, IInteractable interactable)
+        {
+            if (!interactable.IsActive)
+            {
+                return false;
+            }
+            if (!interactable.CanInteract(interactor))
+            {
+                return false;
+            }
+
+            Interaction interaction = new()
             {
                 interactor = interactor,
                 interactable = interactable
@@ -38,8 +84,14 @@ namespace ComBots.Game.Interactions
             _activeInteractions.Add(interaction);
             interactor.OnInteractionStart(interactable);
             interactable.OnInteractionStart(interactor);
+            return true;
         }
 
+        /// <summary>
+        /// Ends an interaction between an interactor and an interactable.
+        /// </summary>
+        /// <param name="interactor"></param>
+        /// <param name="interactable"></param>
         public void EndInteraction(IInteractor interactor, IInteractable interactable)
         {
             for (int i = 0; i < _activeInteractions.Count; i++)
@@ -53,5 +105,7 @@ namespace ComBots.Game.Interactions
             interactor.OnInteractionEnd(interactable);
             interactable.OnInteractionEnd(interactor);
         }
+
+        #endregion
     }
 }
