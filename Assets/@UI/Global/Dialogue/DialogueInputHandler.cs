@@ -16,7 +16,7 @@ namespace ComBots.Global.UI.Dialogue
 
         public override Dependency Dependency => Dependency.Independent;
 
-        [SerializeField] private DialogueController _dialogueController;
+        [SerializeField] private WC_Dialogue _dialogueController;
 
         protected override void Init()
         {

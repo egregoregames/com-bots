@@ -1,5 +1,6 @@
 using ComBots.Global.UI.Dialogue;
 using ComBots.Utils.EntryPoints;
+using UI.Sign;
 using UnityEngine;
 
 namespace ComBots.Global.UI
@@ -16,8 +17,13 @@ namespace ComBots.Global.UI
         [SerializeField] private Sandbox.Global.UI.Menu.MenuNavigationController _menuNavigationController;
 
         [Header("Dialogue")]
-        [SerializeField] private DialogueController _dialogueController;
-        public DialogueController DialogueController => _dialogueController;
+        [SerializeField] private WC_Dialogue _dialogueController;
+        public WC_Dialogue DialogueController => _dialogueController;
+
+        // =============== Sign =============== //
+        [Header("Sign")]
+        [SerializeField] private WC_Sign _signController;
+        public WC_Sign SignController => _signController;
 
         [Header("Area Transitions")]
         [SerializeField] private StageDoorTransitions _stageDoorTransitions;

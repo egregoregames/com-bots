@@ -16,7 +16,7 @@ using ComBots.UI.Utilities;
 
 namespace ComBots.Global.UI.Dialogue
 {
-    public class DialogueController : UIController, IInputHandler, IDialogueUI
+    public class WC_Dialogue : UIController, IInputHandler, IDialogueUI
     {
         protected override string UserInterfaceName => "Global.Dialogue";
 
@@ -69,12 +69,12 @@ namespace ComBots.Global.UI.Dialogue
             // Check Display Settings
             if (DialogueManager.displaySettings != null)
             {
-                MyLogger<DialogueController>.StaticLog($"Display Settings found. Checking subtitle settings...");
-                MyLogger<DialogueController>.StaticLog($"DialogueManager.displaySettings.subtitleSettings type: {DialogueManager.displaySettings.subtitleSettings?.GetType().Name}");
+                MyLogger<WC_Dialogue>.StaticLog($"Display Settings found. Checking subtitle settings...");
+                MyLogger<WC_Dialogue>.StaticLog($"DialogueManager.displaySettings.subtitleSettings type: {DialogueManager.displaySettings.subtitleSettings?.GetType().Name}");
             }
             else
             {
-                MyLogger<DialogueController>.StaticLogWarning("DialogueManager.displaySettings is null!");
+                MyLogger<WC_Dialogue>.StaticLogWarning("DialogueManager.displaySettings is null!");
             }
 
             // ============ Animate Continue Icon ============ //
@@ -130,9 +130,9 @@ namespace ComBots.Global.UI.Dialogue
 
             if (args is State_Dialogue_PixelCrushers_Args pixelCrushersArgs)
             {
-                MyLogger<DialogueController>.StaticLog($"Starting PixelCrushers conversation '{pixelCrushersArgs.ConversationTitle}' between '{pixelCrushersArgs.Actor.GetActorName()}' and '{pixelCrushersArgs.Conversant.GetActorName()}'");
-                MyLogger<DialogueController>.StaticLog($"Current DialogueManager.dialogueUI: {DialogueManager.dialogueUI?.GetType().Name}");
-                MyLogger<DialogueController>.StaticLog($"Is this the registered UI? {ReferenceEquals(DialogueManager.dialogueUI, this)}");
+                MyLogger<WC_Dialogue>.StaticLog($"Starting PixelCrushers conversation '{pixelCrushersArgs.ConversationTitle}' between '{pixelCrushersArgs.Actor.GetActorName()}' and '{pixelCrushersArgs.Conversant.GetActorName()}'");
+                MyLogger<WC_Dialogue>.StaticLog($"Current DialogueManager.dialogueUI: {DialogueManager.dialogueUI?.GetType().Name}");
+                MyLogger<WC_Dialogue>.StaticLog($"Is this the registered UI? {ReferenceEquals(DialogueManager.dialogueUI, this)}");
                 DialogueManager.StartConversation(pixelCrushersArgs.ConversationTitle, pixelCrushersArgs.Actor.transform, pixelCrushersArgs.Conversant.transform);
                 // DisplayGUI() Will be called automatically by DialogueManager using Open()
             }
@@ -151,7 +151,7 @@ namespace ComBots.Global.UI.Dialogue
             // Stop the Pixel Crushers Dialogue
             if (DialogueManager.isConversationActive)
             {
-                MyLogger<DialogueController>.StaticLog($"PixelCrushers.DialogueManager.StopConversation()");
+                MyLogger<WC_Dialogue>.StaticLog($"PixelCrushers.DialogueManager.StopConversation()");
                 DialogueManager.StopConversation();
             }
             _dialogueTypewriter.SetInactive(true, false);
@@ -164,7 +164,7 @@ namespace ComBots.Global.UI.Dialogue
             _w_root.SetActive(false);
             // Clear args
             _args = null;
-            MyLogger<DialogueController>.StaticLog($"SetInactive()");
+            MyLogger<WC_Dialogue>.StaticLog($"SetInactive()");
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace ComBots.Global.UI.Dialogue
                     }
                     else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
                     {
-                        MyLogger<DialogueController>.StaticLog("Advancing PixelCrushers conversation.");
+                        MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
                         DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
                     }
                     else // Go back to playing state
@@ -262,12 +262,12 @@ namespace ComBots.Global.UI.Dialogue
 
         public void ShowSubtitle(Subtitle subtitle)
         {
-            MyLogger<DialogueController>.StaticLog($"ShowSubtitle called - Title: '{subtitle.dialogueEntry.Title}', Actor: '{subtitle.speakerInfo.nameInDatabase}', Text: '{subtitle.formattedText.text}', Sequence: '{subtitle.sequence}'");
+            MyLogger<WC_Dialogue>.StaticLog($"ShowSubtitle called - Title: '{subtitle.dialogueEntry.Title}', Actor: '{subtitle.speakerInfo.nameInDatabase}', Text: '{subtitle.formattedText.text}', Sequence: '{subtitle.sequence}'");
 
             // If it's empty text (like the START node), continue immediately
             if (string.IsNullOrEmpty(subtitle.formattedText.text))
             {
-                MyLogger<DialogueController>.StaticLog($"Empty subtitle, continuing...");
+                MyLogger<WC_Dialogue>.StaticLog($"Empty subtitle, continuing...");
                 StartCoroutine(ContinueAfterFrame());
                 return;
             }
@@ -275,13 +275,13 @@ namespace ComBots.Global.UI.Dialogue
             // Only skip if this is actually a player response that we want to skip
             if (subtitle.speakerInfo.nameInDatabase == "Player")
             {
-                MyLogger<DialogueController>.StaticLog($"Skipping player response: {subtitle.dialogueEntry.DialogueText}");
+                MyLogger<WC_Dialogue>.StaticLog($"Skipping player response: {subtitle.dialogueEntry.DialogueText}");
                 StartCoroutine(ContinueAfterFrame());
                 return;
             }
 
             // For NPC dialogue, show it
-            MyLogger<DialogueController>.StaticLog($"Displaying NPC dialogue from {subtitle.speakerInfo.nameInDatabase}: {subtitle.formattedText.text}");
+            MyLogger<WC_Dialogue>.StaticLog($"Displaying NPC dialogue from {subtitle.speakerInfo.nameInDatabase}: {subtitle.formattedText.text}");
 
             // Set the speaker name
             if (subtitle.speakerInfo != null && !string.IsNullOrEmpty(subtitle.speakerInfo.nameInDatabase))
@@ -297,7 +297,7 @@ namespace ComBots.Global.UI.Dialogue
             // Check if this subtitle has a very short or "None()" sequence that would cause immediate hiding
             if (string.IsNullOrEmpty(subtitle.sequence) || subtitle.sequence.Contains("None()@0"))
             {
-                MyLogger<DialogueController>.StaticLog($"Subtitle has short/empty sequence '{subtitle.sequence}', using custom timing");
+                MyLogger<WC_Dialogue>.StaticLog($"Subtitle has short/empty sequence '{subtitle.sequence}', using custom timing");
                 _dialogueTypewriter.SetActive(subtitle.formattedText.text, null);
             }
             else
@@ -365,7 +365,7 @@ namespace ComBots.Global.UI.Dialogue
             }
             catch (System.Exception ex)
             {
-                MyLogger<DialogueController>.StaticLogError($"Error analyzing subtitle: {ex.Message}");
+                MyLogger<WC_Dialogue>.StaticLogError($"Error analyzing subtitle: {ex.Message}");
                 isLast = true;
                 hasOptions = false;
             }
@@ -381,7 +381,7 @@ namespace ComBots.Global.UI.Dialogue
 
         private async void ShowSubtitle(string text, float animationDuration, bool isLast)
         {
-            MyLogger<DialogueController>.StaticLog($"Showing subtitle: {text}");
+            MyLogger<WC_Dialogue>.StaticLog($"Showing subtitle: {text}");
 
             // Hide end & continue icons
             _endIcon.gameObject.SetActive(false);
@@ -392,7 +392,7 @@ namespace ComBots.Global.UI.Dialogue
             // Don't show empty text
             if (string.IsNullOrEmpty(text))
             {
-                MyLogger<DialogueController>.StaticLog($"Empty text provided to ShowSubtitle, skipping animation");
+                MyLogger<WC_Dialogue>.StaticLog($"Empty text provided to ShowSubtitle, skipping animation");
                 return;
             }
 
@@ -423,13 +423,13 @@ namespace ComBots.Global.UI.Dialogue
                         // If this is the last subtitle, show the end icon
                         if (isLast)
                         {
-                            MyLogger<DialogueController>.StaticLog($"Showing end icon for last subtitle.");
+                            MyLogger<WC_Dialogue>.StaticLog($"Showing end icon for last subtitle.");
                             _endIcon.gameObject.SetActive(true);
                             _continueIcon.gameObject.SetActive(false);
                         }
                         else
                         {
-                            MyLogger<DialogueController>.StaticLog($"Showing continue icon for non-last subtitle.");
+                            MyLogger<WC_Dialogue>.StaticLog($"Showing continue icon for non-last subtitle.");
                             _endIcon.gameObject.SetActive(false);
                             _continueIcon.gameObject.SetActive(_COR_responses == null);
                         }
@@ -439,12 +439,12 @@ namespace ComBots.Global.UI.Dialogue
 
         public void HideSubtitle(Subtitle subtitle)
         {
-            MyLogger<DialogueController>.StaticLog($"HideSubtitle called for: '{subtitle.formattedText.text}' from speaker: '{subtitle.speakerInfo.nameInDatabase}'");
+            MyLogger<WC_Dialogue>.StaticLog($"HideSubtitle called for: '{subtitle.formattedText.text}' from speaker: '{subtitle.speakerInfo.nameInDatabase}'");
 
             // Only hide if this is not an NPC subtitle that should stay visible
             if (subtitle.speakerInfo.nameInDatabase != "Player" && !string.IsNullOrEmpty(subtitle.formattedText.text))
             {
-                MyLogger<DialogueController>.StaticLog($"Keeping NPC subtitle visible for responses");
+                MyLogger<WC_Dialogue>.StaticLog($"Keeping NPC subtitle visible for responses");
                 // Don't clear NPC subtitles immediately - they should stay visible during response selection
                 return;
             }
@@ -465,29 +465,29 @@ namespace ComBots.Global.UI.Dialogue
 
         public void HideResponses()
         {
-            MyLogger<DialogueController>.StaticLog("Hiding responses.");
+            MyLogger<WC_Dialogue>.StaticLog("Hiding responses.");
             _optionLister.SetInactive();
             _COR_responses = null;
         }
 
         public void ShowQTEIndicator(int index)
         {
-            MyLogger<DialogueController>.StaticLogWarning($"DialogueController.ShowQTEIndicator() is not implemented for index {index}.");
+            MyLogger<WC_Dialogue>.StaticLogWarning($"DialogueController.ShowQTEIndicator() is not implemented for index {index}.");
         }
 
         public void HideQTEIndicator(int index)
         {
-            MyLogger<DialogueController>.StaticLogWarning($"DialogueController.HideQTEIndicator() is not implemented for index {index}.");
+            MyLogger<WC_Dialogue>.StaticLogWarning($"DialogueController.HideQTEIndicator() is not implemented for index {index}.");
         }
 
         public void ShowAlert(string message, float duration)
         {
-            MyLogger<DialogueController>.StaticLogWarning("DialogueController.ShowAlert() is not implemented.");
+            MyLogger<WC_Dialogue>.StaticLogWarning("DialogueController.ShowAlert() is not implemented.");
         }
 
         public void HideAlert()
         {
-            MyLogger<DialogueController>.StaticLogWarning("DialogueController.HideAlert() is not implemented.");
+            MyLogger<WC_Dialogue>.StaticLogWarning("DialogueController.HideAlert() is not implemented.");
         }
 
         #region Lister API
@@ -513,7 +513,7 @@ namespace ComBots.Global.UI.Dialogue
         private void OptionLister_OnSelected(int index)
         {
             bool isBackOption;
-            MyLogger<DialogueController>.StaticLog($"Confirming selection: {index}");
+            MyLogger<WC_Dialogue>.StaticLog($"Confirming selection: {index}");
             if (_args is State_Dialogue_Args standardArgs)
             {
                 isBackOption = index >= standardArgs.OptionsArgs.Options.Length;
@@ -555,7 +555,7 @@ namespace ComBots.Global.UI.Dialogue
 
         private void StandardArgs_ShowResponses(string[] responses)
         {
-            MyLogger<DialogueController>.StaticLog($"Showing responses: {string.Join(", ", responses)}");
+            MyLogger<WC_Dialogue>.StaticLog($"Showing responses: {string.Join(", ", responses)}");
             _optionLister.SetActive(
                 responses.Length,
                 OptionLister_SetupOption,
@@ -571,7 +571,7 @@ namespace ComBots.Global.UI.Dialogue
                 yield return null;
             }
 
-            MyLogger<DialogueController>.StaticLog($"Showing {responses.Length} responses...");
+            MyLogger<WC_Dialogue>.StaticLog($"Showing {responses.Length} responses...");
 
             if (_pcArgs_responsesBuffer == null || _pcArgs_responsesBuffer.Length != responses.Length)
             {
@@ -581,7 +581,7 @@ namespace ComBots.Global.UI.Dialogue
             {
                 _pcArgs_responsesBuffer[i] = responses[i];
             }
-            MyLogger<DialogueController>.StaticLog($"Stored {responses.Length} responses in the buffer.");
+            MyLogger<WC_Dialogue>.StaticLog($"Stored {responses.Length} responses in the buffer.");
             _optionLister.SetActive(
                 responses.Length,
                 OptionLister_SetupOption,
@@ -600,7 +600,7 @@ namespace ComBots.Global.UI.Dialogue
         {
             if (!_isActive)
             {
-                MyLogger<DialogueController>.StaticLogError("Open() was called but the Dialogue Controller isn't active.");
+                MyLogger<WC_Dialogue>.StaticLogError("Open() was called but the Dialogue Controller isn't active.");
                 return;
             }
 

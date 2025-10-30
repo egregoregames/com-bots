@@ -10,7 +10,7 @@ namespace ComBots.Game.StateMachine
     {
         public static GameStateMachine I { get; private set; }
 
-        private State STATE_Playing, STATE_Dialogue, STATE_AreaTransition;
+        private State STATE_Playing, STATE_Dialogue, STATE_AreaTransition, STATE_Sign;
 
         public override Dependency Dependency => Dependency.Dependent;
 
@@ -18,15 +18,17 @@ namespace ComBots.Game.StateMachine
         [SerializeField] private InputContextConfig _overworldContextData;
         [SerializeField] private InputContextConfig _pauseContextData;
         [SerializeField] private InputContextConfig _dialogueContextData;
+        [SerializeField] private InputContextConfig _signContextData;
 
         protected override State[] InitStates(out State initialState)
         {
             STATE_Playing = new State_Playing(this);
             STATE_Dialogue = new State_Dialogue(this);
             STATE_AreaTransition = new State_AreaTransition(this);
+            STATE_Sign = new State_Sign(this);
 
             initialState = STATE_Playing;
-            return new[] { STATE_Playing, STATE_Dialogue, STATE_AreaTransition };
+            return new[] { STATE_Playing, STATE_Dialogue, STATE_AreaTransition, STATE_Sign };
         }
 
         protected override void Init()

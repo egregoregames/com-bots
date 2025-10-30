@@ -32,11 +32,11 @@ namespace ComBots.World.NPCs
         [Header("Overhead Widget")]
         [SerializeField] private Vector3 _overheadWidgetOffset;
         private const string PK_OVERHEAD_WIDGET = "NPC_Overhead_Widget";
+        private OverheadWidget _overheadWidget;
 
         [Header("Cameras")]
         public CameraTarget CameraTarget;
         /// <summary> Pool key for the overhead widget </summary>
-        private OverheadWidget _overheadWidget;
 
         // ============ State ============ //
         /// <summary> Is affected by visibility config in NPC_Config. </summary>
