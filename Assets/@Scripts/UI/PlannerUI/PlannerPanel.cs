@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System.Linq;
-using System.Threading.Tasks;
 
 public class PlannerPanel : MonoBehaviourR3
 {
@@ -29,7 +24,10 @@ public class PlannerPanel : MonoBehaviourR3
         Instance = this;
 
         AddEvents(
-            ComBotsSaveSystem.OnLoadSuccess(RefreshQuestItems));
+            ComBotsSaveSystem.OnLoadSuccess(RefreshQuestItems),
+
+            // Bad for performance but we can worry about that after the MVP
+            PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
     }
 
     private void Start()
@@ -46,7 +44,12 @@ public class PlannerPanel : MonoBehaviourR3
 
         foreach (var item in gameData.PlayerQuestTrackingData)
         {
-            
+            var newObj = Instantiate(
+                QuestItemTemplate, QuestItemTemplate.transform.parent);
+
+            var comp = newObj.GetComponent<PlannerQuestItem>();
+            comp.SetQuest(item);
+            QuestItems.Add(comp);
         }
     }
 }

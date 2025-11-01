@@ -37,11 +37,15 @@ public class PlannerQuestItem : MonoBehaviourR3
 
     private QuestTrackingDatum Quest { get; set; }
 
+    /// <summary>
+    /// Should only be called once immediately after instantiation
+    /// </summary>
+    /// <param name="value"></param>
     public void SetQuest(QuestTrackingDatum value)
     {
         Quest = value;
         ActiveQuestIndicator.SetActive(value.IsActive);
-        //TextQuestName todo, need to get the persistent data via quest ID
+        //TextQuestName = todo, need to get the persistent data via quest ID
     }
 
     protected override void Initialize()

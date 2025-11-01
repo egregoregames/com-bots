@@ -2036,41 +2036,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea73e1a219512d43a6567ea40b5b8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuName: Planner
-  description: Check you Requirements and Electives this term.
-  categoryButtons:
-  - {fileID: 3068452703778068083}
-  - {fileID: 8862224357281446149}
-  inputSO: {fileID: 11400000, guid: 394bda1ddbb12536a9de84f962a04b5e, type: 2}
-  descriptionPanel: {fileID: 0}
-  menuButton: {fileID: 0}
-  menuContent: {fileID: 0}
-  mainButtonsGameObject: {fileID: 0}
-  mainDescriptionGameObject: {fileID: 0}
-  mainTopGameObject: {fileID: 0}
-  subPlannerTabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  requirementsTab: {fileID: 3068452703778068083}
-  electivesTab: {fileID: 8862224357281446149}
-  questNameText: {fileID: 6840707707543984176}
-  questPointsText: {fileID: 5022357329241854734}
-  questDescriptionText: {fileID: 8497552815688757728}
-  setQuestGameObject: {fileID: 3569731396587848270}
-  scrollRect: {fileID: 8004036211198074356}
+  <Logging>k__BackingField: 4
+  <QuestItems>k__BackingField: []
+  <QuestItemTemplate>k__BackingField: {fileID: 2154003856367512602}
 --- !u!1 &8648463225144055292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,11 +2327,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2464491132934479117, guid: 22c0e1e9668252546bc07a4d1803b72c, type: 3}
   m_PrefabInstance: {fileID: 1326470835368567095}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3569731396587848270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2585816022407881593, guid: 22c0e1e9668252546bc07a4d1803b72c, type: 3}
-  m_PrefabInstance: {fileID: 1326470835368567095}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3700382162522594939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2372,6 +2335,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2487547480993580201}
     m_Modifications:
+    - target: {fileID: 117771893201942725, guid: 4901086962857c440819ed0971dce5f3, type: 3}
+      propertyPath: m_MinWidth
+      value: 550
+      objectReference: {fileID: 0}
+    - target: {fileID: 117771893201942725, guid: 4901086962857c440819ed0971dce5f3, type: 3}
+      propertyPath: m_PreferredWidth
+      value: 550
+      objectReference: {fileID: 0}
     - target: {fileID: 2175833380343955440, guid: 4901086962857c440819ed0971dce5f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2422,7 +2393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3383445080653069137, guid: 4901086962857c440819ed0971dce5f3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 922.5
+      value: 650
       objectReference: {fileID: 0}
     - target: {fileID: 3383445080653069137, guid: 4901086962857c440819ed0971dce5f3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2476,6 +2447,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8590088880295850930, guid: 4901086962857c440819ed0971dce5f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8657669975566852573, guid: 4901086962857c440819ed0971dce5f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2509,5 +2484,10 @@ GameObject:
 --- !u!224 &2138660785772537130 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3383445080653069137, guid: 4901086962857c440819ed0971dce5f3, type: 3}
+  m_PrefabInstance: {fileID: 3700382162522594939}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2154003856367512602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3368387822968025697, guid: 4901086962857c440819ed0971dce5f3, type: 3}
   m_PrefabInstance: {fileID: 3700382162522594939}
   m_PrefabAsset: {fileID: 0}

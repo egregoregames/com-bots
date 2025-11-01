@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -267,6 +268,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// <returns>A percentage value between 0 and 1, inclusive</returns>
     public static async Task<float> GetProgressToNextRank()
     {
+        using var block = InputBlocker.GetBlock("Getting progress to next rank");
         int rank = await GetPlayerRank();
         var rankXp = (await GetInstanceAsync()).PlayerRankExperience;
         int rankMinXp = (int)Math.Pow(rank - 1, 3);
@@ -282,6 +284,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// </summary>
     public static async void SetTerm(Term term)
     {
+        using var block = InputBlocker.GetBlock("Setting term");
         (await GetInstanceAsync()).CurrentTerm = term;
         _onTermUpdated.Invoke();
     }
@@ -299,12 +302,28 @@ public partial class PersistentGameData : MonoBehaviourR3
         return Instance;
     }
 
+    /// <summary>
+    /// Should be called even if it's the first time the user is encountering a quest
+    /// </summary>
+    /// <param name="questId"></param>
+    /// <param name="isActive"></param>
+    /// <param name="currentStep"></param>
     public static async void UpdateQuest(int questId, bool isActive, int currentStep)
     {
-        // Todo, if the player doesn't have this quest, should we auto add it??
+        using var block = InputBlocker.GetBlock("Updating quests");
 
         var quest = (await GetInstanceAsync()).PlayerQuestTrackingData
-            .First(x => x.QuestId == questId);
+            .FirstOrDefault(x => x.QuestId == questId);
+
+        if (quest == null)
+        {
+            quest = new QuestTrackingDatum()
+            {
+                QuestId = questId
+            };
+
+            (await GetInstanceAsync()).PlayerQuestTrackingData.Add(quest);
+        }
 
         quest.IsActive = isActive;
         quest.CurrentStep = currentStep;
