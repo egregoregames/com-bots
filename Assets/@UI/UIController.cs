@@ -23,7 +23,7 @@ namespace ComBots.UI.Controllers
 
         private void SetupGameObjectName()
         {
-            gameObject.name = $"[UI.Controller] {UserInterfaceName}";
+            gameObject.name = $"[Widget Controller] {UserInterfaceName}";
         }
     }
 }

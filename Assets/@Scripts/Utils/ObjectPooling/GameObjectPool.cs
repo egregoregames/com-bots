@@ -18,18 +18,38 @@ namespace ComBots.Utils.ObjectPooling
         // Stacks
         private Stack<GameObject> _available;
 
-        void Start()
+        #region Unity Lifecycle
+        // ----------------------------------------
+        // Unity Lifecycle 
+        // ----------------------------------------
+        
+        void Awake()
         {
             _available = new();
+            if (_initialSize > _maxSize)
+            {
+                _initialSize = _maxSize;
+            }
             for (int i = 0; i < _initialSize; i++)
             {
                 var obj = Instantiate();
                 Push(obj);
             }
+        }
+
+        void Start()
+        {
             PoolManager.I.RegisterPool(this);
         }
 
-        public T Pull<T>() where T : MonoBehaviour
+        #endregion
+        
+        #region Public API
+        // ----------------------------------------
+        // Public API 
+        // ----------------------------------------
+                
+        public T Pull<T>() where T : Component
         {
             GameObject obj;
             if (_available.Count == 0)
@@ -57,10 +77,19 @@ namespace ComBots.Utils.ObjectPooling
             }
         }
 
+        #endregion
+
+        #region Private Methods
+        // ----------------------------------------
+        // Private Methods 
+        // ----------------------------------------
+
         private GameObject Instantiate()
         {
             var obj = Instantiate(_prefab, _parentT);
             return obj;
         }
+        
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 using ComBots.Game.StateMachine;
+using ComBots.Global.Audio;
 using ComBots.Inputs;
 using ComBots.Logs;
 using ComBots.UI.Controllers;
@@ -9,10 +10,11 @@ using DG.Tweening;
 using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
-using ComBots.UI.Utilities.Listing;
+using ComBots.UI.Utils.Listing;
 using TMPro;
 using UnityEngine.UI;
-using ComBots.UI.Utilities;
+using ComBots.UI.Utils;
+using ComBots.UI.Dialogue;
 
 namespace ComBots.Global.UI.Dialogue
 {
@@ -47,6 +49,11 @@ namespace ComBots.Global.UI.Dialogue
         [SerializeField] private float _continueIcon_moveAmount;
         [SerializeField] private Transform _endIcon;
         [SerializeField] private float _endIcon_scaleAmount;
+
+        // =============== Sound Effects =============== //
+        [Header("Sound Effects")]
+        [SerializeField] private DialogueSoundEffects _defaultSFX;
+        [SerializeField] private TypeWriterSoundEffects _typeWriterSFX;
 
         // ============ Responses ============ //
         private Response[] _pcArgs_responsesBuffer;
@@ -147,7 +154,8 @@ namespace ComBots.Global.UI.Dialogue
         {
             if (!_isActive) { return; }
             _isActive = false;
-
+            // SFX
+            AudioManager.I.PlaySFX(_defaultSFX.EndDialogue);
             // Stop the Pixel Crushers Dialogue
             if (DialogueManager.isConversationActive)
             {
@@ -155,11 +163,9 @@ namespace ComBots.Global.UI.Dialogue
                 DialogueManager.StopConversation();
             }
             _dialogueTypewriter.SetInactive(true, false);
-
             // Hide Dialogue UI
             _continueIcon.gameObject.SetActive(false);
             _endIcon.gameObject.SetActive(false);
-
             HideResponses();
             _w_root.SetActive(false);
             // Clear args
@@ -198,10 +204,12 @@ namespace ComBots.Global.UI.Dialogue
                     if (!context.performed) { return true; }
                     if (_optionLister.IsActive) // If we have options pass the input
                     {
+                        AudioManager.I.PlaySFX(_defaultSFX.ChooseOption);
                         _optionLister.Input_Confirm();
                     }
                     else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
                     {
+                        AudioManager.I.PlaySFX(_defaultSFX.ContinueDialogue);
                         MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
                         DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
                     }
@@ -218,6 +226,7 @@ namespace ComBots.Global.UI.Dialogue
                 case DialogueInputHandler.INPUT_ACTION_NAVIGATE:
                     if (!context.performed) { return true; }
                     if (!_optionLister.IsActive) { break; }
+                    AudioManager.I.PlaySFX(_defaultSFX.NavigateOptions);
                     Vector2 inputValue = context.ReadValue<Vector2>();
                     _optionLister.Input_Navigate(inputValue);
                     return true;
@@ -298,7 +307,7 @@ namespace ComBots.Global.UI.Dialogue
             if (string.IsNullOrEmpty(subtitle.sequence) || subtitle.sequence.Contains("None()@0"))
             {
                 MyLogger<WC_Dialogue>.StaticLog($"Subtitle has short/empty sequence '{subtitle.sequence}', using custom timing");
-                _dialogueTypewriter.SetActive(subtitle.formattedText.text, null);
+                _dialogueTypewriter.SetActive(subtitle.formattedText.text, null, _typeWriterSFX);
             }
             else
             {
@@ -434,7 +443,7 @@ namespace ComBots.Global.UI.Dialogue
                             _continueIcon.gameObject.SetActive(_COR_responses == null);
                         }
                     }
-                });
+                }, _typeWriterSFX);
         }
 
         public void HideSubtitle(Subtitle subtitle)

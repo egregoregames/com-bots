@@ -1,16 +1,21 @@
+using ComBots.Global.Audio;
+using ComBots.Logs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ComBots.UI.Utilities
+namespace ComBots.UI.Utils
 {
     public class WC_Typewriter : MonoBehaviour
     {
         [Header("UI")]
         [SerializeField] private TextMeshProUGUI _text;
-
         [Header("Settings")]
         [SerializeField] private float _speedPerCharacter;
+        // =============== Sound Effects =============== //
+        [Header("Sound Effects")]
+        public TypeWriterSoundEffects _defaultSoundEffects;
+        [SerializeField] private AudioSource _audioSource;
 
         // ============ State ============ //
         public bool IsTyping { get; private set; }
@@ -21,10 +26,11 @@ namespace ComBots.UI.Utilities
         private UnityAction _onComplete;
         private int _currentIndex;
 
-        #region Unity Methods
+        #region Unity Lifecycle
         // ----------------------------------------
-        // Unity Methods 
+        // Unity Lifecycle
         // ----------------------------------------
+
         void Update()
         {
             if (!IsTyping)
@@ -43,6 +49,9 @@ namespace ComBots.UI.Utilities
             if (_currentIndex >= _fullText.Length)
             {
                 IsTyping = false;
+                _audioSource.Stop();
+                AudioManager.I.PushAudioSource(_audioSource);
+                _audioSource = null;
                 _onComplete?.Invoke();
             }
         }
@@ -53,7 +62,7 @@ namespace ComBots.UI.Utilities
         // Public API 
         // ----------------------------------------
 
-        public void SetActive(string text, UnityAction onComplete)
+        public void SetActive(string text, UnityAction onComplete, TypeWriterSoundEffects soundEffects = null)
         {
             _fullText = text;
             _onComplete = onComplete;
@@ -61,6 +70,24 @@ namespace ComBots.UI.Utilities
             _timer = 0f;
             _text.text = string.Empty;
             IsTyping = true;
+            // SFX
+            if (!_audioSource)
+            {
+                _audioSource = AudioManager.I.PullAudioSource();
+                _audioSource.loop = true;
+            }
+            if (soundEffects != null)
+            {
+                _audioSource.clip = soundEffects.TypeWriterLoop;
+            }
+            else
+            {
+                _audioSource.clip = _defaultSoundEffects.TypeWriterLoop;
+            }
+            MyLogger<WC_Typewriter>.StaticLog($"{_audioSource}");
+            MyLogger<WC_Typewriter>.StaticLog($"{_audioSource.clip}");
+            MyLogger<WC_Typewriter>.StaticLog($"{_audioSource.loop}");
+            _audioSource.Play();
         }
 
         public void SetInactive(bool fillTextInstantly, bool invokeCallback)
