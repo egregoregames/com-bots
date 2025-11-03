@@ -9,4 +9,13 @@ public class StaticQuestData : ScriptableObject
 
     [field: SerializeField]
     public string[] Steps { get; private set; }
+
+    [field: SerializeField]
+    public QuestType QuestType { get; private set; }
+}
+
+public enum QuestType
+{
+    Requirement,
+    Elective
 }

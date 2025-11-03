@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StaticGameData : MonoBehaviourR3
 {
-    private static StaticGameData _instance;
+    public static StaticGameData Instance { get; private set; }
 
     [field: SerializeField]
     public StaticQuestData[] QuestData { get; private set; }
@@ -11,7 +11,7 @@ public class StaticGameData : MonoBehaviourR3
     [RuntimeInitializeOnLoadMethod]
     private static void OnApplicationStart()
     {
-        if (_instance == null)
+        if (Instance == null)
         {
             var obj = Resources.Load<GameObject>("StaticGameData");
             Instantiate(obj);
@@ -22,18 +22,18 @@ public class StaticGameData : MonoBehaviourR3
     {
         base.Initialize();
 
-        if (_instance != null)
+        if (Instance != null)
         {
             Debug.LogError("Too many StaticGameData instance detected in scene");
         }
 
-        _instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     public static async Task<StaticGameData> GetInstanceAsync()
     {
-        while (_instance != null)
+        while (Instance != null)
         {
             await Task.Yield();
 
@@ -41,6 +41,6 @@ public class StaticGameData : MonoBehaviourR3
                 throw new TaskCanceledException();
         }
 
-        return _instance;
+        return Instance;
     }
 }

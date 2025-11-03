@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 /// <summary>
 /// In GameMaker, I tracked quest status as follows:
 /// <para />
@@ -41,6 +43,20 @@ public class QuestTrackingDatum
     public int CurrentStep { get; set; } = 0;
     public bool IsCompleted => CurrentStep == 100;
     public bool HasUnreadUpdates { get; set; } = true;
+
+    public async Task<StaticQuestData> GetQuestDataAsync()
+    {
+        return (await StaticGameData.GetInstanceAsync()).QuestData[QuestId];
+    }
+
+    /// <summary>
+    /// Make sure <see cref="StaticQuestData"/>
+    /// </summary>
+    /// <returns></returns>
+    public StaticQuestData GetQuestData()
+    {
+        
+    }
 
     public void Complete()
     {

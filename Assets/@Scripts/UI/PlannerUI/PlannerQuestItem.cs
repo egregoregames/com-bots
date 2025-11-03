@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -35,17 +36,35 @@ public class PlannerQuestItem : MonoBehaviourR3
     [field: SerializeField]
     private GameObject QuestCompleteIndicator { get; set; }
 
-    private QuestTrackingDatum Quest { get; set; }
+    /// <summary>
+    /// Check for null or use <see cref="GetQuestTrackingDatumAsync"/>
+    /// </summary>
+    public QuestTrackingDatum Quest { get; private set; }
+
+    public bool IsSelected { get; private set; }
 
     /// <summary>
     /// Should only be called once immediately after instantiation
     /// </summary>
     /// <param name="value"></param>
-    public void SetQuest(QuestTrackingDatum value)
+    public async Task SetQuest(QuestTrackingDatum value)
     {
         Quest = value;
-        ActiveQuestIndicator.SetActive(value.IsActive);
-        //TextQuestName = todo, need to get the persistent data via quest ID
+        var questData = await Quest.GetQuestDataAsync();
+        TextQuestName.text = questData.QuestName;
+        UpdateUI();
+    }
+
+    public async Task<QuestTrackingDatum> GetQuestTrackingDatumAsync()
+    {
+        while (Quest == null)
+        {
+            await Task.Yield();
+            if (!Application.isPlaying)
+                throw new TaskCanceledException();
+        }
+
+        return Quest;
     }
 
     protected override void Initialize()
@@ -54,6 +73,18 @@ public class PlannerQuestItem : MonoBehaviourR3
 
         AddEvents(
             PersistentGameData.GameEvents.OnQuestUpdated(UpdateUI));
+    }
+
+    private void UpdateUI()
+    {
+        if (Quest.IsCompleted)
+        {
+            Complete();
+            return;
+        }
+
+        ActiveQuestIndicator.SetActive(Quest.IsActive);
+        NewUpdateIndicator.SetActive(Quest.HasUnreadUpdates && !IsSelected);
     }
 
     private void UpdateUI(QuestTrackingDatum quest)
@@ -70,16 +101,7 @@ public class PlannerQuestItem : MonoBehaviourR3
 
         if (quest != Quest) return;
 
-        if (quest.IsCompleted)
-        {
-            Complete();
-            return;
-        }
-
-        if (quest.IsActive)
-        {
-            
-        }
+        UpdateUI();
     }
 
     public void Select()
@@ -87,17 +109,20 @@ public class PlannerQuestItem : MonoBehaviourR3
         BackgroundSelected.SetActive(true);
         SelectedQuestIndent.SetActive(true);
         NewUpdateIndicator.SetActive(false);
+        IsSelected = true;
         _onSelected?.Invoke(Quest);
     }
 
     public void Deselect()
     {
         BackgroundSelected.SetActive(false);
+        IsSelected = false;
         _onSelected?.Invoke(Quest);
     }
 
     public void Complete()
     {
+        QuestCompleteIndicator.SetActive(true);
         BackgroundCompleted.SetActive(true);
         ActiveQuestIndicator.SetActive(false);
     }
