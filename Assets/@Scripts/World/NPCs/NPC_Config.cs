@@ -8,14 +8,6 @@ namespace ComBots.World.NPCs
     [CreateAssetMenu(fileName = "NPC", menuName = "World/NPC/NPC Config")]
     public class NPC_Config : ScriptableObject
     {
-        // =============== Active State Config =============== //
-        [Header("Active State Config")]
-        public NPC_ActiveStateConfig ActiveStateConfig;
-
-        [Header("Conversations")]
-        [Tooltip("Conversation name in PixelCrushers Dialogue DataBase")]
-        public string conversationName;
-
         // =============== Conditions =============== //
         [System.Serializable]
         public class QuestCondition
@@ -80,12 +72,7 @@ namespace ComBots.World.NPCs
     [System.Serializable]
     public class NPC_ConversationConfig
     {
-        /// <summary>
-        /// The name of the conversation in the PixelCrushers database.
-        /// </summary>
-        public string NameInDatabase;
         // =============== Time Condition =============== //
-        [Header("Time Condition")]
         public NPC_Config.TimeCondition TimeCondition;
         // =============== Quest =============== //
         [Header("Quest Condition")]
