@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Allows other components (<see cref="PauseMenu"/>) to easily determine if 
+/// any app is open
+/// </summary>
 public class PauseMenuApp : MonoBehaviourR3
 {
     private static List<PauseMenuApp> _openMenus = new List<PauseMenuApp>();
@@ -42,7 +46,6 @@ public class PauseMenuApp : MonoBehaviourR3
         base.OnEnable();
         Inputs.Enable();
         _openMenus.Add(this);
-        //Debug.Log("MenuPanel.OnEnable");
         _onMenuOpened?.Invoke();
     }
 
@@ -50,7 +53,6 @@ public class PauseMenuApp : MonoBehaviourR3
     {
         Inputs.Disable();
         _openMenus.Remove(this);
-        //Debug.Log("MenuPanel.OnDisable");
         _onMenuClosed?.Invoke();
     }
 }

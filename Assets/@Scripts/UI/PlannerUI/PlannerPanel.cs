@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ComBots.Sandbox.Global.UI.Menu;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
 using TMPro;
 using R3.Triggers;
-using UnityEngine.UIElements;
+using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 /// <summary>
 /// Logic that controls the "Planner" app in the <see cref="PauseMenu"/>
@@ -18,8 +18,8 @@ public class PlannerPanel : MonoBehaviourR3
 {
     public static PlannerPanel Instance { get; private set; }
 
-    [field: SerializeField]
-    private List<PlannerQuestItem> QuestItems { get; set; }
+    [field: SerializeField, ReadOnly]
+    private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
 
     [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }
@@ -28,7 +28,7 @@ public class PlannerPanel : MonoBehaviourR3
     private TextMeshProUGUI QuestDescription { get; set; }
 
     [field: SerializeField]
-    private ScrollView ScrollViewQuestItems { get; set; }
+    private ScrollRect ScrollRectQuestItems { get; set; }
 
     private InputSystem_Actions Inputs { get; set; }
 
@@ -42,7 +42,7 @@ public class PlannerPanel : MonoBehaviourR3
     private new void Awake()
     {
         base.Awake();
-        QuestItems.Clear();
+        InstantiatedQuestItems.Clear();
     }
 
     protected override void Initialize()
@@ -109,25 +109,25 @@ public class PlannerPanel : MonoBehaviourR3
                 "Improper usage. Argument must be 1 (next quest) or -1 (prev quest)");
         }
 
-        if (QuestItems.Count <= 1) return;
+        if (InstantiatedQuestItems.Count <= 1) return;
 
-        var selectedQuest = QuestItems.First(x => x.IsSelected);
-        int selectedQuestIndex = QuestItems.IndexOf(selectedQuest);
+        var selectedQuest = InstantiatedQuestItems.First(x => x.IsSelected);
+        int selectedQuestIndex = InstantiatedQuestItems.IndexOf(selectedQuest);
 
         var newIndex = selectedQuestIndex + increment;
         if (newIndex < 0)
         {
             // Wrap back to bottom of quest list
-            newIndex = QuestItems.Count - 1;
+            newIndex = InstantiatedQuestItems.Count - 1;
         }
-        else if (newIndex > QuestItems.Count - 1)
+        else if (newIndex > InstantiatedQuestItems.Count - 1)
         {
             // Wrap to top of quest list
             newIndex = 0;
         }
 
         selectedQuest.Deselect();
-        QuestItems[newIndex].Select();
+        InstantiatedQuestItems[newIndex].Select();
     }
 
     private async void UpdateSelected(QuestTrackingDatum quest)
@@ -177,8 +177,8 @@ public class PlannerPanel : MonoBehaviourR3
         try
         {
             Log("Refreshing quest items");
-            QuestItems.ForEach(x => Destroy(x));
-            QuestItems.Clear();
+            InstantiatedQuestItems.ForEach(x => Destroy(x));
+            InstantiatedQuestItems.Clear();
 
             var gameData = await PersistentGameData.GetInstanceAsync();
 
@@ -211,7 +211,7 @@ public class PlannerPanel : MonoBehaviourR3
 
                 // This guarantees that 
                 await comp.SetQuest(item);
-                QuestItems.Add(comp);
+                InstantiatedQuestItems.Add(comp);
             }
 
             QuestItemTemplate.SetActive(false);
@@ -221,11 +221,11 @@ public class PlannerPanel : MonoBehaviourR3
 
             if (selected == -1)
             {
-                QuestItems.First().Select();
+                InstantiatedQuestItems.First().Select();
             }
             else
             {
-                QuestItems.First(x => x.Quest.QuestId == selected).Select();
+                InstantiatedQuestItems.First(x => x.Quest.QuestId == selected).Select();
             }
         }
         catch (Exception e)

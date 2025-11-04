@@ -50,12 +50,13 @@ public class QuestTrackingDatum
     }
 
     /// <summary>
-    /// Make sure <see cref="StaticQuestData"/>
+    /// Make sure <see cref="StaticGameData.Instance"/> is not null or 
+    /// use <see cref="GetQuestDataAsync"/>
     /// </summary>
     /// <returns></returns>
     public StaticQuestData GetQuestData()
     {
-        
+        return StaticGameData.Instance.QuestData[QuestId];
     }
 
     public void Complete()
