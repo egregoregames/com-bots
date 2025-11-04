@@ -25,5 +25,5 @@ public class dataHolderItem : ScriptableObject
 	public bool fromCorruptDisc;
 	[TextArea(3, 10)]
 	public string flavorText;
-	public GameObject image;	
+	public Texture2D image;	
 }
