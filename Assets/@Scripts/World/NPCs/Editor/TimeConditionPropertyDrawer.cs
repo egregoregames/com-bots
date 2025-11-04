@@ -213,10 +213,10 @@ namespace ComBots.World.NPCs.Editor
         {
             switch (timeOfDay)
             {
-                case TimeOfDay.Morning: return "Morning (6 AM - 12 PM)";
-                case TimeOfDay.Day: return "Day (12 PM - 6 PM)";
-                case TimeOfDay.Evening: return "Evening (6 PM - 12 AM)";
-                case TimeOfDay.Night: return "Night (12 AM - 6 AM)";
+                case TimeOfDay.Morning: return "Morning";
+                case TimeOfDay.Day: return "Day";
+                case TimeOfDay.Evening: return "Evening";
+                case TimeOfDay.Night: return "Night";
                 default: return timeOfDay.ToString();
             }
         }
