@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PauseMenuApp : MonoBehaviourR3
 {
-    private static List<PauseMenuApp> _openMenus = new List<PauseMenuApp>();
+    private static List<PauseMenuApp> _openMenus = new();
     public static bool IsAnyOpen => _openMenus.Count > 0;
 
     private static UnityEventR3 _onMenuOpened = new();
