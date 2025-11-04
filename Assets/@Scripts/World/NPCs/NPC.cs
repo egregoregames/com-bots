@@ -18,19 +18,14 @@ namespace ComBots.World.NPCs
         // ============ IInteractable Implementation ============ //
         public Transform T => transform;
         public bool IsActive => _isActive;
-        // =============== Config =============== //
-        [Header("Config")]
-        [SerializeField] private NPC_Config _config;
-        // =============== Conversation Name =============== //
-        [Header("Conversation Name")]
-        [Tooltip("Conversation name in PixelCrushers Dialogue DataBase")]
-        public string _conversationName;
         // =============== Active State Config =============== //
         [Header("Active State Config")]
         public NPC_ActiveStateConfig ActiveStateConfig;
         // =============== PixelCrushers Dialogue =============== //
         [Header("PixelCrushers Dialogue")]
         [SerializeField] private DialogueActor _dialogueActor;
+        [Tooltip("Conversation name in PixelCrushers Dialogue DataBase")]
+        public string _conversationTitle;
 
         [Header("Visuals")]
         [SerializeField] private Animator _animator;
@@ -73,6 +68,8 @@ namespace ComBots.World.NPCs
         void Awake()
         {
             _initialRot = transform.rotation;
+            if (!_visual)
+                _visual = transform.GetChild(0).gameObject;
             if (_visual)
                 _isActive = _visual.activeSelf;
         }
@@ -125,7 +122,7 @@ namespace ComBots.World.NPCs
             transform.rotation = Quaternion.LookRotation(interactor.T.position - transform.position);
             transform.eulerAngles = new(0, transform.eulerAngles.y, 0);
             // Determine the right conversation
-            State_Dialogue_PixelCrushers_Args args = new(_conversationName, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
+            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 
