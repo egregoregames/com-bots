@@ -1,9 +1,9 @@
-using PixelCrushers.DialogueSystem;
+using ComBots.Global.UI;
 using R3;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -94,9 +94,6 @@ namespace ComBots.Sandbox.Global.UI.Menu
                 h => Inputs.Player.OpenMenu.performed += h,
                 h => Inputs.Player.OpenMenu.performed -= h);
 
-            DialogueManager.instance.conversationStarted += ConversationStarted;
-            DialogueManager.instance.conversationEnded += ConversationEnded;
-
             AddEvents(
                 onOpenMenu.Subscribe(_ => ToggleIsOpen(!IsOpen)),
                 PauseMenuApp.OnMenuOpened(UpdateVisibility),
@@ -106,12 +103,22 @@ namespace ComBots.Sandbox.Global.UI.Menu
             SetVisibility(Visibility.Partial);
         }
 
-        private void ConversationEnded(Transform t)
+        IEnumerator Start()
+        {
+            while( GlobalUIRefs.I == null)
+            {
+                yield return null;
+            }
+            GlobalUIRefs.I.DialogueController.OnDialogueStarted += ConversationStarted;
+            GlobalUIRefs.I.DialogueController.OnDialogueEnded += ConversationEnded;
+        }
+
+        private void ConversationEnded()
         {
             SetBottomBarVisible(true);
         }
 
-        private void ConversationStarted(Transform t)
+        private void ConversationStarted()
         {
             SetBottomBarVisible(false);
         }
@@ -130,8 +137,8 @@ namespace ComBots.Sandbox.Global.UI.Menu
         private new void OnDestroy()
         {
             base.OnDestroy();
-            DialogueManager.instance.conversationStarted -= ConversationStarted;
-            DialogueManager.instance.conversationEnded -= ConversationEnded;
+            GlobalUIRefs.I.DialogueController.OnDialogueStarted -= ConversationStarted;
+            GlobalUIRefs.I.DialogueController.OnDialogueEnded -= ConversationEnded;
         }
 
         private void ToggleIsOpen(bool isOpen)
@@ -142,8 +149,8 @@ namespace ComBots.Sandbox.Global.UI.Menu
 
         private void UpdateVisibility()
         {
-            
-            if (DialogueManager.instance.activeConversation != null || PauseMenuApp.IsAnyOpen)
+
+            if (GlobalUIRefs.I.DialogueController.IsDialogueActive || PauseMenuApp.IsAnyOpen)
             {
                 SetVisibility(Visibility.Hidden);
             }

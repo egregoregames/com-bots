@@ -15,6 +15,7 @@ using TMPro;
 using UnityEngine.UI;
 using ComBots.UI.Utils;
 using ComBots.UI.Dialogue;
+using UnityEngine.Events;
 
 namespace ComBots.Global.UI.Dialogue
 {
@@ -58,11 +59,13 @@ namespace ComBots.Global.UI.Dialogue
         // ============ Responses ============ //
         private Response[] _pcArgs_responsesBuffer;
         private Coroutine _COR_responses;
-
-        // Args
+        // =============== Public Events =============== //
+        public UnityAction OnDialogueStarted;
+        public UnityAction OnDialogueEnded;
+        public bool IsDialogueActive => _isActive;   
+        // =============== Cache =============== //
         private IState_Dialogue_Args _args;
-
-        // IDialogueUI implementation
+        // =============== IDialogueUI implementation =============== //
         public event EventHandler<SelectedResponseEventArgs> SelectedResponseHandler;
 
         #region Initialization & Disposal
@@ -171,6 +174,8 @@ namespace ComBots.Global.UI.Dialogue
             // Clear args
             _args = null;
             MyLogger<WC_Dialogue>.StaticLog($"SetInactive()");
+            // Events
+            OnDialogueEnded?.Invoke();
         }
 
         /// <summary>
@@ -612,6 +617,7 @@ namespace ComBots.Global.UI.Dialogue
                 MyLogger<WC_Dialogue>.StaticLogError("Open() was called but the Dialogue Controller isn't active.");
                 return;
             }
+            OnDialogueStarted?.Invoke();
 
             // Show UI
             _w_root.SetActive(true);
