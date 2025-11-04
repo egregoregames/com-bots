@@ -33,7 +33,7 @@ public class dataHolderSoftware : ScriptableObject
 {
 	public bool allDataEntered;
 	public string softwareName;
-	public GameObject image; //just graphic? not model?
+	public Texture2D image; //just graphic? not model?
 	public ScriptableObject aura;
 	public int ramCost;
 	public int omegaEnergyCost;
