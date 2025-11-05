@@ -47,6 +47,10 @@ public class MonoBehaviourR3 : MonoBehaviour
         Initialize();
     }
 
+    /// <summary>
+    /// Hot-reload compatible initialization code. Can be used in place of Awake
+    /// in many cases, and OnEnable in some cases
+    /// </summary>
     protected virtual void Initialize()
     {
         
