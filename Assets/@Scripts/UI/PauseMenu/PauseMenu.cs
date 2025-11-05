@@ -97,7 +97,7 @@ public class PauseMenu : MonoBehaviourR3
         SubscribeToDialogueManagerEvents();
 
         AddEvents(
-            onOpenMenu.Subscribe(_ => ToggleIsOpen(!IsOpen)),
+            onOpenMenu.Subscribe(_ => OnOpenMenuInput()),
             PauseMenuApp.OnMenuOpened(UpdateVisibility),
             PauseMenuApp.OnMenuClosed(UpdateVisibility));
 
@@ -132,6 +132,17 @@ public class PauseMenu : MonoBehaviourR3
         UpdatePosition();
     }
     #endregion
+
+    private void OnOpenMenuInput()
+    {
+        if (DialogueManager.instance == null) 
+            return;
+
+        if (DialogueManager.instance.isConversationActive) 
+            return;
+
+        ToggleIsOpen(!IsOpen);
+    }
 
     private async void SubscribeToDialogueManagerEvents()
     {
