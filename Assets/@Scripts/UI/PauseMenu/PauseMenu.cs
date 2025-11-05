@@ -94,8 +94,7 @@ public class PauseMenu : MonoBehaviourR3
             h => Inputs.Player.OpenMenu.performed += h,
             h => Inputs.Player.OpenMenu.performed -= h);
 
-        DialogueManager.instance.conversationStarted += ConversationStarted;
-        DialogueManager.instance.conversationEnded += ConversationEnded;
+        SubscribeToDialogueManagerEvents();
 
         AddEvents(
             onOpenMenu.Subscribe(_ => ToggleIsOpen(!IsOpen)),
@@ -130,6 +129,20 @@ public class PauseMenu : MonoBehaviourR3
     }
     #endregion
 
+    private async void SubscribeToDialogueManagerEvents()
+    {
+        while (DialogueManager.instance == null)
+        {
+            await Task.Yield();
+
+            if (!Application.isPlaying)
+                throw new TaskCanceledException();
+        }
+
+        DialogueManager.instance.conversationStarted += ConversationStarted;
+        DialogueManager.instance.conversationEnded += ConversationEnded;
+    }
+
     /// <summary>
     /// Opens the full-screen planner app.
     /// </summary>
@@ -154,9 +167,16 @@ public class PauseMenu : MonoBehaviourR3
         UpdateVisibility();
     }
 
-    private void UpdateVisibility()
+    private async void UpdateVisibility()
     {
-            
+        while (DialogueManager.instance == null)
+        {
+            await Task.Yield();
+
+            if (!Application.isPlaying)
+                throw new TaskCanceledException();
+        }
+
         if (DialogueManager.instance.activeConversation != null || PauseMenuApp.IsAnyOpen)
         {
             SetVisibility(Visibility.Hidden);
