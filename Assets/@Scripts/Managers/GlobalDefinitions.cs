@@ -6,7 +6,6 @@ namespace ComBots.Managers
     {
         public VitalDefinition EnduranceVital;
         public VitalDefinition EnergyVital;
-
         public StatDefinition Accuracy;
         public StatDefinition BeamAttack;
         public StatDefinition BeamDefense;
