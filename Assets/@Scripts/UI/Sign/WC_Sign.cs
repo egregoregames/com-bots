@@ -28,6 +28,7 @@ namespace UI.Sign
         // =============== Sound Effects =============== //
         [Header("Sound Effects")]
         [SerializeField] private AudioClip _sfx_read;
+        [SerializeField] private AudioClip _sfx_end;
         
         // =============== Animation Settings =============== //
         [Header("Animation Settings")]
@@ -107,6 +108,8 @@ namespace UI.Sign
 
         public void SetInactive()
         {
+            // Sound
+            AudioManager.I.PlaySFX(_sfx_end);
             // Stop any ongoing animations and delayed calls
             _widget.transform.DOKill();
             _endIcon.DOKill();

@@ -62,9 +62,11 @@ namespace ComBots.Global.UI.Dialogue
         // =============== Public Events =============== //
         public UnityAction OnDialogueStarted;
         public UnityAction OnDialogueEnded;
-        public bool IsDialogueActive => _isActive;   
+        public bool IsDialogueActive => _isActive;
         // =============== Cache =============== //
         private IState_Dialogue_Args _args;
+        private bool _isFirstSubtitle;
+        private bool _previouslyHadOptions;
         // =============== IDialogueUI implementation =============== //
         public event EventHandler<SelectedResponseEventArgs> SelectedResponseHandler;
 
@@ -132,7 +134,9 @@ namespace ComBots.Global.UI.Dialogue
                 SetInactive();
             }
             _isActive = true;
+            _previouslyHadOptions = false;
             _args = args;
+            _isFirstSubtitle = true;
 
             // Hide icons at start
             _endIcon.gameObject.SetActive(false);
@@ -148,7 +152,7 @@ namespace ComBots.Global.UI.Dialogue
             }
             else if (args is State_Dialogue_Args standardArgs)
             {
-                ShowSubtitle(standardArgs.Dialogue, 2f, true);
+                ShowSubtitle(standardArgs.Dialogue, true, false);
                 DisplayGUI();
             }
         }
@@ -214,7 +218,6 @@ namespace ComBots.Global.UI.Dialogue
                     }
                     else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
                     {
-                        AudioManager.I.PlaySFX(_defaultSFX.ContinueDialogue);
                         MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
                         DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
                     }
@@ -316,12 +319,8 @@ namespace ComBots.Global.UI.Dialogue
             }
             else
             {
-                // float charsPerSecond = DialogueManager.displaySettings.subtitleSettings.subtitleCharsPerSecond;
-                // float minSeconds = DialogueManager.displaySettings.subtitleSettings.minSubtitleSeconds;
-                //float animationDuration = Mathf.Max(minSeconds, subtitle.formattedText.text.Length / charsPerSecond);
-                float animationDuration = 0.02f * subtitle.formattedText.text.Length; // 20 chars per second
-                AnalyzeSubtitle(subtitle, out bool isLastSubtitle, out bool _);
-                ShowSubtitle(subtitle.formattedText.text, animationDuration, isLastSubtitle);
+                AnalyzeSubtitle(subtitle, out bool isLast, out bool _);
+                ShowSubtitle(subtitle.formattedText.text, isLast, _previouslyHadOptions);
             }
 
             // Play conversant animation
@@ -393,9 +392,20 @@ namespace ComBots.Global.UI.Dialogue
                                                SendMessageOptions.DontRequireReceiver);
         }
 
-        private async void ShowSubtitle(string text, float animationDuration, bool isLast)
+        private async void ShowSubtitle(string text, bool isLast, bool previouslyHadOptions)
         {
-            MyLogger<WC_Dialogue>.StaticLog($"Showing subtitle: {text}");
+            MyLogger<WC_Dialogue>.StaticLog($"Showing subtitle: {text}, isfirst: {_isFirstSubtitle}, isLast: {isLast}, previouslyHadOptions: {previouslyHadOptions}");
+
+            // Play the SFX if this isn't the first or last subtitle
+            if (!_isFirstSubtitle && !previouslyHadOptions)
+            {
+                AudioManager.I.PlaySFX(_defaultSFX.ContinueDialogue);
+            }
+
+            if (_isFirstSubtitle)
+            {
+                _isFirstSubtitle = false;
+            }
 
             // Hide end & continue icons
             _endIcon.gameObject.SetActive(false);
@@ -480,6 +490,7 @@ namespace ComBots.Global.UI.Dialogue
         public void HideResponses()
         {
             MyLogger<WC_Dialogue>.StaticLog("Hiding responses.");
+            _previouslyHadOptions = _optionLister.IsActive;
             _optionLister.SetInactive();
             _COR_responses = null;
         }
