@@ -1,36 +1,42 @@
+using R3;
 using System;
 using System.Collections;
-using ComBots.src;
-using ComBots.Utils.EntryPoints;
 using UnityEngine;
 
-public class StageDoorTransitions : EntryPointMono
+public class StageDoorTransitions : MonoBehaviourR3
 {
-    public override Dependency Dependency => Dependency.Independent;
-
+    public static StageDoorTransitions Instance { get; private set; }
     public RectTransform leftPanel;
     public RectTransform rightPanel;
     public float transitionTime = 0.5f;
     public UISo uiSo;
     public float delayTime = 0.5f;
-    public AreaDisplayPanels AreaDisplayPanels;
     private Vector2 leftStartPos, rightStartPos;
     private Vector2 leftClosePos, rightClosePos;
 
     private bool _isClosed = false;
     private bool _isOpen = true;
 
-    protected override void Init()
+    private new void Awake()
     {
-        uiSo.TriggerAreaChangeTransition += DoTransition;
+        base.Awake();
         leftStartPos = leftPanel.anchoredPosition;
         rightStartPos = rightPanel.anchoredPosition;
         leftClosePos = Vector2.zero;
         rightClosePos = Vector2.zero;
     }
 
-    public override void Dispose()
+    protected override void Initialize()
     {
+        base.Initialize();
+        Instance = this;
+        uiSo.TriggerAreaChangeTransition += DoTransition;
+    }
+
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
+        uiSo.TriggerAreaChangeTransition -= DoTransition;
     }
 
     public void DoTransition(Action onTransitionMidPoint, Action onTransitionEnd, string bannerLabel)
@@ -54,7 +60,7 @@ public class StageDoorTransitions : EntryPointMono
 
         if (!string.IsNullOrEmpty(bannerLabel))
         {
-            AreaDisplayPanels.DoTransition(bannerLabel);
+            AreaDisplayPanels.Instance.DoTransition(bannerLabel);
         }
         
         onTransitionEnd?.Invoke();

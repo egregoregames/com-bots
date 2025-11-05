@@ -2,8 +2,10 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class AreaDisplayPanels : MonoBehaviour
+public class AreaDisplayPanels : MonoBehaviourR3
 {
+    public static AreaDisplayPanels Instance { get; private set; }
+
     private RectTransform rectTransform;
     private Vector2 initialPosition;
     private Coroutine moveRoutine;
@@ -11,6 +13,13 @@ public class AreaDisplayPanels : MonoBehaviour
     public float moveDuration = 0.2f; // Time to move
     public float holdTime = 1f; // Time to stay visible
     private string _currentAreaName;
+    public Vector2 targetPosition = new(0, -180);
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        Instance = this;
+    }
 
     void Start()
     {
@@ -42,7 +51,6 @@ public class AreaDisplayPanels : MonoBehaviour
     {
         _currentAreaName = areaName;
         GetComponentInChildren<TextMeshProUGUI>().text = areaName;
-        Vector2 targetPosition = new (0, -180);
 
         // Move down
         yield return MoveToPosition(targetPosition, moveDuration);

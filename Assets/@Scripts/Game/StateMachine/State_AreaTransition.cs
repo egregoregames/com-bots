@@ -46,7 +46,7 @@ namespace ComBots.Game.StateMachine
                     {
                         portalArgs.Player.Controller.FreezeMovement = true;
 
-                        GlobalUIRefs.I.StageDoorTransitions.DoTransition(
+                        StageDoorTransitions.Instance.DoTransition(
                             onTransitionMidPoint: () =>
                             {
                                 // Change background music
@@ -66,7 +66,7 @@ namespace ComBots.Game.StateMachine
                     {
                         roomArgs.Player.Controller.FreezeMovement = true;
 
-                        GlobalUIRefs.I.StageDoorTransitions.DoTransition(
+                        StageDoorTransitions.Instance.DoTransition(
                             onTransitionMidPoint: () =>
                             {
                                 // Change background music

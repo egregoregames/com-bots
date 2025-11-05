@@ -14,17 +14,12 @@ namespace ComBots.Global.UI
         [SerializeField] private DialogueController _dialogueController;
         public DialogueController DialogueController => _dialogueController;
 
-        [Header("Area Transitions")]
-        [SerializeField] private StageDoorTransitions _stageDoorTransitions;
-        public StageDoorTransitions StageDoorTransitions => _stageDoorTransitions;
-
         protected override void Init()
         {
             //Independent
             //_menuController.TryInit();
             //_menuNavigationController.TryInit();
             _dialogueController.TryInit();
-            _stageDoorTransitions.TryInit();
             I = this;
         }
 
