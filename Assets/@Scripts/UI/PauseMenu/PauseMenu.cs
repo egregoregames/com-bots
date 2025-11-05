@@ -119,8 +119,12 @@ public class PauseMenu : MonoBehaviourR3
     private new void OnDestroy()
     {
         base.OnDestroy();
-        DialogueManager.instance.conversationStarted -= ConversationStarted;
-        DialogueManager.instance.conversationEnded -= ConversationEnded;
+
+        if (DialogueManager.instance != null)
+        {
+            DialogueManager.instance.conversationStarted -= ConversationStarted;
+            DialogueManager.instance.conversationEnded -= ConversationEnded;
+        }
     }
 
     private void Update()
