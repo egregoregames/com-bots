@@ -7,7 +7,7 @@ public class dataHolderBotBasic : ScriptableObject
 	public string botName;
 	public GameObject modelAlly;
 	public GameObject modelFoe;
-	public GameObject blueprintImage;
+	public Texture2D blueprintImage;
 	public ScriptableObject combatForm1;
 	public ScriptableObject combatForm2;
 	public ScriptableObject combatForm3;

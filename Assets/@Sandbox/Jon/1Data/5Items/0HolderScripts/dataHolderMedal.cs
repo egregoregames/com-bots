@@ -9,5 +9,5 @@ public class dataHolderMedal : ScriptableObject
 	public string flavorText;
 	[TextArea(3, 10)]
 	public string effectText;
-	public GameObject image;	
+	public Texture2D image;	
 }
