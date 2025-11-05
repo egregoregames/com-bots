@@ -198,7 +198,7 @@ namespace ComBots.World.NPCs
 
         private void UpdateActiveStatus(Term term, TimeOfDay timeOfDay)
         {
-            Debug.Log($"NPC.UpdateActiveStatus({term}, {timeOfDay})");
+            //Debug.Log($"NPC.UpdateActiveStatus({term}, {timeOfDay})");
             // Check currentterm in visibility config.terms
             bool isTimeConditionSatisfied = ActiveStateConfig.TimeCondition.IsStatisfied(term, timeOfDay);
             SetActive(isTimeConditionSatisfied);
