@@ -1,6 +1,7 @@
 using ComBots.Game;
 using ComBots.Utils.EntryPoints;
 using R3;
+using Sirenix.Utilities;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,34 +17,18 @@ public class AudioManager : MonoBehaviourR3
     [Header("Audio Source")]
     [SerializeField] private AudioSource _musicSource;
 
+    [field: SerializeField]
+    private UISo UISo { get; set; }
+
     protected override void Initialize()
     {
         base.Initialize();
 
         Instance = this;
 
-        SubscribeToBackgroundMusicSelectedEvent();
-    }
-
-    private async void SubscribeToBackgroundMusicSelectedEvent()
-    {
-        while (GlobalConfig.I == null)
-        {
-            await Task.Yield();
-
-            if (!Application.isPlaying)
-                throw new TaskCanceledException();
-        }
-
-        static void Unassign(Action<AudioClip> h)
-        {
-            if (GlobalConfig.I != null)
-                GlobalConfig.I.UISo.OnBackgroundMusicSelected -= h;
-        }
-
         var onOpenMenu = Observable.FromEvent<AudioClip>(
-            h => GlobalConfig.I.UISo.OnBackgroundMusicSelected += h,
-            Unassign);
+            h => UISo.OnBackgroundMusicSelected += h,
+            h => UISo.OnBackgroundMusicSelected -= h);
 
         AddEvents(
             onOpenMenu.Subscribe(TrySetBackgroundMusic)

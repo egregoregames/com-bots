@@ -37,6 +37,9 @@ namespace StarterAssets
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
 
+        [field: SerializeField]
+        private InputSO InputSO { get; set; }
+
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
@@ -167,12 +170,12 @@ namespace StarterAssets
 
         public void AllowPlayerInput()
         {
-            GlobalConfig.I.InputSO.CanPlayerMove = true;
+            InputSO.CanPlayerMove = true;
         }
 
         public void DisAllowPlayerInput()
         {
-            GlobalConfig.I.InputSO.CanPlayerMove = false;
+            InputSO.CanPlayerMove = false;
         }
 
         private void FixedUpdate()
