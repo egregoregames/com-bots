@@ -1,6 +1,5 @@
 using System.Collections;
 using ComBots.Game.Players;
-using ComBots.Global.Audio;
 using ComBots.Global.UI;
 using ComBots.Global.UI.Dialogue;
 using ComBots.Global.UI.Menu;
@@ -9,6 +8,9 @@ using UnityEngine;
 
 namespace ComBots.Global
 {
+    /// <summary>
+    /// Soon to be deprecated, JC 2025-11-05
+    /// </summary>
     public class GlobalEntryPoint : MonoBehaviour
     {
         public static bool IsInitialized { get; private set; }
@@ -21,14 +23,9 @@ namespace ComBots.Global
         [Header("UI")]
         [SerializeField] private GlobalUIRefs _globalUIRefs;
 
-        [Header("Audio")]
-        [SerializeField] private AudioManager _audioManager;
-
         void Start()
         {
             //// Independent initialization
-            // Audio
-            _audioManager.TryInit();
             // UI
             _globalUIRefs.TryInit();
             // Input

@@ -1,7 +1,6 @@
 using ComBots.Game.Players;
 using ComBots.Game.Portals;
 using ComBots.Game.Worlds.Rooms;
-using ComBots.Global.Audio;
 using ComBots.Global.UI;
 using ComBots.Global.UI.Dialogue;
 using ComBots.Inputs;
@@ -51,7 +50,7 @@ namespace ComBots.Game.StateMachine
                             onTransitionMidPoint: () =>
                             {
                                 // Change background music
-                                AudioManager.I.TrySetBackgroundMusic(portalArgs.NewBackgroundMusic);
+                                AudioManager.TrySetBackgroundMusic(portalArgs.NewBackgroundMusic);
                                 // Teleport player
                                 portalArgs.Portal.TeleportPlayer(portalArgs.Player);
                             },
@@ -71,7 +70,7 @@ namespace ComBots.Game.StateMachine
                             onTransitionMidPoint: () =>
                             {
                                 // Change background music
-                                AudioManager.I.TrySetBackgroundMusic(roomArgs.Room.clip);
+                                AudioManager.TrySetBackgroundMusic(roomArgs.Room.clip);
                                 // Teleport player
                                 roomArgs.Room.TeleportPlayerToRoom(roomArgs.Player);
                             },
