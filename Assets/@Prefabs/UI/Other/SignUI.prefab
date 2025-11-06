@@ -25,18 +25,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507011180570308015}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2896288452435835537}
+  m_Father: {fileID: 7492817627371208690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 396, y: -111}
-  m_SizeDelta: {x: 62.818, y: 62.818}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -63.591064, y: -33.408997}
+  m_SizeDelta: {x: 62.817993, y: 62.818}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &2407621987128743143
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2896288452435835537}
   - component: {fileID: 1844864011842710650}
-  - component: {fileID: 2759941247931432021}
   - component: {fileID: 6937357518948376239}
   - component: {fileID: 2931482802671607159}
   - component: {fileID: 2121965508189380996}
@@ -110,7 +109,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7492817627371208690}
-  - {fileID: 2456361274029516300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -130,7 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d2942cd8f373543ad592fb8901c92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Sign.WC_Sign
-  _widget: {fileID: 2039150009418772908}
+  <Logging>k__BackingField: 4
+  _widget: {fileID: 7932257229017135891}
   _text: {fileID: 3478756745758393731}
   _endIcon: {fileID: 2456361274029516300}
   _iconAnimDuration: 0.45
@@ -140,18 +139,6 @@ MonoBehaviour:
   _sfx_end: {fileID: 8300000, guid: 5a17ff6467faebe4f9ebd7cdc29e6718, type: 3}
   _widgetExpandDuration: 0.3
   _widgetCollapseDuration: 0.2
---- !u!114 &2759941247931432021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039150009418772908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd9bce685ac2dd4797db5d881caa1ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComBots.Signs.SignInputHandler
 --- !u!223 &6937357518948376239
 Canvas:
   m_ObjectHideFlags: 0
@@ -390,6 +377,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 238717882220166331}
+  - {fileID: 2456361274029516300}
   m_Father: {fileID: 2896288452435835537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

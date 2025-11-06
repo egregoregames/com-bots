@@ -75,7 +75,7 @@ public class Sign : MonoBehaviourR3, IInteractable
 
     public bool CanInteract(IInteractor interactor)
     {
-        return interactor is Player;
+        return interactor is Player && !SignUI.IsOpen;
     }
 
     public void OnInteractionStart(IInteractor interactor)

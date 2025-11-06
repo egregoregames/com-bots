@@ -9,8 +9,12 @@ using UnityEngine.InputSystem;
 
 public class SignUI : MonoBehaviourR3
 {
+    private static SignUI _instance;
+
     private static UnityEventR3 _onClosed = new();
     public static IDisposable OnClosed(Action x) => _onClosed.Subscribe(x);
+
+    public static bool IsOpen => _instance._widget.activeInHierarchy;
 
     [SerializeField] private GameObject _widget;
     [SerializeField] private TextMeshProUGUI _text;
@@ -56,7 +60,7 @@ public class SignUI : MonoBehaviourR3
     {
         base.Initialize();
         Inputs = new();
-
+        _instance = this;
         var onInteract = Observable.FromEvent<InputAction.CallbackContext>(
             h => Inputs.Player.Interact.performed += h,
             h => Inputs.Player.Interact.performed -= h);
