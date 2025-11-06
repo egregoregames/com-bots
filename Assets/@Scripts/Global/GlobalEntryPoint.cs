@@ -2,8 +2,6 @@ using System.Collections;
 using ComBots.Game.Players;
 using ComBots.Global.Audio;
 using ComBots.Global.UI;
-using ComBots.Global.UI.Dialogue;
-using ComBots.Global.UI.Menu;
 using ComBots.Inputs;
 using UnityEngine;
 
@@ -15,8 +13,6 @@ namespace ComBots.Global
 
         [Header("Input")]
         [SerializeField] private InputManager _inputManager;
-        [SerializeField] private DialogueInputHandler _dialogueInputHandler;
-        //[SerializeField] private MenuInputHandler _menuInputHandler;
 
         [Header("UI")]
         [SerializeField] private GlobalUIRefs _globalUIRefs;
@@ -33,7 +29,6 @@ namespace ComBots.Global
             _globalUIRefs.TryInit();
             // Input
             _inputManager.TryInit();
-            _dialogueInputHandler.TryInit();
             //_menuInputHandler.TryInit();
             
             //// Dependent initialization

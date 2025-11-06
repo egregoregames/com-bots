@@ -17,639 +17,629 @@ using ComBots.UI.Utils;
 using ComBots.UI.Dialogue;
 using UnityEngine.Events;
 
-namespace ComBots.Global.UI.Dialogue
+public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 {
-    public class WC_Dialogue : UIController, IInputHandler, IDialogueUI
+    private bool _isActive;
+
+    public static WC_Dialogue Instance { get; private set; }
+
+    [Header("UI")]
+    [SerializeField] private GameObject _w_root;
+
+    [Header("Dialogue")]
+    [SerializeField] private WC_Typewriter _dialogueTypewriter;
+
+    [Header("Utility Lister")]
+    [SerializeField] private WC_Lister<WC_DialogueOption> _optionLister;
+
+    [Header("Dialogue Events")]
+    [SerializeField] private DialogueSystemEvents _dialogueSystemEvents;
+
+    [Header("NameTag")]
+    [SerializeField] private GameObject _nametag;
+    [SerializeField] private Image _nametagIcon;
+    [SerializeField] private TextMeshProUGUI _nametagText;
+
+    [Header("End & Continue Icons")]
+    [SerializeField] private float _iconSpeed;
+    [SerializeField] private Transform _continueIcon;
+    [SerializeField] private float _continueIcon_moveAmount;
+    [SerializeField] private Transform _endIcon;
+    [SerializeField] private float _endIcon_scaleAmount;
+
+    [Header("Sound Effects")]
+    [SerializeField] private DialogueSoundEffects _defaultSFX;
+    [SerializeField] private TypeWriterSoundEffects _typeWriterSFX;
+
+    // ============ Responses ============ //
+    private Response[] _pcArgs_responsesBuffer;
+    private Coroutine _COR_responses;
+
+    // =============== Public Events =============== //
+    public UnityAction OnDialogueStarted;
+    public UnityAction OnDialogueEnded;
+    public bool IsDialogueActive => _isActive;
+
+    // =============== Cache =============== //
+    private IState_Dialogue_Args _args;
+    private bool _isFirstSubtitle;
+    private bool _previouslyHadOptions;
+
+    // =============== IDialogueUI implementation =============== //
+    public event EventHandler<SelectedResponseEventArgs> SelectedResponseHandler;
+
+    private new void Awake()
     {
-        protected override string UserInterfaceName => "Global.Dialogue";
+        base.Awake();
+        _w_root.SetActive(false);
+    }
 
-        public override Dependency Dependency => Dependency.Independent;
+    #region Initialization & Disposal
+    protected override void Initialize()
+    {
+        base.Initialize();
+        Instance = this;
 
-        private bool _isActive;
+        // Register this as the DialogueManager's UI
+        DialogueManager.dialogueUI = this;
 
-        [Header("UI")]
-        [SerializeField] private GameObject _w_root;
-
-        [Header("Dialogue")]
-        [SerializeField] private WC_Typewriter _dialogueTypewriter;
-
-        [Header("Utility Lister")]
-        [SerializeField] private WC_Lister<WC_DialogueOption> _optionLister;
-
-        [Header("Dialogue Events")]
-        [SerializeField] private DialogueSystemEvents _dialogueSystemEvents;
-
-        [Header("NameTag")]
-        [SerializeField] private GameObject _nametag;
-        [SerializeField] private Image _nametagIcon;
-        [SerializeField] private TextMeshProUGUI _nametagText;
-
-        [Header("End & Continue Icons")]
-        [SerializeField] private float _iconSpeed;
-        [SerializeField] private Transform _continueIcon;
-        [SerializeField] private float _continueIcon_moveAmount;
-        [SerializeField] private Transform _endIcon;
-        [SerializeField] private float _endIcon_scaleAmount;
-
-        // =============== Sound Effects =============== //
-        [Header("Sound Effects")]
-        [SerializeField] private DialogueSoundEffects _defaultSFX;
-        [SerializeField] private TypeWriterSoundEffects _typeWriterSFX;
-
-        // ============ Responses ============ //
-        private Response[] _pcArgs_responsesBuffer;
-        private Coroutine _COR_responses;
-        // =============== Public Events =============== //
-        public UnityAction OnDialogueStarted;
-        public UnityAction OnDialogueEnded;
-        public bool IsDialogueActive => _isActive;
-        // =============== Cache =============== //
-        private IState_Dialogue_Args _args;
-        private bool _isFirstSubtitle;
-        private bool _previouslyHadOptions;
-        // =============== IDialogueUI implementation =============== //
-        public event EventHandler<SelectedResponseEventArgs> SelectedResponseHandler;
-
-        #region Initialization & Disposal
-        // ----------------------------------------
-        // Initialization & Disposal
-        // ----------------------------------------
-        protected override void Init()
+        // Check Display Settings
+        if (DialogueManager.displaySettings != null)
         {
-            // Register this as the DialogueManager's UI
-            DialogueManager.dialogueUI = this;
-            // Check Display Settings
-            if (DialogueManager.displaySettings != null)
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Display Settings found. Checking subtitle settings...");
-                MyLogger<WC_Dialogue>.StaticLog($"DialogueManager.displaySettings.subtitleSettings type: {DialogueManager.displaySettings.subtitleSettings?.GetType().Name}");
-            }
-            else
-            {
-                MyLogger<WC_Dialogue>.StaticLogWarning("DialogueManager.displaySettings is null!");
-            }
-
-            // ============ Animate Continue Icon ============ //
-            Vector3 startPos = _continueIcon.localPosition;
-            Vector3 targetPos = startPos + Vector3.up * _continueIcon_moveAmount;
-            _continueIcon.DOLocalMoveY(targetPos.y, _iconSpeed)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo);
-
-            // ============ Animate End Icon ============ //
-            Vector3 startScale = _endIcon.localScale;
-            Vector3 targetScale = startScale * _endIcon_scaleAmount;
-            _endIcon.DOScale(targetScale, _iconSpeed)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo);
+            MyLogger<WC_Dialogue>.StaticLog($"Display Settings found. Checking subtitle settings...");
+            MyLogger<WC_Dialogue>.StaticLog($"DialogueManager.displaySettings.subtitleSettings type: {DialogueManager.displaySettings.subtitleSettings?.GetType().Name}");
+        }
+        else
+        {
+            MyLogger<WC_Dialogue>.StaticLogWarning("DialogueManager.displaySettings is null!");
         }
 
-        public override void Dispose()
-        {
-            // Unregister from DialogueManager if we're the active UI
-            if (ReferenceEquals(DialogueManager.dialogueUI, this))
-            {
-                DialogueManager.dialogueUI = null;
-            }
+        // ============ Animate Continue Icon ============ //
+        Vector3 startPos = _continueIcon.localPosition;
+        Vector3 targetPos = startPos + Vector3.up * _continueIcon_moveAmount;
+        _continueIcon.DOLocalMoveY(targetPos.y, _iconSpeed)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
 
-            _w_root = null;
-            _dialogueTypewriter = null;
-            _optionLister?.Dispose();
-            _optionLister = null;
-            _continueIcon = null;
-            _endIcon = null;
-            _args = null;
+        // ============ Animate End Icon ============ //
+        Vector3 startScale = _endIcon.localScale;
+        Vector3 targetScale = startScale * _endIcon_scaleAmount;
+        _endIcon.DOScale(targetScale, _iconSpeed)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
+        _optionLister?.Dispose();
+    }
+    #endregion
+
+    #region State Machine API
+
+    public void SetActive(IState_Dialogue_Args args)
+    {
+        if (_isActive)
+        {
+            SetInactive();
         }
-        #endregion
+        _isActive = true;
+        _previouslyHadOptions = false;
+        _args = args;
+        _isFirstSubtitle = true;
 
-        #region State Machine API
-        // ----------------------------------------
-        // Game State Machine API
-        // ----------------------------------------
+        // Hide icons at start
+        _endIcon.gameObject.SetActive(false);
+        _continueIcon.gameObject.SetActive(false);
 
-        public void SetActive(IState_Dialogue_Args args)
+        if (args is State_Dialogue_PixelCrushers_Args pixelCrushersArgs)
         {
-            if (_isActive)
-            {
-                SetInactive();
-            }
-            _isActive = true;
-            _previouslyHadOptions = false;
-            _args = args;
-            _isFirstSubtitle = true;
-
-            // Hide icons at start
-            _endIcon.gameObject.SetActive(false);
-            _continueIcon.gameObject.SetActive(false);
-
-            if (args is State_Dialogue_PixelCrushers_Args pixelCrushersArgs)
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Starting PixelCrushers conversation '{pixelCrushersArgs.ConversationTitle}' between '{pixelCrushersArgs.Actor.GetActorName()}' and '{pixelCrushersArgs.Conversant.GetActorName()}'");
-                MyLogger<WC_Dialogue>.StaticLog($"Current DialogueManager.dialogueUI: {DialogueManager.dialogueUI?.GetType().Name}");
-                MyLogger<WC_Dialogue>.StaticLog($"Is this the registered UI? {ReferenceEquals(DialogueManager.dialogueUI, this)}");
-                DialogueManager.StartConversation(pixelCrushersArgs.ConversationTitle, pixelCrushersArgs.Actor.transform, pixelCrushersArgs.Conversant.transform);
-                // DisplayGUI() Will be called automatically by DialogueManager using Open()
-            }
-            else if (args is State_Dialogue_Args standardArgs)
-            {
-                ShowSubtitle(standardArgs.Dialogue, true, false);
-                DisplayGUI();
-            }
+            MyLogger<WC_Dialogue>.StaticLog($"Starting PixelCrushers conversation '{pixelCrushersArgs.ConversationTitle}' between '{pixelCrushersArgs.Actor.GetActorName()}' and '{pixelCrushersArgs.Conversant.GetActorName()}'");
+            MyLogger<WC_Dialogue>.StaticLog($"Current DialogueManager.dialogueUI: {DialogueManager.dialogueUI?.GetType().Name}");
+            MyLogger<WC_Dialogue>.StaticLog($"Is this the registered UI? {ReferenceEquals(DialogueManager.dialogueUI, this)}");
+            DialogueManager.StartConversation(pixelCrushersArgs.ConversationTitle, pixelCrushersArgs.Actor.transform, pixelCrushersArgs.Conversant.transform);
+            // DisplayGUI() Will be called automatically by DialogueManager using Open()
         }
-
-        public void SetInactive()
+        else if (args is State_Dialogue_Args standardArgs)
         {
-            if (!_isActive) { return; }
-            _isActive = false;
-            // SFX
-            AudioManager.I.PlaySFX(_defaultSFX.EndDialogue);
-            // Stop the Pixel Crushers Dialogue
-            if (DialogueManager.isConversationActive)
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"PixelCrushers.DialogueManager.StopConversation()");
-                DialogueManager.StopConversation();
-            }
-            _dialogueTypewriter.SetInactive(true, false);
-            // Hide Dialogue UI
-            _continueIcon.gameObject.SetActive(false);
-            _endIcon.gameObject.SetActive(false);
-            HideResponses();
-            _w_root.SetActive(false);
-            // Clear args
-            _args = null;
-            MyLogger<WC_Dialogue>.StaticLog($"SetInactive()");
-            // Events
-            OnDialogueEnded?.Invoke();
-        }
-
-        /// <summary>
-        /// This must be called by the state machine when the dialogue state is exited.
-        /// </summary>
-        public void OnExit()
-        {
-            // Clear args after handling
-            _args = null;
-        }
-
-        #endregion
-
-        #region InputManager API
-        // ----------------------------------------
-        // Input 
-        // ----------------------------------------
-
-        public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
-        {
-            // Ignore input while text is animating
-            if (_dialogueTypewriter.IsTyping)
-            {
-                return true; // Consume the input but don't process it
-            }
-
-            // Handle non-lister inputs (like proceeding through dialogue)
-            switch (actionName)
-            {
-                case DialogueInputHandler.INPUT_ACTION_CONFIRM:
-                    if (!context.performed) { return true; }
-                    if (_optionLister.IsActive) // If we have options pass the input
-                    {
-                        AudioManager.I.PlaySFX(_defaultSFX.ChooseOption);
-                        _optionLister.Input_Confirm();
-                    }
-                    else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
-                    {
-                        MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
-                        DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
-                    }
-                    else // Go back to playing state
-                    {
-                        GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
-                    }
-                    return true;
-                case DialogueInputHandler.INPUT_ACTION_CANCEL:
-                    if (!context.performed) { return true; }
-                    //GameStateMachine.I.ExitState<GameStateMachine.State_Dialogue>();
-                    // return true;
-                    return false;
-                case DialogueInputHandler.INPUT_ACTION_NAVIGATE:
-                    if (!context.performed) { return true; }
-                    if (!_optionLister.IsActive) { break; }
-                    AudioManager.I.PlaySFX(_defaultSFX.NavigateOptions);
-                    Vector2 inputValue = context.ReadValue<Vector2>();
-                    _optionLister.Input_Navigate(inputValue);
-                    return true;
-            }
-
-            return false;
-        }
-
-        public void OnInputContextEntered(InputContext context)
-        {
-        }
-
-        public void OnInputContextExited(InputContext context)
-        {
-        }
-
-        public void OnInputContextPaused(InputContext context)
-        {
-        }
-
-        public void OnInputContextResumed(InputContext context)
-        {
-        }
-        #endregion
-
-        #region Pixel Crushers API
-        // ----------------------------------------
-        // Pixel Crushers IDialogueUI Implementation
-        // ----------------------------------------
-        public void Open()
-        {
+            ShowSubtitle(standardArgs.Dialogue, true, false);
             DisplayGUI();
         }
+    }
 
-        public void Close()
+    public void SetInactive()
+    {
+        if (!_isActive) { return; }
+        _isActive = false;
+        // SFX
+        AudioManager.I.PlaySFX(_defaultSFX.EndDialogue);
+        // Stop the Pixel Crushers Dialogue
+        if (DialogueManager.isConversationActive)
         {
-            if (_isActive)
-            {
-                GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
-            }
+            MyLogger<WC_Dialogue>.StaticLog($"PixelCrushers.DialogueManager.StopConversation()");
+            DialogueManager.StopConversation();
+        }
+        _dialogueTypewriter.SetInactive(true, false);
+        // Hide Dialogue UI
+        _continueIcon.gameObject.SetActive(false);
+        _endIcon.gameObject.SetActive(false);
+        HideResponses();
+        _w_root.SetActive(false);
+        // Clear args
+        _args = null;
+        MyLogger<WC_Dialogue>.StaticLog($"SetInactive()");
+        // Events
+        OnDialogueEnded?.Invoke();
+    }
+
+    /// <summary>
+    /// This must be called by the state machine when the dialogue state is exited.
+    /// </summary>
+    public void OnExit()
+    {
+        // Clear args after handling
+        _args = null;
+    }
+
+    #endregion
+
+    #region InputManager API
+    // ----------------------------------------
+    // Input 
+    // ----------------------------------------
+
+    public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
+    {
+        // Ignore input while text is animating
+        if (_dialogueTypewriter.IsTyping)
+        {
+            return true; // Consume the input but don't process it
         }
 
-        public void ShowSubtitle(Subtitle subtitle)
+        // Handle non-lister inputs (like proceeding through dialogue)
+        switch (actionName)
         {
-            MyLogger<WC_Dialogue>.StaticLog($"ShowSubtitle called - Title: '{subtitle.dialogueEntry.Title}', Actor: '{subtitle.speakerInfo.nameInDatabase}', Text: '{subtitle.formattedText.text}', Sequence: '{subtitle.sequence}'");
-
-            // If it's empty text (like the START node), continue immediately
-            if (string.IsNullOrEmpty(subtitle.formattedText.text))
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Empty subtitle, continuing...");
-                StartCoroutine(ContinueAfterFrame());
-                return;
-            }
-
-            // Only skip if this is actually a player response that we want to skip
-            if (subtitle.speakerInfo.nameInDatabase == "Player")
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Skipping player response: {subtitle.dialogueEntry.DialogueText}");
-                StartCoroutine(ContinueAfterFrame());
-                return;
-            }
-
-            // For NPC dialogue, show it
-            MyLogger<WC_Dialogue>.StaticLog($"Displaying NPC dialogue from {subtitle.speakerInfo.nameInDatabase}: {subtitle.formattedText.text}");
-
-            // Set the speaker name
-            if (subtitle.speakerInfo != null && !string.IsNullOrEmpty(subtitle.speakerInfo.nameInDatabase))
-            {
-                _nametagText.text = subtitle.speakerInfo.nameInDatabase;
-                _nametag.SetActive(true);
-            }
-            else
-            {
-                _nametag.SetActive(false);
-            }
-
-            // Check if this subtitle has a very short or "None()" sequence that would cause immediate hiding
-            if (string.IsNullOrEmpty(subtitle.sequence) || subtitle.sequence.Contains("None()@0"))
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Subtitle has short/empty sequence '{subtitle.sequence}', using custom timing");
-                _dialogueTypewriter.SetActive(subtitle.formattedText.text, null, _typeWriterSFX);
-            }
-            else
-            {
-                AnalyzeSubtitle(subtitle, out bool isLast, out bool _);
-                ShowSubtitle(subtitle.formattedText.text, isLast, _previouslyHadOptions);
-            }
-
-            // Play conversant animation
-            if (_args is State_Dialogue_PixelCrushers_Args pcArgs && pcArgs.PlayConversantAnimation != null)
-            {
-                string value = string.Empty;
-                for (int i = 0; i < subtitle.dialogueEntry.fields.Count; i++)
+            case DialogueInputHandler.INPUT_ACTION_CONFIRM:
+                if (!context.performed) { return true; }
+                if (_optionLister.IsActive) // If we have options pass the input
                 {
-                    if (subtitle.dialogueEntry.fields[i].title == "ConversantAnimation")
-                    {
-                        value = subtitle.dialogueEntry.fields[i].value;
-                        break;
-                    }
+                    AudioManager.I.PlaySFX(_defaultSFX.ChooseOption);
+                    _optionLister.Input_Confirm();
                 }
-                if (value != string.Empty)
+                else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
                 {
-                    pcArgs.PlayConversantAnimation?.Invoke(value);
+                    MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
+                    DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
                 }
-                else
+                else // Go back to playing state
                 {
-                    pcArgs.PlayConversantAnimation?.Invoke("Talk");
+                    GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
                 }
-            }
-        }
-        #endregion
-
-        private void AnalyzeSubtitle(Subtitle subtitle, out bool isLast, out bool hasOptions)
-        {
-            try
-            {
-                var conversationModel = DialogueManager.conversationModel;
-
-                if (conversationModel == null || subtitle?.dialogueEntry == null)
-                {
-                    isLast = true;
-                    hasOptions = false;
-                    return;
-                }
-
-                // Get the state for this dialogue entry, including evaluating its links
-                var currentState = conversationModel.GetState(subtitle.dialogueEntry, includeLinks: true);
-
-                if (currentState == null)
-                {
-                    isLast = true;
-                    hasOptions = false;
-                    return;
-                }
-
-                // Check if there are any player responses available
-                hasOptions = currentState.hasAnyResponses;
-
-                // If no responses, this is the last subtitle
-                isLast = !hasOptions;
-            }
-            catch (System.Exception ex)
-            {
-                MyLogger<WC_Dialogue>.StaticLogError($"Error analyzing subtitle: {ex.Message}");
-                isLast = true;
-                hasOptions = false;
-            }
+                return true;
+            case DialogueInputHandler.INPUT_ACTION_CANCEL:
+                if (!context.performed) { return true; }
+                //GameStateMachine.I.ExitState<GameStateMachine.State_Dialogue>();
+                // return true;
+                return false;
+            case DialogueInputHandler.INPUT_ACTION_NAVIGATE:
+                if (!context.performed) { return true; }
+                if (!_optionLister.IsActive) { break; }
+                AudioManager.I.PlaySFX(_defaultSFX.NavigateOptions);
+                Vector2 inputValue = context.ReadValue<Vector2>();
+                _optionLister.Input_Navigate(inputValue);
+                return true;
         }
 
-        private IEnumerator ContinueAfterFrame()
+        return false;
+    }
+
+    public void OnInputContextEntered(InputContext context)
+    {
+    }
+
+    public void OnInputContextExited(InputContext context)
+    {
+    }
+
+    public void OnInputContextPaused(InputContext context)
+    {
+    }
+
+    public void OnInputContextResumed(InputContext context)
+    {
+    }
+    #endregion
+
+    #region Pixel Crushers API
+    // ----------------------------------------
+    // Pixel Crushers IDialogueUI Implementation
+    // ----------------------------------------
+    public void Open()
+    {
+        DisplayGUI();
+    }
+
+    public void Close()
+    {
+        if (_isActive)
         {
-            yield return null; // Wait one frame
-            DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue,
-                                               (IDialogueUI)this,
-                                               SendMessageOptions.DontRequireReceiver);
+            GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
+        }
+    }
+
+    public void ShowSubtitle(Subtitle subtitle)
+    {
+        MyLogger<WC_Dialogue>.StaticLog($"ShowSubtitle called - Title: '{subtitle.dialogueEntry.Title}', Actor: '{subtitle.speakerInfo.nameInDatabase}', Text: '{subtitle.formattedText.text}', Sequence: '{subtitle.sequence}'");
+
+        // If it's empty text (like the START node), continue immediately
+        if (string.IsNullOrEmpty(subtitle.formattedText.text))
+        {
+            MyLogger<WC_Dialogue>.StaticLog($"Empty subtitle, continuing...");
+            StartCoroutine(ContinueAfterFrame());
+            return;
         }
 
-        private async void ShowSubtitle(string text, bool isLast, bool previouslyHadOptions)
+        // Only skip if this is actually a player response that we want to skip
+        if (subtitle.speakerInfo.nameInDatabase == "Player")
         {
-            MyLogger<WC_Dialogue>.StaticLog($"Showing subtitle: {text}, isfirst: {_isFirstSubtitle}, isLast: {isLast}, previouslyHadOptions: {previouslyHadOptions}");
-
-            // Play the SFX if this isn't the first or last subtitle
-            if (!_isFirstSubtitle && !previouslyHadOptions)
-            {
-                AudioManager.I.PlaySFX(_defaultSFX.ContinueDialogue);
-            }
-
-            if (_isFirstSubtitle)
-            {
-                _isFirstSubtitle = false;
-            }
-
-            // Hide end & continue icons
-            _endIcon.gameObject.SetActive(false);
-            _continueIcon.gameObject.SetActive(false);
-            // Hide responses if any
-            HideResponses();
-
-            // Don't show empty text
-            if (string.IsNullOrEmpty(text))
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Empty text provided to ShowSubtitle, skipping animation");
-                return;
-            }
-
-            // ============ Substitute values ============ //
-            var gameData = await PersistentGameData.GetInstanceAsync();
-
-            string playerName = gameData.PlayerName;
-            string basicBot = "FlameBot"; // Default fallback
-            if (gameData.PlayerTeamBotStatusData.Count > 0)
-            {
-                basicBot = gameData.PlayerTeamBotStatusData[0].BlueprintId ?? "FlameBot";
-            }
-            // Replace player name
-            text = text.Replace("${varName}", playerName);
-            text = text.Replace("${varBasicBot.name}", basicBot);
-
-            // Display dialogue
-            _dialogueTypewriter.SetActive(text, () =>
-                {
-                    // Display options if we have them
-                    if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
-                    {
-                        StandardArgs_ShowResponses(standardArgs.OptionsArgs.Options);
-                    }
-                    else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
-                    {
-                        pcArgs.PlayConversantAnimation?.Invoke(string.Empty);
-                        // If this is the last subtitle, show the end icon
-                        if (isLast)
-                        {
-                            MyLogger<WC_Dialogue>.StaticLog($"Showing end icon for last subtitle.");
-                            _endIcon.gameObject.SetActive(true);
-                            _continueIcon.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            MyLogger<WC_Dialogue>.StaticLog($"Showing continue icon for non-last subtitle.");
-                            _endIcon.gameObject.SetActive(false);
-                            _continueIcon.gameObject.SetActive(_COR_responses == null);
-                        }
-                    }
-                }, _typeWriterSFX);
+            MyLogger<WC_Dialogue>.StaticLog($"Skipping player response: {subtitle.dialogueEntry.DialogueText}");
+            StartCoroutine(ContinueAfterFrame());
+            return;
         }
 
-        public void HideSubtitle(Subtitle subtitle)
+        // For NPC dialogue, show it
+        MyLogger<WC_Dialogue>.StaticLog($"Displaying NPC dialogue from {subtitle.speakerInfo.nameInDatabase}: {subtitle.formattedText.text}");
+
+        // Set the speaker name
+        if (subtitle.speakerInfo != null && !string.IsNullOrEmpty(subtitle.speakerInfo.nameInDatabase))
         {
-            MyLogger<WC_Dialogue>.StaticLog($"HideSubtitle called for: '{subtitle.formattedText.text}' from speaker: '{subtitle.speakerInfo.nameInDatabase}'");
-
-            // Only hide if this is not an NPC subtitle that should stay visible
-            if (subtitle.speakerInfo.nameInDatabase != "Player" && !string.IsNullOrEmpty(subtitle.formattedText.text))
-            {
-                MyLogger<WC_Dialogue>.StaticLog($"Keeping NPC subtitle visible for responses");
-                // Don't clear NPC subtitles immediately - they should stay visible during response selection
-                return;
-            }
-
-            // Clear the dialogue text for empty subtitles or player text
-            _dialogueTypewriter.SetInactive(true, false);
+            _nametagText.text = subtitle.speakerInfo.nameInDatabase;
+            _nametag.SetActive(true);
+        }
+        else
+        {
             _nametag.SetActive(false);
         }
 
-        public void ShowResponses(Subtitle subtitle, Response[] responses, float timeout)
+        // Check if this subtitle has a very short or "None()" sequence that would cause immediate hiding
+        if (string.IsNullOrEmpty(subtitle.sequence) || subtitle.sequence.Contains("None()@0"))
         {
-            if (_COR_responses != null)
+            MyLogger<WC_Dialogue>.StaticLog($"Subtitle has short/empty sequence '{subtitle.sequence}', using custom timing");
+            _dialogueTypewriter.SetActive(subtitle.formattedText.text, null, _typeWriterSFX);
+        }
+        else
+        {
+            AnalyzeSubtitle(subtitle, out bool isLast, out bool _);
+            ShowSubtitle(subtitle.formattedText.text, isLast, _previouslyHadOptions);
+        }
+
+        // Play conversant animation
+        if (_args is State_Dialogue_PixelCrushers_Args pcArgs && pcArgs.PlayConversantAnimation != null)
+        {
+            string value = string.Empty;
+            for (int i = 0; i < subtitle.dialogueEntry.fields.Count; i++)
             {
-                StopCoroutine(_COR_responses);
-            }
-            _COR_responses = StartCoroutine(Async_PCArgs_ShowResponses(responses));
-        }
-
-        public void HideResponses()
-        {
-            MyLogger<WC_Dialogue>.StaticLog("Hiding responses.");
-            _previouslyHadOptions = _optionLister.IsActive;
-            _optionLister.SetInactive();
-            _COR_responses = null;
-        }
-
-        public void ShowQTEIndicator(int index)
-        {
-            MyLogger<WC_Dialogue>.StaticLogWarning($"DialogueController.ShowQTEIndicator() is not implemented for index {index}.");
-        }
-
-        public void HideQTEIndicator(int index)
-        {
-            MyLogger<WC_Dialogue>.StaticLogWarning($"DialogueController.HideQTEIndicator() is not implemented for index {index}.");
-        }
-
-        public void ShowAlert(string message, float duration)
-        {
-            MyLogger<WC_Dialogue>.StaticLogWarning("DialogueController.ShowAlert() is not implemented.");
-        }
-
-        public void HideAlert()
-        {
-            MyLogger<WC_Dialogue>.StaticLogWarning("DialogueController.HideAlert() is not implemented.");
-        }
-
-        #region Lister API
-        // ----------------------------------------
-        // Lister API 
-        // ----------------------------------------
-
-        private void OptionLister_SetupOption(WC_DialogueOption option, int index)
-        {
-            if (_args is State_Dialogue_Args standardArgs)
-            {
-                bool isBackOption = index >= standardArgs.OptionsArgs.Options.Length;
-                option.Setup(isBackOption ? standardArgs.OptionsArgs.CancelOption : standardArgs.OptionsArgs.Options[index]);
-                return;
-            }
-            else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
-            {
-                bool isBackOption = index >= _pcArgs_responsesBuffer.Length;
-                option.Setup(isBackOption ? "Back" : _pcArgs_responsesBuffer[index].formattedText.text);
-            }
-        }
-
-        private void OptionLister_OnSelected(int index)
-        {
-            bool isBackOption;
-            MyLogger<WC_Dialogue>.StaticLog($"Confirming selection: {index}");
-            if (_args is State_Dialogue_Args standardArgs)
-            {
-                isBackOption = index >= standardArgs.OptionsArgs.Options.Length;
-                var callback = standardArgs.OptionsArgs.Callback;
-                _args = null; // Clear args before invoking callback
-                callback?.Invoke(index);
-            }
-            else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
-            {
-                // Determine if this is the back option
-                isBackOption = index >= _pcArgs_responsesBuffer.Length;
-
-                // Figure out the actor animation for this response if any
-                string animation = string.Empty;
-                if (!isBackOption)
+                if (subtitle.dialogueEntry.fields[i].title == "ConversantAnimation")
                 {
-                    for (int i = 0; i < _pcArgs_responsesBuffer[index].destinationEntry.fields.Count; i++)
-                    {
-                        if (_pcArgs_responsesBuffer[index].destinationEntry.fields[i].title == "ActorAnimation")
-                        {
-                            animation = _pcArgs_responsesBuffer[index].destinationEntry.fields[i].value;
-                            break;
-                        }
-                    }
-                    if (animation != string.Empty)
-                    {
-                        pcArgs.PlayActorAnimation?.Invoke(animation);
-                    }
-                    SelectedResponseHandler?.Invoke(this, new SelectedResponseEventArgs(_pcArgs_responsesBuffer[index]));
-                }
-                else
-                {
-                    DialogueManager.StopConversation();
+                    value = subtitle.dialogueEntry.fields[i].value;
+                    break;
                 }
             }
-        }
-
-        #endregion
-
-        private void StandardArgs_ShowResponses(string[] responses)
-        {
-            MyLogger<WC_Dialogue>.StaticLog($"Showing responses: {string.Join(", ", responses)}");
-            _optionLister.SetActive(
-                responses.Length,
-                OptionLister_SetupOption,
-                onOptionSelected: OptionLister_OnSelected,
-                true
-            );
-        }
-
-        private IEnumerator Async_PCArgs_ShowResponses(Response[] responses)
-        {
-            while (_dialogueTypewriter.IsTyping)
+            if (value != string.Empty)
             {
-                yield return null;
-            }
-
-            MyLogger<WC_Dialogue>.StaticLog($"Showing {responses.Length} responses...");
-
-            if (_pcArgs_responsesBuffer == null || _pcArgs_responsesBuffer.Length != responses.Length)
-            {
-                _pcArgs_responsesBuffer = new Response[responses.Length];
-            }
-            for (int i = 0; i < responses.Length; i++)
-            {
-                _pcArgs_responsesBuffer[i] = responses[i];
-            }
-            MyLogger<WC_Dialogue>.StaticLog($"Stored {responses.Length} responses in the buffer.");
-            _optionLister.SetActive(
-                responses.Length,
-                OptionLister_SetupOption,
-                OptionLister_OnSelected,
-                false
-            );
-            _COR_responses = null;
-        }
-
-        #region GUI Utilities
-        // ----------------------------------------
-        // GUI Utilities 
-        // ----------------------------------------
-
-        private void DisplayGUI()
-        {
-            if (!_isActive)
-            {
-                MyLogger<WC_Dialogue>.StaticLogError("Open() was called but the Dialogue Controller isn't active.");
-                return;
-            }
-            OnDialogueStarted?.Invoke();
-
-            // Show UI
-            _w_root.SetActive(true);
-
-            // Ensure icons are properly hidden when opening dialogue
-            _endIcon.gameObject.SetActive(false);
-            _continueIcon.gameObject.SetActive(false);
-
-            // Handle nametag
-            if (string.IsNullOrEmpty(_args.Nametag))
-            {
-                _nametag.SetActive(false);
+                pcArgs.PlayConversantAnimation?.Invoke(value);
             }
             else
             {
-                _nametag.SetActive(true);
-                _nametagIcon.enabled = false;
-                _nametagText.text = _args.Nametag;
+                pcArgs.PlayConversantAnimation?.Invoke("Talk");
             }
         }
-
-        #endregion
     }
+    #endregion
+
+    private void AnalyzeSubtitle(Subtitle subtitle, out bool isLast, out bool hasOptions)
+    {
+        try
+        {
+            var conversationModel = DialogueManager.conversationModel;
+
+            if (conversationModel == null || subtitle?.dialogueEntry == null)
+            {
+                isLast = true;
+                hasOptions = false;
+                return;
+            }
+
+            // Get the state for this dialogue entry, including evaluating its links
+            var currentState = conversationModel.GetState(subtitle.dialogueEntry, includeLinks: true);
+
+            if (currentState == null)
+            {
+                isLast = true;
+                hasOptions = false;
+                return;
+            }
+
+            // Check if there are any player responses available
+            hasOptions = currentState.hasAnyResponses;
+
+            // If no responses, this is the last subtitle
+            isLast = !hasOptions;
+        }
+        catch (System.Exception ex)
+        {
+            MyLogger<WC_Dialogue>.StaticLogError($"Error analyzing subtitle: {ex.Message}");
+            isLast = true;
+            hasOptions = false;
+        }
+    }
+
+    private IEnumerator ContinueAfterFrame()
+    {
+        yield return null; // Wait one frame
+        DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue,
+                                            (IDialogueUI)this,
+                                            SendMessageOptions.DontRequireReceiver);
+    }
+
+    private async void ShowSubtitle(string text, bool isLast, bool previouslyHadOptions)
+    {
+        MyLogger<WC_Dialogue>.StaticLog($"Showing subtitle: {text}, isfirst: {_isFirstSubtitle}, isLast: {isLast}, previouslyHadOptions: {previouslyHadOptions}");
+
+        // Play the SFX if this isn't the first or last subtitle
+        if (!_isFirstSubtitle && !previouslyHadOptions)
+        {
+            AudioManager.I.PlaySFX(_defaultSFX.ContinueDialogue);
+        }
+
+        if (_isFirstSubtitle)
+        {
+            _isFirstSubtitle = false;
+        }
+
+        // Hide end & continue icons
+        _endIcon.gameObject.SetActive(false);
+        _continueIcon.gameObject.SetActive(false);
+        // Hide responses if any
+        HideResponses();
+
+        // Don't show empty text
+        if (string.IsNullOrEmpty(text))
+        {
+            MyLogger<WC_Dialogue>.StaticLog($"Empty text provided to ShowSubtitle, skipping animation");
+            return;
+        }
+
+        // ============ Substitute values ============ //
+        var gameData = await PersistentGameData.GetInstanceAsync();
+
+        string playerName = gameData.PlayerName;
+        string basicBot = "FlameBot"; // Default fallback
+        if (gameData.PlayerTeamBotStatusData.Count > 0)
+        {
+            basicBot = gameData.PlayerTeamBotStatusData[0].BlueprintId ?? "FlameBot";
+        }
+        // Replace player name
+        text = text.Replace("${varName}", playerName);
+        text = text.Replace("${varBasicBot.name}", basicBot);
+
+        // Display dialogue
+        _dialogueTypewriter.SetActive(text, () =>
+            {
+                // Display options if we have them
+                if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
+                {
+                    StandardArgs_ShowResponses(standardArgs.OptionsArgs.Options);
+                }
+                else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
+                {
+                    pcArgs.PlayConversantAnimation?.Invoke(string.Empty);
+                    // If this is the last subtitle, show the end icon
+                    if (isLast)
+                    {
+                        MyLogger<WC_Dialogue>.StaticLog($"Showing end icon for last subtitle.");
+                        _endIcon.gameObject.SetActive(true);
+                        _continueIcon.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        MyLogger<WC_Dialogue>.StaticLog($"Showing continue icon for non-last subtitle.");
+                        _endIcon.gameObject.SetActive(false);
+                        _continueIcon.gameObject.SetActive(_COR_responses == null);
+                    }
+                }
+            }, _typeWriterSFX);
+    }
+
+    public void HideSubtitle(Subtitle subtitle)
+    {
+        MyLogger<WC_Dialogue>.StaticLog($"HideSubtitle called for: '{subtitle.formattedText.text}' from speaker: '{subtitle.speakerInfo.nameInDatabase}'");
+
+        // Only hide if this is not an NPC subtitle that should stay visible
+        if (subtitle.speakerInfo.nameInDatabase != "Player" && !string.IsNullOrEmpty(subtitle.formattedText.text))
+        {
+            MyLogger<WC_Dialogue>.StaticLog($"Keeping NPC subtitle visible for responses");
+            // Don't clear NPC subtitles immediately - they should stay visible during response selection
+            return;
+        }
+
+        // Clear the dialogue text for empty subtitles or player text
+        _dialogueTypewriter.SetInactive(true, false);
+        _nametag.SetActive(false);
+    }
+
+    public void ShowResponses(Subtitle subtitle, Response[] responses, float timeout)
+    {
+        if (_COR_responses != null)
+        {
+            StopCoroutine(_COR_responses);
+        }
+        _COR_responses = StartCoroutine(Async_PCArgs_ShowResponses(responses));
+    }
+
+    public void HideResponses()
+    {
+        MyLogger<WC_Dialogue>.StaticLog("Hiding responses.");
+        _previouslyHadOptions = _optionLister.IsActive;
+        _optionLister.SetInactive();
+        _COR_responses = null;
+    }
+
+    public void ShowQTEIndicator(int index)
+    {
+        MyLogger<WC_Dialogue>.StaticLogWarning($"DialogueController.ShowQTEIndicator() is not implemented for index {index}.");
+    }
+
+    public void HideQTEIndicator(int index)
+    {
+        MyLogger<WC_Dialogue>.StaticLogWarning($"DialogueController.HideQTEIndicator() is not implemented for index {index}.");
+    }
+
+    public void ShowAlert(string message, float duration)
+    {
+        MyLogger<WC_Dialogue>.StaticLogWarning("DialogueController.ShowAlert() is not implemented.");
+    }
+
+    public void HideAlert()
+    {
+        MyLogger<WC_Dialogue>.StaticLogWarning("DialogueController.HideAlert() is not implemented.");
+    }
+
+    #region Lister API
+    // ----------------------------------------
+    // Lister API 
+    // ----------------------------------------
+
+    private void OptionLister_SetupOption(WC_DialogueOption option, int index)
+    {
+        if (_args is State_Dialogue_Args standardArgs)
+        {
+            bool isBackOption = index >= standardArgs.OptionsArgs.Options.Length;
+            option.Setup(isBackOption ? standardArgs.OptionsArgs.CancelOption : standardArgs.OptionsArgs.Options[index]);
+            return;
+        }
+        else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
+        {
+            bool isBackOption = index >= _pcArgs_responsesBuffer.Length;
+            option.Setup(isBackOption ? "Back" : _pcArgs_responsesBuffer[index].formattedText.text);
+        }
+    }
+
+    private void OptionLister_OnSelected(int index)
+    {
+        bool isBackOption;
+        MyLogger<WC_Dialogue>.StaticLog($"Confirming selection: {index}");
+        if (_args is State_Dialogue_Args standardArgs)
+        {
+            isBackOption = index >= standardArgs.OptionsArgs.Options.Length;
+            var callback = standardArgs.OptionsArgs.Callback;
+            _args = null; // Clear args before invoking callback
+            callback?.Invoke(index);
+        }
+        else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
+        {
+            // Determine if this is the back option
+            isBackOption = index >= _pcArgs_responsesBuffer.Length;
+
+            // Figure out the actor animation for this response if any
+            string animation = string.Empty;
+            if (!isBackOption)
+            {
+                for (int i = 0; i < _pcArgs_responsesBuffer[index].destinationEntry.fields.Count; i++)
+                {
+                    if (_pcArgs_responsesBuffer[index].destinationEntry.fields[i].title == "ActorAnimation")
+                    {
+                        animation = _pcArgs_responsesBuffer[index].destinationEntry.fields[i].value;
+                        break;
+                    }
+                }
+                if (animation != string.Empty)
+                {
+                    pcArgs.PlayActorAnimation?.Invoke(animation);
+                }
+                SelectedResponseHandler?.Invoke(this, new SelectedResponseEventArgs(_pcArgs_responsesBuffer[index]));
+            }
+            else
+            {
+                DialogueManager.StopConversation();
+            }
+        }
+    }
+
+    #endregion
+
+    private void StandardArgs_ShowResponses(string[] responses)
+    {
+        MyLogger<WC_Dialogue>.StaticLog($"Showing responses: {string.Join(", ", responses)}");
+        _optionLister.SetActive(
+            responses.Length,
+            OptionLister_SetupOption,
+            onOptionSelected: OptionLister_OnSelected,
+            true
+        );
+    }
+
+    private IEnumerator Async_PCArgs_ShowResponses(Response[] responses)
+    {
+        while (_dialogueTypewriter.IsTyping)
+        {
+            yield return null;
+        }
+
+        MyLogger<WC_Dialogue>.StaticLog($"Showing {responses.Length} responses...");
+
+        if (_pcArgs_responsesBuffer == null || _pcArgs_responsesBuffer.Length != responses.Length)
+        {
+            _pcArgs_responsesBuffer = new Response[responses.Length];
+        }
+        for (int i = 0; i < responses.Length; i++)
+        {
+            _pcArgs_responsesBuffer[i] = responses[i];
+        }
+        MyLogger<WC_Dialogue>.StaticLog($"Stored {responses.Length} responses in the buffer.");
+        _optionLister.SetActive(
+            responses.Length,
+            OptionLister_SetupOption,
+            OptionLister_OnSelected,
+            false
+        );
+        _COR_responses = null;
+    }
+
+    #region GUI Utilities
+    // ----------------------------------------
+    // GUI Utilities 
+    // ----------------------------------------
+
+    private void DisplayGUI()
+    {
+        if (!_isActive)
+        {
+            MyLogger<WC_Dialogue>.StaticLogError("Open() was called but the Dialogue Controller isn't active.");
+            return;
+        }
+        OnDialogueStarted?.Invoke();
+
+        // Show UI
+        _w_root.SetActive(true);
+
+        // Ensure icons are properly hidden when opening dialogue
+        _endIcon.gameObject.SetActive(false);
+        _continueIcon.gameObject.SetActive(false);
+
+        // Handle nametag
+        if (string.IsNullOrEmpty(_args.Nametag))
+        {
+            _nametag.SetActive(false);
+        }
+        else
+        {
+            _nametag.SetActive(true);
+            _nametagIcon.enabled = false;
+            _nametagText.text = _args.Nametag;
+        }
+    }
+
+    #endregion
 }

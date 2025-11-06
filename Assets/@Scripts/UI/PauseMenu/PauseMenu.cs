@@ -1,4 +1,5 @@
 using ComBots.Global.UI;
+using PixelCrushers.DialogueSystem;
 using R3;
 using System;
 using System.Collections;
@@ -109,8 +110,8 @@ namespace ComBots.Sandbox.Global.UI.Menu
             {
                 yield return null;
             }
-            GlobalUIRefs.I.DialogueController.OnDialogueStarted += ConversationStarted;
-            GlobalUIRefs.I.DialogueController.OnDialogueEnded += ConversationEnded;
+            WC_Dialogue.Instance.OnDialogueStarted += ConversationStarted;
+            WC_Dialogue.Instance.OnDialogueEnded += ConversationEnded;
         }
 
         private void ConversationEnded()
@@ -137,8 +138,8 @@ namespace ComBots.Sandbox.Global.UI.Menu
         private new void OnDestroy()
         {
             base.OnDestroy();
-            GlobalUIRefs.I.DialogueController.OnDialogueStarted -= ConversationStarted;
-            GlobalUIRefs.I.DialogueController.OnDialogueEnded -= ConversationEnded;
+            WC_Dialogue.Instance.OnDialogueStarted -= ConversationStarted;
+            WC_Dialogue.Instance.OnDialogueEnded -= ConversationEnded;
         }
 
         private void ToggleIsOpen(bool isOpen)
@@ -150,7 +151,7 @@ namespace ComBots.Sandbox.Global.UI.Menu
         private void UpdateVisibility()
         {
 
-            if (GlobalUIRefs.I.DialogueController.IsDialogueActive || PauseMenuApp.IsAnyOpen)
+            if (WC_Dialogue.Instance.IsDialogueActive || PauseMenuApp.IsAnyOpen)
             {
                 SetVisibility(Visibility.Hidden);
             }
