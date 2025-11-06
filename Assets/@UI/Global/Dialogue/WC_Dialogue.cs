@@ -3,19 +3,21 @@ using ComBots.Global.Audio;
 using ComBots.Inputs;
 using ComBots.Logs;
 using ComBots.UI.Controllers;
+using ComBots.UI.Dialogue;
+using ComBots.UI.Utils;
+using ComBots.UI.Utils.Listing;
 using ComBots.Utils.EntryPoints;
-using UnityEngine;
-using UnityEngine.InputSystem;
 using DG.Tweening;
 using PixelCrushers.DialogueSystem;
+using R3;
 using System;
 using System.Collections;
-using ComBots.UI.Utils.Listing;
 using TMPro;
-using UnityEngine.UI;
-using ComBots.UI.Utils;
-using ComBots.UI.Dialogue;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 {
@@ -68,6 +70,8 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
     // =============== IDialogueUI implementation =============== //
     public event EventHandler<SelectedResponseEventArgs> SelectedResponseHandler;
 
+    private InputSystem_Actions Inputs { get; set; }
+
     private new void Awake()
     {
         base.Awake();
@@ -79,6 +83,7 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
     {
         base.Initialize();
         Instance = this;
+        Inputs = new();
 
         // Register this as the DialogueManager's UI
         DialogueManager.dialogueUI = this;
@@ -94,6 +99,7 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
             MyLogger<WC_Dialogue>.StaticLogWarning("DialogueManager.displaySettings is null!");
         }
 
+        // These can probably go in Awake
         // ============ Animate Continue Icon ============ //
         Vector3 startPos = _continueIcon.localPosition;
         Vector3 targetPos = startPos + Vector3.up * _continueIcon_moveAmount;
@@ -107,6 +113,71 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
         _endIcon.DOScale(targetScale, _iconSpeed)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
+
+        var onCancel = Observable.FromEvent<InputAction.CallbackContext>(
+            h => Inputs.UI.Cancel.performed += h,
+            h => Inputs.UI.Cancel.performed -= h);
+
+        var onSubmit = Observable.FromEvent<InputAction.CallbackContext>(
+            h => Inputs.UI.Submit.performed += h,
+            h => Inputs.UI.Submit.performed -= h);
+
+        var onNavigate = Observable.FromEvent<InputAction.CallbackContext>(
+            h => Inputs.UI.Navigate.performed += h,
+            h => Inputs.UI.Navigate.performed -= h);
+
+        AddEvents(
+            onCancel.Subscribe(OnCancel),
+            onSubmit.Subscribe(OnSubmit),
+            onNavigate.Subscribe(OnNavigate));
+    }
+
+    private void OnNavigate(InputAction.CallbackContext context)
+    {
+        if (_dialogueTypewriter.IsTyping) 
+            return;
+
+        if (!_optionLister.IsActive) 
+            return;
+
+        AudioManager.I.PlaySFX(_defaultSFX.NavigateOptions);
+        Vector2 inputValue = context.ReadValue<Vector2>();
+        _optionLister.Input_Navigate(inputValue);
+    }
+
+    private void OnSubmit(InputAction.CallbackContext context)
+    {
+        if (_dialogueTypewriter.IsTyping) return;
+
+        if (_optionLister.IsActive) // If we have options pass the input
+        {
+            AudioManager.I.PlaySFX(_defaultSFX.ChooseOption);
+            _optionLister.Input_Confirm();
+            return;
+        }
+
+        MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
+        DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
+
+        // Maybe this could listen to a conversation ended event
+        // GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        if (_dialogueTypewriter.IsTyping) return;
+        //GameStateMachine.I.ExitState<GameStateMachine.State_Dialogue>();
+    }
+
+    private new void OnEnable()
+    {
+        base.OnEnable();
+        Inputs.Enable();
+    }
+
+    private void OnDisable()
+    {
+        Inputs.Disable();
     }
 
     private new void OnDestroy()
@@ -182,73 +253,6 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
         _args = null;
     }
 
-    #endregion
-
-    #region InputManager API
-    // ----------------------------------------
-    // Input 
-    // ----------------------------------------
-
-    public bool HandleInput(InputAction.CallbackContext context, string actionName, InputFlags inputFlag)
-    {
-        // Ignore input while text is animating
-        if (_dialogueTypewriter.IsTyping)
-        {
-            return true; // Consume the input but don't process it
-        }
-
-        // Handle non-lister inputs (like proceeding through dialogue)
-        switch (actionName)
-        {
-            case DialogueInputHandler.INPUT_ACTION_CONFIRM:
-                if (!context.performed) { return true; }
-                if (_optionLister.IsActive) // If we have options pass the input
-                {
-                    AudioManager.I.PlaySFX(_defaultSFX.ChooseOption);
-                    _optionLister.Input_Confirm();
-                }
-                else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
-                {
-                    MyLogger<WC_Dialogue>.StaticLog("Advancing PixelCrushers conversation.");
-                    DialogueManager.instance.SendMessage(DialogueSystemMessages.OnConversationContinue, (IDialogueUI)this, SendMessageOptions.DontRequireReceiver);
-                }
-                else // Go back to playing state
-                {
-                    GameStateMachine.I.SetState<GameStateMachine.State_Playing>(null);
-                }
-                return true;
-            case DialogueInputHandler.INPUT_ACTION_CANCEL:
-                if (!context.performed) { return true; }
-                //GameStateMachine.I.ExitState<GameStateMachine.State_Dialogue>();
-                // return true;
-                return false;
-            case DialogueInputHandler.INPUT_ACTION_NAVIGATE:
-                if (!context.performed) { return true; }
-                if (!_optionLister.IsActive) { break; }
-                AudioManager.I.PlaySFX(_defaultSFX.NavigateOptions);
-                Vector2 inputValue = context.ReadValue<Vector2>();
-                _optionLister.Input_Navigate(inputValue);
-                return true;
-        }
-
-        return false;
-    }
-
-    public void OnInputContextEntered(InputContext context)
-    {
-    }
-
-    public void OnInputContextExited(InputContext context)
-    {
-    }
-
-    public void OnInputContextPaused(InputContext context)
-    {
-    }
-
-    public void OnInputContextResumed(InputContext context)
-    {
-    }
     #endregion
 
     #region Pixel Crushers API
@@ -426,30 +430,30 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 
         // Display dialogue
         _dialogueTypewriter.SetActive(text, () =>
+        {
+            // Display options if we have them
+            if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
             {
-                // Display options if we have them
-                if (_args is State_Dialogue_Args standardArgs && standardArgs.OptionsArgs != null)
+                StandardArgs_ShowResponses(standardArgs.OptionsArgs.Options);
+            }
+            else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
+            {
+                pcArgs.PlayConversantAnimation?.Invoke(string.Empty);
+                // If this is the last subtitle, show the end icon
+                if (isLast)
                 {
-                    StandardArgs_ShowResponses(standardArgs.OptionsArgs.Options);
+                    MyLogger<WC_Dialogue>.StaticLog($"Showing end icon for last subtitle.");
+                    _endIcon.gameObject.SetActive(true);
+                    _continueIcon.gameObject.SetActive(false);
                 }
-                else if (_args is State_Dialogue_PixelCrushers_Args pcArgs)
+                else
                 {
-                    pcArgs.PlayConversantAnimation?.Invoke(string.Empty);
-                    // If this is the last subtitle, show the end icon
-                    if (isLast)
-                    {
-                        MyLogger<WC_Dialogue>.StaticLog($"Showing end icon for last subtitle.");
-                        _endIcon.gameObject.SetActive(true);
-                        _continueIcon.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        MyLogger<WC_Dialogue>.StaticLog($"Showing continue icon for non-last subtitle.");
-                        _endIcon.gameObject.SetActive(false);
-                        _continueIcon.gameObject.SetActive(_COR_responses == null);
-                    }
+                    MyLogger<WC_Dialogue>.StaticLog($"Showing continue icon for non-last subtitle.");
+                    _endIcon.gameObject.SetActive(false);
+                    _continueIcon.gameObject.SetActive(_COR_responses == null);
                 }
-            }, _typeWriterSFX);
+            }
+        }, _typeWriterSFX);
     }
 
     public void HideSubtitle(Subtitle subtitle)

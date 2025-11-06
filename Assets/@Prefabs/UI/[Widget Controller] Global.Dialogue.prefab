@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4445534350349350912}
-  - component: {fileID: 8211491104027113886}
   - component: {fileID: 3134172332293677814}
   - component: {fileID: 3676049597387905222}
   - component: {fileID: 7720163592581474082}
@@ -36,19 +35,6 @@ Transform:
   - {fileID: 3857699946122579706}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8211491104027113886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1727537093260270396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c112ddd549ebb4e49a33c5abfe270570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dialogueController: {fileID: 3134172332293677814}
 --- !u!114 &3134172332293677814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,8 +54,8 @@ MonoBehaviour:
     _maxVisibleOptions: 8
     _overflowTop: {fileID: 6189350570324321368}
     _overflowBottom: {fileID: 2784439253475873739}
-    _optionParent: {fileID: 4702075608094047950}
-    _optionPrefab: {fileID: 0}
+    _optionParent: {fileID: 503595998168050672}
+    _optionPrefab: {fileID: 4398192710656904193}
   _dialogueSystemEvents: {fileID: 7720163592581474082}
   _nametag: {fileID: 2210969035731926755}
   _nametagIcon: {fileID: 9217294042072784727}
@@ -396,6 +382,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+--- !u!224 &503595998168050672 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3239371235633976379, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+  m_PrefabInstance: {fileID: 3029144766534762443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2210969035731926755 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3794106223146156328, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
@@ -427,14 +418,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d01b6f43ba4bb41914401c792de352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComBots.UI.Utilities.WC_Typewriter
+--- !u!114 &4398192710656904193 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1657372947077362634, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+  m_PrefabInstance: {fileID: 3029144766534762443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2944775d643d3f4f91b5ae3b3525333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComBots.Global.UI.Dialogue.WC_DialogueOption
 --- !u!224 &4591898207562195684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1562779904082631983, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
-  m_PrefabInstance: {fileID: 3029144766534762443}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &4702075608094047950 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7730586849033371909, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
   m_PrefabInstance: {fileID: 3029144766534762443}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6189350570324321368 stripped

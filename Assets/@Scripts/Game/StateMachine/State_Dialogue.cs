@@ -37,10 +37,7 @@ namespace ComBots.Game.StateMachine
                 {
                     _args = args;
                     WC_Dialogue.Instance.SetActive((IState_Dialogue_Args)args);
-                    // Hide the menu's bottom bar
-                    //GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
-                    // Push the dialogue input context
-                    InputManager.I.PushContext(_stateMachine._dialogueContextData, DialogueInputHandler.I);
+
                     // Camera
                     if (args is State_Dialogue_PixelCrushers_Args pcArgs)
                     {
