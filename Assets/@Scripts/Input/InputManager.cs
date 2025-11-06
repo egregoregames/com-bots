@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using ComBots.Logs;
 using ComBots.Utils.EntryPoints;
+using System;
 
 namespace ComBots.Inputs
 {
+    [Obsolete]
     public class InputManager : EntryPointMono
     {
         public static InputManager I { get; private set; }
