@@ -1,5 +1,3 @@
-using ComBots.Game.StateMachine;
-using ComBots.Global.Audio;
 using DG.Tweening;
 using R3;
 using System;
@@ -89,8 +87,10 @@ public class SignUI : MonoBehaviourR3
         _widget.transform.DOKill();
         _endIcon.DOKill();
         DOTween.Kill(this);
-            
-        AudioManager.I.PlaySFX(_sfx_read);
+
+        Debug.LogError("Fix this");
+        //AudioManager.I.PlaySFX(_sfx_read);
+
         _text.text = signText;
             
         // Ensure widget is active and properly reset
@@ -134,7 +134,10 @@ public class SignUI : MonoBehaviourR3
             return;
 
         // Sound
-        AudioManager.I.PlaySFX(_sfx_end);
+
+        Debug.LogError("Fix this");
+        //AudioManager.I.PlaySFX(_sfx_end);
+
         // Stop any ongoing animations and delayed calls
         _widget.transform.DOKill();
         _endIcon.DOKill();
