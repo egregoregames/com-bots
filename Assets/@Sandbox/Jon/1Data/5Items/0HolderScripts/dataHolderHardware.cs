@@ -20,5 +20,5 @@ public class dataHolderHardware : ScriptableObject
 	public int weight;
 	[TextArea(3, 10)]
 	public string flavorText;
-	public GameObject image;	
+	public Texture2D image;	
 }
