@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ComBots.UI.Utilities
+namespace ComBots.UI.Utils
 {
     public class WC_ListerOption : MonoBehaviour
     {

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-namespace ComBots.UI.Utilities.Listing
+namespace ComBots.UI.Utils.Listing
 {
     /// <summary>
     /// A reusable utility for creating scrollable lists with input navigation.
