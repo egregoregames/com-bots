@@ -23,7 +23,7 @@ namespace ComBots.Game.Players
         {
             //Debug.Log($"PlayerInputHandler.HandleInput: actionName={actionName}, phase={context.phase}, value={context.ReadValueAsObject()}");
 
-            if (PauseMenu.Instance.IsOpen || PauseMenuApp.IsAnyOpen)
+            if (PauseMenu.Instance.IsOpen || PauseMenuApp.IsAnyOpen || SignUI.IsOpen)
             {
                 // When pause menu is open, do not process player inputs
                 return false;
