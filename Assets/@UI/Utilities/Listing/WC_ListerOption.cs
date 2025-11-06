@@ -1,14 +1,11 @@
 using UnityEngine;
 
-namespace ComBots.UI.Utils
+public class WC_ListerOption : MonoBehaviour
 {
-    public class WC_ListerOption : MonoBehaviour
+    public bool IsHighlighted { get; private set; }
+    
+    public virtual void SetIsHighlighted(bool highlighted)
     {
-        public bool IsHighlighted { get; private set; }
-        
-        public virtual void SetIsHighlighted(bool highlighted)
-        {
-            IsHighlighted = highlighted;
-        }
+        IsHighlighted = highlighted;
     }
 }
