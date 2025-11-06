@@ -463,6 +463,7 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 
         // Clear the dialogue text for empty subtitles or player text
         _dialogueTypewriter.SetInactive(true, false);
+
         _nametag.SetActive(false);
     }
 

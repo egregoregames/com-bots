@@ -18,12 +18,14 @@ namespace ComBots.World.NPCs
         // ============ IInteractable Implementation ============ //
         public Transform T => transform;
         public bool IsActive => _isActive;
-
-        [Header("Config")]
-        [SerializeField] private NPC_Config _config;
-
+        // =============== Active State Config =============== //
+        [Header("Active State Config")]
+        public NPC_ActiveStateConfig ActiveStateConfig;
+        // =============== PixelCrushers Dialogue =============== //
         [Header("PixelCrushers Dialogue")]
         [SerializeField] private DialogueActor _dialogueActor;
+        [Tooltip("Conversation name in PixelCrushers Dialogue DataBase")]
+        public string _conversationTitle;
 
         [Header("Visuals")]
         [SerializeField] private Animator _animator;
@@ -32,11 +34,11 @@ namespace ComBots.World.NPCs
         [Header("Overhead Widget")]
         [SerializeField] private Vector3 _overheadWidgetOffset;
         private const string PK_OVERHEAD_WIDGET = "NPC_Overhead_Widget";
+        private OverheadWidget _overheadWidget;
 
         [Header("Cameras")]
         public CameraTarget CameraTarget;
         /// <summary> Pool key for the overhead widget </summary>
-        private OverheadWidget _overheadWidget;
 
         // ============ State ============ //
         /// <summary> Is affected by visibility config in NPC_Config. </summary>
@@ -66,6 +68,8 @@ namespace ComBots.World.NPCs
         void Awake()
         {
             _initialRot = transform.rotation;
+            if (!_visual)
+                _visual = transform.GetChild(0).gameObject;
             if (_visual)
                 _isActive = _visual.activeSelf;
         }
@@ -118,7 +122,7 @@ namespace ComBots.World.NPCs
             transform.rotation = Quaternion.LookRotation(interactor.T.position - transform.position);
             transform.eulerAngles = new(0, transform.eulerAngles.y, 0);
             // Determine the right conversation
-            State_Dialogue_PixelCrushers_Args args = new(_config.conversationName, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
+            State_Dialogue_PixelCrushers_Args args = new(_conversationTitle, _dialogueActor, player.DialogueActor, CameraTarget, player.PlayActorAnimation, PlayConversantAnimation, StateDialogue_OnEnd);
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 
@@ -194,9 +198,9 @@ namespace ComBots.World.NPCs
 
         private void UpdateActiveStatus(Term term, TimeOfDay timeOfDay)
         {
-            Debug.Log($"NPC.UpdateActiveStatus({term}, {timeOfDay})");
+            //Debug.Log($"NPC.UpdateActiveStatus({term}, {timeOfDay})");
             // Check currentterm in visibility config.terms
-            bool isTimeConditionSatisfied = _config.ActiveStateConfig.TimeCondition.IsStatisfied(term, timeOfDay);
+            bool isTimeConditionSatisfied = ActiveStateConfig.TimeCondition.IsStatisfied(term, timeOfDay);
             SetActive(isTimeConditionSatisfied);
         }
 
