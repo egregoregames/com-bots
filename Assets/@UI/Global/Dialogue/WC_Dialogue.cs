@@ -159,7 +159,7 @@ namespace ComBots.Global.UI.Dialogue
             if (!_isActive) { return; }
             _isActive = false;
             // SFX
-            AudioManager.I.PlaySFX(_defaultSFX.EndDialogue);
+            AudioManager.PlaySoundEffect(_defaultSFX.EndDialogue);
             // Stop the Pixel Crushers Dialogue
             if (DialogueManager.isConversationActive)
             {
@@ -210,7 +210,7 @@ namespace ComBots.Global.UI.Dialogue
                     if (!context.performed) { return true; }
                     if (_optionLister.IsActive) // If we have options pass the input
                     {
-                        AudioManager.I.PlaySFX(_defaultSFX.ChooseOption);
+                        AudioManager.PlaySoundEffect(_defaultSFX.ChooseOption);
                         _optionLister.Input_Confirm();
                     }
                     else if (_args is State_Dialogue_PixelCrushers_Args) // Move-on to next node
@@ -231,7 +231,7 @@ namespace ComBots.Global.UI.Dialogue
                 case DialogueInputHandler.INPUT_ACTION_NAVIGATE:
                     if (!context.performed) { return true; }
                     if (!_optionLister.IsActive) { break; }
-                    AudioManager.I.PlaySFX(_defaultSFX.NavigateOptions);
+                    AudioManager.PlaySoundEffect(_defaultSFX.NavigateOptions);
                     Vector2 inputValue = context.ReadValue<Vector2>();
                     _optionLister.Input_Navigate(inputValue);
                     return true;
@@ -396,7 +396,7 @@ namespace ComBots.Global.UI.Dialogue
             // Play the SFX if this isn't the first or last subtitle
             if (!_isFirstSubtitle && !previouslyHadOptions)
             {
-                AudioManager.I.PlaySFX(_defaultSFX.ContinueDialogue);
+                AudioManager.PlaySoundEffect(_defaultSFX.ContinueDialogue);
             }
 
             if (_isFirstSubtitle)

@@ -5,11 +5,9 @@ using UnityEngine.Events;
 
 public class WC_Typewriter : MonoBehaviour
 {
-    [Header("UI")]
     [SerializeField] private TextMeshProUGUI _text;
-    [Header("Settings")]
     [SerializeField] private float _speedPerCharacter;
-    // =============== Sound Effects =============== //
+
     [Header("Sound Effects")]
     public TypeWriterSoundEffects _defaultSoundEffects;
     [SerializeField] private AudioSource _audioSource;
@@ -23,11 +21,7 @@ public class WC_Typewriter : MonoBehaviour
     private UnityAction _onComplete;
     private int _currentIndex;
 
-    #region Unity Lifecycle
-    // ----------------------------------------
-    // Unity Lifecycle
-    // ----------------------------------------
-
+    #region Monobehaviour
     void Update()
     {
         if (!IsTyping)
@@ -46,19 +40,16 @@ public class WC_Typewriter : MonoBehaviour
         if (_currentIndex >= _fullText.Length)
         {
             IsTyping = false;
-            _audioSource.Stop();
-            AudioManager.I.PushAudioSource(_audioSource);
-            _audioSource = null;
+
+            if (_audioSource != null)
+                _audioSource.Stop();
+
             _onComplete?.Invoke();
         }
     }
     #endregion
 
     #region Public API
-    // ----------------------------------------
-    // Public API 
-    // ----------------------------------------
-
     public void SetActive(string text, UnityAction onComplete, TypeWriterSoundEffects soundEffects = null)
     {
         _fullText = text;
@@ -70,9 +61,10 @@ public class WC_Typewriter : MonoBehaviour
         // SFX
         if (!_audioSource)
         {
-            _audioSource = AudioManager.I.PullAudioSource();
+            _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.loop = true;
         }
+
         if (soundEffects != null)
         {
             _audioSource.clip = soundEffects.TypeWriterLoop;
@@ -81,9 +73,11 @@ public class WC_Typewriter : MonoBehaviour
         {
             _audioSource.clip = _defaultSoundEffects.TypeWriterLoop;
         }
+
         MyLogger<WC_Typewriter>.StaticLog($"{_audioSource}");
         MyLogger<WC_Typewriter>.StaticLog($"{_audioSource.clip}");
         MyLogger<WC_Typewriter>.StaticLog($"{_audioSource.loop}");
+
         _audioSource.Play();
     }
 

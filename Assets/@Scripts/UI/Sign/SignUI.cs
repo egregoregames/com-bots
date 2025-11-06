@@ -88,8 +88,7 @@ public class SignUI : MonoBehaviourR3
         _endIcon.DOKill();
         DOTween.Kill(this);
 
-        Debug.LogError("Fix this");
-        //AudioManager.I.PlaySFX(_sfx_read);
+        AudioManager.PlaySoundEffect(_sfx_read);
 
         _text.text = signText;
             
@@ -134,9 +133,7 @@ public class SignUI : MonoBehaviourR3
             return;
 
         // Sound
-
-        Debug.LogError("Fix this");
-        //AudioManager.I.PlaySFX(_sfx_end);
+        AudioManager.PlaySoundEffect(_sfx_end);
 
         // Stop any ongoing animations and delayed calls
         _widget.transform.DOKill();
