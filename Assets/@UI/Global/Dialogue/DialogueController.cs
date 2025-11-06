@@ -9,7 +9,6 @@ using DG.Tweening;
 using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
-using ComBots.UI.Utilities.Listing;
 using TMPro;
 using UnityEngine.UI;
 using ComBots.UI.Utilities;
