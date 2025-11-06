@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c056e19f6b50d4e9a9f04431f40985, type: 3}
+  m_Name: SignInput
+  m_EditorClassIdentifier: 
+  contextName: Sign
+  allowedInputs: 96
+  blockLowerContexts: 1
+  persistent: 0
+  inputActions: {fileID: -944628639613478452, guid: a24e92830d30d8044838027e450062a7, type: 3}
+  actionMaps:
+  - mapName: Sign
+    requiredFlags: 96
+    actionMap:
+      m_Name: Dialogue
+      m_Id: 3729bc5d-4b9b-4d5f-b55f-8307df4e7fa9
+      m_Asset: {fileID: -944628639613478452, guid: 6139c7400c8da494db2499f5e7a22a13, type: 3}
+      m_Actions:
+      - m_Name: Navigate
+        m_Type: 0
+        m_ExpectedControlType: Vector2
+        m_Id: 19bc4813-94f9-48ea-8697-457da3108c5d
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+        m_Flags: 1
+      - m_Name: Confirm
+        m_Type: 1
+        m_ExpectedControlType: 
+        m_Id: 6def73dc-745a-4cb7-b1bf-fcca5d480e32
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+        m_Flags: 0
+      - m_Name: Cancel
+        m_Type: 1
+        m_ExpectedControlType: 
+        m_Id: 552bb075-9086-4788-bcec-ce2793e7df95
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+        m_Flags: 0
+      m_Bindings:
+      - m_Name: Gamepad
+        m_Id: 49ad3f8a-860d-4105-b3fd-cad8fa67524d
+        m_Path: 2DVector
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Navigate
+        m_Flags: 4
+      - m_Name: up
+        m_Id: 9a55a97b-73b8-46ca-9113-332786115b84
+        m_Path: <Gamepad>/leftStick/up
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: up
+        m_Id: 8bfe9b83-9db0-4061-b022-d9016a745c08
+        m_Path: <Gamepad>/rightStick/up
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: down
+        m_Id: 1c6bdd57-0194-4295-9355-cef08fa98455
+        m_Path: <Gamepad>/leftStick/down
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: down
+        m_Id: a383c329-3f5d-4358-86e0-c8a904a9693d
+        m_Path: <Gamepad>/rightStick/down
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: left
+        m_Id: 96d0f1c0-a1e9-4026-b4b0-6d05ba048b84
+        m_Path: <Gamepad>/leftStick/left
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: left
+        m_Id: f0df6751-1ea5-465f-8764-71d5551a00d1
+        m_Path: <Gamepad>/rightStick/left
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 0fa66193-9ad3-414a-b545-1c6dc71181ed
+        m_Path: <Gamepad>/leftStick/right
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 718afab7-f373-4b25-8cf1-109781031620
+        m_Path: <Gamepad>/rightStick/right
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: 
+        m_Id: a7e51f22-ffdf-4f53-a133-6c40de189d4a
+        m_Path: <Gamepad>/dpad
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: ;Gamepad
+        m_Action: Navigate
+        m_Flags: 0
+      - m_Name: Joystick
+        m_Id: b389fb09-33d9-45ee-88ab-ea4e37513884
+        m_Path: 2DVector
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Navigate
+        m_Flags: 4
+      - m_Name: up
+        m_Id: ef44a9b9-51ee-489a-94f8-83d9c725064e
+        m_Path: <Joystick>/stick/up
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Joystick
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: down
+        m_Id: fa308941-116b-4ec5-ba62-942da554b418
+        m_Path: <Joystick>/stick/down
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Joystick
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: left
+        m_Id: 6565dcdc-d319-4e74-9fae-0e105488f238
+        m_Path: <Joystick>/stick/left
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Joystick
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 83ad68cd-1d72-4640-9a29-3860e0b3a6ab
+        m_Path: <Joystick>/stick/right
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Joystick
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: Keyboard
+        m_Id: ce2b7275-9ee2-4771-8544-f3b571751e03
+        m_Path: 2DVector
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Navigate
+        m_Flags: 4
+      - m_Name: up
+        m_Id: 7a7d97a1-9b94-4407-b965-a4293e89e8aa
+        m_Path: <Keyboard>/upArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Keyboard&Mouse
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: down
+        m_Id: eef7e49d-ce15-4729-91e3-5d002f2cde91
+        m_Path: <Keyboard>/downArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Keyboard&Mouse
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: left
+        m_Id: 40e73feb-8ee3-4d28-8ce0-9f77664b5f29
+        m_Path: <Keyboard>/leftArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Keyboard&Mouse
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 6348dbbd-3d1d-4c9d-97da-58b6f1183878
+        m_Path: <Keyboard>/rightArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Keyboard&Mouse
+        m_Action: Navigate
+        m_Flags: 8
+      - m_Name: 
+        m_Id: 7207c098-bdd2-489d-9672-c507c8a73c7f
+        m_Path: <Keyboard>/a
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Keyboard&Mouse;Gamepad;Touch;Joystick;XR
+        m_Action: Confirm
+        m_Flags: 0
+      - m_Name: 
+        m_Id: d510ab73-b2b9-40d5-8854-5e5009f69c6f
+        m_Path: <Keyboard>/s
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: Keyboard&Mouse;Gamepad;Touch;Joystick;XR
+        m_Action: Cancel
+        m_Flags: 0

@@ -1,4 +1,4 @@
-using ComBots.UI.Utilities;
+using ComBots.UI.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

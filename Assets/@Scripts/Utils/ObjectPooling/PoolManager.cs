@@ -28,7 +28,7 @@ namespace ComBots.Utils.ObjectPooling
             _pools.Add(pool.Key, pool);
         }
 
-        public T Pull<T>(string key) where T : MonoBehaviour
+        public T Pull<T>(string key) where T : Component
         {
             if (_pools.TryGetValue(key, out var pool))
             {
@@ -38,7 +38,7 @@ namespace ComBots.Utils.ObjectPooling
             return default;
         }
 
-        public void Push<T>(string key, T obj) where T : MonoBehaviour {
+        public void Push<T>(string key, T obj) where T : Component {
             if (_pools.TryGetValue(key, out var pool))
             {
                 pool.Push(obj.gameObject);
