@@ -10,19 +10,19 @@ namespace ComBots.World.Signs
 {
     public class Sign : MonoBehaviour, IInteractable
     {
-        // =============== IInteractable Interface =============== //
+
         public Transform T => transform;
         public bool IsActive => true;
-        // =============== Sign Text =============== //
+
         [Header("Sign Text")]
         [TextArea(3, 10)]
         [SerializeField] private string _signText;
-        // =============== Interact Widget =============== //
+
         [Header("Interact Widget")]
         [SerializeField] private Vector3 _interactWidgetOffset;
         private const string PK_INTERACT_WIDGET = "Sign_Interact_Widget";
         private OverheadWidget _interactWidget;
-        // =============== Cache =============== //
+
         private IInteractor _currentInteractor;
         
         #region Unity Lifecycle
@@ -39,9 +39,6 @@ namespace ComBots.World.Signs
         #endregion
 
         #region IInteractable Interface
-        // ----------------------------------------
-        // IInteractable Interface 
-        // ----------------------------------------
 
         public bool CanInteract(IInteractor interactor)
         {
@@ -94,9 +91,6 @@ namespace ComBots.World.Signs
         #endregion
 
         #region GameStateMachine API
-        // ----------------------------------------
-        // GameStateMachine API 
-        // ----------------------------------------
         
         private void StateSign_OnExit()
         {

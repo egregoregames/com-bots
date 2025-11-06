@@ -46,10 +46,11 @@ namespace UI.Sign
         {
             // Initially hide the end icon and widget
             _endIcon.gameObject.SetActive(false);
-            _widget.SetActive(false);
+            
             
             // Set initial scale for widget (collapsed horizontally)
             _widget.transform.localScale = new Vector3(0f, 1f, 1f);
+            _widget.SetActive(false);
         }
 
         #endregion
