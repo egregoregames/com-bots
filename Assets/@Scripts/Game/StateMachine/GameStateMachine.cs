@@ -10,7 +10,7 @@ namespace ComBots.Game.StateMachine
     {
         public static GameStateMachine I { get; private set; }
 
-        private State STATE_Playing, STATE_Dialogue, STATE_AreaTransition, STATE_Sign;
+        private State STATE_Playing, STATE_Dialogue, STATE_AreaTransition;
 
         public override Dependency Dependency => Dependency.Dependent;
 
@@ -25,10 +25,9 @@ namespace ComBots.Game.StateMachine
             STATE_Playing = new State_Playing(this);
             STATE_Dialogue = new State_Dialogue(this);
             STATE_AreaTransition = new State_AreaTransition(this);
-            STATE_Sign = new State_Sign(this);
 
             initialState = STATE_Playing;
-            return new[] { STATE_Playing, STATE_Dialogue, STATE_AreaTransition, STATE_Sign };
+            return new[] { STATE_Playing, STATE_Dialogue, STATE_AreaTransition };
         }
 
         protected override void Init()
