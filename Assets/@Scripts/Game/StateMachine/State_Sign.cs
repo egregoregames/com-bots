@@ -1,14 +1,7 @@
-using ComBots.Cameras;
-using ComBots.Game.Players;
-using ComBots.Global.UI;
-using ComBots.Global.UI.Dialogue;
 using ComBots.Inputs;
-using ComBots.Signs;
 using ComBots.Utils.StateMachines;
-using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.Events;
-using static ComBots.Game.StateMachine.GameStateMachine;
 
 namespace ComBots.Game.StateMachine
 {
@@ -39,11 +32,11 @@ namespace ComBots.Game.StateMachine
                 if (canEnter)
                 {
                     _args = (State_Sign_Args)args;
-                    GlobalUIRefs.I.SignController.SetActive(_args.SignText);
+                    //GlobalUIRefs.I.SignController.SetActive(_args.SignText);
                     // Hide the menu's bottom bar
                     // GlobalUIRefs.I.MenuController.SetBottomBarVisible(false);
                     // Push the dialogue input context
-                    InputManager.I.PushContext(_stateMachine._signContextData, SignInputHandler.I);
+                    //InputManager.I.PushContext(_stateMachine._signContextData, SignInputHandler.I);
                 }
 
                 return canEnter;
@@ -52,9 +45,9 @@ namespace ComBots.Game.StateMachine
             public override bool Exit(State nextState)
             {
                 // Pop the dialogue input context
-                InputManager.I.PopContext(_stateMachine._dialogueContextData.contextName);
+                //InputManager.I.PopContext(_stateMachine._dialogueContextData.contextName);
                 // Inform the dialogue controller of state exit & deactivate it
-                GlobalUIRefs.I.SignController.SetInactive();
+                //GlobalUIRefs.I.SignController.SetInactive();
                 // Display back the menu bottom bar
                 //GlobalUIRefs.I.MenuController.SetBottomBarVisible(true);
                 _args.OnStateExited?.Invoke();
