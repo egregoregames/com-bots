@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine.UI;
-using ComBots.UI.Utilities;
 
 namespace ComBots.Global.UI.Dialogue
 {
