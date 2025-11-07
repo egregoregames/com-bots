@@ -19,13 +19,13 @@ namespace ComBots.Game.StateMachine
             {
                 Player.I.PlayerCamera.SetState_Orbital();
                 Player.I.FreezeMovementFor(Player.I.PlayerCamera.BlendTime);
-                InputManager.I.PushContext(_stateMachine._overworldContextData, PlayerInputHandler.I);
+                InputManager.Instance.PushContext(_stateMachine._overworldContextData, PlayerInputHandler.I);
                 return true;
             }
 
             public override bool Exit(State nextState)
             {
-                InputManager.I.PopContext(_stateMachine._overworldContextData.contextName);
+                InputManager.Instance.PopContext(_stateMachine._overworldContextData.contextName);
                 return true;
             }
         }

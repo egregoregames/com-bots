@@ -9,11 +9,9 @@ using System;
 namespace ComBots.Inputs
 {
     [Obsolete]
-    public class InputManager : EntryPointMono
+    public class InputManager : MonoBehaviourR3
     {
-        public static InputManager I { get; private set; }
-
-        public override Dependency Dependency => Dependency.Independent;
+        public static InputManager Instance { get; private set; }
 
         private readonly Stack<InputContext> _contextStack = new();
         private readonly Dictionary<string, InputContext> _namedContexts = new();
@@ -26,23 +24,23 @@ namespace ComBots.Inputs
 
         public event System.Action<InputContext> OnContextChanged;
 
-        protected override void Init()
+        protected override void Initialize()
         {
-            I = this;
+            base.Initialize();
+            Instance = this;
             _logger.TryInit();
             _logger.Log("Initialized.");
         }
 
-        public override void Dispose()
+        private new void OnDestroy()
         {
+            base.OnDestroy();
             // Clean up all active actions
             foreach (var kvp in _activeActions)
             {
                 UnsubscribeFromAction(kvp.Key);
             }
             _activeActions.Clear();
-            
-            I = null;
         }
 
         public InputContext PushContext(InputContextConfig contextData, IInputHandler handler)

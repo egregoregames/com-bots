@@ -49,11 +49,6 @@ public class WC_Typewriter : MonoBehaviour
     }
     #endregion
 
-    private void OnDisable()
-    {
-        Debug.LogError("ONDISABLE");
-    }
-
     #region Public API
     public void SetActive(string text, UnityAction onComplete, TypeWriterSoundEffects soundEffects = null)
     {

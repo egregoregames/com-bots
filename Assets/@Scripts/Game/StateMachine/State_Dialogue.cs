@@ -55,7 +55,7 @@ namespace ComBots.Game.StateMachine
                     pcArgs.OnDialogueEnd?.Invoke();
                 }
                 // Pop the dialogue input context
-                InputManager.I.PopContext(_stateMachine._dialogueContextData.contextName);
+                InputManager.Instance.PopContext(_stateMachine._dialogueContextData.contextName);
                 // Inform the dialogue controller of state exit & deactivate it
 
                 // THESE NEED TO BE EVENTS
