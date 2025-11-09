@@ -129,7 +129,7 @@ public class SignUI : MonoBehaviourR3
 
     private void SetInactive()
     {
-        if (!_widget.activeInHierarchy)
+        if (!_widget.activeInHierarchy || !_endIcon.gameObject.activeInHierarchy)
             return;
 
         // Sound
