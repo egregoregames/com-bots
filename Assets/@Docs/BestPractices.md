@@ -82,9 +82,10 @@ Scene files should NEVER use GitLFS!
 
 ## Redundant singletons
 
-Old singletons such as InputManager, GameStateMachine, GlobalEntryPoint, PoolManager, etc. stem
-from a lack of understanding of existing Unity API and events. These singletons
-are currently deprecated and in the process of being phased out. Do not use them
+Old singletons such as InputManager, GameStateMachine, GlobalEntryPoint, PoolManager, etc., 
+while well meaning, are not needed and circumvent some of the priniciples of OO 
+programming and/or are already handled by existing low level APIs. These singletons 
+are currently deprecated and in the process of being phased out. Do not use them 
 going forward. Instead, do the following:
 
 ### Use InputSystem instances
@@ -138,14 +139,14 @@ public class PauseMenu : MonoBehaviourR3
 ```
 
 This does the same thing as using the old InputManager but everything is
-self-contained, cleaner and does not rely at all on additional redundant systems,
+self-contained, cleaner and does not rely on additional redundant systems,
 instead relying only on existing UnityAPI, making it more resistant to changes 
 and maintainable in the future, as the functionality stems from a widely documented, 
 universally used API rather than some homebrewed megasystem
 
 ### Instead of GameStateMachine, use events
 
-GameStateMachine seems to exist due to a misconception of how events worked in 
+GameStateMachine seems to exist due to a misconception of how events work in 
 C#/Unity. It's a bulky, undocumented system that is completely unneeded.
 
 Instead, if a certain system needs to "react" to something else that happens, use
@@ -159,18 +160,14 @@ public class PauseMenu : MonoBehaviourR3
 
     private static UnityEventR3 _onButtonsVisible = new();
     /// <summary>
-    /// Fires when the bottom app buttons become visible (game paused)
+    /// FiInvokedres when the bottom app buttons become visible (game paused)
     /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
     public static IDisposable OnButtonsVisible(Action x) => _onButtonsVisible.Subscribe(x);
 
     private static UnityEventR3 _onButtonsMinimized = new();
     /// <summary>
     /// Invoked when the bottom buttons become partially visible (game unpaused) or hidden (dialog, submenus)
     /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
     public static IDisposable OnButtonsMinimized(Action x) => _onButtonsMinimized.Subscribe(x);
 
     /// <summary>
@@ -210,34 +207,22 @@ public class PauseMenu : MonoBehaviourR3
 }
 ```
 
-And here's the Menu Description Panel, which describes the currently selected
+And here's how the Menu Description Panel, which describes the currently selected
 app in the Pause Menu, listens to those events and turns itself on or
 off depending on if the pause menu buttons are visible.
 
 ```csharp
 public class MenuDescriptionPanel : MonoBehaviourR3
 {
-    public TextMeshProUGUI menuPanelName;
-    public TextMeshProUGUI menuPanelDescription;
-    public Image background;
-
     protected override void Initialize()
     {
         base.Initialize();
 
         AddEvents(
-            PauseMenu_AppButton.OnSelected(SetDescription),
             PauseMenu.OnButtonsVisible(() => gameObject.SetActive(true)),
             PauseMenu.OnButtonsMinimized(() => gameObject.SetActive(false)));
 
         gameObject.SetActive(false);
-    }
-    
-    private void SetDescription(PauseMenu_AppButton info)
-    {
-        menuPanelName.text = info.DescriptionBoxTitle;
-        menuPanelDescription.text = info.DescriptionBoxText;
-        background.sprite = info.DescriptionBoxBackgroundSprite;
     }
 }
 ```
@@ -293,7 +278,7 @@ allow you to easily await for it to be initialized.
 
 These simple patterns allow us to bypass the need for us to make an additional 
 "level" of functionality that looks down and calls a bunch of same-level APIs.
-This keeps out code self contained, free of merge conflicts and easy to maintain.
+This keeps code self contained, free of merge conflicts and easy to maintain.
 
 ### Instead of PoolManager, systems should manage their own pools
 
