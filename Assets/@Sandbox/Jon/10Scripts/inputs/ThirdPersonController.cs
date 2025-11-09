@@ -239,7 +239,7 @@ namespace StarterAssets
 
         private void Move()
         {
-            if (FreezeMovement)
+            if (FreezeMovement || PauseMenu.Instance.IsOpen || SignUI.IsOpen)
             {
                 _INPUT_move = Vector2.zero;
                 _INPUT_sprint = false;
