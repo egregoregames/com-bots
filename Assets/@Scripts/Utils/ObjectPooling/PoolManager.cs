@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ComBots.Utils.ObjectPooling
 {
-    [Obsolete("Anything that needs a pool should handle it locally or an in event based fashion. This class is spaghetti code and not hot-reload safe")]
+    [Obsolete("Anything that needs a pool should handle it locally or an in event based fashion. This class is  not hot-reload safe")]
     public class PoolManager : MonoBehaviour
     {
         public static PoolManager I { get; private set; }
