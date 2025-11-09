@@ -145,9 +145,8 @@ universally used API rather than some homebrewed megasystem
 
 ### Instead of GameStateMachine, use events
 
-GameStateMachine seems to exist because someone didn't have a clear understanding
-of how events worked in C#/Unity. It's a bulky system that is completely unneeded, 
-and unfortunately undocumented.
+GameStateMachine seems to exist due to a misconception of how events worked in 
+C#/Unity. It's a bulky, undocumented system that is completely unneeded.
 
 Instead, if a certain system needs to "react" to something else that happens, use
 events. Specifically, use the new Observable pattern events. For example, using pause
