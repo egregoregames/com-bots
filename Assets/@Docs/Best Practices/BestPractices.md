@@ -339,3 +339,61 @@ In actual gameplay, you wouldn't ever expect this pool to be
 bigger than 1-5 items. The memory allocation considerations of List are therefore
 also negligible and this is good to go with a very small amount of code. Plus, 
 because the list is serialized, this is hot-reload safe.
+
+## Bug Fixing
+
+When a bug is identified, a bug fix task should be created on Jira.
+
+### Title
+
+When creating a title for a bug fix task, the title should define the bug clearly
+in the description. See the image below:
+
+![Player movement continues once dialog with a Sign starts if player is already moving when sign is activated](image.png)
+
+This title, "Player movement continues once dialog with a Sign starts if player 
+is already moving when sign is activated", clearly defines the problem at hand.
+If a situation is too complex to fit neatly in a title, do your best to summarize
+and fill in the details in the description.
+
+### Description
+
+The description of a bug fix task should include the following:
+
+- Reproduction steps
+- Expected result
+- Actual result
+- Reproduction rate
+
+See the image below for an example:
+
+![Description for bug COM-313](image-1.png)
+
+The reproduction steps should give clear and consise steps to accurately reproduce the bug.
+
+The exected result is what SHOULD happen if there was no bug.
+
+The actual result is what currently happens because of the bug.
+
+The reproduction rate is how often you were able to get the bug to occur by following
+the reproduction steps.
+
+### Work
+
+- Mark the Jira task as In Progress and assign yourself to it, if you haven't been already
+
+- Create a branch specifically for this Jira task on Github, then link it in the Activity section of the Jira card as
+well as in the Add web link section (see image).
+
+![Add web link](image-2.png)
+![Web link](image-3.png)
+![Activity branch](image-4.png)
+
+Once the branch is created, check out that branch and do the required work, 
+following the "feature development" guidelines in this document to be concise and
+include ONLY the work that is needed to fix the bug.
+
+After work is complete, create a pull request, link the pull request to the task,
+add reviewers to the pull request in GitHub and, optionally, ping the relevant Jira users
+
+Once the pull request is approved, the Jira task can be marked as Done.
