@@ -120,7 +120,6 @@ public class PlannerQuestItem : MonoBehaviourR3
         BackgroundSelected.SetActive(false);
         SelectedQuestIndent.SetActive(false);
         IsSelected = false;
-        _onSelected?.Invoke(Quest);
     }
 
     public void Complete()

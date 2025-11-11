@@ -29,10 +29,10 @@ public class PlannerPanel : MonoBehaviourR3
     private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
 
     [field: SerializeField, ReadOnly]
-    private int SelectedQuestElective { get; set; } = -1;
+    private int SelectedQuestIdElective { get; set; } = -1;
 
     [field: SerializeField, ReadOnly]
-    private int SelectedQuestRequirement { get; set; } = -1;
+    private int SelectedQuestIdRequirement { get; set; } = -1;
 
     [field: SerializeField, ReadOnly]
     private QuestType QuestType { get; set; }
@@ -44,6 +44,10 @@ public class PlannerPanel : MonoBehaviourR3
     {
         base.Awake();
         ClearInstantiatedQuestItems();
+        SelectedQuestIdElective = -1; 
+        SelectedQuestIdRequirement = -1;
+        QuestType = QuestType.Requirement;
+        RefreshInProgress = false;
     }
 
     protected override void Initialize()
@@ -79,6 +83,8 @@ public class PlannerPanel : MonoBehaviourR3
 
     private void SetSelectedQuest(int increment)
     {
+        Log($"Incrementing selected quest index by {increment}");
+
         if (increment != 1 && increment != -1)
         {
             throw new Exception(
@@ -108,16 +114,17 @@ public class PlannerPanel : MonoBehaviourR3
 
     private async void UpdateSelected(QuestTrackingDatum quest)
     {
+        Log($"Updating selected quest details (ID:{quest.QuestId})");
         var data = await quest.GetQuestDataAsync();
         var type = data.QuestType;
 
         if (type == QuestType.Elective)
         {
-            SelectedQuestElective = quest.QuestId;
+            SelectedQuestIdElective = quest.QuestId;
         }
         else
         {
-            SelectedQuestRequirement = quest.QuestId;
+            SelectedQuestIdRequirement = quest.QuestId;
         }
 
         int step = quest.CurrentStep;
@@ -179,7 +186,7 @@ public class PlannerPanel : MonoBehaviourR3
     private void RestoreSelectedQuest()
     {
         int selected = QuestType == QuestType.Elective ?
-        SelectedQuestElective : SelectedQuestRequirement;
+        SelectedQuestIdElective : SelectedQuestIdRequirement;
 
         if (InstantiatedQuestItems.Count < 1) return;
 
