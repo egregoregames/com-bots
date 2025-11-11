@@ -17,13 +17,19 @@ public class PlannerPanel : MonoBehaviourR3
     public static PlannerPanel Instance { get; private set; }
 
     [field: SerializeField]
+    private int MaxQuestItemsOnScreen { get; set; } = 3;
+
+    [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }
 
     [field: SerializeField]
     private TextMeshProUGUI QuestDescription { get; set; }
 
     [field: SerializeField]
-    private ScrollRect ScrollRectQuestItems { get; set; }
+    private GameObject UpArrow { get; set; }
+
+    [field: SerializeField]
+    private GameObject DownArrow { get; set; }
 
     [field: SerializeField, ReadOnly]
     private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
@@ -112,6 +118,82 @@ public class PlannerPanel : MonoBehaviourR3
         InstantiatedQuestItems[newIndex].Select();
     }
 
+    private void UpdateQuestDescription(QuestTrackingDatum quest, StaticQuestData data)
+    {
+        int step = quest.CurrentStep;
+        if (quest.IsCompleted)
+        {
+            QuestDescription.text = data.Steps.Last();
+        }
+        else if (data.Steps.Length > step)
+        {
+            QuestDescription.text = data.Steps[step];
+        }
+        else
+        {
+            QuestDescription.text = "ERROR: STEP OUT OF RANGE OR MISSING";
+        }
+    }
+
+    private void UpdateQuestList()
+    {
+        // Get total number of instantiated quest items
+        int total = InstantiatedQuestItems.Count();
+
+        // Get index of selected
+        var selectedQuestItem = InstantiatedQuestItems.First(x => x.IsSelected);
+        int selQuestInd = InstantiatedQuestItems.IndexOf(selectedQuestItem);
+
+        int half = (int)Math.Floor(MaxQuestItemsOnScreen / 2d);
+        int max = MaxQuestItemsOnScreen;
+
+        bool totalGreaterThanMax = total > max;
+        UpArrow.SetActive(selQuestInd > half && totalGreaterThanMax);
+        DownArrow.SetActive((total - 1) - selQuestInd >= half && totalGreaterThanMax);
+
+        foreach (var questItem in InstantiatedQuestItems)
+        {
+            UpdateQuestItemVisibility(
+                total, selectedQuestItem, selQuestInd, half, max, questItem);
+        }
+    }
+
+    private void UpdateQuestItemVisibility(
+        int totalQuestItems, PlannerQuestItem selectedQuestItem, 
+        int selectedQuestItemIndex, int halfOfMaxItemsOnScreen, 
+        int MaxItemsOnScreen, PlannerQuestItem questItem)
+    {
+        if (questItem == selectedQuestItem)
+        {
+            questItem.gameObject.SetActive(true);
+            return;
+        }
+
+        var localIndex = InstantiatedQuestItems.IndexOf(questItem);
+        bool active;
+
+        bool isNearTop = selectedQuestItemIndex <= halfOfMaxItemsOnScreen;
+        bool isNearBottom = (totalQuestItems - 1) - selectedQuestItemIndex <= 
+            halfOfMaxItemsOnScreen;
+
+        if (isNearTop) 
+        {
+            active = localIndex < MaxItemsOnScreen;
+        }
+        else if (isNearBottom)
+        {
+            bool isActive = (totalQuestItems - 1) - localIndex <= MaxItemsOnScreen - 1;
+            active = isActive;
+        }
+        else
+        {
+            active = Math.Abs(localIndex - selectedQuestItemIndex) <= 
+                halfOfMaxItemsOnScreen;
+        }
+
+        questItem.gameObject.SetActive(active);
+    }
+
     private async void UpdateSelected(QuestTrackingDatum quest)
     {
         Log($"Updating selected quest details (ID:{quest.QuestId})");
@@ -127,22 +209,8 @@ public class PlannerPanel : MonoBehaviourR3
             SelectedQuestIdRequirement = quest.QuestId;
         }
 
-        int step = quest.CurrentStep;
-        if (quest.IsCompleted)
-        {
-            QuestDescription.text = data.Steps.Last();
-        }
-        else if (data.Steps.Length > step)
-        {
-            QuestDescription.text = data.Steps[step];
-        }
-        else
-        {
-            QuestDescription.text = "ERROR: STEP OUT OF RANGE OR MISSING";
-        }
-
-        // Todo: Set scrollview
-        // ScrollViewQuestItems ....
+        UpdateQuestDescription(quest, data);
+        UpdateQuestList();
     }
 
     private async Task<IEnumerable<QuestTrackingDatum>> GetFilteredQuests()
@@ -236,6 +304,7 @@ public class PlannerPanel : MonoBehaviourR3
             ClearInstantiatedQuestItems();
             var all = await GetFilteredQuests();
             await InstantiateQuestItems(all);
+            DownArrow.transform.SetAsLastSibling();
             RestoreSelectedQuest();
         }
         catch (Exception e)
