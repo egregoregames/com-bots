@@ -83,6 +83,8 @@ public class PlannerQuestItem : MonoBehaviourR3
             return;
         }
 
+        QuestCompleteIndicator.SetActive(Quest.IsCompleted);
+        BackgroundCompleted.SetActive(Quest.IsCompleted);
         ActiveQuestIndicator.SetActive(Quest.IsActive);
         NewUpdateIndicator.SetActive(Quest.HasUnreadUpdates && !IsSelected);
     }
@@ -116,6 +118,7 @@ public class PlannerQuestItem : MonoBehaviourR3
     public void Deselect()
     {
         BackgroundSelected.SetActive(false);
+        SelectedQuestIndent.SetActive(false);
         IsSelected = false;
         _onSelected?.Invoke(Quest);
     }

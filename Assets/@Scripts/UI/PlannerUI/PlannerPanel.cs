@@ -2,12 +2,10 @@ using R3;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
 using TMPro;
-using R3.Triggers;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 
@@ -18,9 +16,6 @@ public class PlannerPanel : MonoBehaviourR3
 {
     public static PlannerPanel Instance { get; private set; }
 
-    [field: SerializeField, ReadOnly]
-    private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
-
     [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }
 
@@ -29,6 +24,9 @@ public class PlannerPanel : MonoBehaviourR3
 
     [field: SerializeField]
     private ScrollRect ScrollRectQuestItems { get; set; }
+
+    [field: SerializeField, ReadOnly]
+    private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
 
     [field: SerializeField, ReadOnly]
     private int SelectedQuestElective { get; set; } = -1;
@@ -45,7 +43,7 @@ public class PlannerPanel : MonoBehaviourR3
     private new void Awake()
     {
         base.Awake();
-        InstantiatedQuestItems.Clear();
+        ClearInstantiatedQuestItems();
     }
 
     protected override void Initialize()
@@ -63,17 +61,19 @@ public class PlannerPanel : MonoBehaviourR3
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
-    }
 
-    private void Start()
-    {
-        RefreshQuestItems();
         gameObject.SetActive(false);
     }
 
     private void SetQuestType(QuestType type)
     {
         QuestType = type;
+        RefreshQuestItems();
+    }
+
+    private new void OnEnable()
+    {
+        base.OnEnable();
         RefreshQuestItems();
     }
 
@@ -169,6 +169,7 @@ public class PlannerPanel : MonoBehaviourR3
 
             var comp = newObj.GetComponent<PlannerQuestItem>();
             await comp.SetQuest(item);
+            comp.Deselect();
             InstantiatedQuestItems.Add(comp);
         }
 
@@ -196,7 +197,11 @@ public class PlannerPanel : MonoBehaviourR3
 
     private void ClearInstantiatedQuestItems()
     {
-        InstantiatedQuestItems.ForEach(x => Destroy(x.gameObject));
+        InstantiatedQuestItems
+            .Where(x => x != null)
+            .ToList()
+            .ForEach(x => Destroy(x.gameObject));
+
         InstantiatedQuestItems.Clear();
     }
 
@@ -214,6 +219,7 @@ public class PlannerPanel : MonoBehaviourR3
     // I'm sure we can make this more performance friendly later
     private async void RefreshQuestItems()
     {
+        if (!gameObject.activeSelf) return;
         await WaitForQuestRefreshToComplete();
         RefreshInProgress = true;
 
