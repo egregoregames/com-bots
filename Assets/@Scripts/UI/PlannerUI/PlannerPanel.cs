@@ -163,84 +163,90 @@ public class PlannerPanel : MonoBehaviourR3
         // ScrollViewQuestItems ....
     }
 
-    // I'm sure we can make this more performance friendly later
-    private async void RefreshQuestItems()
+    private async Task<IEnumerable<QuestTrackingDatum>> GetFilteredQuests()
+    {
+        // Await these to avoid null reference exceptions
+        var gameData = await PersistentGameData.GetInstanceAsync();
+        var staticGameDataInstance = await StaticGameData.GetInstanceAsync();
+
+        var questsFilteredByType = gameData.PlayerQuestTrackingData
+            .Where(x => x.GetQuestData().QuestType == QuestType);
+
+        var completed = questsFilteredByType
+            .Where(x => x.IsCompleted)
+            .OrderBy(x => x.QuestId);
+
+        var notCompleted = questsFilteredByType
+            .Where(x => !x.IsCompleted)
+            .OrderBy(x => x.QuestId);
+
+        return notCompleted.Concat(completed);
+    }
+
+    private async Task InstantiateQuestItems(IEnumerable<QuestTrackingDatum> all)
+    {
+        QuestItemTemplate.SetActive(true);
+
+        foreach (var item in all)
+        {
+            var newObj = Instantiate(
+                QuestItemTemplate, QuestItemTemplate.transform.parent);
+
+            var comp = newObj.GetComponent<PlannerQuestItem>();
+            await comp.SetQuest(item);
+            InstantiatedQuestItems.Add(comp);
+        }
+
+        QuestItemTemplate.SetActive(false);
+    }
+
+    private void RestoreSelectedQuest()
+    {
+        int selected = QuestType == QuestType.Elective ?
+        SelectedQuestElective : SelectedQuestRequirement;
+
+        if (selected == -1)
+        {
+            InstantiatedQuestItems.First().Select();
+            Log($"Selected first quest in list", LogLevel.Verbose);
+        }
+        else
+        {
+            InstantiatedQuestItems.First(x => x.Quest.QuestId == selected).Select();
+            Log($"Selected last selected quest", LogLevel.Verbose);
+        }
+    }
+
+    private void ClearInstantiatedQuestItems()
+    {
+        InstantiatedQuestItems.ForEach(x => Destroy(x));
+        InstantiatedQuestItems.Clear();
+    }
+
+    private async Task WaitForQuestRefreshToComplete()
     {
         while (RefreshInProgress)
         {
             await Task.Yield();
+
             if (!Application.isPlaying)
                 throw new TaskCanceledException();
         }
+    }
 
+    // I'm sure we can make this more performance friendly later
+    private async void RefreshQuestItems()
+    {
+        await WaitForQuestRefreshToComplete();
         RefreshInProgress = true;
 
         try
         {
             Log($"Refreshing quest items: {QuestType}");
-            InstantiatedQuestItems.ForEach(x => Destroy(x));
-            InstantiatedQuestItems.Clear();
-
-            Log($"Awaiting persistent game data instance", LogLevel.Verbose);
-            var gameData = await PersistentGameData.GetInstanceAsync();
-
-            // Just awaiting this to make sure its not null before proceeding
-            Log($"Awaiting static game data instance", LogLevel.Verbose);
-            var staticGameDataInstance = await StaticGameData.GetInstanceAsync();
-
-            Log($"Filtering quests", LogLevel.Verbose);
-            var questsFilteredByType = gameData.PlayerQuestTrackingData
-                .Where(x => x.GetQuestData().QuestType == QuestType);
-
-            Log($"Found {questsFilteredByType.Count()} {QuestType} quests", LogLevel.Verbose);
-
-            var completed = questsFilteredByType
-                .Where(x => x.IsCompleted)
-                .OrderBy(x => x.QuestId)
-                .ToList();
-
-            Log($"Found {completed.Count()} completed quests", LogLevel.Verbose);
-
-            var notCompleted = questsFilteredByType
-                .Where(x => !x.IsCompleted)
-                .OrderBy(x => x.QuestId)
-                .ToList();
-
-            Log($"Found {notCompleted.Count()} incomplete quests", LogLevel.Verbose);
-
-            var all = notCompleted.Concat(completed);
-
-            Log($"Found {all.Count()} total quests", LogLevel.Verbose);
-
-            QuestItemTemplate.SetActive(true);
-
-            foreach (var item in all)
-            {
-                var newObj = Instantiate(
-                    QuestItemTemplate, QuestItemTemplate.transform.parent);
-
-                var comp = newObj.GetComponent<PlannerQuestItem>();
-                Log($"Instantiated new quest item (ID: {item.QuestId})", LogLevel.Verbose);
-                await comp.SetQuest(item);
-                Log($"Initialized quest item (ID: {item.QuestId})", LogLevel.Verbose);
-                InstantiatedQuestItems.Add(comp);
-            }
-
-            QuestItemTemplate.SetActive(false);
-
-            int selected = QuestType == QuestType.Elective ? 
-                SelectedQuestElective : SelectedQuestRequirement;
-
-            if (selected == -1)
-            {
-                InstantiatedQuestItems.First().Select();
-                Log($"Selected first quest in list", LogLevel.Verbose);
-            }
-            else
-            {
-                InstantiatedQuestItems.First(x => x.Quest.QuestId == selected).Select();
-                Log($"Selected last selected quest", LogLevel.Verbose);
-            }
+            ClearInstantiatedQuestItems();
+            var all = await GetFilteredQuests();
+            await InstantiateQuestItems(all);
+            RestoreSelectedQuest();
         }
         catch (Exception e)
         {
