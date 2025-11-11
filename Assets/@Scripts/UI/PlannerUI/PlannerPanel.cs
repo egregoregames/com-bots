@@ -81,6 +81,7 @@ public class PlannerPanel : MonoBehaviourR3
 
     private void Start()
     {
+        RefreshQuestItems();
         gameObject.SetActive(false);
     }
 
@@ -176,29 +177,40 @@ public class PlannerPanel : MonoBehaviourR3
 
         try
         {
-            Log("Refreshing quest items");
+            Log($"Refreshing quest items: {QuestType}");
             InstantiatedQuestItems.ForEach(x => Destroy(x));
             InstantiatedQuestItems.Clear();
 
+            Log($"Awaiting persistent game data instance", LogLevel.Verbose);
             var gameData = await PersistentGameData.GetInstanceAsync();
 
             // Just awaiting this to make sure its not null before proceeding
+            Log($"Awaiting static game data instance", LogLevel.Verbose);
             var staticGameDataInstance = await StaticGameData.GetInstanceAsync();
 
+            Log($"Filtering quests", LogLevel.Verbose);
             var questsFilteredByType = gameData.PlayerQuestTrackingData
                 .Where(x => x.GetQuestData().QuestType == QuestType);
+
+            Log($"Found {questsFilteredByType.Count()} {QuestType} quests", LogLevel.Verbose);
 
             var completed = questsFilteredByType
                 .Where(x => x.IsCompleted)
                 .OrderBy(x => x.QuestId)
                 .ToList();
 
+            Log($"Found {completed.Count()} completed quests", LogLevel.Verbose);
+
             var notCompleted = questsFilteredByType
                 .Where(x => !x.IsCompleted)
                 .OrderBy(x => x.QuestId)
                 .ToList();
 
+            Log($"Found {notCompleted.Count()} incomplete quests", LogLevel.Verbose);
+
             var all = notCompleted.Concat(completed);
+
+            Log($"Found {all.Count()} total quests", LogLevel.Verbose);
 
             QuestItemTemplate.SetActive(true);
 
@@ -208,9 +220,9 @@ public class PlannerPanel : MonoBehaviourR3
                     QuestItemTemplate, QuestItemTemplate.transform.parent);
 
                 var comp = newObj.GetComponent<PlannerQuestItem>();
-
-                // This guarantees that 
+                Log($"Instantiated new quest item (ID: {item.QuestId})", LogLevel.Verbose);
                 await comp.SetQuest(item);
+                Log($"Initialized quest item (ID: {item.QuestId})", LogLevel.Verbose);
                 InstantiatedQuestItems.Add(comp);
             }
 
@@ -222,10 +234,12 @@ public class PlannerPanel : MonoBehaviourR3
             if (selected == -1)
             {
                 InstantiatedQuestItems.First().Select();
+                Log($"Selected first quest in list", LogLevel.Verbose);
             }
             else
             {
                 InstantiatedQuestItems.First(x => x.Quest.QuestId == selected).Select();
+                Log($"Selected last selected quest", LogLevel.Verbose);
             }
         }
         catch (Exception e)

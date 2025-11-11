@@ -27,7 +27,7 @@ public class StaticGameData : MonoBehaviourR3
         if (Instance == null)
         {
             var obj = Resources.Load<GameObject>("StaticGameData");
-            Instantiate(obj);
+            DontDestroyOnLoad(Instantiate(obj));
         }
     }
 
@@ -57,12 +57,11 @@ public class StaticGameData : MonoBehaviourR3
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public static async Task<StaticGameData> GetInstanceAsync()
     {
-        while (Instance != null)
+        while (Instance == null)
         {
             await Task.Yield();
 
