@@ -30,7 +30,7 @@ public class PlannerPanel : MonoBehaviourR3
     [field: SerializeField]
     private ScrollRect ScrollRectQuestItems { get; set; }
 
-    private InputSystem_Actions Inputs { get; set; }
+    private InputSystem_Actions Inputs2 { get; set; }
 
     private int SelectedQuestElective { get; set; } = -1;
     private int SelectedQuestRequirement { get; set; } = -1;
@@ -49,30 +49,22 @@ public class PlannerPanel : MonoBehaviourR3
     {
         base.Initialize();
         Instance = this;
-        Inputs = new();
-
-        var onInputRight = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs.UI.Right.performed += h,
-            h => Inputs.UI.Right.performed -= h);
+        Inputs2 = new();
 
         var onInputLeft = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs.UI.Left.performed += h,
-            h => Inputs.UI.Left.performed -= h);
-
-        var onInputDown = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs.UI.Down.performed += h,
-            h => Inputs.UI.Down.performed -= h);
+            h => Inputs2.UI.Left.performed += h,
+            h => Inputs2.UI.Left.performed -= h);
 
         var onInputUp = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs.UI.Up.performed += h,
-            h => Inputs.UI.Up.performed -= h);
+            h => Inputs2.UI.Up.performed += h,
+            h => Inputs2.UI.Up.performed -= h);
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(RefreshQuestItems),
             PlannerQuestItem.OnSelected(UpdateSelected),
-            onInputRight.Subscribe(_ => SetQuestType(QuestType.Elective)),
+            Inputs.UI_Right(_ => SetQuestType(QuestType.Elective)),
             onInputLeft.Subscribe(_ => SetQuestType(QuestType.Requirement)),
-            onInputDown.Subscribe(_ => SetSelectedQuest(1)),
+            Inputs.UI_Down(_ => SetSelectedQuest(1)),
             onInputUp.Subscribe(_ => SetSelectedQuest(-1)),
 
             // Bad for performance but we can worry about that after the MVP
@@ -88,12 +80,13 @@ public class PlannerPanel : MonoBehaviourR3
     private new void OnEnable()
     {
         base.OnEnable();
-        Inputs.Enable();
+        Inputs2.Enable();
     }
 
-    private void OnDisable()
+    private new void OnDisable()
     {
-        Inputs.Disable();
+        base.OnDisable();
+        Inputs2.Disable();
     }
 
     private void SetQuestType(QuestType type)
