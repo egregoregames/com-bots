@@ -111,8 +111,9 @@ public class PauseMenu : MonoBehaviourR3
         Inputs.Enable();
     }
 
-    private void OnDisable()
+    private new void OnDisable()
     {
+        base.OnDisable();
         Inputs.Disable();
     }
 

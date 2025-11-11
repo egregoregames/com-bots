@@ -19,6 +19,12 @@ public class PlannerQuestItem : MonoBehaviourR3
     private TextMeshProUGUI TextQuestName { get; set; }
 
     [field: SerializeField]
+    private Color TextColorDark { get; set; }
+
+    [field: SerializeField]
+    private Color TextColorLight { get; set; }
+
+    [field: SerializeField]
     private GameObject ActiveQuestIndicator { get; set; }
 
     [field: SerializeField]
@@ -118,6 +124,8 @@ public class PlannerQuestItem : MonoBehaviourR3
             Quest.HasUnreadUpdates = false;
         }
         
+        TextQuestName.color = TextColorLight;
+
         _onSelected?.Invoke(Quest);
     }
 
@@ -125,6 +133,16 @@ public class PlannerQuestItem : MonoBehaviourR3
     {
         BackgroundSelected.SetActive(false);
         SelectedQuestIndent.SetActive(false);
+
+        if (Quest.IsCompleted)
+        {
+            TextQuestName.color = TextColorLight;
+        }
+        else
+        {
+            TextQuestName.color = TextColorDark;
+        }
+            
         IsSelected = false;
     }
 
@@ -133,6 +151,7 @@ public class PlannerQuestItem : MonoBehaviourR3
         QuestCompleteIndicator.SetActive(true);
         BackgroundCompleted.SetActive(true);
         ActiveQuestIndicator.SetActive(false);
+        TextQuestName.color = TextColorLight;
     }
 
     public void MakeQuestInactive()
