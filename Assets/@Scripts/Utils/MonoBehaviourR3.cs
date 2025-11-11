@@ -12,6 +12,8 @@ public class MonoBehaviourR3 : MonoBehaviour
         private InputSystem_Actions Inputs { get; set; }
         private Observable<InputAction.CallbackContext> _uiRight;
         private Observable<InputAction.CallbackContext> _uiDown;
+        private Observable<InputAction.CallbackContext> _uiLeft;
+        private Observable<InputAction.CallbackContext> _uiUp;
 
         public void TryEnable()
         {
@@ -32,7 +34,9 @@ public class MonoBehaviourR3 : MonoBehaviour
             }
         }
 
-        private IDisposable Subscribe(InputAction inputAction, Observable<InputAction.CallbackContext> observable, Action<InputAction.CallbackContext> x)
+        private IDisposable Subscribe(InputAction inputAction, 
+            Observable<InputAction.CallbackContext> observable, 
+            Action<InputAction.CallbackContext> x)
         {
             TryInitialize();
 
@@ -43,27 +47,17 @@ public class MonoBehaviourR3 : MonoBehaviour
             return observable.Subscribe(x);
         }
 
-        public IDisposable UI_Right(Action<InputAction.CallbackContext> x)
-        {
-            TryInitialize();
+        public IDisposable UI_Right(Action<InputAction.CallbackContext> x) 
+            => Subscribe(Inputs.UI.Right, _uiRight, x);
 
-            _uiRight ??= Observable.FromEvent<InputAction.CallbackContext>(
-                h => Inputs.UI.Right.performed += h,
-                h => Inputs.UI.Right.performed -= h);
-
-            return _uiRight.Subscribe(x);
-        }
+        public IDisposable UI_Left(Action<InputAction.CallbackContext> x)
+            => Subscribe(Inputs.UI.Left, _uiLeft, x);
 
         public IDisposable UI_Down(Action<InputAction.CallbackContext> x)
-        {
-            TryInitialize();
+            => Subscribe(Inputs.UI.Down, _uiDown, x);
 
-            _uiDown ??= Observable.FromEvent<InputAction.CallbackContext>(
-                h => Inputs.UI.Down.performed += h,
-                h => Inputs.UI.Down.performed -= h);
-
-            return _uiDown.Subscribe(x);
-        }
+        public IDisposable UI_Up(Action<InputAction.CallbackContext> x)
+            => Subscribe(Inputs.UI.Up, _uiUp, x);
 
         public void Dispose()
         {
