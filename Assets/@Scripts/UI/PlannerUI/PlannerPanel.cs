@@ -26,10 +26,34 @@ public class PlannerPanel : MonoBehaviourR3
     private TextMeshProUGUI QuestDescription { get; set; }
 
     [field: SerializeField]
+    private TextMeshProUGUI TextQuestTitle { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextQuestRewardCredits { get; set; }
+
+    [field: SerializeField]
     private GameObject UpArrow { get; set; }
 
     [field: SerializeField]
     private GameObject DownArrow { get; set; }
+
+    [field: SerializeField]
+    private GameObject ControlHintSetActiveQuest { get; set; }
+
+    [field: SerializeField]
+    private GameObject ImageSelectedRequirements { get; set; }
+
+    [field: SerializeField]
+    private GameObject ImageSelectedElectives { get; set; } 
+
+    [field: SerializeField]
+    private AudioClip AudioClipNavigation { get; set; }
+
+    [field: SerializeField]
+    private AudioClip AudioClipSetQuestActive { get; set; }
+
+    [field: SerializeField]
+    private AudioClip AudioClipLeaveMenu { get; set; }
 
     [field: SerializeField, ReadOnly]
     private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
@@ -46,6 +70,7 @@ public class PlannerPanel : MonoBehaviourR3
     [field: SerializeField, ReadOnly]
     private bool RefreshInProgress { get; set; }
 
+    #region Monobehaviour
     private new void Awake()
     {
         base.Awake();
@@ -68,6 +93,8 @@ public class PlannerPanel : MonoBehaviourR3
             Inputs.UI_Left(_ => SetQuestType(QuestType.Requirement)),
             Inputs.UI_Down(_ => SetSelectedQuest(1)),
             Inputs.UI_Up(_ => SetSelectedQuest(-1)),
+            Inputs.UI_Submit(_ => SetSelectedQuestActive()),
+            Inputs.UI_Cancel(_ => Close()),
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
@@ -75,16 +102,71 @@ public class PlannerPanel : MonoBehaviourR3
         gameObject.SetActive(false);
     }
 
-    private void SetQuestType(QuestType type)
-    {
-        QuestType = type;
-        RefreshQuestItems();
-    }
-
     private new void OnEnable()
     {
         base.OnEnable();
         RefreshQuestItems();
+        UpdateSelectedQuestTypeUI();
+    }
+    #endregion
+
+    private void Close()
+    {
+        if (!gameObject.activeInHierarchy) return;
+        AudioManager.PlaySoundEffect(AudioClipLeaveMenu);
+        gameObject.SetActive(false);
+    }
+
+    private async void SetSelectedQuestActive()
+    {
+        if (InstantiatedQuestItems.Count < 1) return;
+
+        var selected = InstantiatedQuestItems
+            .First(x => x.IsSelected);
+
+        var questData = await selected.GetQuestTrackingDatumAsync();
+
+        if (questData.IsCompleted)
+            return;
+
+        AudioManager.PlaySoundEffect(AudioClipSetQuestActive);
+
+        if (questData.IsActive)
+            return;
+
+        var data = await PersistentGameData.GetInstanceAsync();
+
+        foreach (var item in data.PlayerQuestTrackingData)
+        {
+            item.IsActive = false;
+        }
+
+        foreach (var item in InstantiatedQuestItems)
+        {
+            item.MakeQuestInactive();
+        }
+
+        questData.IsActive = true;
+        selected.MakeQuestActive();
+    }
+
+    private void PlaySoundNavigation()
+    {
+        AudioManager.PlaySoundEffect(AudioClipNavigation);
+    }
+
+    private void SetQuestType(QuestType type)
+    {
+        QuestType = type;
+        UpdateSelectedQuestTypeUI();
+        RefreshQuestItems();
+        PlaySoundNavigation();
+    }
+
+    private void UpdateSelectedQuestTypeUI()
+    {
+        ImageSelectedElectives.SetActive(QuestType == QuestType.Elective);
+        ImageSelectedRequirements.SetActive(QuestType == QuestType.Requirement);
     }
 
     private void SetSelectedQuest(int increment)
@@ -116,9 +198,11 @@ public class PlannerPanel : MonoBehaviourR3
 
         selectedQuest.Deselect();
         InstantiatedQuestItems[newIndex].Select();
+
+        PlaySoundNavigation();
     }
 
-    private void UpdateQuestDescription(QuestTrackingDatum quest, StaticQuestData data)
+    private void UpdateQuestDetails(QuestTrackingDatum quest, StaticQuestData data)
     {
         int step = quest.CurrentStep;
         if (quest.IsCompleted)
@@ -133,6 +217,9 @@ public class PlannerPanel : MonoBehaviourR3
         {
             QuestDescription.text = "ERROR: STEP OUT OF RANGE OR MISSING";
         }
+
+        TextQuestRewardCredits.text = data.RewardCredits.ToString("0.0");
+        TextQuestTitle.text = data.QuestName;
     }
 
     private void UpdateQuestList()
@@ -209,8 +296,9 @@ public class PlannerPanel : MonoBehaviourR3
             SelectedQuestIdRequirement = quest.QuestId;
         }
 
-        UpdateQuestDescription(quest, data);
+        UpdateQuestDetails(quest, data);
         UpdateQuestList();
+        ControlHintSetActiveQuest.SetActive(!quest.IsCompleted);
     }
 
     private async Task<IEnumerable<QuestTrackingDatum>> GetFilteredQuests()
@@ -256,7 +344,12 @@ public class PlannerPanel : MonoBehaviourR3
         int selected = QuestType == QuestType.Elective ?
         SelectedQuestIdElective : SelectedQuestIdRequirement;
 
-        if (InstantiatedQuestItems.Count < 1) return;
+        if (InstantiatedQuestItems.Count < 1)
+        {
+            DownArrow.SetActive(false);
+            UpArrow.SetActive(false);
+            return;
+        }
 
         if (selected == -1)
         {

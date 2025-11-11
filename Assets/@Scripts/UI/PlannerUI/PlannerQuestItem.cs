@@ -12,8 +12,8 @@ public class PlannerQuestItem : MonoBehaviourR3
     private static UnityEventR3<QuestTrackingDatum> _onSelected = new();
     public static IDisposable OnSelected(Action<QuestTrackingDatum> x) => _onSelected.Subscribe(x);
 
-    private static UnityEventR3<QuestTrackingDatum> _onMadeActive = new();
-    public static IDisposable OnMadeActive(Action<QuestTrackingDatum> x) => _onMadeActive.Subscribe(x);
+    //private static UnityEventR3<QuestTrackingDatum> _onMadeActive = new();
+    //public static IDisposable OnMadeActive(Action<QuestTrackingDatum> x) => _onMadeActive.Subscribe(x);
 
     [field: SerializeField]
     private TextMeshProUGUI TextQuestName { get; set; }
@@ -112,6 +112,12 @@ public class PlannerQuestItem : MonoBehaviourR3
         SelectedQuestIndent.SetActive(true);
         NewUpdateIndicator.SetActive(false);
         IsSelected = true;
+
+        if (Quest != null)
+        {
+            Quest.HasUnreadUpdates = false;
+        }
+        
         _onSelected?.Invoke(Quest);
     }
 
@@ -129,9 +135,14 @@ public class PlannerQuestItem : MonoBehaviourR3
         ActiveQuestIndicator.SetActive(false);
     }
 
+    public void MakeQuestInactive()
+    {
+        ActiveQuestIndicator.SetActive(false);
+    }
+
     public void MakeQuestActive()
     {
         ActiveQuestIndicator.SetActive(true);
-        _onMadeActive?.Invoke(Quest);
+        //_onMadeActive?.Invoke(Quest);
     }
 }

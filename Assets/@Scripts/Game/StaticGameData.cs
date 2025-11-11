@@ -1,4 +1,5 @@
 using R3;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -43,6 +44,18 @@ public class StaticGameData : MonoBehaviourR3
         foreach (var item in Singletons)
         {
             DontDestroyOnLoad(Instantiate(item));
+        }
+
+        // Quest validation
+        List<int> ids = new();
+        foreach (var item in QuestData)
+        {
+            if (ids.Contains(item.QuestID))
+            {
+                throw new System.Exception($"Quest ID collision detected: {item.QuestID} - {item.QuestName}");
+            }
+
+            ids.Add(item.QuestID);
         }
     }
 

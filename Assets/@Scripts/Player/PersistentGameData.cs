@@ -238,11 +238,22 @@ public partial class PersistentGameData : MonoBehaviourR3
 
 #if UNITY_EDITOR
         // Add some test quests
+
         UpdateQuest(1, true, 0);
         UpdateQuest(2, false, 0);
-        UpdateQuest(3, false, 0);
-        UpdateQuest(4, false, 0);
+        UpdateQuest(3, false, 100);
+        UpdateQuest(4, false, 100);
         UpdateQuest(5, false, 0);
+        UpdateQuest(17, false, 0);
+        UpdateQuest(18, false, 0);
+        UpdateQuest(21, false, 0);
+        UpdateQuest(22, false, 0);
+        UpdateQuest(1009, false, 100);
+        UpdateQuest(1010, false, 100);
+        UpdateQuest(1011, false, 0);
+        UpdateQuest(1012, false, 0);
+        UpdateQuest(1013, false, 0);
+        UpdateQuest(1014, false, 0);
 #endif
     }
 
@@ -308,6 +319,7 @@ public partial class PersistentGameData : MonoBehaviourR3
         {
             await Task.Yield();
         }
+
         return Instance;
     }
 
@@ -321,7 +333,9 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         using var block = InputBlocker.GetBlock("Updating quests");
 
-        var quest = (await GetInstanceAsync()).PlayerQuestTrackingData
+        var instance = await GetInstanceAsync();
+
+        var quest = instance.PlayerQuestTrackingData
             .FirstOrDefault(x => x.QuestId == questId);
 
         if (quest == null)
@@ -331,14 +345,36 @@ public partial class PersistentGameData : MonoBehaviourR3
                 QuestId = questId
             };
 
-            (await GetInstanceAsync()).PlayerQuestTrackingData.Add(quest);
+            instance.PlayerQuestTrackingData.Add(quest);
         }
 
-        quest.IsActive = isActive;
         quest.CurrentStep = currentStep;
+
         if (quest.IsCompleted)
         {
             quest.Complete();
+
+            // Find a new active quest
+            var inactive = instance.PlayerQuestTrackingData
+                .OrderBy(x => x.QuestId)
+                .FirstOrDefault(x => !x.IsCompleted);
+            
+            if (inactive != null)
+            {
+                inactive.IsActive = true;
+            }
+        }
+        else
+        {
+            if (isActive == true && quest.IsActive != isActive)
+            {
+                foreach (var item in instance.PlayerQuestTrackingData)
+                {
+                    item.IsActive = false;
+                }
+            }
+
+            quest.IsActive = isActive;
         }
 
         _onQuestUpdated?.Invoke(quest);

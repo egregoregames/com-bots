@@ -14,6 +14,8 @@ public class MonoBehaviourR3 : MonoBehaviour
         private Observable<InputAction.CallbackContext> _uiDown;
         private Observable<InputAction.CallbackContext> _uiLeft;
         private Observable<InputAction.CallbackContext> _uiUp;
+        private Observable<InputAction.CallbackContext> _uiSubmit;
+        private Observable<InputAction.CallbackContext> _uiCancel;
 
         public void TryEnable()
         {
@@ -60,6 +62,12 @@ public class MonoBehaviourR3 : MonoBehaviour
 
         public IDisposable UI_Up(Action<InputAction.CallbackContext> x)
             => Subscribe(() => Inputs.UI.Up, _uiUp, x);
+
+        public IDisposable UI_Submit(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Submit, _uiSubmit, x);
+
+        public IDisposable UI_Cancel(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Cancel, _uiCancel, x);
 
         public void Dispose()
         {
