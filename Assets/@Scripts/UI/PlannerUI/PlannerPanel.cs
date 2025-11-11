@@ -180,6 +180,8 @@ public class PlannerPanel : MonoBehaviourR3
         int selected = QuestType == QuestType.Elective ?
         SelectedQuestElective : SelectedQuestRequirement;
 
+        if (InstantiatedQuestItems.Count < 1) return;
+
         if (selected == -1)
         {
             InstantiatedQuestItems.First().Select();
@@ -194,7 +196,7 @@ public class PlannerPanel : MonoBehaviourR3
 
     private void ClearInstantiatedQuestItems()
     {
-        InstantiatedQuestItems.ForEach(x => Destroy(x));
+        InstantiatedQuestItems.ForEach(x => Destroy(x.gameObject));
         InstantiatedQuestItems.Clear();
     }
 

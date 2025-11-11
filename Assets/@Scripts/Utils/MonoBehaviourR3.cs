@@ -34,11 +34,13 @@ public class MonoBehaviourR3 : MonoBehaviour
             }
         }
 
-        private IDisposable Subscribe(InputAction inputAction, 
+        private IDisposable Subscribe(Func<InputAction> getInputAction, 
             Observable<InputAction.CallbackContext> observable, 
             Action<InputAction.CallbackContext> x)
         {
             TryInitialize();
+
+            var inputAction = getInputAction();
 
             observable ??= Observable.FromEvent<InputAction.CallbackContext>(
                 h => inputAction.performed += h,
@@ -48,16 +50,16 @@ public class MonoBehaviourR3 : MonoBehaviour
         }
 
         public IDisposable UI_Right(Action<InputAction.CallbackContext> x) 
-            => Subscribe(Inputs.UI.Right, _uiRight, x);
+            => Subscribe(() => Inputs.UI.Right, _uiRight, x);
 
         public IDisposable UI_Left(Action<InputAction.CallbackContext> x)
-            => Subscribe(Inputs.UI.Left, _uiLeft, x);
+            => Subscribe(() => Inputs.UI.Left, _uiLeft, x);
 
         public IDisposable UI_Down(Action<InputAction.CallbackContext> x)
-            => Subscribe(Inputs.UI.Down, _uiDown, x);
+            => Subscribe(() => Inputs.UI.Down, _uiDown, x);
 
         public IDisposable UI_Up(Action<InputAction.CallbackContext> x)
-            => Subscribe(Inputs.UI.Up, _uiUp, x);
+            => Subscribe(() => Inputs.UI.Up, _uiUp, x);
 
         public void Dispose()
         {
