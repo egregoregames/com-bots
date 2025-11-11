@@ -2,9 +2,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using R3;
 using System;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class MonoBehaviourR3 : MonoBehaviour
 {
+    public class InputsR3 : IDisposable
+    {
+        private InputSystem_Actions Inputs { get; set; }
+        private Observable<InputAction.CallbackContext> _uiRight;
+        private Observable<InputAction.CallbackContext> _uiDown;
+
+        public void TryEnable()
+        {
+            Inputs?.Enable();
+        }
+
+        public void TryDisable()
+        {
+            Inputs?.Disable();
+        }
+
+        private void TryInitialize()
+        {
+            if (Inputs == null)
+            {
+                Inputs = new InputSystem_Actions();
+                Inputs.Enable();
+            }
+        }
+
+        private IDisposable Subscribe(InputAction inputAction, Observable<InputAction.CallbackContext> observable, Action<InputAction.CallbackContext> x)
+        {
+            TryInitialize();
+
+            observable ??= Observable.FromEvent<InputAction.CallbackContext>(
+                h => inputAction.performed += h,
+                h => inputAction.performed -= h);
+
+            return observable.Subscribe(x);
+        }
+
+        public IDisposable UI_Right(Action<InputAction.CallbackContext> x)
+        {
+            TryInitialize();
+
+            _uiRight ??= Observable.FromEvent<InputAction.CallbackContext>(
+                h => Inputs.UI.Right.performed += h,
+                h => Inputs.UI.Right.performed -= h);
+
+            return _uiRight.Subscribe(x);
+        }
+
+        public IDisposable UI_Down(Action<InputAction.CallbackContext> x)
+        {
+            TryInitialize();
+
+            _uiDown ??= Observable.FromEvent<InputAction.CallbackContext>(
+                h => Inputs.UI.Down.performed += h,
+                h => Inputs.UI.Down.performed -= h);
+
+            return _uiDown.Subscribe(x);
+        }
+
+        public void Dispose()
+        {
+            Inputs?.Dispose();
+        }
+    }
+
     [NonSerialized]
     protected bool _initialized;
 
@@ -15,6 +81,8 @@ public class MonoBehaviourR3 : MonoBehaviour
 
     public bool IsDestroyed { get; private set; }
 
+    public InputsR3 Inputs { get; private set; } = new();
+
     protected void Awake()
     {
         TryInitialize();
@@ -22,11 +90,18 @@ public class MonoBehaviourR3 : MonoBehaviour
 
     protected void OnEnable()
     {
+        Inputs.TryEnable();
         TryInitialize();
+    }
+
+    protected void OnDisable()
+    {
+        Inputs.TryDisable();
     }
 
     public virtual void OnDestroy()
     {
+        Inputs.Dispose();
         foreach (var item in Events)
         {
             item.Dispose();
