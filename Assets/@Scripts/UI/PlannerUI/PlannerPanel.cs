@@ -30,13 +30,16 @@ public class PlannerPanel : MonoBehaviourR3
     [field: SerializeField]
     private ScrollRect ScrollRectQuestItems { get; set; }
 
-    private InputSystem_Actions Inputs2 { get; set; }
-
+    [field: SerializeField, ReadOnly]
     private int SelectedQuestElective { get; set; } = -1;
+
+    [field: SerializeField, ReadOnly]
     private int SelectedQuestRequirement { get; set; } = -1;
 
+    [field: SerializeField, ReadOnly]
     private QuestType QuestType { get; set; }
 
+    [field: SerializeField, ReadOnly]
     private bool RefreshInProgress { get; set; }
 
     private new void Awake()
@@ -49,23 +52,14 @@ public class PlannerPanel : MonoBehaviourR3
     {
         base.Initialize();
         Instance = this;
-        Inputs2 = new();
-
-        var onInputLeft = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs2.UI.Left.performed += h,
-            h => Inputs2.UI.Left.performed -= h);
-
-        var onInputUp = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs2.UI.Up.performed += h,
-            h => Inputs2.UI.Up.performed -= h);
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(RefreshQuestItems),
             PlannerQuestItem.OnSelected(UpdateSelected),
             Inputs.UI_Right(_ => SetQuestType(QuestType.Elective)),
-            onInputLeft.Subscribe(_ => SetQuestType(QuestType.Requirement)),
+            Inputs.UI_Left(_ => SetQuestType(QuestType.Requirement)),
             Inputs.UI_Down(_ => SetSelectedQuest(1)),
-            onInputUp.Subscribe(_ => SetSelectedQuest(-1)),
+            Inputs.UI_Up(_ => SetSelectedQuest(-1)),
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
@@ -75,18 +69,6 @@ public class PlannerPanel : MonoBehaviourR3
     {
         RefreshQuestItems();
         gameObject.SetActive(false);
-    }
-
-    private new void OnEnable()
-    {
-        base.OnEnable();
-        Inputs2.Enable();
-    }
-
-    private new void OnDisable()
-    {
-        base.OnDisable();
-        Inputs2.Disable();
     }
 
     private void SetQuestType(QuestType type)
