@@ -36,9 +36,30 @@ that should be used when possible. Advantages:
 
 ### Summary
 
-Before working on a feature, please give your senior a brief summary of the new classes
+Before working on a new feature, please give your senior a brief summary of the new classes/scripts
 that will be created, especially any new singletons, and a synopsis of how the new
 feature will work. Please get approval before beginning work.
+
+For example, imagine an abstract feature dev task being assigned to you:
+
+```
+Hey! Here's a task to develop a brand new feature where the player character can 
+blink through facial animations." 
+```
+
+Quickly write a brief summary explaining your plan, then ping the senior:
+
+```
+Okay: I'm going to add a script called BlinkController.cs to the player prefab. 
+Using a timer, it's going to trigger a bool in the animator, which will cause a blink.
+```
+
+You might get a response like "OK sounds good!" or "OK, but let's make it work 
+for all NPC animators too" or "Actually I want you to use the existing 
+CharacterBlink script and make modifications". These are all valid possibilities,
+and getting everyone on the same page prior to work saves everyone time.
+
+A good rule of thumb here is that if it requires a new script, it requires a summary.
 
 ### Branches / Pull requests
 
