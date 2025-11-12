@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using R3;
+using UnityEngine.EventSystems;
 
 public class PauseMenu_AppButton : MonoBehaviourR3
 {
@@ -29,5 +30,27 @@ public class PauseMenu_AppButton : MonoBehaviourR3
         var onSelected = Button
             .OnSelectAsObservable()
             .Subscribe(_ => _onButtonSelected.Invoke(this));
+
+        AddEvents(
+            Inputs.UI_Submit(_ => OnSubmit()),
+            onSelected);
+    }
+
+    private void OnSubmit()
+    {
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            return;
+        }
+
+        if (!PauseMenu.Instance.IsOpen)
+        {
+            return;
+        }
+
+        if (EventSystem.current.currentSelectedGameObject == Button.gameObject)
+        {
+            Button.onClick.Invoke();
+        }
     }
 }

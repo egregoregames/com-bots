@@ -2,9 +2,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using R3;
 using System;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class MonoBehaviourR3 : MonoBehaviour
 {
+    public class InputsR3 : IDisposable
+    {
+        private InputSystem_Actions Inputs { get; set; }
+        private Observable<InputAction.CallbackContext> _uiRight;
+        private Observable<InputAction.CallbackContext> _uiDown;
+        private Observable<InputAction.CallbackContext> _uiLeft;
+        private Observable<InputAction.CallbackContext> _uiUp;
+        private Observable<InputAction.CallbackContext> _uiSubmit;
+        private Observable<InputAction.CallbackContext> _uiCancel;
+
+        public void TryEnable()
+        {
+            Inputs?.Enable();
+        }
+
+        public void TryDisable()
+        {
+            Inputs?.Disable();
+        }
+
+        private void TryInitialize()
+        {
+            if (Inputs == null)
+            {
+                Inputs = new InputSystem_Actions();
+                Inputs.Enable();
+            }
+        }
+
+        private IDisposable Subscribe(Func<InputAction> getInputAction, 
+            Observable<InputAction.CallbackContext> observable, 
+            Action<InputAction.CallbackContext> x)
+        {
+            TryInitialize();
+
+            var inputAction = getInputAction();
+
+            observable ??= Observable.FromEvent<InputAction.CallbackContext>(
+                h => inputAction.performed += h,
+                h => inputAction.performed -= h);
+
+            return observable.Subscribe(x);
+        }
+
+        public IDisposable UI_Right(Action<InputAction.CallbackContext> x) 
+            => Subscribe(() => Inputs.UI.Right, _uiRight, x);
+
+        public IDisposable UI_Left(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Left, _uiLeft, x);
+
+        public IDisposable UI_Down(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Down, _uiDown, x);
+
+        public IDisposable UI_Up(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Up, _uiUp, x);
+
+        public IDisposable UI_Submit(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Submit, _uiSubmit, x);
+
+        public IDisposable UI_Cancel(Action<InputAction.CallbackContext> x)
+            => Subscribe(() => Inputs.UI.Cancel, _uiCancel, x);
+
+        public void Dispose()
+        {
+            Inputs?.Dispose();
+        }
+    }
+
     [NonSerialized]
     protected bool _initialized;
 
@@ -15,6 +85,8 @@ public class MonoBehaviourR3 : MonoBehaviour
 
     public bool IsDestroyed { get; private set; }
 
+    public InputsR3 Inputs { get; private set; } = new();
+
     protected void Awake()
     {
         TryInitialize();
@@ -22,11 +94,18 @@ public class MonoBehaviourR3 : MonoBehaviour
 
     protected void OnEnable()
     {
+        Inputs.TryEnable();
         TryInitialize();
+    }
+
+    protected void OnDisable()
+    {
+        Inputs.TryDisable();
     }
 
     public virtual void OnDestroy()
     {
+        Inputs.Dispose();
         foreach (var item in Events)
         {
             item.Dispose();

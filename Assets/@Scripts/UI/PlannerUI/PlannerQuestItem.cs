@@ -12,11 +12,17 @@ public class PlannerQuestItem : MonoBehaviourR3
     private static UnityEventR3<QuestTrackingDatum> _onSelected = new();
     public static IDisposable OnSelected(Action<QuestTrackingDatum> x) => _onSelected.Subscribe(x);
 
-    private static UnityEventR3<QuestTrackingDatum> _onMadeActive = new();
-    public static IDisposable OnMadeActive(Action<QuestTrackingDatum> x) => _onMadeActive.Subscribe(x);
+    //private static UnityEventR3<QuestTrackingDatum> _onMadeActive = new();
+    //public static IDisposable OnMadeActive(Action<QuestTrackingDatum> x) => _onMadeActive.Subscribe(x);
 
     [field: SerializeField]
     private TextMeshProUGUI TextQuestName { get; set; }
+
+    [field: SerializeField]
+    private Color TextColorDark { get; set; }
+
+    [field: SerializeField]
+    private Color TextColorLight { get; set; }
 
     [field: SerializeField]
     private GameObject ActiveQuestIndicator { get; set; }
@@ -83,6 +89,8 @@ public class PlannerQuestItem : MonoBehaviourR3
             return;
         }
 
+        QuestCompleteIndicator.SetActive(Quest.IsCompleted);
+        BackgroundCompleted.SetActive(Quest.IsCompleted);
         ActiveQuestIndicator.SetActive(Quest.IsActive);
         NewUpdateIndicator.SetActive(Quest.HasUnreadUpdates && !IsSelected);
     }
@@ -110,14 +118,32 @@ public class PlannerQuestItem : MonoBehaviourR3
         SelectedQuestIndent.SetActive(true);
         NewUpdateIndicator.SetActive(false);
         IsSelected = true;
+
+        if (Quest != null)
+        {
+            Quest.HasUnreadUpdates = false;
+        }
+        
+        TextQuestName.color = TextColorLight;
+
         _onSelected?.Invoke(Quest);
     }
 
     public void Deselect()
     {
         BackgroundSelected.SetActive(false);
+        SelectedQuestIndent.SetActive(false);
+
+        if (Quest.IsCompleted)
+        {
+            TextQuestName.color = TextColorLight;
+        }
+        else
+        {
+            TextQuestName.color = TextColorDark;
+        }
+            
         IsSelected = false;
-        _onSelected?.Invoke(Quest);
     }
 
     public void Complete()
@@ -125,11 +151,17 @@ public class PlannerQuestItem : MonoBehaviourR3
         QuestCompleteIndicator.SetActive(true);
         BackgroundCompleted.SetActive(true);
         ActiveQuestIndicator.SetActive(false);
+        TextQuestName.color = TextColorLight;
+    }
+
+    public void MakeQuestInactive()
+    {
+        ActiveQuestIndicator.SetActive(false);
     }
 
     public void MakeQuestActive()
     {
         ActiveQuestIndicator.SetActive(true);
-        _onMadeActive?.Invoke(Quest);
+        //_onMadeActive?.Invoke(Quest);
     }
 }

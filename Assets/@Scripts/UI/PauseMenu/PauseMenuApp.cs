@@ -49,8 +49,9 @@ public class PauseMenuApp : MonoBehaviourR3
         _onMenuOpened?.Invoke();
     }
 
-    protected void OnDisable()
+    protected new void OnDisable()
     {
+        base.OnDisable();
         Inputs.Disable();
         _openMenus.Remove(this);
         _onMenuClosed?.Invoke();

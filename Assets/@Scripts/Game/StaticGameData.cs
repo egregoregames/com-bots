@@ -1,4 +1,5 @@
 using R3;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class StaticGameData : MonoBehaviourR3
         if (Instance == null)
         {
             var obj = Resources.Load<GameObject>("StaticGameData");
-            Instantiate(obj);
+            DontDestroyOnLoad(Instantiate(obj));
         }
     }
 
@@ -44,6 +45,18 @@ public class StaticGameData : MonoBehaviourR3
         {
             DontDestroyOnLoad(Instantiate(item));
         }
+
+        // Quest validation
+        List<int> ids = new();
+        foreach (var item in QuestData)
+        {
+            if (ids.Contains(item.QuestID))
+            {
+                throw new System.Exception($"Quest ID collision detected: {item.QuestID} - {item.QuestName}");
+            }
+
+            ids.Add(item.QuestID);
+        }
     }
 
     protected override void Initialize()
@@ -57,12 +70,11 @@ public class StaticGameData : MonoBehaviourR3
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public static async Task<StaticGameData> GetInstanceAsync()
     {
-        while (Instance != null)
+        while (Instance == null)
         {
             await Task.Yield();
 

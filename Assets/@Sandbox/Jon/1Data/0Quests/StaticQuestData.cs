@@ -1,9 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StaticQuestData", menuName = "Scriptable Objects/Static Quest Data")]
 public class StaticQuestData : ScriptableObject
 {
+    [field: SerializeField]
+    public int QuestID { get; set; }
+
     [field: SerializeField]
     public string QuestName { get; private set; }
 
@@ -12,10 +14,7 @@ public class StaticQuestData : ScriptableObject
 
     [field: SerializeField]
     public QuestType QuestType { get; private set; }
-}
 
-public enum QuestType
-{
-    Requirement,
-    Elective
+    [field: SerializeField]
+    public int RewardCredits { get; private set; }
 }

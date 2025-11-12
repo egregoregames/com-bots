@@ -1,4 +1,8 @@
+using Sirenix.OdinInspector;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 /// <summary>
 /// In GameMaker, I tracked quest status as follows:
@@ -36,17 +40,27 @@ using System.Threading.Tasks;
 /// For each step besides step 0, every quest has a corresponding message that 
 /// will display when viewed in the Planner App.
 /// </summary>
+[Serializable]
 public class QuestTrackingDatum
 {
+    [field: SerializeField, ReadOnly]
     public int QuestId { get; set; }
+
+    [field: SerializeField, ReadOnly]
     public bool IsActive { get; set; }
+
+    [field: SerializeField, ReadOnly]
     public int CurrentStep { get; set; } = 0;
-    public bool IsCompleted => CurrentStep == 100;
+
+    public bool IsCompleted => CurrentStep >= 100;
+
+    [field: SerializeField, ReadOnly]
     public bool HasUnreadUpdates { get; set; } = true;
 
     public async Task<StaticQuestData> GetQuestDataAsync()
     {
-        return (await StaticGameData.GetInstanceAsync()).QuestData[QuestId];
+        return (await StaticGameData.GetInstanceAsync()).QuestData
+            .First(x => x.QuestID == QuestId);
     }
 
     /// <summary>
@@ -56,7 +70,8 @@ public class QuestTrackingDatum
     /// <returns></returns>
     public StaticQuestData GetQuestData()
     {
-        return StaticGameData.Instance.QuestData[QuestId];
+        return StaticGameData.Instance.QuestData
+            .First(x => x.QuestID == QuestId);
     }
 
     public void Complete()
