@@ -1,11 +1,15 @@
 using ComBots.Game.Portals;
+using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 /// <summary>
 /// Singleton that must exist as soon as the game starts. Stores frequently 
@@ -239,21 +243,21 @@ public partial class PersistentGameData : MonoBehaviourR3
 #if UNITY_EDITOR
         // Add some test quests
 
-        UpdateQuest(1, true, 0);
-        UpdateQuest(2, false, 0);
-        UpdateQuest(3, false, 100);
-        UpdateQuest(4, false, 100);
-        UpdateQuest(5, false, 0);
-        UpdateQuest(17, false, 0);
-        UpdateQuest(18, false, 0);
-        UpdateQuest(21, false, 0);
-        UpdateQuest(22, false, 0);
-        UpdateQuest(1009, false, 100);
-        UpdateQuest(1010, false, 100);
-        UpdateQuest(1011, false, 0);
-        UpdateQuest(1012, false, 0);
-        UpdateQuest(1013, false, 0);
-        UpdateQuest(1014, false, 0);
+        UpdateQuest(1, 0);
+        UpdateQuest(2, 0);
+        UpdateQuest(3, 100);
+        UpdateQuest(4, 100);
+        UpdateQuest(5, 0);
+        UpdateQuest(17, 0);
+        UpdateQuest(18, 0);
+        UpdateQuest(21, 0);
+        UpdateQuest(22, 0);
+        UpdateQuest(1009, 100);
+        UpdateQuest(1010, 100);
+        UpdateQuest(1011, 0);
+        UpdateQuest(1012, 0);
+        UpdateQuest(1013, 0);
+        UpdateQuest(1014, 0);
 #endif
     }
 
@@ -324,15 +328,76 @@ public partial class PersistentGameData : MonoBehaviourR3
     }
 
     /// <summary>
-    /// Should be called even if it's the first time the user is encountering a quest
+    /// Will update or add a quest to the player's tracked quests.
+    /// <para />
+    /// Set the currentStep to update the quest description in the Planner App. See
+    /// StaticGameData and the individual Quest data scriptable objects for reference.
+    /// <para />
+    /// Setting currentStep to 100 will complete the quest, which will automatically
+    /// update in the Planner App, and a new active quest will be automatically 
+    /// chosen in the list, going through Requirements first, in order of quest 
+    /// ID, then Electives.
     /// </summary>
-    /// <param name="questId"></param>
-    /// <param name="isActive"></param>
-    /// <param name="currentStep"></param>
-    public static async void UpdateQuest(int questId, bool isActive, int currentStep)
+    /// 
+    /// <param name="questId">
+    /// 
+    /// </param>
+    /// 
+    /// <param name="currentStep">
+    /// Should be between 0 and 100
+    /// </param>
+    public static async void UpdateQuest(int questId, int currentStep)
     {
         using var block = InputBlocker.GetBlock("Updating quests");
 
+        var quest = await GetOrAddQuest(questId);
+
+        quest.CurrentStep = currentStep;
+
+        if (quest.IsCompleted)
+        {
+            quest.Complete();
+        }
+
+        EnsureAtLeastOneActiveQuest();
+
+        _onQuestUpdated?.Invoke(quest);
+    }
+
+    /// <summary>
+    /// Sets this quest as the active quest in the Planner App. This should be called
+    /// specifically if you need to make a quest active without the player's input.
+    /// <para />
+    /// This should NOT be used when the player is manually setting a quest active
+    /// in the Planner App (there is already separate code for that).
+    /// <para />
+    /// This should NOT be used when adding the very first quest to the player's
+    /// tracked quests (that will happen automatically).
+    /// <para />
+    /// This should NOT be used immediately after a quest has been completed and you
+    /// want to set a new active quest (this happens automatically).
+    /// </summary>
+    /// <param name="questId"></param>
+    public static async void QuestForceActive(int questId)
+    {
+        var quest = await GetOrAddQuest(questId);
+
+        if (quest.IsCompleted) return;
+
+        // Make all other quests inactive
+        var instance = await GetInstanceAsync();
+
+        foreach (var item in instance.PlayerQuestTrackingData)
+        {
+            item.IsActive = false;
+        }
+
+        quest.IsActive = true;
+        _onQuestUpdated.Invoke(quest);
+    }
+
+    private static async Task<QuestTrackingDatum> GetOrAddQuest(int questId)
+    {
         var instance = await GetInstanceAsync();
 
         var quest = instance.PlayerQuestTrackingData
@@ -348,36 +413,28 @@ public partial class PersistentGameData : MonoBehaviourR3
             instance.PlayerQuestTrackingData.Add(quest);
         }
 
-        quest.CurrentStep = currentStep;
+        return quest;
+    }
 
-        if (quest.IsCompleted)
+    private static async void EnsureAtLeastOneActiveQuest()
+    {
+        var instance = await GetInstanceAsync();
+
+        var active = instance.PlayerQuestTrackingData
+            .Where(x => !x.IsCompleted && x.IsActive)
+            .FirstOrDefault();
+
+        if (active == null)
         {
-            quest.Complete();
-
-            // Find a new active quest
             var inactive = instance.PlayerQuestTrackingData
                 .OrderBy(x => x.QuestId)
                 .FirstOrDefault(x => !x.IsCompleted);
-            
+
             if (inactive != null)
             {
                 inactive.IsActive = true;
             }
         }
-        else
-        {
-            if (isActive == true && quest.IsActive != isActive)
-            {
-                foreach (var item in instance.PlayerQuestTrackingData)
-                {
-                    item.IsActive = false;
-                }
-            }
-
-            quest.IsActive = isActive;
-        }
-
-        _onQuestUpdated?.Invoke(quest);
     }
 
     /// <summary>
