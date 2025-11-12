@@ -58,6 +58,7 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
     // =============== Cache =============== //
     private IState_Dialogue_Args _args;
     private bool _isFirstSubtitle;
+    private bool _isLastSubtitle;
     private bool _previouslyHadOptions;
 
     // =============== IDialogueUI implementation =============== //
@@ -127,10 +128,10 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 
     private void OnNavigate(InputAction.CallbackContext context)
     {
-        if (_dialogueTypewriter.IsTyping) 
+        if (_dialogueTypewriter.IsTyping)
             return;
 
-        if (!_optionLister.IsActive) 
+        if (!_optionLister.IsActive)
             return;
 
         AudioManager.PlaySoundEffect(_defaultSFX.NavigateOptions);
@@ -144,7 +145,10 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 
         if (_optionLister.IsActive) // If we have options pass the input
         {
-            AudioManager.PlaySoundEffect(_defaultSFX.ChooseOption);
+            if (!_isLastSubtitle)
+            {
+                AudioManager.PlaySoundEffect(_defaultSFX.ChooseOption);
+            }
             _optionLister.Input_Confirm();
             return;
         }
@@ -383,6 +387,8 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
     private async void ShowSubtitle(string text, bool isLast, bool previouslyHadOptions)
     {
         MyLogger<WC_Dialogue>.StaticLog($"Showing subtitle: {text}, isfirst: {_isFirstSubtitle}, isLast: {isLast}, previouslyHadOptions: {previouslyHadOptions}");
+        // Cache
+        _isLastSubtitle = isLast;
 
         // Play the SFX if this isn't the first or last subtitle
         if (!_isFirstSubtitle && !previouslyHadOptions)
