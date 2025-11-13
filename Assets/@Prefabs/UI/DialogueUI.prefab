@@ -66,12 +66,12 @@ MonoBehaviour:
   _endIcon: {fileID: 4591898207562195684}
   _endIcon_scaleAmount: 0.75
   _defaultSFX:
-    ContinueDialogue: {fileID: 8300000, guid: 27b4ed80641e48c4d9da6a72e2436df1, type: 3}
-    ChooseOption: {fileID: 8300000, guid: 11c5f38a712762f468d995045dd73e09, type: 3}
+    ContinueDialogue: {fileID: 8300000, guid: 66d198b6e3827fb45b971ac7c99acaa1, type: 3}
+    ChooseOption: {fileID: 8300000, guid: 66d198b6e3827fb45b971ac7c99acaa1, type: 3}
     NavigateOptions: {fileID: 8300000, guid: f514263d7a5ec6040b6559edd2dcdc21, type: 3}
-    EndDialogue: {fileID: 8300000, guid: 5a17ff6467faebe4f9ebd7cdc29e6718, type: 3}
+    EndDialogue: {fileID: 8300000, guid: 66d198b6e3827fb45b971ac7c99acaa1, type: 3}
   _typeWriterSFX:
-    TypeWriterLoop: {fileID: 8300000, guid: 3f422aad134ac5542a4860dba28110f4, type: 3}
+    TypeWriterLoop: {fileID: 8300000, guid: bc7b15267be7fa443b48dc245dae89b4, type: 3}
 --- !u!114 &3676049597387905222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,6 +373,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4072440689255795941, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4852437588105843569, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
       propertyPath: m_Name
       value: Dialogue
@@ -381,6 +385,10 @@ PrefabInstance:
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 2f2825168de443c4f8807d1f85316934, type: 2}
+    - target: {fileID: 5187468226810727450, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+      propertyPath: m_wordSpacing
+      value: -16
+      objectReference: {fileID: 0}
     - target: {fileID: 5187468226810727450, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
