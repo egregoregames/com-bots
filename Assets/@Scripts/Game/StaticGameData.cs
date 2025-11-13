@@ -1,5 +1,6 @@
 using R3;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -33,6 +34,11 @@ public class StaticGameData : MonoBehaviourR3
             var obj = Resources.Load<GameObject>("StaticGameData");
             DontDestroyOnLoad(Instantiate(obj));
         }
+    }
+
+    public static int GetMaxInventoryItemQuantity(int itemId)
+    {
+        return Instance.ItemData.First(x => x.ItemId == itemId).MaxQuantity;
     }
 
     private new void Awake()

@@ -499,7 +499,7 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onMoneyUpdated?.Invoke();
     }
 
-    public async void AddInventoryItem(int itemId, int amount)
+    public static async void AddInventoryItem(int itemId, int amount)
     {
         var instance = await GetInstanceAsync();
 
@@ -526,13 +526,13 @@ public partial class PersistentGameData : MonoBehaviourR3
             var message = $"Tried to add too many of item type " +
                 $"{staticData.ItemName} to player inventory";
 
-            Log(message, LogLevel.Warning);
+            Instance.Log(message, LogLevel.Warning);
         }
 
         _onInventoryItemUpdated?.Invoke(item);
     }
 
-    public async void RemoveInventoryItem(int itemId, int amount)
+    public static async void RemoveInventoryItem(int itemId, int amount)
     {
         var instance = await GetInstanceAsync();
 
@@ -544,7 +544,7 @@ public partial class PersistentGameData : MonoBehaviourR3
             string message = $"Tried to remove an item from the player's " +
                 $"inventory (ID: {itemId}) that did not exist";
 
-            Log(message, LogLevel.Warning);
+            Instance.Log(message, LogLevel.Warning);
             return;
         }
 
@@ -555,12 +555,25 @@ public partial class PersistentGameData : MonoBehaviourR3
             string message = $"Took too many of item {item.ItemId} from " +
                 $"player's inventory";
 
-            Log(message, LogLevel.Warning);
+            Instance.Log(message, LogLevel.Warning);
 
             item.Quantity = 0;
         }
 
         _onInventoryItemUpdated?.Invoke(item);
+    }
+
+    public static int GetInventoryAmount(int itemId)
+    {
+        var item = Instance.PlayerInventoryItemData
+            .FirstOrDefault(x => x.ItemId == itemId);
+
+        if (item == null)
+        {
+            return 0;
+        }
+
+        return item.Quantity;
     }
 
     private void GenerateStudentIdIfNoneExists()
