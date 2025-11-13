@@ -85,6 +85,7 @@ public class PlannerQuestItem : MonoBehaviourR3
     {
         if (Quest.IsCompleted)
         {
+            NewUpdateIndicator.SetActive(Quest.HasUnreadUpdates);
             Complete();
             return;
         }
@@ -104,6 +105,11 @@ public class PlannerQuestItem : MonoBehaviourR3
 
         if (quest != Quest && !BackgroundSelected.activeSelf)
         {
+            string message = $"Activating NewUpdateIndicator " +
+                $"for QuestItem {TextQuestName.text}";
+
+            Log(message, LogLevel.Verbose);
+
             NewUpdateIndicator.SetActive(true);
         }
 
