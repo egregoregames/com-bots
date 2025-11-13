@@ -7,16 +7,16 @@ using UnityEngine.Serialization;
 /// </summary>
 [CreateAssetMenu(
     fileName = "StaticItemDatum", 
-    menuName = "Scriptable Objects/StaticItemDatum")]
+    menuName = "Scriptable Objects/Static Item Datum")]
 public class StaticItemDatum : ScriptableObject
 {
 	[field: SerializeField]
 	public int ItemId { get; private set; }
 
-	[field: SerializeField, FormerlySerializedAs("itemNameSingular")]
+	[field: SerializeField, FormerlySerializedAs("itemNameSingular"), FormerlySerializedAs("hardwareNameSingular")]
 	public string ItemName { get; private set; }
 
-    [field: SerializeField, FormerlySerializedAs("itemNamePlural")]
+    [field: SerializeField, FormerlySerializedAs("itemNamePlural"), FormerlySerializedAs("hardwareNamePlural")]
     public string ItemNamePlural { get; private set; }
 
     [field: SerializeField, FormerlySerializedAs("itemType")]
