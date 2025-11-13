@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -21,4 +23,21 @@ public class InventoryItemDatum
     /// </summary>
     [field: SerializeField]
     public int Quantity { get; set; }
+
+    public async Task<StaticItemDatum> GetStaticDataAsync()
+    {
+        return (await StaticGameData.GetInstanceAsync()).ItemData
+            .First(x => x.ItemId == ItemId);
+    }
+
+    /// <summary>
+    /// Make sure <see cref="StaticGameData.Instance"/> is not null or 
+    /// use <see cref="GetStaticDataAsync"/>
+    /// </summary>
+    /// <returns></returns>
+    public StaticItemDatum GetStaticData()
+    {
+        return StaticGameData.Instance.ItemData
+            .First(x => x.ItemId == ItemId);
+    }
 }
