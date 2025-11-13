@@ -14,7 +14,7 @@ public class InventoryItemDatum
     /// Refers to a unique Id that defines the item. Is not unique to this instance
     /// </summary>
     [field: SerializeField]
-    public string ItemId { get; set; }
+    public int ItemId { get; set; }
 
     /// <summary>
     /// Key items will have a max inventory quantity of 1
