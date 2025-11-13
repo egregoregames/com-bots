@@ -36,6 +36,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     private static UnityEventR3 _onLocationUpdated = new();
 
     private static UnityEventR3<QuestTrackingDatum> _onQuestUpdated = new();
+    private static UnityEventR3<InventoryItemDatum> _onInventoryItemUpdated = new();
 
     public static class GameEvents
     {
@@ -59,6 +60,9 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnQuestUpdated(Action<QuestTrackingDatum> x)
             => _onQuestUpdated.Subscribe(x);
+
+        public static IDisposable OnInventoryItemUpdate(Action<InventoryItemDatum> x)
+            => _onInventoryItemUpdated.Subscribe(x);
     }
 
     /// <summary>
@@ -499,6 +503,70 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerMoney -= amount;
         _onMoneyUpdated?.Invoke();
+    }
+
+    public async void AddInventoryItem(int itemId, int amount)
+    {
+        var instance = await GetInstanceAsync();
+
+        var item = instance.PlayerInventoryItemData
+            .FirstOrDefault(x => x.ItemId == itemId);
+
+        if (item == null)
+        {
+            item = new InventoryItemDatum()
+            {
+                ItemId = itemId
+            };
+
+            instance.PlayerInventoryItemData.Add(item);
+        }
+
+        var staticData = await item.GetStaticDataAsync();
+        item.Quantity += amount;
+
+        if (staticData.MaxQuantity < item.Quantity)
+        {
+            item.Quantity = staticData.MaxQuantity;
+
+            var message = $"Tried to add too many of item type " +
+                $"{staticData.ItemName} to player inventory";
+
+            Log(message, LogLevel.Warning);
+        }
+
+        _onInventoryItemUpdated?.Invoke(item);
+    }
+
+    public async void RemoveInventoryItem(int itemId, int amount)
+    {
+        var instance = await GetInstanceAsync();
+
+        var item = instance.PlayerInventoryItemData
+            .FirstOrDefault(x => x.ItemId == itemId);
+
+        if (item == null)
+        {
+            string message = $"Tried to remove an item from the player's " +
+                $"inventory (ID: {itemId}) that did not exist";
+
+            Log(message, LogLevel.Warning);
+            return;
+        }
+
+        item.Quantity -= amount;
+
+        if (item.Quantity < 0)
+        {
+            string message = $"Took too many of item {item.ItemId} from " +
+                $"player's inventory";
+
+            Log(message, LogLevel.Warning);
+
+            item.Quantity = 0;
+        }
+
+        _onInventoryItemUpdated?.Invoke(item);
     }
 
     private void GenerateStudentIdIfNoneExists()
