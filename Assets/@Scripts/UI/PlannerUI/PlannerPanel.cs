@@ -95,6 +95,7 @@ public class PlannerPanel : MonoBehaviourR3
             Inputs.UI_Up(_ => SetSelectedQuest(-1)),
             Inputs.UI_Submit(_ => SetSelectedQuestActive()),
             Inputs.UI_Cancel(_ => Close()),
+            Inputs.UI_OpenMenu(_ => Close()),
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
@@ -107,6 +108,12 @@ public class PlannerPanel : MonoBehaviourR3
         base.OnEnable();
         RefreshQuestItems();
         UpdateSelectedQuestTypeUI();
+    }
+
+    private new void OnDisable()
+    {
+        base.OnDisable();
+        RemoveUnreadNotificationsOnCompletedQuests();
     }
     #endregion
 
@@ -157,8 +164,20 @@ public class PlannerPanel : MonoBehaviourR3
     {
         QuestType = type;
         UpdateSelectedQuestTypeUI();
+        RemoveUnreadNotificationsOnCompletedQuests();
         RefreshQuestItems();
         PlaySoundNavigation();
+    }
+
+    private void RemoveUnreadNotificationsOnCompletedQuests()
+    {
+        foreach (var item in InstantiatedQuestItems)
+        {
+            if (item.Quest.IsCompleted && item.Quest.HasUnreadUpdates)
+            {
+                item.Quest.HasUnreadUpdates = false;
+            }
+        }
     }
 
     private void UpdateSelectedQuestTypeUI()
