@@ -9,7 +9,7 @@ public class StaticQuestData : ScriptableObject
     [field: SerializeField]
     public string QuestName { get; private set; }
 
-    [field: SerializeField]
+    [field: SerializeField, TextArea]
     public string[] Steps { get; private set; }
 
     [field: SerializeField]
