@@ -24,17 +24,11 @@ public partial class PersistentGameData : MonoBehaviourR3
     public static PersistentGameData Instance { get; private set; }
 
     private static UnityEventR3 _onTermUpdated = new();
-
     private static UnityEventR3 _onSaveDataLoaded = new();
-
     private static UnityEventR3 _onRankXpUpdated = new();
-
     private static UnityEventR3 _onCreditsUpdated = new();
-
     private static UnityEventR3 _onMoneyUpdated = new();
-
     private static UnityEventR3 _onLocationUpdated = new();
-
     private static UnityEventR3<QuestTrackingDatum> _onQuestUpdated = new();
     private static UnityEventR3<InventoryItemDatum> _onInventoryItemUpdated = new();
 
@@ -585,7 +579,6 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onSaveDataLoaded?.Invoke();
     }
         
-
     private void SaveData() => 
         ComBotsSaveSystem.SaveData(typeof(PersistentGameData), this);
 }
