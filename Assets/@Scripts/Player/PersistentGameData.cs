@@ -499,6 +499,18 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onMoneyUpdated?.Invoke();
     }
 
+    /// <summary>
+    /// Add an item to the player's inventory. Will throw a warning if you 
+    /// exceed the item's max quantity. This is very undesirable. 
+    /// Check <see cref="StaticGameData.GetMaxInventoryItemQuantity(int)"/> 
+    /// and <see cref="GetInventoryAmount(int)"/> first
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <param name="amount">How many of the item to add. Will throw a warning 
+    /// if you exceed the item's max quantity. This is very undesirable. 
+    /// Check <see cref="StaticGameData.GetMaxInventoryItemQuantity(int)"/> 
+    /// and <see cref="GetInventoryAmount(int)"/> first
+    /// </param>
     public static async void AddInventoryItem(int itemId, int amount)
     {
         var instance = await GetInstanceAsync();
@@ -532,6 +544,15 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onInventoryItemUpdated?.Invoke(item);
     }
 
+    /// <summary>
+    /// Remove an item from the player's inventory. Will log a warning if the 
+    /// end quantity is lower than 0. This would be very undsirable. 
+    /// Check <see cref="GetInventoryAmount"/> first
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <param name="amount">The amount to remove. Will log a warning if the 
+    /// end quantity is lower than 0. This would be very undsirable. 
+    /// Check <see cref="GetInventoryAmount"/> first</param>
     public static async void RemoveInventoryItem(int itemId, int amount)
     {
         var instance = await GetInstanceAsync();
@@ -563,6 +584,7 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onInventoryItemUpdated?.Invoke(item);
     }
 
+    /// <returns>An integer representing how many of an itemId the user has</returns>
     public static int GetInventoryAmount(int itemId)
     {
         var item = Instance.PlayerInventoryItemData
