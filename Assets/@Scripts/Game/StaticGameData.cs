@@ -57,6 +57,24 @@ public class StaticGameData : MonoBehaviourR3
 
             ids.Add(item.QuestID);
         }
+
+        // Item validation (todo)
+        ids.Clear();
+        // should validate that max quantity is not 0
+        foreach (var item in ItemData)
+        {
+            if (ids.Contains(item.ItemId))
+            {
+                throw new System.Exception($"Item ID collision detected: {item.ItemId} - {item.ItemName}");
+            }
+
+            if (item.MaxQuantity == 0)
+            {
+                Debug.LogWarning($"Max quantity has not been set for item {item.ItemId} - {item.ItemName}");
+            }
+
+            ids.Add(item.ItemId);
+        }
     }
 
     protected override void Initialize()
