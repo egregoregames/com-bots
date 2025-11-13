@@ -13,7 +13,7 @@ public class StaticGameData : MonoBehaviourR3
     public static StaticGameData Instance { get; private set; }
 
     [field: SerializeField]
-    public StaticQuestData[] QuestData { get; private set; }
+    public StaticQuestDatum[] QuestData { get; private set; }
 
     /// <summary>
     /// Singletons that will be instantiated on app launch and 

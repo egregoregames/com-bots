@@ -202,7 +202,7 @@ public class PlannerPanel : MonoBehaviourR3
         PlaySoundNavigation();
     }
 
-    private void UpdateQuestDetails(QuestTrackingDatum quest, StaticQuestData data)
+    private void UpdateQuestDetails(QuestTrackingDatum quest, StaticQuestDatum data)
     {
         int step = quest.CurrentStep;
         if (quest.IsCompleted)
