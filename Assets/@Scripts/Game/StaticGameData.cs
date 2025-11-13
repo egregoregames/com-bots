@@ -15,6 +15,9 @@ public class StaticGameData : MonoBehaviourR3
     [field: SerializeField]
     public StaticQuestDatum[] QuestData { get; private set; }
 
+    [field: SerializeField]
+    public StaticItemDatum[] ItemData { get; private set; }
+
     /// <summary>
     /// Singletons that will be instantiated on app launch and 
     /// made <see cref="Object.DontDestroyOnLoad(Object)"/>
