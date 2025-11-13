@@ -1,8 +1,14 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "dataHolderItem", menuName = "Scriptable Objects/dataHolderItem")]
-public class dataHolderItem : ScriptableObject
+/// <summary>
+/// Contains immutable data related to in-game inventory/backpack items. 
+/// Accessible via <see cref="StaticGameData"/>
+/// </summary>
+[CreateAssetMenu(
+    fileName = "StaticItemDatum", 
+    menuName = "Scriptable Objects/StaticItemDatum")]
+public class StaticItemDatum : ScriptableObject
 {
 	[field: SerializeField]
 	public int ItemId { get; private set; }
