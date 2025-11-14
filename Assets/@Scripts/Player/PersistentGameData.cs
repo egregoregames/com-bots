@@ -31,6 +31,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     private static UnityEventR3 _onLocationUpdated = new();
     private static UnityEventR3<QuestTrackingDatum> _onQuestUpdated = new();
     private static UnityEventR3<InventoryItemDatum> _onInventoryItemUpdated = new();
+    private static UnityEventR3<int> _onSocialyteProfileAdded = new();
 
     public static class GameEvents
     {
@@ -57,6 +58,19 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         public static IDisposable OnInventoryItemUpdate(Action<InventoryItemDatum> x)
             => _onInventoryItemUpdated.Subscribe(x);
+
+        /// <summary>
+        /// Is invoked when a new connection is made in the Socialyte App. 
+        /// Passes the integer ID of the NPC
+        /// </summary>
+        /// 
+        /// <param name="x">
+        /// An action with the integer ID of the added NPC as a parameter
+        /// </param>
+        /// 
+        /// <returns></returns>
+        public static IDisposable OnSocialyteProfileAdded(Action<int> x)
+            => _onSocialyteProfileAdded.Subscribe(x);
     }
 
     /// <summary>
@@ -144,13 +158,13 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// A list of NPC unique IDs that are currently in the player's team. Max of 2
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcTeamMembers, null)]
-    public List<string> PlayerNpcTeamMembers { get; private set; } = new();
+    public List<int> PlayerNpcTeamMembers { get; private set; } = new();
 
     /// <summary>
     /// A list of NPC unique IDs that the player has connected with on Socialyte
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcConnections, null)]
-    public List<string> PlayerNpcConnections { get; private set; } = new();
+    public List<int> PlayerNpcConnections { get; private set; } = new();
 
     /// <summary>
     /// Defines the player's inventory. Each entry contains an Item ID and a quantity.
@@ -583,6 +597,26 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
 
         _onInventoryItemUpdated?.Invoke(item);
+    }
+
+    /// <summary>
+    /// Add a new NPC connection in the Socialyte app. Will log a warning if
+    /// the NPC already exists as a connection. Check if the connection already exists
+    /// by calling <see cref="PlayerNpcConnections.Contains(npcId)"/>
+    /// </summary>
+    /// <param name="npcId">The Profile ID of the NPC. 
+    /// Lives at <see cref="SocialyteProfileStaticDatum.ProfileId"/></param>
+    public static async void AddSocialyteConnection(int npcId)
+    {
+        var instance = await GetInstanceAsync();
+
+        if (instance.PlayerNpcConnections.Contains(npcId))
+        {
+            instance.Log($"NPC id {npcId} has already been added as a socialyte connection");
+            return; 
+        }
+
+        instance.PlayerNpcConnections.Add(npcId);
     }
 
     /// <returns>An integer representing how many of an itemId the user has</returns>
