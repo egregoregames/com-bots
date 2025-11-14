@@ -228,6 +228,7 @@ public partial class PersistentGameData : MonoBehaviourR3
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(LoadSavedData),

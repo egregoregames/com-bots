@@ -95,6 +95,7 @@ public class PlannerPanel : MonoBehaviourR3
             Inputs.UI_Up(_ => SetSelectedQuest(-1)),
             Inputs.UI_Submit(_ => SetSelectedQuestActive()),
             Inputs.UI_Cancel(_ => Close()),
+            Inputs.UI_OpenMenu(_ => Close()),
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
@@ -126,13 +127,10 @@ public class PlannerPanel : MonoBehaviourR3
 
         var questData = await selected.GetQuestTrackingDatumAsync();
 
-        if (questData.IsCompleted)
+        if (questData.IsCompleted || questData.IsActive)
             return;
 
         AudioManager.PlaySoundEffect(AudioClipSetQuestActive);
-
-        if (questData.IsActive)
-            return;
 
         var data = await PersistentGameData.GetInstanceAsync();
 
@@ -148,6 +146,7 @@ public class PlannerPanel : MonoBehaviourR3
 
         questData.IsActive = true;
         selected.MakeQuestActive();
+        ControlHintSetActiveQuest.SetActive(false);
     }
 
     private void PlaySoundNavigation()
@@ -298,7 +297,7 @@ public class PlannerPanel : MonoBehaviourR3
 
         UpdateQuestDetails(quest, data);
         UpdateQuestList();
-        ControlHintSetActiveQuest.SetActive(!quest.IsCompleted);
+        ControlHintSetActiveQuest.SetActive(!quest.IsCompleted && !quest.IsActive);
     }
 
     private async Task<IEnumerable<QuestTrackingDatum>> GetFilteredQuests()
