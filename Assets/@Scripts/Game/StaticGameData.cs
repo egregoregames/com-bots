@@ -93,7 +93,7 @@ public class StaticGameData : MonoBehaviourR3
         {
             if (ids.Contains(item.ProfileId))
             {
-                throw new System.Exception($"Socialyte profile ID collision detected: {item.ProfileId} - {item.ProfileName}";
+                throw new System.Exception($"Socialyte profile ID collision detected: {item.ProfileId} - {item.ProfileName}");
             }
 
             ids.Add(item.ProfileId);
