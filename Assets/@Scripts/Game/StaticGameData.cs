@@ -19,6 +19,9 @@ public class StaticGameData : MonoBehaviourR3
     [field: SerializeField]
     public StaticItemDatum[] ItemData { get; private set; }
 
+    [field: SerializeField]
+    public SocialyteProfileStaticDatum[] SocialyteData { get; private set; }
+
     /// <summary>
     /// Singletons that will be instantiated on app launch and 
     /// made <see cref="Object.DontDestroyOnLoad(Object)"/>
@@ -67,9 +70,8 @@ public class StaticGameData : MonoBehaviourR3
             ids.Add(item.QuestID);
         }
 
-        // Item validation (todo)
+        // Item validation 
         ids.Clear();
-        // should validate that max quantity is not 0
         foreach (var item in ItemData)
         {
             if (ids.Contains(item.ItemId))
@@ -83,6 +85,18 @@ public class StaticGameData : MonoBehaviourR3
             }
 
             ids.Add(item.ItemId);
+        }
+
+        // Socialyte validation
+        ids.Clear();
+        foreach (var item in SocialyteData)
+        {
+            if (ids.Contains(item.ProfileId))
+            {
+                throw new System.Exception($"Socialyte profile ID collision detected: {item.ProfileId} - {item.ProfileName}";
+            }
+
+            ids.Add(item.ProfileId);
         }
     }
 
