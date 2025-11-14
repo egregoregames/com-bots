@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -14,11 +16,28 @@ public class InventoryItemDatum
     /// Refers to a unique Id that defines the item. Is not unique to this instance
     /// </summary>
     [field: SerializeField]
-    public string ItemId { get; set; }
+    public int ItemId { get; set; }
 
     /// <summary>
     /// Key items will have a max inventory quantity of 1
     /// </summary>
     [field: SerializeField]
     public int Quantity { get; set; }
+
+    public async Task<StaticItemDatum> GetStaticDataAsync()
+    {
+        return (await StaticGameData.GetInstanceAsync()).ItemData
+            .First(x => x.ItemId == ItemId);
+    }
+
+    /// <summary>
+    /// Make sure <see cref="StaticGameData.Instance"/> is not null or 
+    /// use <see cref="GetStaticDataAsync"/>
+    /// </summary>
+    /// <returns></returns>
+    public StaticItemDatum GetStaticData()
+    {
+        return StaticGameData.Instance.ItemData
+            .First(x => x.ItemId == ItemId);
+    }
 }
