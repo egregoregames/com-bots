@@ -109,12 +109,6 @@ public class PlannerPanel : MonoBehaviourR3
         RefreshQuestItems();
         UpdateSelectedQuestTypeUI();
     }
-
-    private new void OnDisable()
-    {
-        base.OnDisable();
-        RemoveUnreadNotificationsOnCompletedQuests();
-    }
     #endregion
 
     private void Close()
@@ -164,20 +158,8 @@ public class PlannerPanel : MonoBehaviourR3
     {
         QuestType = type;
         UpdateSelectedQuestTypeUI();
-        RemoveUnreadNotificationsOnCompletedQuests();
         RefreshQuestItems();
         PlaySoundNavigation();
-    }
-
-    private void RemoveUnreadNotificationsOnCompletedQuests()
-    {
-        foreach (var item in InstantiatedQuestItems)
-        {
-            if (item.Quest.IsCompleted && item.Quest.HasUnreadUpdates)
-            {
-                item.Quest.HasUnreadUpdates = false;
-            }
-        }
     }
 
     private void UpdateSelectedQuestTypeUI()
