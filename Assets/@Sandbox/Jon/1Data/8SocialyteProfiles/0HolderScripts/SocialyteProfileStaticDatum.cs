@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "dataHolderSocialyteProfile", 
-	menuName = "Scriptable Objects/dataHolderSocialyteProfile")]
-public class dataHolderSocialyteProfile : ScriptableObject
+[CreateAssetMenu(fileName = "SocialyteProfileStaticDatum", 
+	menuName = "Scriptable Objects/Socialyte Profile Static Datum")]
+public class SocialyteProfileStaticDatum : ScriptableObject
 {
 	[field: SerializeField]
 	public int ProfileId { get; private set; }

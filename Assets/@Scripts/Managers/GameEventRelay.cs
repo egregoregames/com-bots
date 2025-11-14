@@ -4,6 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameEventRelay")]
 public class GameEventRelay : ScriptableObject
 {
-    public Action<dataHolderSocialyteProfile> ConnectionMade;
+    public Action<SocialyteProfileStaticDatum> ConnectionMade;
     
 }
