@@ -37,7 +37,7 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 
     [Header("End & Continue Icons")]
     [SerializeField] private float _iconSpeed;
-    [SerializeField] private Transform _continueIcon;
+    [SerializeField] private RectTransform _continueIcon;
     [SerializeField] private float _continueIcon_moveAmount;
     [SerializeField] private Transform _endIcon;
     [SerializeField] private float _endIcon_scaleAmount;
@@ -95,9 +95,11 @@ public class WC_Dialogue : MonoBehaviourR3, IDialogueUI
 
         // These can probably go in Awake
         // ============ Animate Continue Icon ============ //
-        Vector3 startPos = _continueIcon.localPosition;
-        Vector3 targetPos = startPos + Vector3.up * _continueIcon_moveAmount;
-        _continueIcon.DOLocalMoveY(targetPos.y, _iconSpeed)
+        float halfMove = _continueIcon_moveAmount * 0.5f;
+        Vector2 startPos = _continueIcon.anchoredPosition + Vector2.down * halfMove;
+        Vector2 targetPos = startPos + Vector2.up * _continueIcon_moveAmount;
+        _continueIcon.anchoredPosition = startPos;
+        _continueIcon.DOAnchorPosY(targetPos.y, _iconSpeed)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
 

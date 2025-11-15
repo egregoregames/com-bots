@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3676049597387905222}
   - component: {fileID: 7720163592581474082}
   m_Layer: 0
-  m_Name: DialogueUI
+  m_Name: WC_Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   _nametagText: {fileID: 7923021156685476817}
   _iconSpeed: 0.45
   _continueIcon: {fileID: 3659879243954999780}
-  _continueIcon_moveAmount: 15
+  _continueIcon_moveAmount: 20
   _endIcon: {fileID: 4591898207562195684}
   _endIcon_scaleAmount: 0.75
   _defaultSFX:
@@ -281,6 +281,10 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 1784322472033316399, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2270063478341873969, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -381,6 +385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dialogue
       objectReference: {fileID: 0}
+    - target: {fileID: 5076910901148692233, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5187468226810727450, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -400,6 +408,10 @@ PrefabInstance:
     - target: {fileID: 5187468226810727450, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626857585021909404, guid: 61d56ad6e71be2f46bc90c4d4c1013f4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
