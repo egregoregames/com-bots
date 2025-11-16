@@ -27,11 +27,11 @@ public partial class PersistentGameData
         /// <param name="currentStep">
         /// Should be between 0 and 100
         /// </param>
-        public static async void UpdateQuest(int questId, int currentStep)
+        public static async void Update(int questId, int currentStep)
         {
             using var block = InputBlocker.GetBlock("Updating quests");
 
-            var quest = await GetOrAddQuest(questId);
+            var quest = await GetOrAdd(questId);
 
             quest.CurrentStep = currentStep;
 
@@ -40,7 +40,7 @@ public partial class PersistentGameData
                 quest.Complete();
             }
 
-            EnsureAtLeastOneActiveQuest();
+            EnsureAtLeastOneActive();
 
             _onQuestUpdated?.Invoke(quest);
         }
@@ -59,9 +59,9 @@ public partial class PersistentGameData
         /// want to set a new active quest (this happens automatically).
         /// </summary>
         /// <param name="questId"></param>
-        public static async void QuestForceActive(int questId)
+        public static async void ForceActive(int questId)
         {
-            var quest = await GetOrAddQuest(questId);
+            var quest = await GetOrAdd(questId);
 
             if (quest.IsCompleted) return;
 
@@ -77,7 +77,7 @@ public partial class PersistentGameData
             _onQuestUpdated.Invoke(quest);
         }
 
-        private static async Task<QuestTrackingDatum> GetOrAddQuest(int questId)
+        private static async Task<QuestTrackingDatum> GetOrAdd(int questId)
         {
             var instance = await GetInstanceAsync();
 
@@ -97,7 +97,7 @@ public partial class PersistentGameData
             return quest;
         }
 
-        private static async void EnsureAtLeastOneActiveQuest()
+        private static async void EnsureAtLeastOneActive()
         {
             var instance = await GetInstanceAsync();
 

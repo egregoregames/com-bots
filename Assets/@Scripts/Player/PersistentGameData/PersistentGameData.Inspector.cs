@@ -38,21 +38,21 @@ public partial class PersistentGameData
 
                 if (GUILayout.Button("Generate Quests", buttonHeight))
                 {
-                    Quests.UpdateQuest(1, 0);
-                    Quests.UpdateQuest(2, 0);
-                    Quests.UpdateQuest(3, 100);
-                    Quests.UpdateQuest(4, 100);
-                    Quests.UpdateQuest(5, 0);
-                    Quests.UpdateQuest(17, 0);
-                    Quests.UpdateQuest(18, 0);
-                    Quests.UpdateQuest(21, 0);
-                    Quests.UpdateQuest(22, 0);
-                    Quests.UpdateQuest(1009, 100);
-                    Quests.UpdateQuest(1010, 100);
-                    Quests.UpdateQuest(1011, 0);
-                    Quests.UpdateQuest(1012, 0);
-                    Quests.UpdateQuest(1013, 0);
-                    Quests.UpdateQuest(1014, 0);
+                    Quests.Update(1, 0);
+                    Quests.Update(2, 0);
+                    Quests.Update(3, 100);
+                    Quests.Update(4, 100);
+                    Quests.Update(5, 0);
+                    Quests.Update(17, 0);
+                    Quests.Update(18, 0);
+                    Quests.Update(21, 0);
+                    Quests.Update(22, 0);
+                    Quests.Update(1009, 100);
+                    Quests.Update(1010, 100);
+                    Quests.Update(1011, 0);
+                    Quests.Update(1012, 0);
+                    Quests.Update(1013, 0);
+                    Quests.Update(1014, 0);
                 }
 
                 if (GUILayout.Button("Generate Socialyte Connections", buttonHeight))
