@@ -136,8 +136,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// List of quests the player has accepted and their current status
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerQuestTrackingData, null)]
-    public List<QuestTrackingDatum> PlayerQuestTrackingData { get; private set; } = 
-        new();
+    private List<QuestTrackingDatum> PlayerQuestTrackingData { get; set; } = new();
 
     /// <summary>
     /// List of current or former NPC teammates and their <see cref="TeammateBond"/> with the 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,6 +76,11 @@ public partial class PersistentGameData
 
             quest.IsActive = true;
             _onQuestUpdated.Invoke(quest);
+        }
+
+        public static IReadOnlyList<QuestTrackingDatum> GetAll()
+        {
+            return Instance.PlayerQuestTrackingData.AsReadOnly();
         }
 
         private static async Task<QuestTrackingDatum> GetOrAdd(int questId)
