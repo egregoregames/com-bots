@@ -170,7 +170,7 @@ public class PlannerPanel : MonoBehaviourR3
 
     private void SetSelectedQuest(int increment)
     {
-        Log($"Incrementing selected quest index by {increment}");
+        Log($"Incrementing selected quest index by {increment}", LogLevel.Verbose);
 
         if (increment != 1 && increment != -1)
         {
@@ -282,7 +282,7 @@ public class PlannerPanel : MonoBehaviourR3
 
     private async void UpdateSelected(QuestTrackingDatum quest)
     {
-        Log($"Updating selected quest details (ID:{quest.QuestId})");
+        Log($"Updating selected quest details (ID:{quest.QuestId})", LogLevel.Verbose);
         var data = await quest.GetQuestDataAsync();
         var type = data.QuestType;
 
@@ -392,7 +392,7 @@ public class PlannerPanel : MonoBehaviourR3
 
         try
         {
-            Log($"Refreshing quest items: {QuestType}");
+            Log($"Refreshing quest items: {QuestType}", LogLevel.Verbose);
             ClearInstantiatedQuestItems();
             var all = await GetFilteredQuests();
             await InstantiateQuestItems(all);

@@ -1,25 +1,24 @@
 using ComBots.Game.Portals;
-using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEngine.Scripting;
 
 /// <summary>
 /// Singleton that must exist as soon as the game starts. Stores frequently 
-/// accessed global variables. When testing, an instance of this can exist in 
-/// the scene to supply variables manually.
+/// accessed global variables that get saved to disk when the game is saved. 
+/// When testing, an instance of this can exist in the scene to supply 
+/// variables manually. If no such singleton exists, one will be created in
+/// a static <see cref="RuntimeInitializeOnLoadMethodAttribute"/> method, 
+/// <see cref="OnGameStart"/>
 /// </summary>
 public partial class PersistentGameData : MonoBehaviourR3
 {
     /// <summary>
-    /// Reference to the singleton
+    /// Reference to the singleton. Can be null when game is
+    /// first loading. Use <see cref="GetInstanceAsync"/> if needed
     /// </summary>
     public static PersistentGameData Instance { get; private set; }
 
@@ -32,46 +31,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     private static UnityEventR3<QuestTrackingDatum> _onQuestUpdated = new();
     private static UnityEventR3<InventoryItemDatum> _onInventoryItemUpdated = new();
     private static UnityEventR3<int> _onSocialyteProfileAdded = new();
-
-    public static class GameEvents
-    {
-        public static IDisposable OnTermUpdated(Action x)
-            => _onTermUpdated.Subscribe(x);
-
-        public static IDisposable OnSaveDataLoaded(Action x)
-            => _onSaveDataLoaded.Subscribe(x);
-
-        public static IDisposable OnRankXpUpdated(Action x)
-            => _onRankXpUpdated.Subscribe(x);
-
-        public static IDisposable OnCreditsUpdated(Action x)
-            => _onCreditsUpdated.Subscribe(x);
-
-        public static IDisposable OnMoneyUpdated(Action x)
-            => _onMoneyUpdated.Subscribe(x);
-
-        public static IDisposable OnLocationUpdated(Action x)
-            => _onLocationUpdated.Subscribe(x);
-
-        public static IDisposable OnQuestUpdated(Action<QuestTrackingDatum> x)
-            => _onQuestUpdated.Subscribe(x);
-
-        public static IDisposable OnInventoryItemUpdate(Action<InventoryItemDatum> x)
-            => _onInventoryItemUpdated.Subscribe(x);
-
-        /// <summary>
-        /// Is invoked when a new connection is made in the Socialyte App. 
-        /// Passes the integer ID of the NPC
-        /// </summary>
-        /// 
-        /// <param name="x">
-        /// An action with the integer ID of the added NPC as a parameter
-        /// </param>
-        /// 
-        /// <returns></returns>
-        public static IDisposable OnSocialyteProfileAdded(Action<int> x)
-            => _onSocialyteProfileAdded.Subscribe(x);
-    }
 
     /// <summary>
     /// Entered by the player at the start of a new game
@@ -221,7 +180,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerUnlockedCybercastChannels, null)]
     public List<string> PlayerUnlockedCybercastChannelIds { get; private set; } = new();
 
-    [RuntimeInitializeOnLoadMethod]
+    [RuntimeInitializeOnLoadMethod, Preserve]
     private static void OnGameStart()
     {
         if (Instance == null)
@@ -252,26 +211,6 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         LoadSavedData();
         GenerateStudentIdIfNoneExists();
-
-#if UNITY_EDITOR
-        // Add some test quests
-
-        UpdateQuest(1, 0);
-        UpdateQuest(2, 0);
-        UpdateQuest(3, 100);
-        UpdateQuest(4, 100);
-        UpdateQuest(5, 0);
-        UpdateQuest(17, 0);
-        UpdateQuest(18, 0);
-        UpdateQuest(21, 0);
-        UpdateQuest(22, 0);
-        UpdateQuest(1009, 100);
-        UpdateQuest(1010, 100);
-        UpdateQuest(1011, 0);
-        UpdateQuest(1012, 0);
-        UpdateQuest(1013, 0);
-        UpdateQuest(1014, 0);
-#endif
     }
 
     private void Reset()
