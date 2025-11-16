@@ -68,6 +68,26 @@ public partial class PersistentGameData
                     AddSocialyteConnection(9);
                     AddSocialyteConnection(10);
                 }
+
+                if (GUILayout.Button("Generate Inventory Items (Key Items)", buttonHeight))
+                {
+                    // Key items
+                    AddInventoryItem(1001, 1); // Student ID Card
+                    AddInventoryItem(1002, 1); // Bank Card
+                    AddInventoryItem(1003, 1); // V-pass
+                    AddInventoryItem(1004, 1); // Omni-phone
+                    AddInventoryItem(1005, 1); // Uplink glove
+                    AddInventoryItem(1006, 1); // Solex
+                    AddInventoryItem(1007, 1); // Backpack module
+                    AddInventoryItem(1008, 1); // Blueprint drive
+                    AddInventoryItem(1009, 1); // Software drive
+                    AddInventoryItem(1010, 1); // Medal Case
+                    AddInventoryItem(1011, 1); // Dynaboard
+                    AddInventoryItem(1012, 1); // AutoRecyclobot
+                    AddInventoryItem(1013, 1); // Antigrav part
+                    AddInventoryItem(1014, 1); // Statue of talos
+                    AddInventoryItem(1015, 1); // Smiley Mask
+                }
             }
         }
     }
