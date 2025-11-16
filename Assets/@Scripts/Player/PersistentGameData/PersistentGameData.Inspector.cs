@@ -57,16 +57,16 @@ public partial class PersistentGameData
 
                 if (GUILayout.Button("Generate Socialyte Connections", buttonHeight))
                 {
-                    AddSocialyteConnection(1);
-                    AddSocialyteConnection(2);
-                    AddSocialyteConnection(3);
-                    AddSocialyteConnection(4);
-                    AddSocialyteConnection(5);
-                    AddSocialyteConnection(6);
-                    AddSocialyteConnection(7);
-                    AddSocialyteConnection(8);
-                    AddSocialyteConnection(9);
-                    AddSocialyteConnection(10);
+                    Socialyte.AddConnection(1);
+                    Socialyte.AddConnection(2);
+                    Socialyte.AddConnection(3);
+                    Socialyte.AddConnection(4);
+                    Socialyte.AddConnection(5);
+                    Socialyte.AddConnection(6);
+                    Socialyte.AddConnection(7);
+                    Socialyte.AddConnection(8);
+                    Socialyte.AddConnection(9);
+                    Socialyte.AddConnection(10);
                 }
 
                 if (GUILayout.Button("Generate Inventory Items (Key Items)", buttonHeight))
