@@ -16,7 +16,8 @@ using UnityEngine;
 public partial class PersistentGameData : MonoBehaviourR3
 {
     /// <summary>
-    /// Reference to the singleton
+    /// Reference to the singleton. Can be null when game is
+    /// first loading. Use <see cref="GetInstanceAsync"/> if needed
     /// </summary>
     public static PersistentGameData Instance { get; private set; }
 
