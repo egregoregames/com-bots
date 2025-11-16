@@ -7,15 +7,15 @@ All changes will automatically reflect in the Socialyte App
 Add a contact in the Socialyte app.
 
 ```csharp
-PersistentGameData.AddSocialyteConnection([npcId]);
+PersistentGameData.Socialyte.AddConnection([npcId]);
 ```
 
 This method will throw a warning if the user already exists. Check the list
 in persistent game data first.
 
 ```csharp
-var pgd = await PersistentGameData.GetInstanceAsync();
-bool exists = pgd.PlayerNpcConnections.Contains(npcId);
+await PersistentGameData.GetInstanceAsync();
+bool exists = PersistentGameData.Socialyte.ConnectionExists(npcId);
 ```
 
 ### Notes

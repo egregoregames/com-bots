@@ -21,5 +21,11 @@ public partial class PersistentGameData
 
             instance.PlayerNpcConnections.Add(npcId);
         }
+
+        /// <returns>True if the player is already conencted to this NPC via Socailyte</returns>
+        public static bool ConnectionExists(int npcId)
+        {
+            return Instance.PlayerNpcConnections.Contains(npcId);
+        }
     }
 }
