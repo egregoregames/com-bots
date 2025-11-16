@@ -10,7 +10,8 @@ using UnityEngine;
 /// accessed global variables that get saved to disk when the game is saved. 
 /// When testing, an instance of this can exist in the scene to supply 
 /// variables manually. If no such singleton exists, one will be created in
-/// a static <see cref="RuntimeInitializeOnLoadMethodAttribute"/> method, <see cref="OnGameStart"/>
+/// a static <see cref="RuntimeInitializeOnLoadMethodAttribute"/> method, 
+/// <see cref="OnGameStart"/>
 /// </summary>
 public partial class PersistentGameData : MonoBehaviourR3
 {
