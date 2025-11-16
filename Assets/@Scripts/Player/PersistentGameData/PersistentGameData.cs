@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 /// <summary>
 /// Singleton that must exist as soon as the game starts. Stores frequently 
@@ -179,7 +180,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerUnlockedCybercastChannels, null)]
     public List<string> PlayerUnlockedCybercastChannelIds { get; private set; } = new();
 
-    [RuntimeInitializeOnLoadMethod]
+    [RuntimeInitializeOnLoadMethod, Preserve]
     private static void OnGameStart()
     {
         if (Instance == null)
