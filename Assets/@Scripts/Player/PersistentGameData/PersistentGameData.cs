@@ -129,8 +129,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// Defines the player's inventory. Each entry contains an Item ID and a quantity.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerInventoryItemData, null)]
-    public List<InventoryItemDatum> PlayerInventoryItemData { get; private set; } = 
-        new();
+    private List<InventoryItemDatum> PlayerInventoryItemData { get; set; } = new();
 
     /// <summary>
     /// List of quests the player has accepted and their current status
