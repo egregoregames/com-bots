@@ -38,55 +38,55 @@ public partial class PersistentGameData
 
                 if (GUILayout.Button("Generate Quests", buttonHeight))
                 {
-                    UpdateQuest(1, 0);
-                    UpdateQuest(2, 0);
-                    UpdateQuest(3, 100);
-                    UpdateQuest(4, 100);
-                    UpdateQuest(5, 0);
-                    UpdateQuest(17, 0);
-                    UpdateQuest(18, 0);
-                    UpdateQuest(21, 0);
-                    UpdateQuest(22, 0);
-                    UpdateQuest(1009, 100);
-                    UpdateQuest(1010, 100);
-                    UpdateQuest(1011, 0);
-                    UpdateQuest(1012, 0);
-                    UpdateQuest(1013, 0);
-                    UpdateQuest(1014, 0);
+                    Quests.Update(1, 0);
+                    Quests.Update(2, 0);
+                    Quests.Update(3, 100);
+                    Quests.Update(4, 100);
+                    Quests.Update(5, 0);
+                    Quests.Update(17, 0);
+                    Quests.Update(18, 0);
+                    Quests.Update(21, 0);
+                    Quests.Update(22, 0);
+                    Quests.Update(1009, 100);
+                    Quests.Update(1010, 100);
+                    Quests.Update(1011, 0);
+                    Quests.Update(1012, 0);
+                    Quests.Update(1013, 0);
+                    Quests.Update(1014, 0);
                 }
 
                 if (GUILayout.Button("Generate Socialyte Connections", buttonHeight))
                 {
-                    AddSocialyteConnection(1);
-                    AddSocialyteConnection(2);
-                    AddSocialyteConnection(3);
-                    AddSocialyteConnection(4);
-                    AddSocialyteConnection(5);
-                    AddSocialyteConnection(6);
-                    AddSocialyteConnection(7);
-                    AddSocialyteConnection(8);
-                    AddSocialyteConnection(9);
-                    AddSocialyteConnection(10);
+                    Socialyte.AddConnection(1);
+                    Socialyte.AddConnection(2);
+                    Socialyte.AddConnection(3);
+                    Socialyte.AddConnection(4);
+                    Socialyte.AddConnection(5);
+                    Socialyte.AddConnection(6);
+                    Socialyte.AddConnection(7);
+                    Socialyte.AddConnection(8);
+                    Socialyte.AddConnection(9);
+                    Socialyte.AddConnection(10);
                 }
 
                 if (GUILayout.Button("Generate Inventory Items (Key Items)", buttonHeight))
                 {
                     // Key items
-                    AddInventoryItem(1001, 1); // Student ID Card
-                    AddInventoryItem(1002, 1); // Bank Card
-                    AddInventoryItem(1003, 1); // V-pass
-                    AddInventoryItem(1004, 1); // Omni-phone
-                    AddInventoryItem(1005, 1); // Uplink glove
-                    AddInventoryItem(1006, 1); // Solex
-                    AddInventoryItem(1007, 1); // Backpack module
-                    AddInventoryItem(1008, 1); // Blueprint drive
-                    AddInventoryItem(1009, 1); // Software drive
-                    AddInventoryItem(1010, 1); // Medal Case
-                    AddInventoryItem(1011, 1); // Dynaboard
-                    AddInventoryItem(1012, 1); // AutoRecyclobot
-                    AddInventoryItem(1013, 1); // Antigrav part
-                    AddInventoryItem(1014, 1); // Statue of talos
-                    AddInventoryItem(1015, 1); // Smiley Mask
+                    Inventory.AddItem(1001, 1); // Student ID Card
+                    Inventory.AddItem(1002, 1); // Bank Card
+                    Inventory.AddItem(1003, 1); // V-pass
+                    Inventory.AddItem(1004, 1); // Omni-phone
+                    Inventory.AddItem(1005, 1); // Uplink glove
+                    Inventory.AddItem(1006, 1); // Solex
+                    Inventory.AddItem(1007, 1); // Backpack module
+                    Inventory.AddItem(1008, 1); // Blueprint drive
+                    Inventory.AddItem(1009, 1); // Software drive
+                    Inventory.AddItem(1010, 1); // Medal Case
+                    Inventory.AddItem(1011, 1); // Dynaboard
+                    Inventory.AddItem(1012, 1); // AutoRecyclobot
+                    Inventory.AddItem(1013, 1); // Antigrav part
+                    Inventory.AddItem(1014, 1); // Statue of talos
+                    Inventory.AddItem(1015, 1); // Smiley Mask
                 }
             }
         }

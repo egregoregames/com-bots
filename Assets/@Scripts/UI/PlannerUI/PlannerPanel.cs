@@ -134,7 +134,7 @@ public class PlannerPanel : MonoBehaviourR3
 
         var data = await PersistentGameData.GetInstanceAsync();
 
-        foreach (var item in data.PlayerQuestTrackingData)
+        foreach (var item in PersistentGameData.Quests.GetAll())
         {
             item.IsActive = false;
         }
@@ -306,7 +306,7 @@ public class PlannerPanel : MonoBehaviourR3
         var gameData = await PersistentGameData.GetInstanceAsync();
         var staticGameDataInstance = await StaticGameData.GetInstanceAsync();
 
-        var questsFilteredByType = gameData.PlayerQuestTrackingData
+        var questsFilteredByType = PersistentGameData.Quests.GetAll()
             .Where(x => x.GetQuestData().QuestType == QuestType);
 
         var completed = questsFilteredByType

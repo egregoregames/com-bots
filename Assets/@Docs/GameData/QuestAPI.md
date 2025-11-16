@@ -10,7 +10,7 @@ All changes will automatically reflect in the Planner App.
 Update a quest's current step.
 
 ```csharp
-PersistentGameData.UpdateQuest([questId], [currentStep]);
+PersistentGameData.Quests.Update([questId], [currentStep]);
 ```
 
 Set the currentStep to update the quest description in the Planner App. See
@@ -25,7 +25,7 @@ ID, then Electives.
 Force a quest to be the active quest.
 
 ```csharp
-PersistentGameData.QuestForceActive([questId]);
+PersistentGameData.Quests.ForceActive([questId]);
 ```
 
 Sets this quest as the active quest in the Planner App. This should be called

@@ -9,7 +9,7 @@ All changes will automatically reflect in the BackPack app.
 Add an item to the player's inventory.
 
 ```csharp
-PersistentGameData.AddInventoryItem([itemId], [amount]);
+PersistentGameData.Inventory.AddItem([itemId], [amount]);
 ```
 
 Check the static game data of a particular item to be sure that amount will
@@ -20,7 +20,7 @@ Check the static game data and compare to the user's current amount like so:
 
 ```csharp
 var max = StaticGameData.GetMaxInventoryItemQuantity([itemId]);
-var current = PersistentGameData.GetInventoryAmount([itemId]);
+var current = PersistentGameData.Inventory.GetAmount([itemId]);
 
 var maxPlayerCanBuy = max - current;
 bool canPlayerBuy = current < max;
@@ -31,7 +31,7 @@ bool canPlayerBuy = current < max;
 Remove an item from the player's inventory.
 
 ```csharp
-PersistentGameData.RemoveInventoryItem([itemId], [amount]);
+PersistentGameData.Inventory.RemoveItem([itemId], [amount]);
 ```
 
 Check the static game data of a particular item to be sure the final amount will 
@@ -41,7 +41,7 @@ will be a negative player experience and a bug if it happens in a shop setting.
 Check the persistent game data:
 
 ```csharp
-var current = PersistentGameData.GetInventoryAmount([itemId]);
+var current = PersistentGameData.Inventory.GetAmount([itemId]);
 
 var maxPlayerCanSell = current;
 bool canPlayerSell = current > 0;
@@ -55,7 +55,7 @@ inventory yet (never acquired).
 Returns an integer representing how many of an itemId the user has.
 
 ```csharp
-var amount = PersistentGameData.GetInventoryAmount([itemId]);
+var amount = PersistentGameData.Inventory.GetAmount([itemId]);
 ```
 
 ### Notes

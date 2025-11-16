@@ -123,21 +123,19 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// A list of NPC unique IDs that the player has connected with on Socialyte
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcConnections, null)]
-    public List<int> PlayerNpcConnections { get; private set; } = new();
+    private List<int> PlayerNpcConnections { get; set; } = new();
 
     /// <summary>
     /// Defines the player's inventory. Each entry contains an Item ID and a quantity.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerInventoryItemData, null)]
-    public List<InventoryItemDatum> PlayerInventoryItemData { get; private set; } = 
-        new();
+    private List<InventoryItemDatum> PlayerInventoryItemData { get; set; } = new();
 
     /// <summary>
     /// List of quests the player has accepted and their current status
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerQuestTrackingData, null)]
-    public List<QuestTrackingDatum> PlayerQuestTrackingData { get; private set; } = 
-        new();
+    private List<QuestTrackingDatum> PlayerQuestTrackingData { get; set; } = new();
 
     /// <summary>
     /// List of current or former NPC teammates and their <see cref="TeammateBond"/> with the 
@@ -280,116 +278,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     }
 
     /// <summary>
-    /// Will update or add a quest to the player's tracked quests.
-    /// <para />
-    /// Set the currentStep to update the quest description in the Planner App. See
-    /// StaticGameData and the individual Quest data scriptable objects for reference.
-    /// <para />
-    /// Setting currentStep to 100 will complete the quest, which will automatically
-    /// update in the Planner App, and a new active quest will be automatically 
-    /// chosen in the list, going through Requirements first, in order of quest 
-    /// ID, then Electives.
-    /// </summary>
-    /// 
-    /// <param name="questId">
-    /// 
-    /// </param>
-    /// 
-    /// <param name="currentStep">
-    /// Should be between 0 and 100
-    /// </param>
-    public static async void UpdateQuest(int questId, int currentStep)
-    {
-        using var block = InputBlocker.GetBlock("Updating quests");
-
-        var quest = await GetOrAddQuest(questId);
-
-        quest.CurrentStep = currentStep;
-
-        if (quest.IsCompleted)
-        {
-            quest.Complete();
-        }
-
-        EnsureAtLeastOneActiveQuest();
-
-        _onQuestUpdated?.Invoke(quest);
-    }
-
-    /// <summary>
-    /// Sets this quest as the active quest in the Planner App. This should be called
-    /// specifically if you need to make a quest active without the player's input.
-    /// <para />
-    /// This should NOT be used when the player is manually setting a quest active
-    /// in the Planner App (there is already separate code for that).
-    /// <para />
-    /// This should NOT be used when adding the very first quest to the player's
-    /// tracked quests (that will happen automatically).
-    /// <para />
-    /// This should NOT be used immediately after a quest has been completed and you
-    /// want to set a new active quest (this happens automatically).
-    /// </summary>
-    /// <param name="questId"></param>
-    public static async void QuestForceActive(int questId)
-    {
-        var quest = await GetOrAddQuest(questId);
-
-        if (quest.IsCompleted) return;
-
-        // Make all other quests inactive
-        var instance = await GetInstanceAsync();
-
-        foreach (var item in instance.PlayerQuestTrackingData)
-        {
-            item.IsActive = false;
-        }
-
-        quest.IsActive = true;
-        _onQuestUpdated.Invoke(quest);
-    }
-
-    private static async Task<QuestTrackingDatum> GetOrAddQuest(int questId)
-    {
-        var instance = await GetInstanceAsync();
-
-        var quest = instance.PlayerQuestTrackingData
-            .FirstOrDefault(x => x.QuestId == questId);
-
-        if (quest == null)
-        {
-            quest = new QuestTrackingDatum()
-            {
-                QuestId = questId
-            };
-
-            instance.PlayerQuestTrackingData.Add(quest);
-        }
-
-        return quest;
-    }
-
-    private static async void EnsureAtLeastOneActiveQuest()
-    {
-        var instance = await GetInstanceAsync();
-
-        var active = instance.PlayerQuestTrackingData
-            .Where(x => !x.IsCompleted && x.IsActive)
-            .FirstOrDefault();
-
-        if (active == null)
-        {
-            var inactive = instance.PlayerQuestTrackingData
-                .OrderBy(x => x.QuestId)
-                .FirstOrDefault(x => !x.IsCompleted);
-
-            if (inactive != null)
-            {
-                inactive.IsActive = true;
-            }
-        }
-    }
-
-    /// <summary>
     /// Adds to <see cref="PlayerRankExperience"/> and invokes 
     /// <see cref="GameEvents.OnRankXpUpdated(Action)"/>
     /// </summary>
@@ -451,125 +339,6 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerMoney -= amount;
         _onMoneyUpdated?.Invoke();
-    }
-
-    /// <summary>
-    /// Add an item to the player's inventory. Will throw a warning if you 
-    /// exceed the item's max quantity. This is very undesirable. 
-    /// Check <see cref="StaticGameData.GetMaxInventoryItemQuantity(int)"/> 
-    /// and <see cref="GetInventoryAmount(int)"/> first
-    /// </summary>
-    /// <param name="itemId"></param>
-    /// <param name="amount">How many of the item to add. Will throw a warning 
-    /// if you exceed the item's max quantity. This is very undesirable. 
-    /// Check <see cref="StaticGameData.GetMaxInventoryItemQuantity(int)"/> 
-    /// and <see cref="GetInventoryAmount(int)"/> first
-    /// </param>
-    public static async void AddInventoryItem(int itemId, int amount)
-    {
-        var instance = await GetInstanceAsync();
-
-        var item = instance.PlayerInventoryItemData
-            .FirstOrDefault(x => x.ItemId == itemId);
-
-        if (item == null)
-        {
-            item = new InventoryItemDatum()
-            {
-                ItemId = itemId
-            };
-
-            instance.PlayerInventoryItemData.Add(item);
-        }
-
-        var staticData = await item.GetStaticDataAsync();
-        item.Quantity += amount;
-
-        if (staticData.MaxQuantity < item.Quantity)
-        {
-            item.Quantity = staticData.MaxQuantity;
-
-            var message = $"Tried to add too many of item type " +
-                $"{staticData.ItemName} to player inventory";
-
-            Instance.Log(message, LogLevel.Warning);
-        }
-
-        _onInventoryItemUpdated?.Invoke(item);
-    }
-
-    /// <summary>
-    /// Remove an item from the player's inventory. Will log a warning if the 
-    /// end quantity is lower than 0. This would be very undsirable. 
-    /// Check <see cref="GetInventoryAmount"/> first
-    /// </summary>
-    /// <param name="itemId"></param>
-    /// <param name="amount">The amount to remove. Will log a warning if the 
-    /// end quantity is lower than 0. This would be very undsirable. 
-    /// Check <see cref="GetInventoryAmount"/> first</param>
-    public static async void RemoveInventoryItem(int itemId, int amount)
-    {
-        var instance = await GetInstanceAsync();
-
-        var item = instance.PlayerInventoryItemData
-            .FirstOrDefault(x => x.ItemId == itemId);
-
-        if (item == null)
-        {
-            string message = $"Tried to remove an item from the player's " +
-                $"inventory (ID: {itemId}) that did not exist";
-
-            Instance.Log(message, LogLevel.Warning);
-            return;
-        }
-
-        item.Quantity -= amount;
-
-        if (item.Quantity < 0)
-        {
-            string message = $"Took too many of item {item.ItemId} from " +
-                $"player's inventory";
-
-            Instance.Log(message, LogLevel.Warning);
-
-            item.Quantity = 0;
-        }
-
-        _onInventoryItemUpdated?.Invoke(item);
-    }
-
-    /// <summary>
-    /// Add a new NPC connection in the Socialyte app. Will log a warning if
-    /// the NPC already exists as a connection. Check if the connection already exists
-    /// by calling <see cref="PlayerNpcConnections.Contains(npcId)"/>
-    /// </summary>
-    /// <param name="npcId">The Profile ID of the NPC. 
-    /// Lives at <see cref="SocialyteProfileStaticDatum.ProfileId"/></param>
-    public static async void AddSocialyteConnection(int npcId)
-    {
-        var instance = await GetInstanceAsync();
-
-        if (instance.PlayerNpcConnections.Contains(npcId))
-        {
-            instance.Log($"NPC id {npcId} has already been added as a socialyte connection");
-            return; 
-        }
-
-        instance.PlayerNpcConnections.Add(npcId);
-    }
-
-    /// <returns>An integer representing how many of an itemId the user has</returns>
-    public static int GetInventoryAmount(int itemId)
-    {
-        var item = Instance.PlayerInventoryItemData
-            .FirstOrDefault(x => x.ItemId == itemId);
-
-        if (item == null)
-        {
-            return 0;
-        }
-
-        return item.Quantity;
     }
 
     private void GenerateStudentIdIfNoneExists()
