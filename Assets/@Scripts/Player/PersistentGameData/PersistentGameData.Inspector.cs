@@ -54,6 +54,20 @@ public partial class PersistentGameData
                     UpdateQuest(1013, 0);
                     UpdateQuest(1014, 0);
                 }
+
+                if (GUILayout.Button("Generate Socialyte Connections", buttonHeight))
+                {
+                    AddSocialyteConnection(1);
+                    AddSocialyteConnection(2);
+                    AddSocialyteConnection(3);
+                    AddSocialyteConnection(4);
+                    AddSocialyteConnection(5);
+                    AddSocialyteConnection(6);
+                    AddSocialyteConnection(7);
+                    AddSocialyteConnection(8);
+                    AddSocialyteConnection(9);
+                    AddSocialyteConnection(10);
+                }
             }
         }
     }
