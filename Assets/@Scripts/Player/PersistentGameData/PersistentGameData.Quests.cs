@@ -78,6 +78,14 @@ public partial class PersistentGameData
             _onQuestUpdated.Invoke(quest);
         }
 
+        /// <summary>
+        /// Returns all tracked quest data as a <see cref="IReadOnlyList{T}"/>.
+        /// <para />
+        /// Keep in mind that any modifications made directly to objects in the
+        /// collection will NOT automatically fire any events. Only <see cref="PlannerPanel"/>
+        /// should directly set any properties of the objects in this list.
+        /// </summary>
+        /// <returns></returns>
         public static IReadOnlyList<QuestTrackingDatum> GetAll()
         {
             return Instance.PlayerQuestTrackingData.AsReadOnly();
