@@ -206,26 +206,6 @@ public partial class PersistentGameData : MonoBehaviourR3
 
         LoadSavedData();
         GenerateStudentIdIfNoneExists();
-
-#if UNITY_EDITOR
-        // Add some test quests
-
-        UpdateQuest(1, 0);
-        UpdateQuest(2, 0);
-        UpdateQuest(3, 100);
-        UpdateQuest(4, 100);
-        UpdateQuest(5, 0);
-        UpdateQuest(17, 0);
-        UpdateQuest(18, 0);
-        UpdateQuest(21, 0);
-        UpdateQuest(22, 0);
-        UpdateQuest(1009, 100);
-        UpdateQuest(1010, 100);
-        UpdateQuest(1011, 0);
-        UpdateQuest(1012, 0);
-        UpdateQuest(1013, 0);
-        UpdateQuest(1014, 0);
-#endif
     }
 
     private void Reset()

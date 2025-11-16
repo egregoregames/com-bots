@@ -7,6 +7,7 @@ public partial class PersistentGameData
     private class Inspector : Editor
     {
         private PersistentGameData _target;
+        private bool _isTestAreaOpen;
 
         public override void OnInspectorGUI()
         {
@@ -18,14 +19,41 @@ public partial class PersistentGameData
 
             if (!Application.isPlaying) return;
 
-            if (GUILayout.Button("Save Data", GUILayout.Height(40)))
-            {
-                ComBotsSaveSystem.Save("TestSave1");
-            }
+            _isTestAreaOpen = EditorGUILayout.Foldout(
+                _isTestAreaOpen, new GUIContent("Test area"));
 
-            if (GUILayout.Button("Load Data", GUILayout.Height(40)))
+            if (_isTestAreaOpen)
             {
-                ComBotsSaveSystem.Load("TestSave1");
+                var buttonHeight = GUILayout.Height(40);
+
+                if (GUILayout.Button("Save Data", buttonHeight))
+                {
+                    ComBotsSaveSystem.Save("TestSave1");
+                }
+
+                if (GUILayout.Button("Load Data", buttonHeight))
+                {
+                    ComBotsSaveSystem.Load("TestSave1");
+                }
+
+                if (GUILayout.Button("Generate Quests", buttonHeight))
+                {
+                    UpdateQuest(1, 0);
+                    UpdateQuest(2, 0);
+                    UpdateQuest(3, 100);
+                    UpdateQuest(4, 100);
+                    UpdateQuest(5, 0);
+                    UpdateQuest(17, 0);
+                    UpdateQuest(18, 0);
+                    UpdateQuest(21, 0);
+                    UpdateQuest(22, 0);
+                    UpdateQuest(1009, 100);
+                    UpdateQuest(1010, 100);
+                    UpdateQuest(1011, 0);
+                    UpdateQuest(1012, 0);
+                    UpdateQuest(1013, 0);
+                    UpdateQuest(1014, 0);
+                }
             }
         }
     }
