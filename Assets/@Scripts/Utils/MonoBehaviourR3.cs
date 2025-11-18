@@ -3,7 +3,6 @@ using UnityEngine;
 using R3;
 using System;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 
 public class MonoBehaviourR3 : MonoBehaviour
 {
@@ -91,25 +90,26 @@ public class MonoBehaviourR3 : MonoBehaviour
 
     public InputsR3 Inputs { get; private set; } = new();
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         TryInitialize();
     }
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         Inputs.TryEnable();
         TryInitialize();
     }
 
-    protected void OnDisable()
+    protected virtual void OnDisable()
     {
         Inputs.TryDisable();
     }
 
-    public virtual void OnDestroy()
+    protected virtual void OnDestroy()
     {
         Inputs.Dispose();
+
         foreach (var item in Events)
         {
             item.Dispose();
