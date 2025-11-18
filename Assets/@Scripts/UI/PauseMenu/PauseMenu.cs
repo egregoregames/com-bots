@@ -15,10 +15,8 @@ using UnityEngine.InputSystem;
 /// in any scene where the user has player control, aside from special 
 /// situations. 
 /// </summary>
-public class PauseMenu : MonoBehaviourR3
+public class PauseMenu : MonoPublicSingletonR3<PauseMenu>
 {
-    public static PauseMenu Instance { get; private set; }
-
     private static UnityEventR3 _onButtonsVisible = new();
     /// <summary>
     /// Fires when the bottom app buttons become visible (game paused)
@@ -85,7 +83,6 @@ public class PauseMenu : MonoBehaviourR3
     protected override void Initialize()
     {
         base.Initialize();
-        Instance = this;
 
         SubscribeToDialogueManagerEvents();
 
