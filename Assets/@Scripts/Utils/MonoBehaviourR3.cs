@@ -4,6 +4,11 @@ using R3;
 using System;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Base class for Unity components that takes advantage of Observable based
+/// event patterns in R3. Contains some other common convenience properties
+/// and methods
+/// </summary>
 public class MonoBehaviourR3 : MonoBehaviour
 {
     public class InputsR3 : IDisposable
