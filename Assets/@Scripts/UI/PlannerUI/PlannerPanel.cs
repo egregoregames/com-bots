@@ -1,18 +1,19 @@
 using R3;
+using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 using TMPro;
-using Sirenix.OdinInspector;
+using UnityEditorInternal.VersionControl;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// Logic that controls the "Planner" app in the <see cref="PauseMenu"/>
 /// </summary>
-public class PlannerPanel : MonoBehaviourR3
+public partial class PlannerPanel : MonoBehaviourR3
 {
     public static PlannerPanel Instance { get; private set; }
 
@@ -221,65 +222,6 @@ public class PlannerPanel : MonoBehaviourR3
         TextQuestTitle.text = data.QuestName;
     }
 
-    private void UpdateQuestList()
-    {
-        // Get total number of instantiated quest items
-        int total = InstantiatedQuestItems.Count();
-
-        // Get index of selected
-        var selectedQuestItem = InstantiatedQuestItems.First(x => x.IsSelected);
-        int selQuestInd = InstantiatedQuestItems.IndexOf(selectedQuestItem);
-
-        int half = (int)Math.Floor(MaxQuestItemsOnScreen / 2d);
-        int max = MaxQuestItemsOnScreen;
-
-        bool totalGreaterThanMax = total > max;
-        UpArrow.SetActive(selQuestInd > half && totalGreaterThanMax);
-        DownArrow.SetActive((total - 1) - selQuestInd >= half && totalGreaterThanMax);
-
-        foreach (var questItem in InstantiatedQuestItems)
-        {
-            UpdateQuestItemVisibility(
-                total, selectedQuestItem, selQuestInd, half, max, questItem);
-        }
-    }
-
-    private void UpdateQuestItemVisibility(
-        int totalQuestItems, PlannerQuestItem selectedQuestItem, 
-        int selectedQuestItemIndex, int halfOfMaxItemsOnScreen, 
-        int MaxItemsOnScreen, PlannerQuestItem questItem)
-    {
-        if (questItem == selectedQuestItem)
-        {
-            questItem.gameObject.SetActive(true);
-            return;
-        }
-
-        var localIndex = InstantiatedQuestItems.IndexOf(questItem);
-        bool active;
-
-        bool isNearTop = selectedQuestItemIndex <= halfOfMaxItemsOnScreen;
-        bool isNearBottom = (totalQuestItems - 1) - selectedQuestItemIndex <= 
-            halfOfMaxItemsOnScreen;
-
-        if (isNearTop) 
-        {
-            active = localIndex < MaxItemsOnScreen;
-        }
-        else if (isNearBottom)
-        {
-            bool isActive = (totalQuestItems - 1) - localIndex <= MaxItemsOnScreen - 1;
-            active = isActive;
-        }
-        else
-        {
-            active = Math.Abs(localIndex - selectedQuestItemIndex) <= 
-                halfOfMaxItemsOnScreen;
-        }
-
-        questItem.gameObject.SetActive(active);
-    }
-
     private async void UpdateSelected(QuestTrackingDatum quest)
     {
         Log($"Updating selected quest details (ID:{quest.QuestId})", LogLevel.Verbose);
@@ -296,7 +238,13 @@ public class PlannerPanel : MonoBehaviourR3
         }
 
         UpdateQuestDetails(quest, data);
-        UpdateQuestList();
+
+        PlannerQuestItem selectedQuestItem = InstantiatedQuestItems
+            .First(x => x.IsSelected);
+
+        PauseMenuAppUtils.UpdateItemList(MaxQuestItemsOnScreen, UpArrow, DownArrow,
+            selectedQuestItem, InstantiatedQuestItems);
+
         ControlHintSetActiveQuest.SetActive(!quest.IsCompleted && !quest.IsActive);
     }
 
