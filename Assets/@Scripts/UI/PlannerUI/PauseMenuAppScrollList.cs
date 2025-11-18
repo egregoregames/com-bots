@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Subcomponent used by pause menu apps to easily reorganize a scroll list
+/// upon UI navigation
+/// </summary>
 [Serializable]
 public class PauseMenuAppScrollList
 {
