@@ -40,8 +40,6 @@ public class PauseMenu : MonoBehaviourR3
     /// </summary>
     public bool IsOpen { get; private set; }
 
-    private InputSystem_Actions Inputs { get; set; }
-
     [field: SerializeField]
     private RectTransform MenuSelector { get; set; }
 
@@ -88,33 +86,16 @@ public class PauseMenu : MonoBehaviourR3
     {
         base.Initialize();
         Instance = this;
-        Inputs = new();
-
-        var onOpenMenu = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs.Player.OpenMenu.performed += h,
-            h => Inputs.Player.OpenMenu.performed -= h);
 
         SubscribeToDialogueManagerEvents();
 
         AddEvents(
-            onOpenMenu.Subscribe(_ => OnOpenMenuInput()),
+            Inputs.Player_OpenMenu(_ => OnOpenMenuInput()),
             PauseMenuApp.OnMenuOpened(UpdateVisibility),
             PauseMenuApp.OnMenuClosed(UpdateVisibility));
 
         InitializeButtons();
         SetVisibility(Visibility.Partial);
-    }
-
-    private new void OnEnable()
-    {
-        base.OnEnable();
-        Inputs.Enable();
-    }
-
-    private new void OnDisable()
-    {
-        base.OnDisable();
-        Inputs.Disable();
     }
 
     private new void OnDestroy()
