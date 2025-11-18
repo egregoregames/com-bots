@@ -46,8 +46,8 @@ public class PauseMenuApp : MonoBehaviourR3
         base.Initialize();
 
         AddEvents(
-            Inputs.UI_Cancel(_ => Close()),
-            Inputs.UI_OpenMenu(_ => Close())
+            Inputs.UI_Cancel(_ => Close(playSound: true)),
+            Inputs.UI_OpenMenu(_ => Close(playSound: false))
         );
     }
 
@@ -56,10 +56,15 @@ public class PauseMenuApp : MonoBehaviourR3
         AudioManager.PlaySoundEffect(AudioClipMenuOpened);
     }
 
-    private void Close()
+    private void Close(bool playSound)
     {
         if (!gameObject.activeInHierarchy) return;
-        AudioManager.PlaySoundEffect(AudioClipLeaveMenu);
+
+        if (playSound)
+        {
+            AudioManager.PlaySoundEffect(AudioClipLeaveMenu);
+        }
+
         gameObject.SetActive(false);
     }
 

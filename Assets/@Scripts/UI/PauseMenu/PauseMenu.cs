@@ -60,6 +60,12 @@ public class PauseMenu : MonoPublicSingletonR3<PauseMenu>
     private float MovementSpeed { get; set; } = 5f;
 
     [field: SerializeField]
+    private AudioClip AudioClipMenuOpened { get; set; }
+
+    [field: SerializeField]
+    private AudioClip AudioClipMenuClosed { get; set; }
+
+    [field: SerializeField]
     private List<PauseMenuButton> Buttons { get; set; }
 
     [Serializable]
@@ -121,6 +127,9 @@ public class PauseMenu : MonoPublicSingletonR3<PauseMenu>
             return;
 
         ToggleIsOpen(!IsOpen);
+
+        AudioManager.PlaySoundEffect(
+            IsOpen ? AudioClipMenuOpened : AudioClipMenuClosed);
     }
 
     private async void SubscribeToDialogueManagerEvents()
