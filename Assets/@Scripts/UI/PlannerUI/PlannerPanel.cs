@@ -127,7 +127,7 @@ public partial class PlannerPanel : MonoBehaviourR3
 
         AudioManager.PlaySoundEffect(AudioClipSetQuestActive);
 
-        var data = await PersistentGameData.GetInstanceAsync();
+        await PersistentGameData.GetInstanceAsync();
 
         foreach (var item in PersistentGameData.Quests.GetAll())
         {
