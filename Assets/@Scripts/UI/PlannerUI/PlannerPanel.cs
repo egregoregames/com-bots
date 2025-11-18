@@ -13,10 +13,8 @@ using UnityEngine.UI;
 /// <summary>
 /// Logic that controls the "Planner" app in the <see cref="PauseMenu"/>
 /// </summary>
-public partial class PlannerPanel : MonoBehaviourR3
+public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
 {
-    public static PlannerPanel Instance { get; private set; }
-
     [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }
 
@@ -76,7 +74,6 @@ public partial class PlannerPanel : MonoBehaviourR3
     {
         base.Initialize();
         RefreshInProgress = false;
-        Instance = this;
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(RefreshQuestItems),
