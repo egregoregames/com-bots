@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8768834364335573626}
   - component: {fileID: 8574771493649870125}
-  - component: {fileID: 8917062273700765928}
   - component: {fileID: 3865231009139833245}
   - component: {fileID: 4142227847495134091}
   - component: {fileID: 8206857001869612294}
   - component: {fileID: 676420641217909350}
   m_Layer: 5
-  m_Name: AppPlanner
+  m_Name: PauseMenuApp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,35 +50,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8479390466191543424}
   m_CullTransparentMesh: 1
---- !u!114 &8917062273700765928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8479390466191543424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ea73e1a219512d43a6567ea40b5b8ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Logging>k__BackingField: 4
-  <RefreshInProgress>k__BackingField: 0
-  <QuestItemTemplate>k__BackingField: {fileID: 2154003856367512602}
-  <QuestDescription>k__BackingField: {fileID: 8497552815688757728}
-  <TextQuestTitle>k__BackingField: {fileID: 6840707707543984176}
-  <TextQuestRewardCredits>k__BackingField: {fileID: 5022357329241854734}
-  <ControlHintSetActiveQuest>k__BackingField: {fileID: 3569731396587848270}
-  <ImageSelectedRequirements>k__BackingField: {fileID: 463832805020468130}
-  <ImageSelectedElectives>k__BackingField: {fileID: 7399082935614320908}
-  <ScrollList>k__BackingField:
-    <UpArrow>k__BackingField: {fileID: 9147007924610274552}
-    <DownArrow>k__BackingField: {fileID: 4493388879937535754}
-    <MaxItemsOnScreen>k__BackingField: 5
-  <InstantiatedQuestItems>k__BackingField: []
-  <SelectedQuestIdElective>k__BackingField: -1
-  <SelectedQuestIdRequirement>k__BackingField: -1
-  <QuestType>k__BackingField: 0
 --- !u!223 &3865231009139833245
 Canvas:
   m_ObjectHideFlags: 0
@@ -216,6 +186,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3138648396774101577, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
+      propertyPath: m_Name
+      value: PauseMenuAppSubCategoryBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663443790791766207, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
+      propertyPath: m_Name
+      value: PauseMenuAppTitleBar
+      objectReference: {fileID: 0}
     - target: {fileID: 4739873448235676418, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -283,6 +261,10 @@ PrefabInstance:
     - target: {fileID: 6304095460889641065, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6650670897691264779, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
+      propertyPath: m_Name
+      value: PauseMenuAppInfoBox
       objectReference: {fileID: 0}
     - target: {fileID: 7474516167788463304, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -417,67 +399,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
---- !u!1 &463832805020468130 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5529704242867496673, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2154003856367512602 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6284253025521764697, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2539874439638113635 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7632998372361910304, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4493388879937535754 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8397261317657893449, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5022357329241854734 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1107980810435638861, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6840707707543984176 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1458527076583931251, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &7399082935614320908 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3205572784865367119, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8497552815688757728 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4557632442235802787, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
-  m_PrefabInstance: {fileID: 5391558400230122819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &9147007924610274552 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3756594665989173691, guid: ccc812596a06b9c45902d159155e8c3d, type: 3}
   m_PrefabInstance: {fileID: 5391558400230122819}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8930285638763715100
@@ -490,7 +414,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4887711587380643963, guid: 0d7f6aad94d2fd9479cd76ccdc1a4b1a, type: 3}
       propertyPath: m_Name
-      value: BottomButtons
+      value: PauseMenuAppBottomButtons
       objectReference: {fileID: 0}
     - target: {fileID: 5455421468482430502, guid: 0d7f6aad94d2fd9479cd76ccdc1a4b1a, type: 3}
       propertyPath: m_Pivot.x
@@ -580,10 +504,5 @@ PrefabInstance:
 --- !u!224 &3484435441571593274 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5455421468482430502, guid: 0d7f6aad94d2fd9479cd76ccdc1a4b1a, type: 3}
-  m_PrefabInstance: {fileID: 8930285638763715100}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3569731396587848270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5360555364912011346, guid: 0d7f6aad94d2fd9479cd76ccdc1a4b1a, type: 3}
   m_PrefabInstance: {fileID: 8930285638763715100}
   m_PrefabAsset: {fileID: 0}
