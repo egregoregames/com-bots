@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Logging>k__BackingField: 4
+  <RefreshInProgress>k__BackingField: 0
   <QuestItemTemplate>k__BackingField: {fileID: 2154003856367512602}
   <QuestDescription>k__BackingField: {fileID: 8497552815688757728}
   <TextQuestTitle>k__BackingField: {fileID: 6840707707543984176}
@@ -71,7 +72,6 @@ MonoBehaviour:
   <ControlHintSetActiveQuest>k__BackingField: {fileID: 3569731396587848270}
   <ImageSelectedRequirements>k__BackingField: {fileID: 463832805020468130}
   <ImageSelectedElectives>k__BackingField: {fileID: 7399082935614320908}
-  <AudioClipNavigation>k__BackingField: {fileID: 8300000, guid: f514263d7a5ec6040b6559edd2dcdc21, type: 3}
   <AudioClipSetQuestActive>k__BackingField: {fileID: 8300000, guid: 59167204f4eb65548a2d82eca75cd390, type: 3}
   <ScrollList>k__BackingField:
     <UpArrow>k__BackingField: {fileID: 9147007924610274552}
@@ -81,7 +81,6 @@ MonoBehaviour:
   <SelectedQuestIdElective>k__BackingField: -1
   <SelectedQuestIdRequirement>k__BackingField: -1
   <QuestType>k__BackingField: 0
-  <RefreshInProgress>k__BackingField: 0
 --- !u!223 &3865231009139833245
 Canvas:
   m_ObjectHideFlags: 0
@@ -159,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuApp
   <Logging>k__BackingField: 4
   <AudioClipLeaveMenu>k__BackingField: {fileID: 8300000, guid: dc9028b94d72ccb4fbc61612af575896, type: 3}
+  <AudioClipNavigation>k__BackingField: {fileID: 8300000, guid: f514263d7a5ec6040b6559edd2dcdc21, type: 3}
 --- !u!1001 &5391558400230122819
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Logic that controls the "Planner" app in the <see cref="PauseMenu"/>
 /// </summary>
-public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
+public partial class PlannerPanel : PauseMenuAppSingleton<PlannerPanel>
 {
     [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }
@@ -36,12 +36,6 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
     private GameObject ImageSelectedElectives { get; set; } 
 
     [field: SerializeField]
-    private AudioClip AudioClipNavigation { get; set; }
-
-    [field: SerializeField]
-    private AudioClip AudioClipSetQuestActive { get; set; }
-
-    [field: SerializeField]
     private PauseMenuAppScrollList ScrollList { get; set; }
 
     [field: SerializeField, ReadOnly]
@@ -56,11 +50,8 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
     [field: SerializeField, ReadOnly]
     private QuestType QuestType { get; set; }
 
-    [field: SerializeField, ReadOnly]
-    private bool RefreshInProgress { get; set; }
-
     #region Monobehaviour
-    private new void Awake()
+    protected override void Awake()
     {
         base.Awake();
         ClearInstantiatedQuestItems();
@@ -72,7 +63,6 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
     protected override void Initialize()
     {
         base.Initialize();
-        RefreshInProgress = false;
 
         AddEvents(
             ComBotsSaveSystem.OnLoadSuccess(RefreshQuestItems),
@@ -85,22 +75,15 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
-
-        gameObject.SetActive(false);
     }
 
-    private new void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         RefreshQuestItems();
         UpdateSelectedQuestTypeUI();
     }
     #endregion
-
-    public static void Open()
-    {
-        Instance.gameObject.SetActive(true);
-    }
 
     private async void SetSelectedQuestActive()
     {
@@ -114,7 +97,7 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
         if (questData.IsCompleted || questData.IsActive)
             return;
 
-        AudioManager.PlaySoundEffect(AudioClipSetQuestActive);
+        PlaySoundSubmit();
 
         await PersistentGameData.GetInstanceAsync();
 
@@ -131,11 +114,6 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
         questData.IsActive = true;
         selected.MakeQuestActive();
         ControlHintSetActiveQuest.SetActive(false);
-    }
-
-    private void PlaySoundNavigation()
-    {
-        AudioManager.PlaySoundEffect(AudioClipNavigation);
     }
 
     private void SetQuestType(QuestType type)

@@ -22,6 +22,12 @@ public class PauseMenuApp : MonoBehaviourR3
     [field: SerializeField]
     private AudioClip AudioClipLeaveMenu { get; set; }
 
+    [field: SerializeField]
+    private AudioClip AudioClipNavigation { get; set; }
+
+    [field: SerializeField]
+    private AudioClip AudioClipSubmit { get; set; }
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -37,6 +43,16 @@ public class PauseMenuApp : MonoBehaviourR3
         if (!gameObject.activeInHierarchy) return;
         AudioManager.PlaySoundEffect(AudioClipLeaveMenu);
         gameObject.SetActive(false);
+    }
+
+    public void PlaySoundNavigation()
+    {
+        AudioManager.PlaySoundEffect(AudioClipNavigation);
+    }
+
+    public void PlaySoundSubmit()
+    {
+        AudioManager.PlaySoundEffect(AudioClipSubmit);
     }
 
     private new void OnEnable()
