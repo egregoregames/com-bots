@@ -45,9 +45,6 @@ public partial class PlannerPanel : MonoBehaviourR3
     private AudioClip AudioClipSetQuestActive { get; set; }
 
     [field: SerializeField]
-    private AudioClip AudioClipLeaveMenu { get; set; }
-
-    [field: SerializeField]
     private PauseMenuAppScrollList ScrollList { get; set; }
 
     [field: SerializeField, ReadOnly]
@@ -89,8 +86,6 @@ public partial class PlannerPanel : MonoBehaviourR3
             Inputs.UI_Down(_ => SetSelectedQuest(1)),
             Inputs.UI_Up(_ => SetSelectedQuest(-1)),
             Inputs.UI_Submit(_ => SetSelectedQuestActive()),
-            Inputs.UI_Cancel(_ => Close()),
-            Inputs.UI_OpenMenu(_ => Close()),
 
             // Bad for performance but we can worry about that after the MVP
             PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshQuestItems()));
@@ -105,13 +100,6 @@ public partial class PlannerPanel : MonoBehaviourR3
         UpdateSelectedQuestTypeUI();
     }
     #endregion
-
-    private void Close()
-    {
-        if (!gameObject.activeInHierarchy) return;
-        AudioManager.PlaySoundEffect(AudioClipLeaveMenu);
-        gameObject.SetActive(false);
-    }
 
     private async void SetSelectedQuestActive()
     {

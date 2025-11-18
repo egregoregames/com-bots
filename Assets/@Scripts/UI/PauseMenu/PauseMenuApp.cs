@@ -19,32 +19,29 @@ public class PauseMenuApp : MonoBehaviourR3
     private static UnityEventR3 _onMenuClosed = new();
     public static IDisposable OnMenuClosed(Action x) => _onMenuClosed.Subscribe(x);
 
-    private InputSystem_Actions Inputs { get; set; }
+    [field: SerializeField]
+    private AudioClip AudioClipLeaveMenu { get; set; }
 
     protected override void Initialize()
     {
         base.Initialize();
-        Inputs = new InputSystem_Actions();
-
-        var onCancelAction = Observable.FromEvent<InputAction.CallbackContext>(
-            h => Inputs.UI.Cancel.performed += h,
-            h => Inputs.UI.Cancel.performed -= h);
 
         AddEvents(
-            onCancelAction.Subscribe(OnCancelAction_performed)
+            Inputs.UI_Cancel(_ => Close()),
+            Inputs.UI_OpenMenu(_ => Close())
         );
     }
 
-    private void OnCancelAction_performed(InputAction.CallbackContext context)
+    private void Close()
     {
-        //Debug.Log("PauseMenuApp.OnCancelAction_performed");
+        if (!gameObject.activeInHierarchy) return;
+        AudioManager.PlaySoundEffect(AudioClipLeaveMenu);
         gameObject.SetActive(false);
     }
 
     private new void OnEnable()
     {
         base.OnEnable();
-        Inputs.Enable();
         _openMenus.Add(this);
         _onMenuOpened?.Invoke();
     }
@@ -52,7 +49,6 @@ public class PauseMenuApp : MonoBehaviourR3
     protected new void OnDisable()
     {
         base.OnDisable();
-        Inputs.Disable();
         _openMenus.Remove(this);
         _onMenuClosed?.Invoke();
     }
