@@ -73,12 +73,12 @@ public partial class PlannerPanel : MonoBehaviourR3
         SelectedQuestIdElective = -1; 
         SelectedQuestIdRequirement = -1;
         QuestType = QuestType.Requirement;
-        RefreshInProgress = false;
     }
 
     protected override void Initialize()
     {
         base.Initialize();
+        RefreshInProgress = false;
         Instance = this;
 
         AddEvents(
