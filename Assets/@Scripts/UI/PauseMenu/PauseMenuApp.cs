@@ -1,6 +1,7 @@
 using R3;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,13 +20,25 @@ public class PauseMenuApp : MonoBehaviourR3
     private static UnityEventR3 _onMenuClosed = new();
     public static IDisposable OnMenuClosed(Action x) => _onMenuClosed.Subscribe(x);
 
-    [field: SerializeField]
+    /// <summary>
+    /// Used when an app is closed
+    /// </summary>
+    [field: SerializeField, 
+        Tooltip("Used when an app is closed")]
     private AudioClip AudioClipLeaveMenu { get; set; }
 
-    [field: SerializeField]
+    /// <summary>
+    /// Used when navigating through menus in Pause Menu apps
+    /// </summary>
+    [field: SerializeField, 
+        Tooltip("Used when navigating through menus in Pause Menu apps")]
     private AudioClip AudioClipNavigation { get; set; }
 
-    [field: SerializeField]
+    /// <summary>
+    /// Used when an action occurs, like setting an active quest
+    /// </summary>
+    [field: SerializeField, 
+        Tooltip("Used when an action occurs, like setting an active quest")]
     private AudioClip AudioClipSubmit { get; set; }
 
     protected override void Initialize()
