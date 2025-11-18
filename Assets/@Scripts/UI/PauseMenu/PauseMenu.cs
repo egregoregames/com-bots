@@ -162,10 +162,7 @@ public class PauseMenu : MonoBehaviourR3
     /// <summary>
     /// Opens the full-screen planner app.
     /// </summary>
-    public void OpenAppPlanner()
-    {
-        PlannerPanel.Instance.gameObject.SetActive(true);
-    }
+    public void OpenAppPlanner() => PlannerPanel.Open();
 
     private void ConversationEnded(Transform t)
     {

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,6 +96,11 @@ public partial class PlannerPanel : MonoProtectedSingletonR3<PlannerPanel>
         UpdateSelectedQuestTypeUI();
     }
     #endregion
+
+    public static void Open()
+    {
+        Instance.gameObject.SetActive(true);
+    }
 
     private async void SetSelectedQuestActive()
     {
