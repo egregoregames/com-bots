@@ -18,9 +18,6 @@ public partial class PlannerPanel : MonoBehaviourR3
     public static PlannerPanel Instance { get; private set; }
 
     [field: SerializeField]
-    private int MaxQuestItemsOnScreen { get; set; } = 3;
-
-    [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }
 
     [field: SerializeField]
@@ -31,12 +28,6 @@ public partial class PlannerPanel : MonoBehaviourR3
 
     [field: SerializeField]
     private TextMeshProUGUI TextQuestRewardCredits { get; set; }
-
-    [field: SerializeField]
-    private GameObject UpArrow { get; set; }
-
-    [field: SerializeField]
-    private GameObject DownArrow { get; set; }
 
     [field: SerializeField]
     private GameObject ControlHintSetActiveQuest { get; set; }
@@ -55,6 +46,9 @@ public partial class PlannerPanel : MonoBehaviourR3
 
     [field: SerializeField]
     private AudioClip AudioClipLeaveMenu { get; set; }
+
+    [field: SerializeField]
+    private PauseMenuAppScrollList ScrollList { get; set; }
 
     [field: SerializeField, ReadOnly]
     private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
@@ -242,9 +236,7 @@ public partial class PlannerPanel : MonoBehaviourR3
         PlannerQuestItem selectedQuestItem = InstantiatedQuestItems
             .First(x => x.IsSelected);
 
-        PauseMenuAppUtils.UpdateItemList(MaxQuestItemsOnScreen, UpArrow, DownArrow,
-            selectedQuestItem, InstantiatedQuestItems);
-
+        ScrollList.UpdateItemList(selectedQuestItem, InstantiatedQuestItems);
         ControlHintSetActiveQuest.SetActive(!quest.IsCompleted && !quest.IsActive);
     }
 
@@ -293,8 +285,7 @@ public partial class PlannerPanel : MonoBehaviourR3
 
         if (InstantiatedQuestItems.Count < 1)
         {
-            DownArrow.SetActive(false);
-            UpArrow.SetActive(false);
+            ScrollList.UpdateItemList(null, InstantiatedQuestItems);
             return;
         }
 
@@ -344,7 +335,6 @@ public partial class PlannerPanel : MonoBehaviourR3
             ClearInstantiatedQuestItems();
             var all = await GetFilteredQuests();
             await InstantiateQuestItems(all);
-            DownArrow.transform.SetAsLastSibling();
             RestoreSelectedQuest();
         }
         catch (Exception e)

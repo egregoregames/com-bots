@@ -3632,19 +3632,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Logging>k__BackingField: 4
-  <MaxQuestItemsOnScreen>k__BackingField: 5
   <QuestItemTemplate>k__BackingField: {fileID: 2154003856367512602}
   <QuestDescription>k__BackingField: {fileID: 8497552815688757728}
   <TextQuestTitle>k__BackingField: {fileID: 6840707707543984176}
   <TextQuestRewardCredits>k__BackingField: {fileID: 5022357329241854734}
-  <UpArrow>k__BackingField: {fileID: 9147007924610274552}
-  <DownArrow>k__BackingField: {fileID: 4493388879937535754}
   <ControlHintSetActiveQuest>k__BackingField: {fileID: 3569731396587848270}
   <ImageSelectedRequirements>k__BackingField: {fileID: 463832805020468130}
   <ImageSelectedElectives>k__BackingField: {fileID: 7399082935614320908}
   <AudioClipNavigation>k__BackingField: {fileID: 8300000, guid: f514263d7a5ec6040b6559edd2dcdc21, type: 3}
   <AudioClipSetQuestActive>k__BackingField: {fileID: 8300000, guid: 59167204f4eb65548a2d82eca75cd390, type: 3}
   <AudioClipLeaveMenu>k__BackingField: {fileID: 8300000, guid: dc9028b94d72ccb4fbc61612af575896, type: 3}
+  <ScrollList>k__BackingField:
+    <UpArrow>k__BackingField: {fileID: 9147007924610274552}
+    <DownArrow>k__BackingField: {fileID: 4493388879937535754}
+    <MaxItemsOnScreen>k__BackingField: 5
   <InstantiatedQuestItems>k__BackingField: []
   <SelectedQuestIdElective>k__BackingField: -1
   <SelectedQuestIdRequirement>k__BackingField: -1
@@ -3671,7 +3672,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 31
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 300
   m_TargetDisplay: 0
 --- !u!114 &4142227847495134091
 MonoBehaviour:
