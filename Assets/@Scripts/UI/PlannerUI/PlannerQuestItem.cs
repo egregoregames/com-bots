@@ -49,6 +49,14 @@ public class PlannerQuestItem : MonoBehaviourR3
 
     public bool IsSelected { get; private set; }
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        AddEvents(
+            PersistentGameData.GameEvents.OnQuestUpdated(UpdateUI));
+    }
+
     /// <summary>
     /// Should only be called once immediately after instantiation
     /// </summary>
@@ -71,14 +79,6 @@ public class PlannerQuestItem : MonoBehaviourR3
         }
 
         return Quest;
-    }
-
-    protected override void Initialize()
-    {
-        base.Initialize();
-
-        AddEvents(
-            PersistentGameData.GameEvents.OnQuestUpdated(UpdateUI));
     }
 
     private void UpdateUI()
