@@ -8,14 +8,18 @@ using UnityEngine;
 /// <typeparam name="T">The singleton logic class for the app</typeparam>
 public class PauseMenuAppSingleton<T> : MonoProtectedSingletonR3<T> where T : Component
 {
-    private PauseMenuApp _pauseMenuApp;
+    private static PauseMenuAppSingleton<T> _instance;
 
     [field: SerializeField, ReadOnly]
     protected bool RefreshInProgress { get; set; }
 
+    private PauseMenuApp _pauseMenuApp;
+
     public static void Open()
     {
         Instance.gameObject.SetActive(true);
+        _instance.EnsurePauseMenuApp();
+        _instance._pauseMenuApp.PlaySoundMenuOpened();
     }
 
     protected new virtual void Awake()
@@ -27,6 +31,7 @@ public class PauseMenuAppSingleton<T> : MonoProtectedSingletonR3<T> where T : Co
     protected override void Initialize()
     {
         base.Initialize();
+        _instance = this;
         RefreshInProgress = false;
     }
 

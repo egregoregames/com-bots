@@ -38,6 +38,9 @@ public class PauseMenuApp : MonoBehaviourR3
         Tooltip("Used when an action occurs, like setting an active quest")]
     private AudioClip AudioClipSubmit { get; set; }
 
+    [field: SerializeField]
+    private AudioClip AudioClipMenuOpened { get; set; }
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -46,6 +49,11 @@ public class PauseMenuApp : MonoBehaviourR3
             Inputs.UI_Cancel(_ => Close()),
             Inputs.UI_OpenMenu(_ => Close())
         );
+    }
+
+    public void PlaySoundMenuOpened()
+    {
+        AudioManager.PlaySoundEffect(AudioClipMenuOpened);
     }
 
     private void Close()
