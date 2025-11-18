@@ -192,7 +192,6 @@ public partial class PlannerPanel : MonoBehaviourR3
 
         selectedQuest.Deselect();
         InstantiatedQuestItems[newIndex].Select();
-
         PlaySoundNavigation();
     }
 
