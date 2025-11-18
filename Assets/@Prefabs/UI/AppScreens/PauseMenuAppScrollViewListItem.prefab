@@ -242,7 +242,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4110131815233150841}
   - component: {fileID: 6816268303722916368}
-  - component: {fileID: 1021257652232400787}
   - component: {fileID: 8492934042229426425}
   m_Layer: 5
   m_Name: PauseMenuAppScrollViewListItem
@@ -298,28 +297,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1021257652232400787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4125469482759755337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c955ac872c0e1e84889aafca52405189, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlannerQuestItem
-  <Logging>k__BackingField: 4
-  <TextQuestName>k__BackingField: {fileID: 7394350708243084985}
-  <TextColorDark>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
-  <TextColorLight>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
-  <ActiveQuestIndicator>k__BackingField: {fileID: 6094662000431409364}
-  <SelectedQuestIndent>k__BackingField: {fileID: 6973918653549877146}
-  <BackgroundSelected>k__BackingField: {fileID: 6562143245740825401}
-  <BackgroundCompleted>k__BackingField: {fileID: 4540775057990182051}
-  <NewUpdateIndicator>k__BackingField: {fileID: 8202856044687810850}
-  <QuestCompleteIndicator>k__BackingField: {fileID: 5725091435931377529}
 --- !u!114 &8492934042229426425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,10 +876,5 @@ PrefabInstance:
 --- !u!224 &4226848066941721219 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2159231095157844780, guid: d669142941a1e8445a9418b81c2c3256, type: 3}
-  m_PrefabInstance: {fileID: 2837240078328656303}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5725091435931377529 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7506509393288359638, guid: d669142941a1e8445a9418b81c2c3256, type: 3}
   m_PrefabInstance: {fileID: 2837240078328656303}
   m_PrefabAsset: {fileID: 0}

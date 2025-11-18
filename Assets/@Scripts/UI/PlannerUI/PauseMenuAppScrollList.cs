@@ -18,7 +18,7 @@ public class PauseMenuAppScrollList
     private GameObject DownArrow { get; set; }
 
     [field: SerializeField]
-    private int MaxItemsOnScreen { get; set; } = 7;
+    private int MaxItemsOnScreen { get; set; } = 5;
 
     public void UpdateItemList<T>(T selected, IEnumerable<T> list) where T : Component
     {

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Logic that controls the "Planner" app in the <see cref="PauseMenu"/>
 /// </summary>
-public partial class PlannerPanel : PauseMenuAppSingleton<PlannerPanel>
+public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
 {
     [field: SerializeField]
     private GameObject QuestItemTemplate { get; set; }

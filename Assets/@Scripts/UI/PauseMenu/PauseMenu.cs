@@ -149,7 +149,7 @@ public class PauseMenu : MonoPublicSingletonR3<PauseMenu>
     /// <summary>
     /// Opens the full-screen planner app.
     /// </summary>
-    public void OpenAppPlanner() => PlannerPanel.Open();
+    public void OpenAppPlanner() => AppPlanner.Open();
 
     private void ConversationEnded(Transform t)
     {

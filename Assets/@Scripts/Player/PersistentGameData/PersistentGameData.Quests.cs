@@ -82,7 +82,7 @@ public partial class PersistentGameData
         /// Returns all tracked quest data as a <see cref="IReadOnlyList{T}"/>.
         /// <para />
         /// Keep in mind that any modifications made directly to objects in the
-        /// collection will NOT automatically fire any events. Only <see cref="PlannerPanel"/>
+        /// collection will NOT automatically fire any events. Only <see cref="AppPlanner"/>
         /// should directly set any properties of the objects in this list.
         /// </summary>
         /// <returns></returns>
