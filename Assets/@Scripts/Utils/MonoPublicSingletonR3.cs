@@ -1,4 +1,6 @@
-public class MonoPublicSingletonR3<T> : MonoBehaviourR3
+using UnityEngine;
+
+public class MonoPublicSingletonR3<T> : MonoBehaviourR3 where T : Component
 {
     public static T Instance { get; private set; }
 
