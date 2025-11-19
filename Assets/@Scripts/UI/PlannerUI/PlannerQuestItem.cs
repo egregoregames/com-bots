@@ -39,8 +39,8 @@ public class PlannerQuestItem : PauseMenuAppSelectableListItem<QuestTrackingDatu
     public override async Task SetDatum(QuestTrackingDatum value)
     {
         await base.SetDatum(value);
-        var questData = await Datum.GetQuestDataAsync();
-        TextMain.text = questData.QuestName;
+        var staticData = await Datum.GetStaticDataAsync();
+        TextMain.text = staticData.QuestName;
         UpdateUI();
     }
 

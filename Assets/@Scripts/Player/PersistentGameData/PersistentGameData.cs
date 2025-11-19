@@ -1,7 +1,6 @@
 using ComBots.Game.Portals;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -30,7 +29,8 @@ public partial class PersistentGameData : MonoBehaviourR3
     private static UnityEventR3 _onLocationUpdated = new();
     private static UnityEventR3<QuestTrackingDatum> _onQuestUpdated = new();
     private static UnityEventR3<InventoryItemDatum> _onInventoryItemUpdated = new();
-    private static UnityEventR3<int> _onSocialyteProfileAdded = new();
+    private static UnityEventR3<NpcConnectionDatum> _onSocialyteProfileAdded = new();
+    private static UnityEventR3<TeammateBondDatum> _onTeammateBondUpdated = new();
 
     /// <summary>
     /// Entered by the player at the start of a new game
@@ -142,7 +142,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// player. If an NPC is not in this list, consider their bond level to be 0.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeammateBonds, null)]
-    public List<TeammateBondDatum> PlayerTeammateBonds { get; private set; } = new();
+    private List<TeammateBondDatum> PlayerTeammateBonds { get; set; } = new();
 
     /// <summary>
     /// List of blueprints the player has either seen or not seen and their 

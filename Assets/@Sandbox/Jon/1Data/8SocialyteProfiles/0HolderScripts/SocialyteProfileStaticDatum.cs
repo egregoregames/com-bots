@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -37,6 +38,12 @@ public class SocialyteProfileStaticDatum : ScriptableObject
 	[field: SerializeField, FormerlySerializedAs("origin")]
     public string Origin { get; private set; }
 
-	[field: SerializeField, FormerlySerializedAs("bio"), TextArea(3, 10)]
+	[field: SerializeField, FormerlySerializedAs("bio"), TextArea(3, 10), Obsolete]
 	public string Bio { get; private set; }
+
+	[field: SerializeField]
+	public string[] Bios { get; private set; }
+
+	[field: SerializeField]
+	public string[] CheckInLocations { get; private set; }
 }

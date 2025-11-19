@@ -151,6 +151,11 @@ public class PauseMenu : MonoPublicSingletonR3<PauseMenu>
     /// </summary>
     public void OpenAppPlanner() => AppPlanner.Open();
 
+    /// <summary>
+    /// Opens the full-screen socialyte app.
+    /// </summary>
+    public void OpenAppSocialyte() => AppSocialyte.Open();
+
     private void ConversationEnded(Transform t)
     {
         SetBottomBarVisible(true);

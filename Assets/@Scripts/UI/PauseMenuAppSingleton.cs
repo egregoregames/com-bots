@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -40,6 +41,17 @@ public class PauseMenuAppSingleton<T> : MonoProtectedSingletonR3<T> where T : Co
         if (_pauseMenuApp == null)
         {
             _pauseMenuApp = GetComponent<PauseMenuApp>();
+        }
+    }
+
+    protected async Task WaitForQuestRefreshToComplete()
+    {
+        while (RefreshInProgress)
+        {
+            await Task.Yield();
+
+            if (!Application.isPlaying)
+                throw new TaskCanceledException();
         }
     }
 

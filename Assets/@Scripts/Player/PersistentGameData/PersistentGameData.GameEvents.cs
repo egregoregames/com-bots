@@ -38,7 +38,10 @@ public partial class PersistentGameData
         /// </param>
         /// 
         /// <returns></returns>
-        public static IDisposable OnSocialyteProfileAdded(Action<int> x)
+        public static IDisposable OnSocialyteProfileAdded(Action<NpcConnectionDatum> x)
             => _onSocialyteProfileAdded.Subscribe(x);
+
+        public static IDisposable OnTeammateBondUpdated(Action<TeammateBondDatum> x)
+            => _onTeammateBondUpdated.Subscribe(x);
     }
 }

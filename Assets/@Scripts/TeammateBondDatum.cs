@@ -4,7 +4,7 @@ using UnityEngine;
 public class TeammateBondDatum
 {
     [field: SerializeField]
-    public string TeammateNpcId { get; set; }
+    public int NpcId { get; set; }
 
     [field: SerializeField]
     public TeammateBond TeammateBond { get; set; }

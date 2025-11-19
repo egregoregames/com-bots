@@ -57,7 +57,7 @@ public class QuestTrackingDatum
     [field: SerializeField, ReadOnly]
     public bool HasUnreadUpdates { get; set; } = true;
 
-    public async Task<StaticQuestDatum> GetQuestDataAsync()
+    public async Task<StaticQuestDatum> GetStaticDataAsync()
     {
         return (await StaticGameData.GetInstanceAsync()).QuestData
             .First(x => x.QuestID == QuestId);
@@ -65,10 +65,10 @@ public class QuestTrackingDatum
 
     /// <summary>
     /// Make sure <see cref="StaticGameData.Instance"/> is not null or 
-    /// use <see cref="GetQuestDataAsync"/>
+    /// use <see cref="GetStaticDataAsync"/>
     /// </summary>
     /// <returns></returns>
-    public StaticQuestDatum GetQuestData()
+    public StaticQuestDatum GetStaticData()
     {
         return StaticGameData.Instance.QuestData
             .First(x => x.QuestID == QuestId);

@@ -29,6 +29,16 @@ public class PauseMenuAppScrollList<T>
     [field: SerializeField, ReadOnly]
     public List<PauseMenuAppSelectableListItem<T>> InstantiatedItems { get; private set; }
 
+    public void ClearItems()
+    {
+        InstantiatedItems
+            .Where(x => x != null)
+            .ToList()
+            .ForEach(x => Object.Destroy(x.gameObject));
+
+        InstantiatedItems.Clear();
+    }
+
     public void SetSelected(int increment)
     {
         if (increment != 1 && increment != -1)

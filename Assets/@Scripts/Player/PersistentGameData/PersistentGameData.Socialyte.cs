@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class PersistentGameData
@@ -37,6 +38,11 @@ public partial class PersistentGameData
                 .FirstOrDefault(x => x.NpcId == npcId);
 
             return existing != null;
+        }
+
+        public static IReadOnlyList<NpcConnectionDatum> GetAll()
+        { 
+            return Instance.PlayerNpcConnections.AsReadOnly();
         }
     }
 }

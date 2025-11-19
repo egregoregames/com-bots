@@ -51,7 +51,7 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
     protected override void Awake()
     {
         base.Awake();
-        ClearInstantiatedQuestItems();
+        ScrollList.ClearItems();
         SelectedQuestIdElective = -1; 
         SelectedQuestIdRequirement = -1;
         QuestType = QuestType.Requirement;
@@ -156,7 +156,7 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
     private async void UpdateSelected(QuestTrackingDatum quest)
     {
         Log($"Updating selected quest details (ID:{quest.QuestId})", LogLevel.Verbose);
-        var data = await quest.GetQuestDataAsync();
+        var data = await quest.GetStaticDataAsync();
         var type = data.QuestType;
 
         if (type == QuestType.Elective)
@@ -177,14 +177,14 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
         ControlHintSetActiveQuest.SetActive(!quest.IsCompleted && !quest.IsActive);
     }
 
-    private async Task<IEnumerable<QuestTrackingDatum>> GetFilteredQuests()
+    private async Task<IEnumerable<QuestTrackingDatum>> GetData()
     {
         // Await these to avoid null reference exceptions
         var gameData = await PersistentGameData.GetInstanceAsync();
         var staticGameDataInstance = await StaticGameData.GetInstanceAsync();
 
         var questsFilteredByType = PersistentGameData.Quests.GetAll()
-            .Where(x => x.GetQuestData().QuestType == QuestType);
+            .Where(x => x.GetStaticData().QuestType == QuestType);
 
         var completed = questsFilteredByType
             .Where(x => x.IsCompleted)
@@ -197,10 +197,10 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
         return notCompleted.Concat(completed);
     }
 
-    private void RestoreSelectedQuest()
+    private void RestoreSelection()
     {
         int selected = QuestType == QuestType.Elective ?
-        SelectedQuestIdElective : SelectedQuestIdRequirement;
+            SelectedQuestIdElective : SelectedQuestIdRequirement;
 
         if (Items.Count < 1)
         {
@@ -220,27 +220,6 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
         }
     }
 
-    private void ClearInstantiatedQuestItems()
-    {
-        Items
-            .Where(x => x != null)
-            .ToList()
-            .ForEach(x => Destroy(x.gameObject));
-
-        Items.Clear();
-    }
-
-    private async Task WaitForQuestRefreshToComplete()
-    {
-        while (RefreshInProgress)
-        {
-            await Task.Yield();
-
-            if (!Application.isPlaying)
-                throw new TaskCanceledException();
-        }
-    }
-
     // I'm sure we can make this more performance friendly later
     private async void RefreshQuestItems()
     {
@@ -250,11 +229,11 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
 
         try
         {
-            Log($"Refreshing quest items: {QuestType}", LogLevel.Verbose);
-            ClearInstantiatedQuestItems();
-            var all = await GetFilteredQuests();
+            Log($"Refreshing items: {QuestType}", LogLevel.Verbose);
+            ScrollList.ClearItems();
+            var all = await GetData();
             await ScrollList.InstantiateItems(all);
-            RestoreSelectedQuest();
+            RestoreSelection();
         }
         catch (Exception e)
         {
