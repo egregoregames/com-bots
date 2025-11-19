@@ -41,7 +41,7 @@ public class SocialyteProfileStaticDatum : ScriptableObject
 	[field: SerializeField, FormerlySerializedAs("bio"), TextArea(3, 10), Obsolete]
 	public string Bio { get; private set; }
 
-	[field: SerializeField]
+	[field: SerializeField, TextArea(3, 10)]
 	public string[] Bios { get; private set; }
 
 	[field: SerializeField]
