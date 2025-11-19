@@ -70,7 +70,7 @@ public class OverheadWidgetManager : MonoBehaviourR3
         Log("OverheadWidgetManager initialized successfully", LogLevel.Info);
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         if (Instance == this)
         {
