@@ -15,9 +15,6 @@ using UnityEngine.UI;
 public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
 {
     [field: SerializeField]
-    private GameObject QuestItemTemplate { get; set; }
-
-    [field: SerializeField]
     private TextMeshProUGUI QuestDescription { get; set; }
 
     [field: SerializeField]
@@ -35,20 +32,20 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
     [field: SerializeField]
     private GameObject ImageSelectedElectives { get; set; } 
 
-    [field: SerializeField]
-    private PauseMenuAppScrollList ScrollList { get; set; }
-
-    [field: SerializeField, ReadOnly]
-    private List<PlannerQuestItem> InstantiatedQuestItems { get; set; }
-
     [field: SerializeField, ReadOnly]
     private int SelectedQuestIdElective { get; set; } = -1;
 
     [field: SerializeField, ReadOnly]
     private int SelectedQuestIdRequirement { get; set; } = -1;
 
+    [field: SerializeField]
+    private PauseMenuAppScrollList<QuestTrackingDatum> ScrollList { get; set; }
+
     [field: SerializeField, ReadOnly]
     private QuestType QuestType { get; set; }
+
+    private List<PauseMenuAppSelectableListItem<QuestTrackingDatum>> Items 
+        => ScrollList.InstantiatedItems;
 
     #region Monobehaviour
     protected override void Awake()
@@ -69,8 +66,8 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
             PlannerQuestItem.OnSelected(UpdateSelected),
             Inputs.UI_Right(_ => SetQuestType(QuestType.Elective)),
             Inputs.UI_Left(_ => SetQuestType(QuestType.Requirement)),
-            Inputs.UI_Down(_ => SetSelectedQuest(1)),
-            Inputs.UI_Up(_ => SetSelectedQuest(-1)),
+            Inputs.UI_Down(_ => SetSelected(1)),
+            Inputs.UI_Up(_ => SetSelected(-1)),
             Inputs.UI_Submit(_ => SetSelectedQuestActive()),
 
             // Bad for performance but we can worry about that after the MVP
@@ -85,14 +82,20 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
     }
     #endregion
 
+    private void SetSelected(int increment)
+    {
+        ScrollList.SetSelected(increment);
+        PlaySoundNavigation();
+    }
+
     private async void SetSelectedQuestActive()
     {
-        if (InstantiatedQuestItems.Count < 1) return;
+        if (Items.Count < 1) return;
 
-        var selected = InstantiatedQuestItems
+        var selected = Items
             .First(x => x.IsSelected);
 
-        var questData = await selected.GetQuestTrackingDatumAsync();
+        var questData = await selected.GetDatumAsync();
 
         if (questData.IsCompleted || questData.IsActive)
             return;
@@ -106,13 +109,13 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
             item.IsActive = false;
         }
 
-        foreach (var item in InstantiatedQuestItems)
+        foreach (var item in Items)
         {
-            item.MakeQuestInactive();
+            ((PlannerQuestItem)item).MakeQuestInactive();
         }
 
         questData.IsActive = true;
-        selected.MakeQuestActive();
+        ((PlannerQuestItem)selected).MakeQuestActive();
         ControlHintSetActiveQuest.SetActive(false);
     }
 
@@ -128,38 +131,6 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
     {
         ImageSelectedElectives.SetActive(QuestType == QuestType.Elective);
         ImageSelectedRequirements.SetActive(QuestType == QuestType.Requirement);
-    }
-
-    private void SetSelectedQuest(int increment)
-    {
-        Log($"Incrementing selected quest index by {increment}", LogLevel.Verbose);
-
-        if (increment != 1 && increment != -1)
-        {
-            throw new Exception(
-                "Improper usage. Argument must be 1 (next quest) or -1 (prev quest)");
-        }
-
-        if (InstantiatedQuestItems.Count <= 1) return;
-
-        var selectedQuest = InstantiatedQuestItems.First(x => x.IsSelected);
-        int selectedQuestIndex = InstantiatedQuestItems.IndexOf(selectedQuest);
-
-        var newIndex = selectedQuestIndex + increment;
-        if (newIndex < 0)
-        {
-            // Wrap back to bottom of quest list
-            newIndex = InstantiatedQuestItems.Count - 1;
-        }
-        else if (newIndex > InstantiatedQuestItems.Count - 1)
-        {
-            // Wrap to top of quest list
-            newIndex = 0;
-        }
-
-        selectedQuest.Deselect();
-        InstantiatedQuestItems[newIndex].Select();
-        PlaySoundNavigation();
     }
 
     private void UpdateQuestDetails(QuestTrackingDatum quest, StaticQuestDatum data)
@@ -199,10 +170,10 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
 
         UpdateQuestDetails(quest, data);
 
-        PlannerQuestItem selectedQuestItem = InstantiatedQuestItems
+        PlannerQuestItem selectedQuestItem = (PlannerQuestItem)Items
             .First(x => x.IsSelected);
 
-        ScrollList.UpdateItemList(selectedQuestItem, InstantiatedQuestItems);
+        ScrollList.UpdateItemList(selectedQuestItem, Items);
         ControlHintSetActiveQuest.SetActive(!quest.IsCompleted && !quest.IsActive);
     }
 
@@ -226,55 +197,37 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
         return notCompleted.Concat(completed);
     }
 
-    private async Task InstantiateQuestItems(IEnumerable<QuestTrackingDatum> all)
-    {
-        QuestItemTemplate.SetActive(true);
-
-        foreach (var item in all)
-        {
-            var newObj = Instantiate(
-                QuestItemTemplate, QuestItemTemplate.transform.parent);
-
-            var comp = newObj.GetComponent<PlannerQuestItem>();
-            await comp.SetQuest(item);
-            comp.Deselect();
-            InstantiatedQuestItems.Add(comp);
-        }
-
-        QuestItemTemplate.SetActive(false);
-    }
-
     private void RestoreSelectedQuest()
     {
         int selected = QuestType == QuestType.Elective ?
         SelectedQuestIdElective : SelectedQuestIdRequirement;
 
-        if (InstantiatedQuestItems.Count < 1)
+        if (Items.Count < 1)
         {
-            ScrollList.UpdateItemList(null, InstantiatedQuestItems);
+            ScrollList.UpdateItemList(null, Items);
             return;
         }
 
         if (selected == -1)
         {
-            InstantiatedQuestItems.First().Select();
+            Items.First().Select();
             Log($"Selected first quest in list", LogLevel.Verbose);
         }
         else
         {
-            InstantiatedQuestItems.First(x => x.Quest.QuestId == selected).Select();
+            Items.First(x => x.Datum.QuestId == selected).Select();
             Log($"Selected last selected quest", LogLevel.Verbose);
         }
     }
 
     private void ClearInstantiatedQuestItems()
     {
-        InstantiatedQuestItems
+        Items
             .Where(x => x != null)
             .ToList()
             .ForEach(x => Destroy(x.gameObject));
 
-        InstantiatedQuestItems.Clear();
+        Items.Clear();
     }
 
     private async Task WaitForQuestRefreshToComplete()
@@ -300,7 +253,7 @@ public partial class AppPlanner : PauseMenuAppSingleton<AppPlanner>
             Log($"Refreshing quest items: {QuestType}", LogLevel.Verbose);
             ClearInstantiatedQuestItems();
             var all = await GetFilteredQuests();
-            await InstantiateQuestItems(all);
+            await ScrollList.InstantiateItems(all);
             RestoreSelectedQuest();
         }
         catch (Exception e)

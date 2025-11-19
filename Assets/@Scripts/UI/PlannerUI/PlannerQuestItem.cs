@@ -7,17 +7,8 @@ using UnityEngine;
 /// Logic for the individual items in the quest selection section of the
 /// Planner App
 /// </summary>
-public class PlannerQuestItem : MonoBehaviourR3
+public class PlannerQuestItem : PauseMenuAppSelectableListItem<QuestTrackingDatum>
 {
-    private static UnityEventR3<QuestTrackingDatum> _onSelected = new();
-    public static IDisposable OnSelected(Action<QuestTrackingDatum> x) => _onSelected.Subscribe(x);
-
-    //private static UnityEventR3<QuestTrackingDatum> _onMadeActive = new();
-    //public static IDisposable OnMadeActive(Action<QuestTrackingDatum> x) => _onMadeActive.Subscribe(x);
-
-    [field: SerializeField]
-    private TextMeshProUGUI TextQuestName { get; set; }
-
     [field: SerializeField]
     private Color TextColorDark { get; set; }
 
@@ -28,12 +19,6 @@ public class PlannerQuestItem : MonoBehaviourR3
     private GameObject ActiveQuestIndicator { get; set; }
 
     [field: SerializeField]
-    private GameObject SelectedQuestIndent { get; set; }
-
-    [field: SerializeField]
-    private GameObject BackgroundSelected { get; set; }
-
-    [field: SerializeField]
     private GameObject BackgroundCompleted { get; set; }
 
     [field: SerializeField]
@@ -41,13 +26,6 @@ public class PlannerQuestItem : MonoBehaviourR3
 
     [field: SerializeField]
     private GameObject QuestCompleteIndicator { get; set; }
-
-    /// <summary>
-    /// Check for null or use <see cref="GetQuestTrackingDatumAsync"/>
-    /// </summary>
-    public QuestTrackingDatum Quest { get; private set; }
-
-    public bool IsSelected { get; private set; }
 
     protected override void Initialize()
     {
@@ -57,99 +35,77 @@ public class PlannerQuestItem : MonoBehaviourR3
             PersistentGameData.GameEvents.OnQuestUpdated(UpdateUI));
     }
 
-    /// <summary>
-    /// Should only be called once immediately after instantiation
-    /// </summary>
-    /// <param name="value"></param>
-    public async Task SetQuest(QuestTrackingDatum value)
+    /// <inheritdoc/>
+    public override async Task SetDatum(QuestTrackingDatum value)
     {
-        Quest = value;
-        var questData = await Quest.GetQuestDataAsync();
-        TextQuestName.text = questData.QuestName;
+        await base.SetDatum(value);
+        var questData = await Datum.GetQuestDataAsync();
+        TextMain.text = questData.QuestName;
         UpdateUI();
-    }
-
-    public async Task<QuestTrackingDatum> GetQuestTrackingDatumAsync()
-    {
-        while (Quest == null)
-        {
-            await Task.Yield();
-            if (!Application.isPlaying)
-                throw new TaskCanceledException();
-        }
-
-        return Quest;
     }
 
     private void UpdateUI()
     {
-        if (Quest.IsCompleted)
+        if (Datum.IsCompleted)
         {
-            NewUpdateIndicator.SetActive(Quest.HasUnreadUpdates);
+            NewUpdateIndicator.SetActive(Datum.HasUnreadUpdates);
             Complete();
             return;
         }
 
-        QuestCompleteIndicator.SetActive(Quest.IsCompleted);
-        BackgroundCompleted.SetActive(Quest.IsCompleted);
-        ActiveQuestIndicator.SetActive(Quest.IsActive);
-        NewUpdateIndicator.SetActive(Quest.HasUnreadUpdates && !IsSelected);
+        QuestCompleteIndicator.SetActive(Datum.IsCompleted);
+        BackgroundCompleted.SetActive(Datum.IsCompleted);
+        ActiveQuestIndicator.SetActive(Datum.IsActive);
+        NewUpdateIndicator.SetActive(Datum.HasUnreadUpdates && !IsSelected);
     }
 
     private void UpdateUI(QuestTrackingDatum quest)
     {
-        if (quest.IsActive && Quest != quest)
+        if (quest.IsActive && Datum != quest)
         {
             ActiveQuestIndicator.SetActive(false);
         }
 
-        if (quest != Quest && !BackgroundSelected.activeSelf)
+        if (quest != Datum && !IsSelected)
         {
             string message = $"Activating NewUpdateIndicator " +
-                $"for QuestItem {TextQuestName.text}";
+                $"for QuestItem {TextMain.text}";
 
             Log(message, LogLevel.Verbose);
 
             NewUpdateIndicator.SetActive(true);
         }
 
-        if (quest != Quest) return;
+        if (quest != Datum) return;
 
         UpdateUI();
     }
 
-    public void Select()
+    public override void Select()
     {
-        BackgroundSelected.SetActive(true);
-        SelectedQuestIndent.SetActive(true);
+        base.Select();
         NewUpdateIndicator.SetActive(false);
-        IsSelected = true;
 
-        if (Quest != null)
+        if (Datum != null)
         {
-            Quest.HasUnreadUpdates = false;
+            Datum.HasUnreadUpdates = false;
         }
         
-        TextQuestName.color = TextColorLight;
-
-        _onSelected?.Invoke(Quest);
+        TextMain.color = TextColorLight;
     }
 
-    public void Deselect()
+    public override void Deselect()
     {
-        BackgroundSelected.SetActive(false);
-        SelectedQuestIndent.SetActive(false);
+        base.Deselect();
 
-        if (Quest.IsCompleted)
+        if (Datum.IsCompleted)
         {
-            TextQuestName.color = TextColorLight;
+            TextMain.color = TextColorLight;
         }
         else
         {
-            TextQuestName.color = TextColorDark;
+            TextMain.color = TextColorDark;
         }
-            
-        IsSelected = false;
     }
 
     public void Complete()
@@ -157,7 +113,7 @@ public class PlannerQuestItem : MonoBehaviourR3
         QuestCompleteIndicator.SetActive(true);
         BackgroundCompleted.SetActive(true);
         ActiveQuestIndicator.SetActive(false);
-        TextQuestName.color = TextColorLight;
+        TextMain.color = TextColorLight;
     }
 
     public void MakeQuestInactive()
@@ -168,6 +124,5 @@ public class PlannerQuestItem : MonoBehaviourR3
     public void MakeQuestActive()
     {
         ActiveQuestIndicator.SetActive(true);
-        //_onMadeActive?.Invoke(Quest);
     }
 }

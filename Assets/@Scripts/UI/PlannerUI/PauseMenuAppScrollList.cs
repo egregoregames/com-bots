@@ -1,15 +1,18 @@
 using R3;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// Subcomponent used by pause menu apps to easily reorganize a scroll list
 /// upon UI navigation
 /// </summary>
 [Serializable]
-public class PauseMenuAppScrollList
+public class PauseMenuAppScrollList<T>
 {
     [field: SerializeField]
     private GameObject UpArrow { get; set; }
@@ -19,6 +22,59 @@ public class PauseMenuAppScrollList
 
     [field: SerializeField]
     private int MaxItemsOnScreen { get; set; } = 5;
+
+    [field: SerializeField]
+    public GameObject ItemTemplate { get; private set; }
+
+    [field: SerializeField, ReadOnly]
+    public List<PauseMenuAppSelectableListItem<T>> InstantiatedItems { get; private set; }
+
+    public void SetSelected(int increment)
+    {
+        if (increment != 1 && increment != -1)
+        {
+            throw new Exception(
+                "Improper usage. Argument must be 1 (next quest) or -1 (prev quest)");
+        }
+
+        if (InstantiatedItems.Count <= 1) return;
+
+        var selectedQuest = InstantiatedItems.First(x => x.IsSelected);
+        int selectedQuestIndex = InstantiatedItems.IndexOf(selectedQuest);
+
+        var newIndex = selectedQuestIndex + increment;
+        if (newIndex < 0)
+        {
+            // Wrap back to bottom of quest list
+            newIndex = InstantiatedItems.Count - 1;
+        }
+        else if (newIndex > InstantiatedItems.Count - 1)
+        {
+            // Wrap to top of quest list
+            newIndex = 0;
+        }
+
+        selectedQuest.Deselect();
+        InstantiatedItems[newIndex].Select();
+    }
+
+    public async Task InstantiateItems(IEnumerable<T> all)
+    {
+        ItemTemplate.SetActive(true);
+
+        foreach (var item in all)
+        {
+            var newObj = Object.Instantiate(
+                ItemTemplate, ItemTemplate.transform.parent);
+
+            var comp = newObj.GetComponent<PauseMenuAppSelectableListItem<T>>();
+            await comp.SetDatum(item);
+            comp.Deselect();
+            InstantiatedItems.Add(comp);
+        }
+
+        ItemTemplate.SetActive(false);
+    }
 
     public void UpdateItemList<T>(T selected, IEnumerable<T> list) where T : Component
     {

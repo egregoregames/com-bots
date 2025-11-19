@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuAppSubCategoryBar
       objectReference: {fileID: 0}
+    - target: {fileID: 5104194604641361154, guid: 5e0dacf8cb958a34280c74813f28b9d0, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -241,6 +245,10 @@ PrefabInstance:
     - target: {fileID: 8949578223951730762, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
       propertyPath: m_text
       value: Electives
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949578223951730762, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -529,7 +537,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlannerPanel
   <Logging>k__BackingField: 4
   <RefreshInProgress>k__BackingField: 0
-  <QuestItemTemplate>k__BackingField: {fileID: 6396516384319186020}
   <QuestDescription>k__BackingField: {fileID: 2373306696548691162}
   <TextQuestTitle>k__BackingField: {fileID: 859591544830100746}
   <TextQuestRewardCredits>k__BackingField: {fileID: 1353914326358115942}
@@ -540,7 +547,8 @@ MonoBehaviour:
     <UpArrow>k__BackingField: {fileID: 4310158029208214662}
     <DownArrow>k__BackingField: {fileID: 8897929495815206772}
     <MaxItemsOnScreen>k__BackingField: 5
-  <InstantiatedQuestItems>k__BackingField: []
+    <ItemTemplate>k__BackingField: {fileID: 6396516384319186020}
+    <InstantiatedItems>k__BackingField: []
   <SelectedQuestIdElective>k__BackingField: -1
   <SelectedQuestIdRequirement>k__BackingField: -1
   <QuestType>k__BackingField: 0
@@ -791,11 +799,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlannerQuestItem
   <Logging>k__BackingField: 4
-  <TextQuestName>k__BackingField: {fileID: 511831094315648148}
+  <TextMain>k__BackingField: {fileID: 511831094315648148}
   <TextColorDark>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
   <TextColorLight>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <ActiveQuestIndicator>k__BackingField: {fileID: 3823828408272067321}
-  <SelectedQuestIndent>k__BackingField: {fileID: 93510650899998135}
+  <SelectedIndent>k__BackingField: {fileID: 93510650899998135}
   <BackgroundSelected>k__BackingField: {fileID: 4221293292283750676}
   <BackgroundCompleted>k__BackingField: {fileID: 6809569881913480846}
   <NewUpdateIndicator>k__BackingField: {fileID: 1176010687283712783}

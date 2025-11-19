@@ -123,7 +123,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// A list of NPC unique IDs that the player has connected with on Socialyte
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcConnections, null)]
-    private List<int> PlayerNpcConnections { get; set; } = new();
+    private List<NpcConnectionDatum> PlayerNpcConnections { get; set; } = new();
 
     /// <summary>
     /// Defines the player's inventory. Each entry contains an Item ID and a quantity.
@@ -207,8 +207,8 @@ public partial class PersistentGameData : MonoBehaviourR3
             SimplePortal.OnPortalTriggered(UpdateLocationName)
         );
 
-        LoadSavedData();
-        GenerateStudentIdIfNoneExists();
+        //LoadSavedData();
+        //GenerateStudentIdIfNoneExists();
     }
 
     private void Reset()
