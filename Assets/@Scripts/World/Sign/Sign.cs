@@ -2,7 +2,6 @@ using ComBots.Game.Interactions;
 using ComBots.Game.Players;
 using ComBots.Game.StateMachine;
 using ComBots.UI.OverheadWidgets;
-using ComBots.Utils.ObjectPooling;
 using R3;
 using System;
 using UnityEngine;
@@ -28,8 +27,7 @@ public class Sign : MonoBehaviourR3, IInteractable
 
     [Header("Interact Widget")]
     [SerializeField] private Vector3 _interactWidgetOffset;
-    private const string PK_INTERACT_WIDGET = "Sign_Interact_Widget";
-    private OverheadWidget _interactWidget;
+    private WC_OverheadWidget _interactWidget;
 
     private IInteractor _currentInteractor;
 
@@ -78,11 +76,11 @@ public class Sign : MonoBehaviourR3, IInteractable
         return interactor is Player && !SignUI.IsOpen;
     }
 
-    public void OnInteractionStart(IInteractor interactor)
+    public async void OnInteractionStart(IInteractor interactor)
     {
         if (_interactWidget)
         {
-            PoolManager.I.Push(PK_INTERACT_WIDGET, _interactWidget);
+            OverheadWidgetManager.ReturnWidget(_interactWidget);
             _interactWidget = null;
         }
         _currentInteractor = interactor;
@@ -91,16 +89,16 @@ public class Sign : MonoBehaviourR3, IInteractable
         _onSignActivated?.Invoke(_signText);
     }
 
-    public void OnInteractorFar(IInteractor interactor)
+    public async void OnInteractorFar(IInteractor interactor)
     {
         if (_interactWidget)
         {
-            PoolManager.I.Push(PK_INTERACT_WIDGET, _interactWidget);
+            OverheadWidgetManager.ReturnWidget(_interactWidget);
             _interactWidget = null;
         }
     }
 
-    public void OnInteractorNearby(IInteractor interactor)
+    public async void OnInteractorNearby(IInteractor interactor)
     {
         if (!IsActive)
         {
@@ -109,7 +107,7 @@ public class Sign : MonoBehaviourR3, IInteractable
 
         if (!_interactWidget)
         {
-            _interactWidget = PoolManager.I.Pull<OverheadWidget>(PK_INTERACT_WIDGET);
+            _interactWidget = await OverheadWidgetManager.GetWidget(OverheadWidgetType.Read);
             _interactWidget.transform.position = transform.position + _interactWidgetOffset;
         }
     }
