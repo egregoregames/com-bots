@@ -4,7 +4,6 @@ using ComBots.Game.StateMachine;
 using PixelCrushers.DialogueSystem;
 using ComBots.Game.Players;
 using ComBots.Logs;
-using ComBots.Utils.ObjectPooling;
 using ComBots.UI.OverheadWidgets;
 using ComBots.Cameras;
 using System.Collections;
@@ -33,12 +32,10 @@ namespace ComBots.World.NPCs
 
         [Header("Overhead Widget")]
         [SerializeField] private Vector3 _overheadWidgetOffset;
-        private const string PK_OVERHEAD_WIDGET = "NPC_Overhead_Widget";
-        private OverheadWidget _overheadWidget;
+        private WC_OverheadWidget _overheadWidget;
 
         [Header("Cameras")]
         public CameraTarget CameraTarget;
-        /// <summary> Pool key for the overhead widget </summary>
 
         // ============ State ============ //
         /// <summary> Is affected by visibility config in NPC_Config. </summary>
@@ -100,7 +97,7 @@ namespace ComBots.World.NPCs
             return true;
         }
 
-        public void OnInteractionStart(IInteractor interactor)
+        public async void OnInteractionStart(IInteractor interactor)
         {
             if (interactor is not Player player)
             {
@@ -114,7 +111,7 @@ namespace ComBots.World.NPCs
             // Remove overhead widget
             if (_overheadWidget)
             {
-                PoolManager.I.Push(PK_OVERHEAD_WIDGET, _overheadWidget);
+                OverheadWidgetManager.ReturnWidget(_overheadWidget);
                 _overheadWidget = null;
             }
             // Rotate NPC towards player
@@ -126,7 +123,7 @@ namespace ComBots.World.NPCs
             GameStateMachine.I.SetState<GameStateMachine.State_Dialogue>(args);
         }
 
-        public void OnInteractorFar(IInteractor interactor)
+        public async void OnInteractorFar(IInteractor interactor)
         {
             if (!_isActive) // NPC is not active
             {
@@ -135,12 +132,12 @@ namespace ComBots.World.NPCs
 
             if (_overheadWidget)
             {
-                PoolManager.I.Push(PK_OVERHEAD_WIDGET, _overheadWidget);
+                OverheadWidgetManager.ReturnWidget(_overheadWidget);
                 _overheadWidget = null;
             }
         }
 
-        public void OnInteractorNearby(IInteractor interactor)
+        public async void OnInteractorNearby(IInteractor interactor)
         {
             if (!_isActive) // NPC is not active
             {
@@ -149,7 +146,7 @@ namespace ComBots.World.NPCs
 
             if (_overheadWidget == null)
             {
-                _overheadWidget = PoolManager.I.Pull<OverheadWidget>(PK_OVERHEAD_WIDGET);
+                _overheadWidget = await OverheadWidgetManager.GetWidget(OverheadWidgetType.Talk);
                 _overheadWidget.transform.position = transform.position + _overheadWidgetOffset;
             }
         }
@@ -220,7 +217,7 @@ namespace ComBots.World.NPCs
             // Hide overhead widget if inactive
             if (!_isActive && _overheadWidget)
             {
-                PoolManager.I.Push(PK_OVERHEAD_WIDGET, _overheadWidget);
+                OverheadWidgetManager.ReturnWidget(_overheadWidget);
                 _overheadWidget = null;
             }
         }
