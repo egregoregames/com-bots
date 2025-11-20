@@ -19,9 +19,6 @@ public class AppSocialyteNpcBroadcaster : MonoProtectedSingletonR3<AppSocialyteN
         public GameObject Instance { get; set; }
     }
 
-    [field: SerializeField] 
-    private Transform Camera { get; set; }
-
     [field: SerializeField]
     private List<NpcBroadcasterDatum> NpcBroadcasterData { get; set; } = new();
 
