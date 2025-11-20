@@ -31,6 +31,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     private static UnityEventR3<InventoryItemDatum> _onInventoryItemUpdated = new();
     private static UnityEventR3<NpcConnectionDatum> _onSocialyteProfileAdded = new();
     private static UnityEventR3<TeammateBondDatum> _onTeammateBondUpdated = new();
+    private static UnityEventR3 _onTeamMembersChanged = new();
 
     /// <summary>
     /// Entered by the player at the start of a new game

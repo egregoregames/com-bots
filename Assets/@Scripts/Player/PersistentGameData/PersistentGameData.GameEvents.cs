@@ -43,5 +43,8 @@ public partial class PersistentGameData
 
         public static IDisposable OnTeammateBondUpdated(Action<TeammateBondDatum> x)
             => _onTeammateBondUpdated.Subscribe(x);
+
+        public static IDisposable OnTeamMembersChanged(Action x)
+            => _onTeamMembersChanged.Subscribe(x);
     }
 }

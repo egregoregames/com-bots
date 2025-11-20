@@ -15,10 +15,10 @@ using Object = UnityEngine.Object;
 public class PauseMenuAppScrollList<T>
 {
     [field: SerializeField]
-    private GameObject UpArrow { get; set; }
+    public GameObject UpArrow { get; private set; }
 
     [field: SerializeField]
-    private GameObject DownArrow { get; set; }
+    public GameObject DownArrow { get; private set; }
 
     [field: SerializeField]
     private int MaxItemsOnScreen { get; set; } = 5;

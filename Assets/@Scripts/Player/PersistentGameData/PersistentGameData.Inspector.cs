@@ -67,6 +67,10 @@ public partial class PersistentGameData
                     Socialyte.AddConnection(8);
                     Socialyte.AddConnection(9);
                     Socialyte.AddConnection(10);
+                    Socialyte.AddConnection(11);
+                    Socialyte.AddConnection(12);
+                    Socialyte.AddConnection(13);
+                    Socialyte.AddConnection(17);
                 }
 
                 if (GUILayout.Button("Generate Inventory Items (Key Items)", buttonHeight))

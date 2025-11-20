@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Contains logic for the socialyte app
+/// </summary>
 public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 {
     [field: SerializeField]
@@ -72,7 +74,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             Inputs.UI_Up(_ => SetSelected(-1)),
 
             // Bad for performance but we can worry about that after the MVP
-            PersistentGameData.GameEvents.OnQuestUpdated(_ => RefreshItems()));
+            PersistentGameData.GameEvents.OnSocialyteProfileAdded(_ => RefreshItems()));
     }
 
     protected override void OnEnable()
@@ -117,9 +119,8 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 
         TextOrigin.text = staticDatum.Origin;
         TextOccupation.text = staticDatum.Occupation;
-
-        // Todo ... how are we doing the portrait?
-        //ImageNpcPhoto.sprite = staticDatum.ModelPortrait;
+        TextContactName.text = staticDatum.ProfileName;
+        AppSocialyteNpcBroadcaster.BroadcastNpc(staticDatum);
     }
 
     private void UpdateBonds(SocialyteProfileStaticDatum staticDatum)
@@ -216,7 +217,12 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
         {
             Log($"Refreshing items: {CurrentTab}", LogLevel.Verbose);
             ScrollList.ClearItems();
-            if (CurrentTab == SocialyteTab.Feed) return;
+            if (CurrentTab == SocialyteTab.Feed)
+            {
+                ScrollList.UpArrow.SetActive(false);
+                ScrollList.DownArrow.SetActive(false);
+                return;
+            }
             var all = await GetData();
             await ScrollList.InstantiateItems(all);
             RestoreSelection();

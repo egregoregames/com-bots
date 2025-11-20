@@ -12,12 +12,22 @@ public class AppSocialyteListItem : PauseMenuAppSelectableListItem<NpcConnection
     [field: SerializeField]
     private GameObject NewUpdateIndicator { get; set; }
 
+    [field: SerializeField]
+    private GameObject InPartyIndicatorSelected { get; set; }
+
+    [field: SerializeField]
+    private GameObject InPartyIndicatorNotSelected { get; set; }
+
+    private bool IsInParty => PersistentGameData.Instance
+        .PlayerNpcTeamMembers.Contains(Datum.NpcId);
+
     protected override void Initialize()
     {
         base.Initialize();
 
         AddEvents(
-            PersistentGameData.GameEvents.OnSocialyteProfileAdded(UpdateUI));
+            PersistentGameData.GameEvents.OnSocialyteProfileAdded(UpdateUI),
+            PersistentGameData.GameEvents.OnTeamMembersChanged(UpdateUI));
     }
 
     /// <inheritdoc/>
@@ -32,9 +42,11 @@ public class AppSocialyteListItem : PauseMenuAppSelectableListItem<NpcConnection
     private void UpdateUI()
     {
         NewUpdateIndicator.SetActive(Datum.HasNewUpdates && !IsSelected);
+        InPartyIndicatorSelected.SetActive(IsInParty);
+        InPartyIndicatorNotSelected.SetActive(IsInParty);
     }
 
-    public override void Select()
+    public override async void Select()
     {
         base.Select();
         NewUpdateIndicator.SetActive(false);
@@ -42,15 +54,20 @@ public class AppSocialyteListItem : PauseMenuAppSelectableListItem<NpcConnection
         if (Datum != null)
         {
             Datum.HasNewUpdates = false;
+            await PersistentGameData.GetInstanceAsync();
+            InPartyIndicatorSelected.SetActive(IsInParty);
         }
 
         TextMain.color = TextColorLight;
     }
 
-    public override void Deselect()
+    public override async void Deselect()
     {
         base.Deselect();
         TextMain.color = TextColorDark;
+
+        await PersistentGameData.GetInstanceAsync();
+        InPartyIndicatorNotSelected.SetActive(IsInParty);
     }
 
     private void UpdateUI(NpcConnectionDatum datum)
