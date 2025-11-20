@@ -232,6 +232,7 @@ public partial class PersistentGameData : MonoBehaviourR3
         PlayerOwnedSoftware = new();
         PlayerTeamBotStatusData = new();
         PlayerUnlockedCybercastChannelIds = new();
+        PlayerMedals = new();
         PlayerSolexId = -1;
     }
 
