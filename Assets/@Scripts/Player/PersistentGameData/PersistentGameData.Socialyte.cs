@@ -25,10 +25,46 @@ public partial class PersistentGameData
                 return;
 
             connection.IsVisible = isVisible;
+
+            if (isVisible)
+            {
+                connection.HasNewUpdates = true;
+            }
+
             _onSocialyteProfileUpdated?.Invoke(connection);
         }
 
-        private static NpcConnectionDatum GetConnectionDatum(int npcId)
+        public static async void SetBioStep(int npcId, int step)
+        {
+            await GetInstanceAsync();
+            var connection = GetConnectionDatum(npcId);
+
+            if (connection.CurrentBioStep == step) 
+                return;
+
+            connection.HasNewUpdates = true;
+            _onSocialyteProfileUpdated?.Invoke(connection);
+        }
+
+        public static async void SetCheckInLocationStep(int npcId, int step)
+        {
+            await GetInstanceAsync();
+            var connection = GetConnectionDatum(npcId);
+
+            if (connection.CurrentCheckInLocationStep == step) 
+                return;
+
+            connection.HasNewUpdates = true;
+            _onSocialyteProfileUpdated?.Invoke(connection);
+        }
+
+        /// <summary>
+        /// Warning: Modifying the returned datum will not fire events. 
+        /// Use the other API methods.
+        /// </summary>
+        /// <param name="npcId"></param>
+        /// <returns></returns>
+        public static NpcConnectionDatum GetConnectionDatum(int npcId)
         {
             var existing = Instance.PlayerNpcConnections
                 .FirstOrDefault(x => x.NpcId == npcId);
@@ -45,6 +81,7 @@ public partial class PersistentGameData
 
             return existing;
         }
+
 
         /// <returns>True if the player is already conencted to this NPC via Socailyte</returns>
         public static bool ConnectionExists(int npcId)

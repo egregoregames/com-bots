@@ -37,7 +37,14 @@ public partial class PersistentGameData
                 instance.PlayerTeammateBonds.Add(existing);
             }
 
+            if (existing.TeammateBond == teammateBond)
+                return;
+
+            var npcConnection = Socialyte.GetConnectionDatum(npcId);
+            npcConnection.HasNewUpdates = true;
+
             existing.TeammateBond = teammateBond;
+            _onSocialyteProfileUpdated?.Invoke(npcConnection);
             _onTeammateBondUpdated?.Invoke(existing);
         }
     }
