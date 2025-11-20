@@ -46,7 +46,7 @@ public class AppSocialyteNpcBroadcaster : MonoProtectedSingletonR3<AppSocialyteN
             Array.ForEach(components, component => 
             {
                 var type = component.GetType();
-                Debug.Log(type.ToString());
+                //Debug.Log(type.ToString());
 
                 if (type != typeof(Transform) 
                     && type != typeof(SkinnedMeshRenderer) 
