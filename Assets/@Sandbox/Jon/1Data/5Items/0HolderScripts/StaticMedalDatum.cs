@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "dataHolderMedal", menuName = "Scriptable Objects/dataHolderMedal")]
-
-public class dataHolderMedal : ScriptableObject
+[CreateAssetMenu(
+	fileName = "StaticMedalDatum", 
+	menuName = "Scriptable Objects/Static Medal Datum")]
+public class StaticMedalDatum : ScriptableObject
 {
 	[field: SerializeField]
     public int Id { get; private set; }
