@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,6 +10,18 @@ using UnityEngine;
 /// <typeparam name="T">The singleton logic class for the app</typeparam>
 public class PauseMenuAppSingleton<T> : MonoProtectedSingletonR3<T> where T : Component
 {
+    private static UnityEventR3 _onClosed = new();
+    /// <summary>
+    /// Called when the singleton gameObject is deactivated/closed
+    /// </summary>
+    /// 
+    /// <param name="x"></param>
+    /// 
+    /// <returns>
+    /// A disposable object for use in observable patterns to unsubscribe the action
+    /// </returns>
+    public static IDisposable OnClosed(Action x) => _onClosed.Subscribe(x);
+
     private static PauseMenuAppSingleton<T> _instance;
 
     [field: SerializeField, ReadOnly]
@@ -34,6 +47,12 @@ public class PauseMenuAppSingleton<T> : MonoProtectedSingletonR3<T> where T : Co
         base.Initialize();
         _instance = this;
         RefreshInProgress = false;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        _onClosed.Invoke();
     }
 
     private void EnsurePauseMenuApp()
