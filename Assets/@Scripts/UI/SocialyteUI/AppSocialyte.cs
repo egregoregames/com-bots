@@ -144,7 +144,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             .Count();
     }
 
-    private void UpdateDetails(NpcConnectionDatum datum, 
+    private async void UpdateDetails(NpcConnectionDatum datum, 
         SocialyteProfileStaticDatum staticDatum)
     {
         TextOccupation.text = staticDatum.Occupation;
@@ -158,14 +158,15 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 
         if (datum.NpcId == 0)
         {
+            var pgdInstance = await PersistentGameData.GetInstanceAsync();
             // Is player profile
-            TextContactName.text = PersistentGameData.Instance.PlayerName;
+            TextContactName.text = pgdInstance.PlayerName;
 
             int connectionCount = GetConnectionCount();
             string s = connectionCount == 1 ? "" : "s";
             TextNumberOfConnections.text = $"{connectionCount} Connection{s}";
 
-            string playerLoc = PersistentGameData.Instance.CurrentLocationName;
+            string playerLoc = pgdInstance.CurrentLocationName;
             TextCheckInLocation.text = checkedInText + playerLoc;
 
             TextPlayerStudentId.text = PersistentGameData.GetPlayerStudentId();
