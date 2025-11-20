@@ -146,6 +146,9 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeammateBonds, null)]
     private List<TeammateBondDatum> PlayerTeammateBonds { get; set; } = new();
 
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerSolexId, null)]
+    private int PlayerSolexId { get; set; } = -1;
+
     /// <summary>
     /// List of blueprints the player has either seen or not seen and their 
     /// current status. If a blueprint is not in this list, consider it unseen.
@@ -229,6 +232,7 @@ public partial class PersistentGameData : MonoBehaviourR3
         PlayerOwnedSoftware = new();
         PlayerTeamBotStatusData = new();
         PlayerUnlockedCybercastChannelIds = new();
+        PlayerSolexId = -1;
     }
 
     /// <returns>
@@ -302,6 +306,18 @@ public partial class PersistentGameData : MonoBehaviourR3
     {
         PlayerCredits += amount;
         _onCreditsUpdated?.Invoke();
+    }
+
+    public static async void SetSolexId(int solexId)
+    {
+        var instance = await GetInstanceAsync();
+        instance.PlayerSolexId = solexId;
+    }
+
+    public static async Task<int> GetSolexIdAsync()
+    {
+        var instance = await GetInstanceAsync();
+        return instance.PlayerSolexId;
     }
 
     /// <summary>
