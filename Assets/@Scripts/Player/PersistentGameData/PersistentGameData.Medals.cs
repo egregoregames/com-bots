@@ -20,5 +20,12 @@ public partial class PersistentGameData
             var instance = await GetInstanceAsync();
             return instance.PlayerMedals.Contains(medalId);
         }
+
+        /// <returns>The total number of medals the player has</returns>
+        public static async Task<int> GetCountAsync()
+        {
+            var instance = await GetInstanceAsync();
+            return instance.PlayerMedals.Count;
+        }
     }
 }
