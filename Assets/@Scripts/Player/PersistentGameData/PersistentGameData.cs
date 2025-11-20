@@ -118,7 +118,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// A list of NPC unique IDs that are currently in the player's team. Max of 2
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerNpcTeamMembers, null)]
-    public List<int> PlayerNpcTeamMembers { get; private set; } = new();
+    private List<int> PlayerNpcTeamMembers { get; set; } = new();
 
     /// <summary>
     /// A list of NPC unique IDs that the player has connected with on Socialyte

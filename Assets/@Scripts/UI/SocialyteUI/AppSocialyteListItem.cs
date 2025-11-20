@@ -18,8 +18,8 @@ public class AppSocialyteListItem : PauseMenuAppSelectableListItem<NpcConnection
     [field: SerializeField]
     private GameObject InPartyIndicatorNotSelected { get; set; }
 
-    private bool IsInParty => PersistentGameData.Instance
-        .PlayerNpcTeamMembers.Contains(Datum.NpcId);
+    private bool IsInParty => PersistentGameData.TeamMembers
+        .IsInParty(Datum.NpcId);
 
     protected override void Initialize()
     {

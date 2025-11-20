@@ -25,5 +25,10 @@ public partial class PersistentGameData
             instance.PlayerNpcTeamMembers.Remove(npcId);
             _onTeamMembersChanged?.Invoke();
         }
+
+        public static bool IsInParty(int npcId)
+        {
+            return Instance.PlayerNpcTeamMembers.Contains(npcId);
+        }
     }
 }
