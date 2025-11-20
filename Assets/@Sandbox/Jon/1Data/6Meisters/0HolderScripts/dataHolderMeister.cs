@@ -14,4 +14,7 @@ public class dataHolderMeister : ScriptableObject
 	public ScriptableObject Bot1;
 	public ScriptableObject Bot2;
 	public ScriptableObject Bot3;
+
+	[field: SerializeField]
+	public int DefaultSolexId { get; private set; }
 }
