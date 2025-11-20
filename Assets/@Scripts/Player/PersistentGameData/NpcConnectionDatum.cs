@@ -13,8 +13,18 @@ public class NpcConnectionDatum
     [field: SerializeField]
     public int NpcId { get; set; }
 
+    /// <summary>
+    /// If true, will display a "new updates" indicator for this connection in 
+    /// the Socialyte App
+    /// </summary>
     [field: SerializeField]
     public bool HasNewUpdates { get; set; } = true;
+
+    /// <summary>
+    /// If true, this NPC connection is visible in the Socialyte App
+    /// </summary>
+    [field: SerializeField]
+    public bool IsVisible { get; set; }
 
     /// <summary>
     /// Is incremented to show a different bio for this NPC depending on 
