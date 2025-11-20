@@ -34,6 +34,12 @@ public partial class PersistentGameData
             _onSocialyteProfileUpdated?.Invoke(connection);
         }
 
+        /// <summary>
+        /// Will change the displayed bio in the Socialyte profile for the 
+        /// given NPC. See <see cref="SocialyteProfileStaticDatum.BioSteps"/>
+        /// </summary>
+        /// <param name="npcId"></param>
+        /// <param name="step"></param>
         public static async void SetBioStep(int npcId, int step)
         {
             await GetInstanceAsync();
@@ -46,6 +52,13 @@ public partial class PersistentGameData
             _onSocialyteProfileUpdated?.Invoke(connection);
         }
 
+        /// <summary>
+        /// Will change the displayed check-in location in the Socialyte 
+        /// profile for the NPC. See 
+        /// <see cref="SocialyteProfileStaticDatum.CheckInLocationSteps"/>
+        /// </summary>
+        /// <param name="npcId"></param>
+        /// <param name="step"></param>
         public static async void SetCheckInLocationStep(int npcId, int step)
         {
             await GetInstanceAsync();
