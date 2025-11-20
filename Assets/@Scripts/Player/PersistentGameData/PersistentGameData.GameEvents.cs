@@ -36,5 +36,8 @@ public partial class PersistentGameData
 
         public static IDisposable OnTeamMembersChanged(Action x)
             => _onTeamMembersUpdated.Subscribe(x);
+
+        public static IDisposable OnMedalAdded(Action<int> x)
+            => _onMedalAdded.Subscribe(x);
     }
 }

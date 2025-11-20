@@ -32,6 +32,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     private static UnityEventR3<NpcConnectionDatum> _onSocialyteProfileUpdated = new();
     private static UnityEventR3<TeammateBondDatum> _onTeammateBondUpdated = new();
     private static UnityEventR3 _onTeamMembersUpdated = new();
+    private static UnityEventR3<int> _onMedalAdded = new();
 
     /// <summary>
     /// Entered by the player at the start of a new game
@@ -166,7 +167,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     public List<BotStatusDatum> PlayerTeamBotStatusData { get; private set; } = new();
 
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerMedals, null)]
-    public List<int> PlayerMedals { get; private set; } = new();
+    private List<int> PlayerMedals { get; set; } = new();
 
     /// <summary>
     /// When the player first obtains the Cybercast App, only 3 channels are 
