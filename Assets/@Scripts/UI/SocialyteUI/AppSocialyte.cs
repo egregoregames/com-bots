@@ -34,6 +34,27 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     private TextMeshProUGUI TextPlayerStudentId { get; set; }
 
     [field: SerializeField]
+    private TextMeshProUGUI TextPlayerRank { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextPlayerExams { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextPlayerBlueprints { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextPlayerSolex { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextPlayerMedals { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextPlayerSoftware { get; set; }
+
+    [field: SerializeField]
+    private GameObject PlayerProfileArea { get; set; }
+
+    [field: SerializeField]
     private GameObject ContainerNumberOfConnections { get; set; }
 
     [field: SerializeField]
