@@ -165,6 +165,9 @@ public partial class PersistentGameData : MonoBehaviourR3
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerTeamBotStatusData, null)]
     public List<BotStatusDatum> PlayerTeamBotStatusData { get; private set; } = new();
 
+    [field: SerializeField, ComBotsSave(SaveKeys.PlayerMedals, null)]
+    public List<int> PlayerMedals { get; private set; } = new();
+
     /// <summary>
     /// When the player first obtains the Cybercast App, only 3 channels are 
     /// visible. 
