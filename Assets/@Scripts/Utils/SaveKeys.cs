@@ -25,4 +25,5 @@ public static class SaveKeys
     public const string PlayerTeamBotStatusData = "PlayerTeamBotStatusData";
     public const string PlayerUnlockedCybercastChannels = "PlayerUnlockedCybercastChannels";
     public const string PlayerMedals = "PlayerMedals";
+    public const string PlayerSolexId = "PlayerSolexId";
 }
