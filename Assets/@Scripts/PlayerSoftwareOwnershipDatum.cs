@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerSoftwareOwnershipDatum
 {
     [field: SerializeField]
-    public string SoftwareId { get; set; }
+    public int SoftwareId { get; set; }
 
     [field: SerializeField]
     public SoftwareOwnershipStatus Status { get; set; }
