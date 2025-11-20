@@ -28,23 +28,13 @@ public partial class PersistentGameData
         public static IDisposable OnInventoryItemUpdate(Action<InventoryItemDatum> x)
             => _onInventoryItemUpdated.Subscribe(x);
 
-        /// <summary>
-        /// Is invoked when a new connection is made in the Socialyte App. 
-        /// Passes the integer ID of the NPC
-        /// </summary>
-        /// 
-        /// <param name="x">
-        /// An action with the integer ID of the added NPC as a parameter
-        /// </param>
-        /// 
-        /// <returns></returns>
-        public static IDisposable OnSocialyteProfileAdded(Action<NpcConnectionDatum> x)
-            => _onSocialyteProfileAdded.Subscribe(x);
+        public static IDisposable OnSocialyteProfileUpdated(Action<NpcConnectionDatum> x)
+            => _onSocialyteProfileUpdated.Subscribe(x);
 
         public static IDisposable OnTeammateBondUpdated(Action<TeammateBondDatum> x)
             => _onTeammateBondUpdated.Subscribe(x);
 
         public static IDisposable OnTeamMembersChanged(Action x)
-            => _onTeamMembersChanged.Subscribe(x);
+            => _onTeamMembersUpdated.Subscribe(x);
     }
 }
