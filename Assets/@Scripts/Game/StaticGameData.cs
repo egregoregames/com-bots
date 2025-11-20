@@ -22,6 +22,9 @@ public class StaticGameData : MonoBehaviourR3
     [field: SerializeField]
     public SocialyteProfileStaticDatum[] SocialyteData { get; private set; }
 
+    [field: SerializeField]
+    public StaticSolexDatum[] SolexData { get; private set; }
+
     /// <summary>
     /// Singletons that will be instantiated on app launch and 
     /// made <see cref="Object.DontDestroyOnLoad(Object)"/>
