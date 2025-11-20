@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Contains logic for the socialyte app. Data from connections is pulled 
@@ -52,6 +53,9 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     private TextMeshProUGUI TextPlayerSoftware { get; set; }
 
     [field: SerializeField]
+    private Image ImageSolex { get; set; }
+
+    [field: SerializeField]
     private GameObject PlayerProfileArea { get; set; }
 
     [field: SerializeField]
@@ -84,6 +88,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     private List<PauseMenuAppSelectableListItem<NpcConnectionDatum>> Items
         => ScrollList.InstantiatedItems;
 
+    #region Monobehaviour
     protected override void Awake()
     {
         base.Awake();
@@ -114,6 +119,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
         RefreshItems();
         UpdateSelectedTabUI();
     }
+    #endregion
 
     private void SetSelected(int increment)
     {
@@ -179,8 +185,8 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             TextPlayerRank.text = $"I'm a Rank {rank} Meister!";
 
             // Only appears after player has obtained quest id 1, The Academy Trial
-            bool exists = await PersistentGameData.Quests.Exists(1);
-            TextPlayerExams.transform.gameObject.SetActive(exists);
+            bool hasAcademyTrial = await PersistentGameData.Quests.Exists(1);
+            TextPlayerExams.transform.parent.gameObject.SetActive(hasAcademyTrial);
             int exams = pgdInstance.PromotionBattleVictoryCount;
             s = exams == 1 ? "" : "s";
             TextPlayerExams.text = $"I've passed {exams} Battle Exam{s}!";
@@ -188,7 +194,26 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             int blueprints = pgdInstance.PlayerBlueprintData.Count();
             TextPlayerBlueprints.text = $"I've collected {blueprints}/76 Blueprints!";
 
-            //int medals = pgdInstance.
+            // Only appears after player has obtained quest id 1, The Academy Trial
+            TextPlayerMedals.transform.parent.gameObject.SetActive(hasAcademyTrial);
+            int medals = await PersistentGameData.Medals.GetCountAsync();
+            s = medals == 1 ? "" : "s";
+            TextPlayerMedals.text = $"I've earned {medals} Medal{s}!";
+
+            int software = await PersistentGameData.Software.GetCountAsync();
+            TextPlayerSoftware.text = $"I've collected {software}/250 Software!";
+
+            // Only appears after player has obtained quest Yama's Research Assistant
+            //bool hasYamasResearchAssistant = await PersistentGameData.Quests.Exists(51);
+            var solexId = await PersistentGameData.GetSolexIdAsync();
+            bool showSolex = solexId > 0;
+            TextPlayerSolex.transform.parent.gameObject.SetActive(showSolex);
+            if (showSolex)
+            {
+                var data = await StaticGameData.GetSolexDatumAsync(solexId);
+                ImageSolex.sprite = data.SpriteIconSocialyte;
+                TextPlayerSolex.text = $"I wield the {data.Name}!";
+            }
         }
         else
         {

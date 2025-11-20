@@ -47,6 +47,12 @@ public class StaticGameData : MonoBehaviourR3
         return Instance.ItemData.First(x => x.ItemId == itemId).MaxQuantity;
     }
 
+    public static async Task<StaticSolexDatum> GetSolexDatumAsync(int solexId)
+    {
+        var instance = await GetInstanceAsync();
+        return instance.SolexData.First(x => x.Id == solexId);
+    }
+
     private new void Awake()
     {
         base.Awake();
