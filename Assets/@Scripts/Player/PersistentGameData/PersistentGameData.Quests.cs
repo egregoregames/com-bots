@@ -111,6 +111,14 @@ public partial class PersistentGameData
             return quest;
         }
 
+        public static async Task<bool> Exists(int questId)
+        {
+            var instance = await GetInstanceAsync();
+            var quest = instance.PlayerQuestTrackingData
+                .FirstOrDefault(x => x.QuestId == questId);
+            return quest != null;
+        }
+
         private static async void EnsureAtLeastOneActive()
         {
             var instance = await GetInstanceAsync();
