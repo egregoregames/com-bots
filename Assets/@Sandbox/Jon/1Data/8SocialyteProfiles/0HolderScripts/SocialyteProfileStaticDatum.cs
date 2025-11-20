@@ -41,9 +41,18 @@ public class SocialyteProfileStaticDatum : ScriptableObject
 	[field: SerializeField, FormerlySerializedAs("bio"), TextArea(3, 10), Obsolete]
 	public string Bio { get; private set; }
 
-	[field: SerializeField, TextArea(3, 10)]
+    /// <summary>
+    /// Allows a different bio to be shown at each step of the relationship/quest
+	/// with this NPC. See <see cref="NpcConnectionDatum.CurrentBioStep"/>
+    /// </summary>
+    [field: SerializeField, TextArea(3, 10)]
 	public string[] Bios { get; private set; }
 
-	[field: SerializeField]
+    /// <summary>
+    /// Allows different check-in locations to be shown at each step of the quest
+	/// with this NPC or from other gameplay events. See 
+	/// <see cref="NpcConnectionDatum.CurrentCheckInLocationStep"/>
+    /// </summary>
+    [field: SerializeField]
 	public string[] CheckInLocations { get; private set; }
 }
