@@ -46,7 +46,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// number from 1 to 9.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerStudentId, "")]
-    public string PlayerStudentId { get; set; } = "";
+    private string PlayerStudentId { get; set; } = "";
 
     /// <summary>
     /// Used to calculate the player's rank
@@ -342,12 +342,23 @@ public partial class PersistentGameData : MonoBehaviourR3
         _onMoneyUpdated?.Invoke();
     }
 
+    /// <summary>
+    /// Automatically generates and stores a new Student ID for the player 
+    /// if it does not exist
+    /// </summary>
+    /// <returns></returns>
+    public static string GetPlayerStudentId()
+    {
+        Instance.GenerateStudentIdIfNoneExists();
+        return Instance.PlayerStudentId;
+    }
+
     private void GenerateStudentIdIfNoneExists()
     {
         if (string.IsNullOrWhiteSpace(PlayerStudentId))
         {
             PlayerStudentId = StudentIdGenerator.Generate();
-            ComBotsSaveSystem.SaveData(SaveKeys.PlayerStudentId, PlayerStudentId);
+            //ComBotsSaveSystem.SaveData(SaveKeys.PlayerStudentId, PlayerStudentId);
         }
     }
 

@@ -28,6 +28,18 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     private TextMeshProUGUI TextOrigin { get; set; }
 
     [field: SerializeField]
+    private TextMeshProUGUI TextNumberOfConnections { get; set; }
+
+    [field: SerializeField]
+    private TextMeshProUGUI TextPlayerStudentId { get; set; }
+
+    [field: SerializeField]
+    private GameObject ContainerNumberOfConnections { get; set; }
+
+    [field: SerializeField]
+    private GameObject ContainerOrigin { get; set; }
+
+    [field: SerializeField]
     private GameObject[] BondHearts { get; set; }
 
     [field: SerializeField]
@@ -104,20 +116,55 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
         ImageSelectedFeed.SetActive(CurrentTab == SocialyteTab.Feed);
     }
 
+    private int GetConnectionCount()
+    {
+        return PersistentGameData.Socialyte.GetAll()
+            .Where(x => x.NpcId != 0 && x.IsVisible)
+            .Count();
+    }
+
     private void UpdateDetails(NpcConnectionDatum datum, 
         SocialyteProfileStaticDatum staticDatum)
     {
-        UpdateFromStringArray(staticDatum.Bios, datum.CurrentBioStep, 
-            TextBio, datum.NpcId);
-
-        UpdateFromStringArray(staticDatum.CheckInLocations, 
-            datum.CurrentCheckInLocationStep, TextCheckInLocation, datum.NpcId);
-
-        UpdateBonds(staticDatum);
-
-        TextOrigin.text = staticDatum.Origin;
         TextOccupation.text = staticDatum.Occupation;
-        TextContactName.text = staticDatum.ProfileName;
+        string checkedInText = "Checked in at ";
+
+        bool isPlayerProfile = datum.NpcId == 0;
+        ContainerNumberOfConnections.SetActive(isPlayerProfile);
+        TextPlayerStudentId.gameObject.SetActive(isPlayerProfile);
+        ContainerOrigin.SetActive(!isPlayerProfile);
+        TextBio.gameObject.SetActive(!isPlayerProfile);
+
+        if (datum.NpcId == 0)
+        {
+            // Is player profile
+            TextContactName.text = PersistentGameData.Instance.PlayerName;
+
+            int connectionCount = GetConnectionCount();
+            string s = connectionCount == 1 ? "" : "s";
+            TextNumberOfConnections.text = $"{connectionCount} Connection{s}";
+
+            string playerLoc = PersistentGameData.Instance.CurrentLocationName;
+            TextCheckInLocation.text = checkedInText + playerLoc;
+
+            TextPlayerStudentId.text = PersistentGameData.GetPlayerStudentId();
+            BondHeartContainer.SetActive(false);
+        }
+        else
+        {
+            UpdateFromStringArray(staticDatum.Bios, datum.CurrentBioStep,
+                TextBio, datum.NpcId);
+
+            UpdateFromStringArray(staticDatum.CheckInLocations,
+                datum.CurrentCheckInLocationStep, TextCheckInLocation, 
+                datum.NpcId, checkedInText);
+
+            UpdateBonds(staticDatum);
+
+            TextOrigin.text = staticDatum.Origin;
+            TextContactName.text = staticDatum.ProfileName;
+        }
+            
         AppSocialyteNpcBroadcaster.BroadcastNpc(staticDatum);
     }
 
@@ -138,23 +185,23 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     }
 
     private void UpdateFromStringArray(string[] stringArray, int index, 
-        TextMeshProUGUI text, int dataId)
+        TextMeshProUGUI text, int dataId, string prefix = "")
     {
         if (stringArray == null || stringArray.Length == 0)
         {
             Log($"String array empty for data object with id {dataId}", LogLevel.Warning);
 
-            text.text = "Unknown";
+            text.text = $"{prefix}Unknown";
         }
         else if (stringArray.Length - 1 < index)
         {
             Log($"Index {index} is out of range for data object with id {dataId}", LogLevel.Warning);
 
-            text.text = stringArray.Last();
+            text.text = prefix + stringArray.Last();
         }
         else
         {
-            text.text = stringArray[index];
+            text.text = prefix + stringArray[index];
         }
     }
 
