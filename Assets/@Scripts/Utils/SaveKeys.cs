@@ -1,6 +1,6 @@
 /// <summary>
 /// Should the string values of these keys be changed, 
-/// old save data will break
+/// old save data will break. So don't change them.
 /// </summary>
 public static class SaveKeys
 {
