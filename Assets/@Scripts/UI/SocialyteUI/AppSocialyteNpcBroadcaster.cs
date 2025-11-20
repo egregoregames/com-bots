@@ -60,10 +60,7 @@ public class AppSocialyteNpcBroadcaster : MonoProtectedSingletonR3<AppSocialyteN
                 }
             });
 
-            //Vector3 cameraAt0 = Instance.Camera.transform.localPosition;
-            //cameraAt0.y = 0;
-
-            //instance.transform.LookAt(Instance.transform.TransformPoint(cameraAt0));
+            instance.transform.localPosition = Vector3.zero;
 
             existing = new NpcBroadcasterDatum()
             {

@@ -227,6 +227,9 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             var filtered = all
                 .Where(x => x.IsVisible);
 
+            // Add an extra one for "YOUR PROFILE"
+            PersistentGameData.Socialyte.SetConnectionVisible(0, true);
+
             await ScrollList.InstantiateItems(filtered);
             RestoreSelection();
         }
