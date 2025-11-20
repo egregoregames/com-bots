@@ -155,6 +155,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
         bool isPlayerProfile = datum.NpcId == 0;
         ContainerNumberOfConnections.SetActive(isPlayerProfile);
         TextPlayerStudentId.gameObject.SetActive(isPlayerProfile);
+        PlayerProfileArea.SetActive(isPlayerProfile);
         ContainerOrigin.SetActive(!isPlayerProfile);
         TextBio.gameObject.SetActive(!isPlayerProfile);
 
@@ -173,6 +174,21 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 
             TextPlayerStudentId.text = PersistentGameData.GetPlayerStudentId();
             BondHeartContainer.SetActive(false);
+
+            int rank = await PersistentGameData.GetPlayerRank();
+            TextPlayerRank.text = $"I'm a Rank {rank} Meister!";
+
+            // Only appears after player has obtained quest id 1, The Academy Trial
+            bool exists = await PersistentGameData.Quests.Exists(1);
+            TextPlayerExams.transform.gameObject.SetActive(exists);
+            int exams = pgdInstance.PromotionBattleVictoryCount;
+            s = exams == 1 ? "" : "s";
+            TextPlayerExams.text = $"I've passed {exams} Battle Exam{s}!";
+
+            int blueprints = pgdInstance.PlayerBlueprintData.Count();
+            TextPlayerBlueprints.text = $"I've collected {blueprints}/76 Blueprints!";
+
+            //int medals = pgdInstance.
         }
         else
         {
