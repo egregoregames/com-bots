@@ -147,6 +147,8 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     private async void UpdateDetails(NpcConnectionDatum datum, 
         SocialyteProfileStaticDatum staticDatum)
     {
+        // TODO: LOCALIZATION
+
         TextOccupation.text = staticDatum.Occupation;
         string checkedInText = "Checked in at ";
 
