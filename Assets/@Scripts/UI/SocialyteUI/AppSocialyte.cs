@@ -139,9 +139,10 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
         }
     }
 
-    private void UpdateFromStringArray(string[] stringArray, int index, TextMeshProUGUI text, int dataId)
+    private void UpdateFromStringArray(string[] stringArray, int index, 
+        TextMeshProUGUI text, int dataId)
     {
-        if (stringArray.Length == 0)
+        if (stringArray == null || stringArray.Length == 0)
         {
             Log($"String array empty for data object with id {dataId}", LogLevel.Warning);
 
