@@ -38,7 +38,8 @@ public class SocialyteProfileStaticDatum : ScriptableObject
 	[field: SerializeField, FormerlySerializedAs("origin")]
     public string Origin { get; private set; }
 
-	[field: SerializeField, FormerlySerializedAs("bio"), TextArea(3, 10), Obsolete]
+	[field: SerializeField, FormerlySerializedAs("bio"), 
+		TextArea(3, 10), Obsolete("Use Bios instead"), HideInInspector]
 	public string Bio { get; private set; }
 
     /// <summary>
