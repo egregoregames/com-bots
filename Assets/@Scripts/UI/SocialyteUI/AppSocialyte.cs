@@ -7,7 +7,8 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Contains logic for the socialyte app
+/// Contains logic for the socialyte app. Data from connections is pulled 
+/// from <see cref="PersistentGameData.Socialyte"/>
 /// </summary>
 public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 {
@@ -25,9 +26,6 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 
     [field: SerializeField]
     private TextMeshProUGUI TextOrigin { get; set; }
-
-    //[field: SerializeField]
-    //private Image ImageNpcPhoto { get; set; }
 
     [field: SerializeField]
     private GameObject[] BondHearts { get; set; }
@@ -74,7 +72,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             Inputs.UI_Up(_ => SetSelected(-1)),
 
             // Bad for performance but we can worry about that after the MVP
-            PersistentGameData.GameEvents.OnSocialyteProfileAdded(_ => RefreshItems()));
+            PersistentGameData.GameEvents.OnSocialyteProfileUpdated(_ => RefreshItems()));
     }
 
     protected override void OnEnable()
@@ -225,7 +223,11 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
                 return;
             }
             var all = await GetData();
-            await ScrollList.InstantiateItems(all);
+
+            var filtered = all
+                .Where(x => x.IsVisible);
+
+            await ScrollList.InstantiateItems(filtered);
             RestoreSelection();
         }
         catch (Exception e)

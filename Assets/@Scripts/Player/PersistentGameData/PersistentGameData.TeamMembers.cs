@@ -12,7 +12,7 @@ public partial class PersistentGameData
                 return;
 
             instance.PlayerNpcTeamMembers.Add(npcId);
-            _onTeamMembersChanged?.Invoke();
+            _onTeamMembersUpdated?.Invoke();
         }
 
         public static async void Remove(int npcId)
@@ -23,7 +23,7 @@ public partial class PersistentGameData
                 return;
 
             instance.PlayerNpcTeamMembers.Remove(npcId);
-            _onTeamMembersChanged?.Invoke();
+            _onTeamMembersUpdated?.Invoke();
         }
 
         public static bool IsInParty(int npcId)

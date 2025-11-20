@@ -26,7 +26,7 @@ public class AppSocialyteListItem : PauseMenuAppSelectableListItem<NpcConnection
         base.Initialize();
 
         AddEvents(
-            PersistentGameData.GameEvents.OnSocialyteProfileAdded(UpdateUI),
+            PersistentGameData.GameEvents.OnSocialyteProfileUpdated(UpdateUI),
             PersistentGameData.GameEvents.OnTeamMembersChanged(UpdateUI));
     }
 

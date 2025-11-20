@@ -3,32 +3,47 @@ using System.Linq;
 
 public partial class PersistentGameData
 {
+    /// <summary>
+    /// API for 
+    /// </summary>
     public static class Socialyte
     {
         /// <summary>
-        /// Add a new NPC connection in the Socialyte app. Will log a warning if
-        /// the NPC already exists as a connection. Check if the connection already exists
-        /// by calling <see cref="ConnectionExists(int)"/>
+        /// Set the visibility of an NPC connection in the Socialyte App
         /// </summary>
-        /// <param name="npcId">The Profile ID of the NPC. 
-        /// Lives at <see cref="SocialyteProfileStaticDatum.ProfileId"/></param>
-        public static async void AddConnection(int npcId)
+        /// 
+        /// <param name="npcId">
+        /// The Profile ID of the NPC. 
+        /// Lives at <see cref="SocialyteProfileStaticDatum.ProfileId"/>
+        /// </param>
+        public static async void SetConnectionVisible(int npcId, bool isVisible)
         {
-            var instance = await GetInstanceAsync();
+            await GetInstanceAsync();
+            var connection = GetConnectionDatum(npcId);
 
-            var existing = instance.PlayerNpcConnections
+            if (connection.IsVisible == isVisible) 
+                return;
+
+            connection.IsVisible = isVisible;
+            _onSocialyteProfileUpdated?.Invoke(connection);
+        }
+
+        private static NpcConnectionDatum GetConnectionDatum(int npcId)
+        {
+            var existing = Instance.PlayerNpcConnections
                 .FirstOrDefault(x => x.NpcId == npcId);
 
-            if (existing != null)
+            if (existing == null)
             {
-                instance.Log($"NPC id {npcId} has already been added as a socialyte connection");
-                return;
+                existing = new NpcConnectionDatum
+                {
+                    NpcId = npcId
+                };
+
+                Instance.PlayerNpcConnections.Add(existing);
             }
 
-            instance.PlayerNpcConnections.Add(new() 
-            {
-                NpcId = npcId
-            });
+            return existing;
         }
 
         /// <returns>True if the player is already conencted to this NPC via Socailyte</returns>
