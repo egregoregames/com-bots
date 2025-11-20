@@ -36,6 +36,11 @@ public partial class PersistentGameData
                     ComBotsSaveSystem.Load("TestSave1");
                 }
 
+                if (GUILayout.Button("Generate Student ID", buttonHeight))
+                {
+                    _target.GenerateStudentIdIfNoneExists();
+                }
+
                 if (GUILayout.Button("Generate Quests", buttonHeight))
                 {
                     Quests.Update(1, 0);
