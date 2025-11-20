@@ -161,7 +161,7 @@ public partial class PersistentGameData : MonoBehaviourR3
     /// consider it unowned.
     /// </summary>
     [field: SerializeField, ComBotsSave(SaveKeys.PlayerOwnedSoftware, null)]
-    public List<PlayerSoftwareOwnershipDatum> PlayerOwnedSoftware { get; private set; } = new();
+    private List<PlayerSoftwareOwnershipDatum> PlayerOwnedSoftware { get; set; } = new();
 
     /// <summary>
     /// Will be no more than 3 entries. Index 0 is the player's bot. Index 1 and 2 are teammates' bots.
