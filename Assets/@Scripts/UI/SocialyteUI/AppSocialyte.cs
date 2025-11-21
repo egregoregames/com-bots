@@ -14,6 +14,9 @@ using UnityEngine.UI;
 public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
 {
     [field: SerializeField]
+    private GameObject RightSide { get; set; }
+
+    [field: SerializeField]
     private TextMeshProUGUI TextBio { get; set; }
 
     [field: SerializeField]
@@ -155,8 +158,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     {
         // TODO: LOCALIZATION
 
-        TextOccupation.transform.parent.gameObject.SetActive(true);
-        TextCheckInLocation.transform.parent.gameObject.SetActive(true);
+        RightSide.SetActive(true);
         TextOccupation.text = staticDatum.Occupation;
         string checkedInText = "Checked in at ";
 
@@ -325,16 +327,17 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     /// </summary>
     private void ClearAllRightSideText()
     {
-        TextBio.text = string.Empty;
-        TextCheckInLocation.transform.parent.gameObject.SetActive(false);
-        TextContactName.text = string.Empty;
-        TextOccupation.transform.parent.gameObject.SetActive(false);
-        TextPlayerStudentId.text = string.Empty;
-        PlayerProfileArea.SetActive(false);
-        ContainerOrigin.SetActive(false);
-        ContainerNumberOfConnections.SetActive(false);
-        BondHeartContainer.SetActive(false);
-        AppSocialyteNpcBroadcaster.BroadcastNpc(null);
+        RightSide.SetActive(false);
+        //TextBio.text = string.Empty;
+        //TextCheckInLocation.transform.parent.gameObject.SetActive(false);
+        //TextContactName.text = string.Empty;
+        //TextOccupation.transform.parent.gameObject.SetActive(false);
+        //TextPlayerStudentId.text = string.Empty;
+        //PlayerProfileArea.SetActive(false);
+        //ContainerOrigin.SetActive(false);
+        //ContainerNumberOfConnections.SetActive(false);
+        //BondHeartContainer.SetActive(false);
+        //AppSocialyteNpcBroadcaster.BroadcastNpc(null);
     }
 
     private async void RefreshItems()

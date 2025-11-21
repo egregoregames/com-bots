@@ -757,6 +757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuAppInfoBox_Socialyte
       objectReference: {fileID: 0}
+    - target: {fileID: 6362149417536236449, guid: 32b36b9a47bfe94489f73d9299cbc81a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7272271332339330132, guid: 32b36b9a47bfe94489f73d9299cbc81a, type: 3}
       propertyPath: m_Name
       value: TextCheckInLocation
@@ -887,6 +891,11 @@ MonoBehaviour:
 --- !u!1 &5840386299078007781 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6884109364116214165, guid: 32b36b9a47bfe94489f73d9299cbc81a, type: 3}
+  m_PrefabInstance: {fileID: 1046098018761968240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6255105934607557073 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6362149417536236449, guid: 32b36b9a47bfe94489f73d9299cbc81a, type: 3}
   m_PrefabInstance: {fileID: 1046098018761968240}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &6963261187395505161 stripped
@@ -2191,6 +2200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AppSocialyte
   <Logging>k__BackingField: 4
   <RefreshInProgress>k__BackingField: 0
+  <RightSide>k__BackingField: {fileID: 6255105934607557073}
   <TextBio>k__BackingField: {fileID: 3871550634412012153}
   <TextCheckInLocation>k__BackingField: {fileID: 5611140268364391749}
   <TextContactName>k__BackingField: {fileID: 2213746692031830953}
