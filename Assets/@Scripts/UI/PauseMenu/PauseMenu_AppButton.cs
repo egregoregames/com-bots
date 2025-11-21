@@ -21,7 +21,10 @@ public class PauseMenu_AppButton : MonoBehaviourR3
     public string DescriptionBoxText { get; set; }
 
     [field: SerializeField]
-    public Sprite DescriptionBoxBackgroundSprite { get; set; }
+    public Gradient DescriptionBoxBackgroundGradient { get; set; }
+
+    [field: SerializeField]
+    public Sprite Icon { get; set; }
 
     protected override void Initialize()
     {
