@@ -114,7 +114,7 @@ public partial class UIGradientR3 : MonoBehaviourR3
         }
 
         string key = colorKey + WrapMode + width;
-        if (_textureCache.TryGetValue(key, out Texture2D cachedTexture))
+        if (_textureCache.TryGetValue(key, out Texture2D cachedTexture) && cachedTexture != null)
         {
             Log("Pulling from cache: " + key, LogLevel.Verbose);
             return cachedTexture;
