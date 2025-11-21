@@ -155,6 +155,8 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
     {
         // TODO: LOCALIZATION
 
+        TextOccupation.transform.parent.gameObject.SetActive(true);
+        TextCheckInLocation.transform.parent.gameObject.SetActive(true);
         TextOccupation.text = staticDatum.Occupation;
         string checkedInText = "Checked in at ";
 
@@ -204,7 +206,6 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             TextPlayerSoftware.text = $"I've collected {software}/250 Software!";
 
             // Only appears after player has obtained quest Yama's Research Assistant
-            //bool hasYamasResearchAssistant = await PersistentGameData.Quests.Exists(51);
             var solexId = await PersistentGameData.GetSolexIdAsync();
             bool showSolex = solexId > 0;
             TextPlayerSolex.transform.parent.gameObject.SetActive(showSolex);
@@ -318,6 +319,24 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
         return all.OrderBy(x => x.NpcId);
     }
 
+    /// <summary>
+    /// Temporary measure until Feed feature is developed. 
+    /// Clears or turns off all text objects on the right side
+    /// </summary>
+    private void ClearAllRightSideText()
+    {
+        TextBio.text = string.Empty;
+        TextCheckInLocation.transform.parent.gameObject.SetActive(false);
+        TextContactName.text = string.Empty;
+        TextOccupation.transform.parent.gameObject.SetActive(false);
+        TextPlayerStudentId.text = string.Empty;
+        PlayerProfileArea.SetActive(false);
+        ContainerOrigin.SetActive(false);
+        ContainerNumberOfConnections.SetActive(false);
+        BondHeartContainer.SetActive(false);
+        AppSocialyteNpcBroadcaster.BroadcastNpc(null);
+    }
+
     private async void RefreshItems()
     {
         if (!gameObject.activeSelf) return;
@@ -332,6 +351,7 @@ public class AppSocialyte : PauseMenuAppSingleton<AppSocialyte>
             {
                 ScrollList.UpArrow.SetActive(false);
                 ScrollList.DownArrow.SetActive(false);
+                ClearAllRightSideText();
                 return;
             }
             var all = await GetData();

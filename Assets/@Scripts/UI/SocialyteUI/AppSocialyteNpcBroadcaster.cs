@@ -43,6 +43,9 @@ public class AppSocialyteNpcBroadcaster : MonoProtectedSingletonR3<AppSocialyteN
         Instance.NpcBroadcasterData
             .ForEach(data => data.Instance.SetActive(false));
 
+        if (datum == null)
+            return;
+
         var existing = Instance.NpcBroadcasterData
             .FirstOrDefault(x => x.NpcId == datum.ProfileId);
 
