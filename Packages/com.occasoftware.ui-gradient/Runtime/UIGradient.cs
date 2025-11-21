@@ -38,8 +38,14 @@ namespace OccaSoftware.UIGradient.Runtime
     private Material m;
     private RectTransform rectTransform;
     private Image img;
+        private static Shader _shader;
 
-    private void Reset()
+    private static Shader GetShader()
+    {
+      return Shader.Find("OccaSoftware/UI/Gradient");
+    }
+
+        private void Reset()
     {
       gradient = new Gradient();
       var colors = new GradientColorKey[2];
