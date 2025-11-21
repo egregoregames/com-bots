@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +14,16 @@ public partial class UIGradientR3 : MonoBehaviourR3
 
     [Header("Gradient")]
     [field: SerializeField]
-    private Gradient Gradient { get; set; }
+    private Gradient Gradient { get; set; } = new();
 
     [field: SerializeField]
     private Direction GradientDirection { get; set; } = Direction.TopRight;
 
     [field: SerializeField]
     private TextureWrapMode WrapMode { get; set; } = TextureWrapMode.Clamp;
+
+    [field: SerializeField]
+    private int TextureResolution { get; set; } = 256;
 
     [Header("Transform")]
     public Vector2 translate = Vector2.zero;
@@ -72,7 +76,7 @@ public partial class UIGradientR3 : MonoBehaviourR3
             Image.material = Material;
         }
             
-        Material.SetTexture("_Gradient", GetOrGenerateTexture());
+        Material.SetTexture("_Gradient", GetOrGenerateTexture(TextureResolution, 1));
         Material.SetFloat("_Rotate", (float)GradientDirection + rotate);
         Material.SetVector("_Translate", translate);
         Material.SetVector("_Scale", scale);
@@ -98,7 +102,18 @@ public partial class UIGradientR3 : MonoBehaviourR3
 
     private Texture2D GetOrGenerateTexture(int width = 256, int height = 1)
     {
-        string key = Gradient.GetHashCode().ToString() + WrapMode;
+        string colorKey = "";
+        foreach (var alphaKey in Gradient.alphaKeys)
+        {
+            colorKey += alphaKey.alpha.ToString() + alphaKey.time.ToString();
+        }
+
+        foreach (var colorKeyItem in Gradient.colorKeys)
+        {
+            colorKey += colorKeyItem.color.GetHashCode().ToString() + colorKeyItem.time.ToString();
+        }
+
+        string key = colorKey + WrapMode + width;
         if (_textureCache.TryGetValue(key, out Texture2D cachedTexture))
         {
             Log("Pulling from cache: " + key, LogLevel.Verbose);
