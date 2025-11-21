@@ -7,7 +7,7 @@ public class ScalableButton : Button
 {
     public Action onSelect;
     
-    float scaleFactor = 1.5f; // How much to scale (e.g., 1.2 = 120% size)
+    float scaleFactor = 1.2f; // How much to scale (e.g., 1.2 = 120% size)
     float scaleSpeed = 10f;   // Speed of scaling
 
     private Vector3 originalScale;
