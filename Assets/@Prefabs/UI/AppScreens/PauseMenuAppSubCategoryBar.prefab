@@ -84,10 +84,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuAppSubCategoryTab
       objectReference: {fileID: 0}
-    - target: {fileID: 2134529843176516040, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2794040812615461499, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -168,12 +164,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5635362314099812174, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6631882097226355832, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-      propertyPath: m_Sprite
+    - target: {fileID: 4308609932423654774, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
+      propertyPath: <Material>k__BackingField
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6631882097226355832, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
@@ -183,87 +175,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2134529843176516040, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8477546013464392433}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
 --- !u!224 &2026788442964799283 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2794040812615461499, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
   m_PrefabInstance: {fileID: 4244348020250625352}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2844493327157062784 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2134529843176516040, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-  m_PrefabInstance: {fileID: 4244348020250625352}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8477546013464392433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2844493327157062784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919a2ab6c8f1a2c4e8bac52f666ab222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIGradientR3
-  <Logging>k__BackingField: 4
-  <Gradient>k__BackingField:
-    serializedVersion: 2
-    key0: {r: 0.9686275, g: 0.5764706, b: 0.11764707, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 46067
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 37779
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  <GradientDirection>k__BackingField: 0
-  <WrapMode>k__BackingField: 1
-  <TextureResolution>k__BackingField: 256
-  translate: {x: 0, y: 0}
-  rotate: 0
-  scale: {x: 1, y: 1}
-  radius: 0
-  <Material>k__BackingField: {fileID: 0}
-  <RectTransform>k__BackingField: {fileID: 4807860070433169321}
-  <Image>k__BackingField: {fileID: 7417386427540361520}
---- !u!224 &4807860070433169321 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8673377954184551137, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-  m_PrefabInstance: {fileID: 4244348020250625352}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7417386427540361520 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6631882097226355832, guid: a1bafccfe065ba442a96e99b0580823c, type: 3}
-  m_PrefabInstance: {fileID: 4244348020250625352}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2844493327157062784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
