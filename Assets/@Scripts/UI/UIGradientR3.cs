@@ -4,6 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Uses a shader to create a gradient background for UI elements. 
+/// Replaces the need for gradient images.
+/// </summary>
 [ExecuteAlways]
 [RequireComponent(typeof(Image))]
 [RequireComponent(typeof(RectTransform))]
