@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -54,6 +55,9 @@ public class StaticItemDatum : ScriptableObject
     [field: SerializeField, FormerlySerializedAs("flavorText"), TextArea(3, 10)]
     public string FlavorText { get; private set; }
 
-    [field: SerializeField, FormerlySerializedAs("image")]
+    [field: SerializeField, FormerlySerializedAs("image"), Obsolete("Use Sprite")]
     public Texture2D Image { get; private set; }
+
+    [field: SerializeField]
+    public Sprite Sprite { get; private set; }
 }
